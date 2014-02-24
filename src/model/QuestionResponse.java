@@ -16,10 +16,4 @@ public class QuestionResponse extends Question {
 		return 0;
 	}
 
-	@Override
-	public String getQuestion() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
