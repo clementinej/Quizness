@@ -12,9 +12,9 @@ public class QuiznessAccountManager {
 	
 	public QuiznessAccountManager() {//initialize with two accounts
 		accounts = new HashMap<String, String>();
+		salt = "@#$%@#FERYS^%#$YSEAH#$E73452WE@#%3#$";
 		createNewAccount("Patrick", "1234");
 		createNewAccount("Molly", "FloPup");
-		salt = "@#$%@#FERYS^%#$YSEAH#$E73452WE@#%3#$";
 	}
 
 	/*
@@ -87,6 +87,9 @@ public class QuiznessAccountManager {
 	}
 		
 
+	/*
+	 * For testing purposes
+	 */
 	public static void main(String[] args) {
 		QuiznessAccountManager manager = new QuiznessAccountManager();
 		System.out.println("Start");
@@ -94,7 +97,8 @@ public class QuiznessAccountManager {
 			System.out.println("Successfully Created New Account");
 		if(manager.validLogin("Lloyd", "ILikeCats29"))
 			System.out.println("Successful Login");
-
+		if(manager.validLogin("Patrick", "1234"))
+			System.out.println("Successful Login");
 	}
 
 }

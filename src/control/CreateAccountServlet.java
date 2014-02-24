@@ -27,7 +27,7 @@ public class CreateAccountServlet extends HttpServlet {
 		ServletContext context = getServletContext();
 		
 		//grabs the manager.  Needs a typecast because returns an object
-		AccountManager manager = (AccountManager) context.getAttribute("manager");
+		QuiznessAccountManager manager = (QuiznessAccountManager) context.getAttribute("manager");
 
 		HttpSession session = request.getSession();
 		
