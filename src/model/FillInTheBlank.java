@@ -1,9 +1,11 @@
 package model;
 
+import java.util.Set;
+
 public class FillInTheBlank extends Question {
 
 	@Override
-	String[] getAnswer() {
+	Set<String>[] getAnswer() {
 		// TODO Auto-generated method stub
 		return null;
 	}

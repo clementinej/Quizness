@@ -1,9 +1,13 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Set;
+
 public abstract class Question {
 	
-	abstract String[] getAnswer();
+	abstract public ArrayList<Set<String>> getAnswer();
 	
-	abstract int getPoints(String[] answers);
-
+	abstract public int getPoints(String[] response);
+	
+	abstract public String getQuestion();
 }
