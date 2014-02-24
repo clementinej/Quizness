@@ -8,4 +8,10 @@ public class FillInTheBlank extends Question {
 		return null;
 	}
 
+	@Override
+	int getPoints(String[] answers) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
