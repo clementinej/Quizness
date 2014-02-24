@@ -6,11 +6,13 @@ import java.util.Set;
 public class PictureResponse extends Question {
 
 	private String url;
-	private Answer answer; 
+	private Answers answer; 
+	private int pointValue;
 	
-	public PictureResponse(String url, ArrayList<Set<String>> answer){
+	public PictureResponse(String url, ArrayList<Set<String>> answer, int pointValue){
 		this.url = url;
-		this.answer = new Answer(answer);
+		this.answer = new Answers(answer);
+		this.pointValue = pointValue;
 	}
 	
 	@Override
@@ -19,7 +21,7 @@ public class PictureResponse extends Question {
 	}
 
 	@Override
-	public int getPoints(String[] response) {
+	public double getPoints(String[] response) {
 		return pointValue * answer.getNumCorrect(response);
 	}
 

@@ -7,25 +7,23 @@ public class MultipleChoice extends Question {
 
 	private String question;
 	private String[] choices;
-	private int answer;
 	private int pointValue;
-	
-	private Answer answer; 
+	private Answers answer; 
 	
 	
 	public MultipleChoice(String question, String[] choices, ArrayList<Set<String>> answer, int pointValue){
 		this.question = question; 
-		this.answer = new Answer(answer);
+		this.answer = new Answers(answer);
 		this.pointValue = pointValue;
 	}
 	
 	@Override
-	public Set<String>[] getAnswer(){
+	public ArrayList<Set<String>> getAnswer(){
 		return answer.getValue();
 	}
 
 	@Override
-	public int getPoints(String[] response) {
+	public double getPoints(String[] response) {
 		return pointValue * answer.getNumCorrect(response);
 	}
 
