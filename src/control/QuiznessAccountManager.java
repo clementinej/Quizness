@@ -2,25 +2,31 @@ package control;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-public class AccountManager {
+public class QuiznessAccountManager {
+
 	Map<String, String> accounts;
+	private String salt;
 	
-	public AccountManager() {//initialize with two accounts
+	public QuiznessAccountManager() {//initialize with two accounts
 		accounts = new HashMap<String, String>();
-		accounts.put("Patrick", "1234");
-		accounts.put("Molly", "FloPup");
+		createNewAccount("Patrick", "1234");
+		createNewAccount("Molly", "FloPup");
+		salt = "@#$%@#FERYS^%#$YSEAH#$E73452WE@#%3#$";
 	}
 
 	/*
 	 *  Returns a true upon successful password creation.
 	 *  Returns false if the username is already taken.
+	 *  Adds a grain of salt to the password for extra security before hashing.
 	 */
 	public boolean createNewAccount(String userName, String pw) {
 		boolean accountFree = false;
 		if(!accounts.containsKey(userName)) {//if there account is free add it
-			String hashedPW = generateHash(pw);
+			String unencryptedPlusSalt = pw + salt;
+			String hashedPW = generateHash(unencryptedPlusSalt);
 			accounts.put(userName, hashedPW);
 			accountFree = true;
 		}		
@@ -28,12 +34,13 @@ public class AccountManager {
 	}
 	
 	/*
-	 * 
+	 * will return true if the userName and pw and hash function is in stored within the account manager.
 	 */
 	public boolean validLogin(String userName, String pw) {
 		boolean validLogin = false;
 		if(accounts.containsKey(userName)) {//if username is stored in database
-			String hashedPW = generateHash(pw);
+			String unencryptedPlusSalt = pw + salt;
+			String hashedPW = generateHash(unencryptedPlusSalt);
 			String stored_pw = accounts.get(userName);
 			if(stored_pw.equals(hashedPW))//if password is correct
 				validLogin = true;
@@ -78,6 +85,16 @@ public class AccountManager {
 		}
 		return buff.toString();
 	}
-	
+		
+
+	public static void main(String[] args) {
+		QuiznessAccountManager manager = new QuiznessAccountManager();
+		System.out.println("Start");
+		if(manager.createNewAccount("Lloyd", "ILikeCats29"));
+			System.out.println("Successfully Created New Account");
+		if(manager.validLogin("Lloyd", "ILikeCats29"))
+			System.out.println("Successful Login");
+
+	}
 
 }
