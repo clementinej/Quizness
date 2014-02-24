@@ -40,5 +40,9 @@ public class Answers {
 		}
 		return correct;
 	}
+	
+	public int numEntries(){
+		return answers.size();
+	}
 
 }
