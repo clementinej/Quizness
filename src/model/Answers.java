@@ -41,6 +41,7 @@ public class Answers {
 		return correct;
 	}
 	
+	//returns the number of fillable entries. this is primarily used to determine the max score
 	public int numEntries(){
 		return answers.size();
 	}
