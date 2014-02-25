@@ -10,6 +10,9 @@ public class QuiznessAccountManager {
 	Map<String, String> accounts;
 	private String salt;
 	
+	/*
+	 *  
+	 */
 	public QuiznessAccountManager() {//initialize with two accounts
 		accounts = new HashMap<String, String>();
 		salt = "@#$%@#FERYS^%#$YSEAH#$E73452WE@#%3#$";
