@@ -8,11 +8,11 @@ import java.util.Set;
 
 import org.junit.Test;
 
-public class FillInTheBlankTest {
+public class QuestionResponseTest {
 
 	@Test
 	public void test() {
-		String q = "The 16th president was _____. The 1st was _____.";
+		String q = "Who was the 16th president? Who was the first?";
 		
 		ArrayList<Set<String>> answer = new ArrayList<Set<String>>();
 		Set<String> a = new HashSet<String>();
@@ -27,11 +27,11 @@ public class FillInTheBlankTest {
 		double pointValue = 3;
 		FillInTheBlank question = new FillInTheBlank(q, answer, pointValue);
 		
-		String[] response = {"Abe"};
+		String[] response = {"Abe", "George"};
 		
 		System.out.println(question.getAnswer());
 		System.out.println(question.getPoints(response));
-		assertTrue(1.5 == question.getPoints(response));
+		assertTrue(3 == question.getPoints(response));
 	}
 
 }

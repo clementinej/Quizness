@@ -29,7 +29,7 @@ public class FillInTheBlank extends Question {
 	//the returned point value is a fraction of the user's given point value.
 	//the max is the point value
 	@Override
-	public double getPoints(ArrayList<String> responses) {
+	public double getPoints(String[] responses) {
 		double fractionCorrect = (double)answers.getNumCorrect(responses) / (double)answers.numEntries();
 		return fractionCorrect * pointValue;
 	}

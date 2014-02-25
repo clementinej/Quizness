@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class QuizTry {
 	private String tryID;
 	private String userID;
@@ -7,7 +9,8 @@ public class QuizTry {
 	private Quiz quiz;
 	private double timeElapsed;
 	private double startTime;
-	private String[][] responses;
+	private ArrayList<String[]> responses;
+	private int index;
 	
 	public QuizTry(String tryID, String userID, String quizID){
 		this.tryID = tryID;
@@ -16,17 +19,18 @@ public class QuizTry {
 		this.quiz = Quiz.getQuiz(quizID);
 		this.startTime = System.currentTimeMillis();
 		this.timeElapsed = 0;
-		this.responses = new String[][];
+		this.index = 0;
 	}
 	
 	public Question getQuestion(int index){
 		Question question =getQuestion(quiz.getQuestion(index));
+		this.index = index;
 		return question;
 	}
 	
 	public void saveProgress(){
-		
 		timeElapsed = System.currentTimeMillis() - startTime;
+		
 	}
 	
 	public void restartTry(){

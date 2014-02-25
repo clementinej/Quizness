@@ -7,7 +7,7 @@ public abstract class Question {
 	
 	abstract public ArrayList<Set<String>> getAnswer();
 	
-	abstract public double getPoints(ArrayList<String> response);
+	abstract public double getPoints(String[] response);
 	
 	abstract public String getQuestion();
 }
