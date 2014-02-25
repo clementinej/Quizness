@@ -1,11 +1,15 @@
 package control;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import store.ShoppingCart;
 
 /**
  * Servlet implementation class CreateServlet
@@ -14,19 +18,17 @@ import javax.servlet.http.HttpServletResponse;
 public class CreateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public CreateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		String productID = request.getParameter("productID");//if a user adds to cart		
+		session.setAttribute("productID", productID);//put it in the variable
+		String sc = (String) session.getAttribute("intent");
 	}
 
 	/**
