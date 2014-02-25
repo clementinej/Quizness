@@ -28,8 +28,9 @@ public class QuizTry {
 		return question;
 	}
 	
-	public void saveProgress(){
+	public void saveProgress(ArrayList<String[]> responses){
 		timeElapsed = System.currentTimeMillis() - startTime;
+		this.responses = responses;
 		User user = ServerConnection.getUser(userID);
 		user.addTry(this);
 	}
