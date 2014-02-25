@@ -71,7 +71,7 @@ public class ServerConnection {
 			throws SQLException, NumberFormatException, IOException {
 		String query = "INSERT INTO users VALUES(?,?)";
 		PreparedStatement ps = con.prepareStatement(query);
-		ps.setObject(Integer.parseInt(userID), convertToByteArray(user));
+		ps.setObject(userID, convertToByteArray(user));
 		ps.executeUpdate();
 	}
 	

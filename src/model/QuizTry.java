@@ -23,7 +23,7 @@ public class QuizTry {
 	}
 	
 	public Question getQuestion(int index){
-		Question question =getQuestion(quiz.getQuestion(index));
+		Question question = quiz.getQuestion(index);
 		this.index = index;
 		return question;
 	}
