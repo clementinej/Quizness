@@ -30,7 +30,7 @@ public class QuestionResponse extends Question {
 	@Override
 	public
 	double getPoints(String[] responses) {
-		double fractionCorrect = answers.getNumCorrect(responses) / answers.numEntries();
+		double fractionCorrect = (double)answers.getNumCorrect(responses) / (double)answers.numEntries();
 		return fractionCorrect * pointValue;
 	}
 
