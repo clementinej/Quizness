@@ -7,10 +7,10 @@ public class PictureResponse extends Question {
 
 	private String url;
 	private Answers answer; 
-	private int pointValue;
+	private double pointValue;
 	
 	//Picture response supports one picture as the question and one answer
-	public PictureResponse(String url, ArrayList<Set<String>> answer, int pointValue){
+	public PictureResponse(String url, ArrayList<Set<String>> answer, double pointValue){
 		this.url = url;
 		this.answer = new Answers(answer);
 		this.pointValue = pointValue;

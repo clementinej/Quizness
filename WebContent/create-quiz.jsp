@@ -2,7 +2,7 @@
 <%@page import="model.*" %>
 <%
 User currUser = (User) session.getAttribute("currentUser");
-int currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
+//int currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
 //Quiz currtQuiz = Quiz.getQuiz(currQuizID);
 //if(!currUser.isAdmin() && currQuiz.getUserID() != currUser.getUserID()) return;
 %>
@@ -42,6 +42,7 @@ int currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
 			</tr>
 			<tr>
 				<th><input type="hidden" name="quiz_id" value=""/>
+				<input type="hidden" name="user intent" value="create quiz"/>
 				<select name="question-type" id="question-type">
 						<option value="0" selected></option>
 								  <option value="question-answer">Question-Answer</option>
