@@ -26,8 +26,8 @@ public class CreateServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String productID = request.getParameter("productID");//if a user adds to cart		
-		session.setAttribute("productID", productID);//put it in the variable
+		String userIntent = request.getParameter("productID");//if a user adds to cart		
+		session.setAttribute("productID", user);//put it in the variable
 		String sc = (String) session.getAttribute("intent");
 	}
 
