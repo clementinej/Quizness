@@ -47,7 +47,7 @@ public class QuizTry {
 		return userID;
 	}
 	
-	public String getQuizID(){
+	public int getQuizID(){
 		return quizID;
 	}
 }
