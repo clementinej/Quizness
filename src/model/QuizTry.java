@@ -30,7 +30,8 @@ public class QuizTry {
 	
 	public void saveProgress(){
 		timeElapsed = System.currentTimeMillis() - startTime;
-		
+		User user = ServerConnection.getUser(userID);
+		user.addTry(this);
 	}
 	
 	public void restartTry(){
