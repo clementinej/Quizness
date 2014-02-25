@@ -27,7 +27,8 @@ public class FillInTheBlankTest {
 		double pointValue = 3;
 		FillInTheBlank question = new FillInTheBlank(q, answer, pointValue);
 		
-		String[] response = {"Lincoln", "George"};
+		ArrayList<String> response = new ArrayList<String>();
+		response.add("Abe");
 		
 		System.out.println(question.getAnswer());
 		System.out.println(question.getPoints(response));

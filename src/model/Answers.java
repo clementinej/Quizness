@@ -31,11 +31,11 @@ public class Answers {
 	
 	//receives the user's responses and compares it to the correct answers.
 	//returns the number 
-	public int getNumCorrect(String[] responses){
+	public int getNumCorrect(ArrayList<String> responses){
 		int correct = 0;
-		for (int i = 0; i < responses.length; i++){
+		for (int i = 0; i < responses.size(); i++){
 			Set<String> thisAnswer = answers.get(i);
-			if (thisAnswer.contains(responses[i]))
+			if (thisAnswer.contains(responses.get(i)))
 				correct++;
 		}
 		return correct;
