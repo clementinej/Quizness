@@ -5,14 +5,14 @@ import java.util.ArrayList;
 public class QuizTry {
 	private String tryID;
 	private String userID;
-	private String quizID;
+	private int quizID;
 	private Quiz quiz;
 	private double timeElapsed;
 	private double startTime;
 	private ArrayList<String[]> responses;
 	private int index;
 	
-	public QuizTry(String tryID, String userID, String quizID){
+	public QuizTry(String tryID, String userID, int quizID){
 		this.tryID = tryID;
 		this.userID = userID;
 		this.quizID = quizID;
