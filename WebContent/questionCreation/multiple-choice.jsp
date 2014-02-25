@@ -64,7 +64,7 @@
 	</tfoot>
 </table>
 <input type="submit" id="button-blue" value="Create Question"></form>
-  </div>
+  </div></div>
 <script type="text/javascript">
 
 var button = document.getElementById("new_option");
