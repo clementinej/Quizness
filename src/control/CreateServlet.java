@@ -63,7 +63,9 @@ public class CreateServlet extends HttpServlet {
 			//int newQuizID = ServerConnection.getUnusedQuizID();
 			int temporaryID = 1;
 			Quiz quiz = new Quiz(temporaryID, questionList);
-			ServerConnection.addQuiz(temporaryID, quiz);//might want to store as attribute			
+			try {
+				ServerConnection.addQuiz(temporaryID, quiz);
+			} catch (Exception e) { }//might want to store as attribute			
 			for(int i = 0; i < questionList.size(); i++) //restart question list
 				questionList.remove(i);	//may want to store questionLists in a map depending on potential quizID
 			//forward back to create-quiz.jsp or maybe create-quiz-success.html

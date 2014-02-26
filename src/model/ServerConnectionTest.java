@@ -2,13 +2,7 @@ package model;
 
 import static org.junit.Assert.*;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.junit.Test;
 
 public class ServerConnectionTest {

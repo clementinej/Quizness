@@ -15,11 +15,12 @@ public class QuizTry {
 	private boolean inProgress;
 	private double score;
 	
-	public QuizTry(String tryID, int userID, int quizID) throws ClassNotFoundException, SQLException, IOException{
+	public QuizTry(String tryID, int userID, int quizID) throws Exception{
 		this.tryID = tryID;
 		this.userID = userID;
 		this.quizID = quizID;
-		this.quiz = Quiz.getQuiz(quizID);
+		this.quiz = ServerConnection.getQuiz(quizID);
+
 		this.startTime = System.currentTimeMillis();
 		this.elapsedTime = 0;
 		this.inProgress = true;
@@ -30,7 +31,7 @@ public class QuizTry {
 		return quiz.getQuestion(index);
 	}
 	
-	public void saveProgress(ArrayList<String[]> responses) throws SQLException, ClassNotFoundException, IOException{
+	public void saveProgress(ArrayList<String[]> responses) throws Exception{
 		elapsedTime = System.currentTimeMillis() - startTime;
 		this.responses = responses;
 		User user = ServerConnection.getUser(userID);

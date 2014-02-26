@@ -1,12 +1,9 @@
 package model;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,14 +16,10 @@ public class ServerConnection {
 	static String server = MyDBInfo.MYSQL_DATABASE_SERVER;
 	static String database = MyDBInfo.MYSQL_DATABASE_NAME;
 	
-	private Connection con; 
-	
-	public ServerConnection(){
-		open();
-	}
+	private static Connection con;
 	
 	//Create a new connection to the database
-	public Connection open(){
+	public static Connection open(){
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://" + server + "/" +  database, account, password);
@@ -41,7 +34,7 @@ public class ServerConnection {
 	}
 	
 	// Convert an quiz object into byte[]
-	private byte[] convertToByteArray(Quiz quiz) throws Exception{
+	private static byte[] convertToByteArray(Quiz quiz) throws Exception{
 		 ByteArrayOutputStream bos = new ByteArrayOutputStream();
 	     ObjectOutputStream oos = new ObjectOutputStream(bos);
 	     oos.writeObject(quiz);
@@ -49,7 +42,7 @@ public class ServerConnection {
 	}
 	
 	// Convert an user object into byte[]
-	private byte[] convertToByteArray(User user) throws Exception{
+	private static byte[] convertToByteArray(User user) throws Exception{
 		 ByteArrayOutputStream bos = new ByteArrayOutputStream();
 	     ObjectOutputStream oos = new ObjectOutputStream(bos);
 	     oos.writeObject(user);
@@ -57,14 +50,14 @@ public class ServerConnection {
 	}
 	
 	// Convert byte[] into an object
-	private Object convertToObject(ResultSet rs, String objectType) throws Exception{
+	private static Object convertToObject(ResultSet rs, String objectType) throws Exception{
 		 InputStream s = rs.getBlob(objectType).getBinaryStream();
 	     ObjectInputStream ois = new ObjectInputStream(s);
 	   	 return ois.readObject();
 	}
 	
 	// Add an user to the database
-	public void addUser(int userID, User user) throws Exception {
+	public static void addUser(int userID, User user) throws Exception {
 		String query = "INSERT INTO users VALUES(?,?)";
 		PreparedStatement ps = con.prepareStatement(query);
 		ps.setInt(1, userID);
@@ -73,14 +66,14 @@ public class ServerConnection {
 	}
 	
 	// Remove the user from the database
-	public void removeUser(int userID) throws Exception{
+	public static void removeUser(int userID) throws Exception{
 		PreparedStatement ps = con.prepareStatement("DELETE FROM users WHERE userID = ?");
 		ps.setInt(1, userID);
 		ps.executeQuery();
 	}
 	
 	// Return an user from the database given the userID
-	public User getUser(int userID) throws Exception {
+	public static User getUser(int userID) throws Exception {
 		PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE userID = ?");
 		ps.setInt(1, userID);
 		ResultSet rs = ps.executeQuery();
@@ -89,7 +82,7 @@ public class ServerConnection {
 	}
 	
 	// Add a quiz to the database
-	public void addQuiz(int quizID, Quiz quiz) throws Exception {
+	public static void addQuiz(int quizID, Quiz quiz) throws Exception {
 		String query = "INSERT INTO quizzes (quizID, quiz) VALUES(?, ?)";
 		PreparedStatement ps = con.prepareStatement(query);
 		ps.setInt(1, quizID); 
@@ -98,14 +91,14 @@ public class ServerConnection {
 	}
 	
 	// Remove a quiz from the database
-	public void removeQuiz(int quizID) throws Exception{
+	public static void removeQuiz(int quizID) throws Exception{
 		PreparedStatement ps = con.prepareStatement("DELETE FROM quizzes WHERE quizID = ?");
 		ps.setInt(1, quizID);
 		ps.executeQuery();
 	}
 	
 	// Return a quiz from the database given the quizID
-	public Quiz getQuiz(int quizID) throws Exception {
+	public static Quiz getQuiz(int quizID) throws Exception {
 		PreparedStatement ps = con.prepareStatement("SELECT * FROM quizzes WHERE quizID = ?");
 		ps.setInt(1, quizID);
 		ResultSet rs = ps.executeQuery();
@@ -114,7 +107,7 @@ public class ServerConnection {
 	}
 	
 	//Close the connection
-	public void close() throws SQLException{
+	public static void close() throws SQLException{
 		if(!con.isClosed()){
 			con.close();
 		}
