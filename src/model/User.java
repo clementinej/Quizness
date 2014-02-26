@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 public class User {
 
-	private String userID;
+	private int userID;
 	private boolean isAdmin;
 	private ArrayList<Quiz> quizzesMade;
 	private ArrayList<QuizTry> quizzesTried;
 	
-	public User(String userID, boolean isAdmin){
+	public User(int userID, boolean isAdmin){
 		this.userID = userID;
 		this.isAdmin = isAdmin;
 		this.quizzesMade = new ArrayList<Quiz>();
@@ -29,7 +29,7 @@ public class User {
 		return isAdmin;
 	}
 	
-	public String getUserID(){
+	public int getUserID(){
 		return userID;
 	}
 	

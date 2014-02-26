@@ -1,10 +1,12 @@
 package model;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class QuizTry {
 	private String tryID;
-	private String userID;
+	private int userID;
 	private int quizID;
 	private Quiz quiz;
 	private double timeElapsed;
@@ -12,7 +14,7 @@ public class QuizTry {
 	private ArrayList<String[]> responses;
 	private int index;
 	
-	public QuizTry(String tryID, String userID, int quizID){
+	public QuizTry(String tryID, int userID, int quizID) throws ClassNotFoundException, SQLException, IOException{
 		this.tryID = tryID;
 		this.userID = userID;
 		this.quizID = quizID;
@@ -28,7 +30,7 @@ public class QuizTry {
 		return question;
 	}
 	
-	public void saveProgress(ArrayList<String[]> responses){
+	public void saveProgress(ArrayList<String[]> responses) throws SQLException, ClassNotFoundException, IOException{
 		timeElapsed = System.currentTimeMillis() - startTime;
 		this.responses = responses;
 		User user = ServerConnection.getUser(userID);
@@ -43,7 +45,7 @@ public class QuizTry {
 		return tryID;
 	}
 	
-	public String getUserID(){
+	public int getUserID(){
 		return userID;
 	}
 	
