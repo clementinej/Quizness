@@ -9,10 +9,11 @@ public class QuizTry {
 	private int userID;
 	private int quizID;
 	private Quiz quiz;
-	private double timeElapsed;
+	private double elapsedTime;
 	private double startTime;
 	private ArrayList<String[]> responses;
-	private int index;
+	private boolean inProgress;
+	private double score;
 	
 	public QuizTry(String tryID, int userID, int quizID) throws ClassNotFoundException, SQLException, IOException{
 		this.tryID = tryID;
@@ -20,25 +21,43 @@ public class QuizTry {
 		this.quizID = quizID;
 		this.quiz = Quiz.getQuiz(quizID);
 		this.startTime = System.currentTimeMillis();
-		this.timeElapsed = 0;
-		this.index = 0;
+		this.elapsedTime = 0;
+		this.inProgress = true;
+		this.score = -1;
 	}
 	
 	public Question getQuestion(int index){
-		Question question = quiz.getQuestion(index);
-		this.index = index;
-		return question;
+		return quiz.getQuestion(index);
 	}
 	
 	public void saveProgress(ArrayList<String[]> responses) throws SQLException, ClassNotFoundException, IOException{
-		timeElapsed = System.currentTimeMillis() - startTime;
+		elapsedTime = System.currentTimeMillis() - startTime;
 		this.responses = responses;
 		User user = ServerConnection.getUser(userID);
 		user.addTry(this);
 	}
 	
+	public void gradeQuiz(ArrayList<String[]>responses){
+		elapsedTime = System.currentTimeMillis() - startTime;
+		this.responses = responses;
+		score = quiz.calculateScore(responses);
+		inProgress = false;
+		
+	}
+	
+	public boolean isInProgress(){
+		return inProgress;
+	}
+	
+	public ArrayList<String[]> getResponses(){
+		return responses;
+	}
 	public void restartTry(){
 		startTime = System.currentTimeMillis();
+	}
+	
+	public double getTime(){
+		return elapsedTime;
 	}
 	
 	public String getTryID(){

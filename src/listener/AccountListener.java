@@ -24,8 +24,11 @@ public class AccountListener implements ServletContextListener {
     }
 
 
-    public void contextDestroyed(ServletContextEvent arg0) {
-        //nothing to clean up
-    }
+	public void contextDestroyed(ServletContextEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 	
 }

@@ -24,7 +24,6 @@ public class LoginServlet extends HttpServlet {
 		//ignore since we don't use
 
 	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 ServletContext context = getServletContext();
 		
