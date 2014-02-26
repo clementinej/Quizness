@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.*" %>
 <%
-User currUser = (User) session.getAttribute("currentUser");
+User currUser = (User) session.getAttribute("currentUser");//user ID should be
 //int currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
 //Quiz currtQuiz = Quiz.getQuiz(currQuizID);
 //if(!currUser.isAdmin() && currQuiz.getUserID() != currUser.getUserID()) return;
@@ -46,6 +46,7 @@ User currUser = (User) session.getAttribute("currentUser");
 				<select name="question-type" id="question-type">
 						<option value="0" selected></option>
 								  <option value="question-answer">Question-Answer</option>
+								  <option value="question-answer2">Question-Answer Test</option>
 								  <option value="picture-response">Picture-Response</option>
 								  <option value="multiple-answer">Multiple Answer</option>
 								  <option value="fill-in-blanks">Fill-in-the-Blank</option>
@@ -78,6 +79,8 @@ button.addEventListener("click", function() {
 		window.location = "../Quizness/questionCreation/question-answer.jsp";
 	} else if (value == "multiple-choice" || value == "multiple-choice-multiple-answer") {
 		window.location = "../Quizness/questionCreation/multiple-choice.jsp";
+	} else if (value == "multiple-choice" || value == "question-answer2") {//test - Lloyd
+		window.location = "../Quizness/questionCreation/question-answer2.jsp";
 	} else {
 		window.location = "../Quizness/questionCreation/" + value + ".jsp";
 	}

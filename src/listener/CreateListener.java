@@ -2,8 +2,11 @@ package listener;
 
 import java.util.*;
 
+import javax.servlet.ServletContextAttributeEvent;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionAttributeListener;
+import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
@@ -36,10 +39,23 @@ public class CreateListener implements HttpSessionListener {
         questionTypeMap.put("human graded", 9);
         questionTypeMap.put("timed", 10);	
         session.setAttribute("question-type map", questionTypeMap);
-        //add questions later
-        
+        //add questions later        
+    }
+    
+	/**
+     * @see HttpSessionAttributeListener#attributeRemoved(HttpSessionBindingEvent)
+     */
+    public void attributeRemoved(HttpSessionBindingEvent arg0) {
+        // TODO Auto-generated method stub
     }
 
+	/**
+     * @see HttpSessionAttributeListener#attributeAdded(HttpSessionBindingEvent)
+     */
+    public void attributeAdded(HttpSessionBindingEvent arg0) {
+        
+    }
+    
 	/**
      * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
      */

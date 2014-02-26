@@ -75,19 +75,33 @@ public class CreateServlet extends HttpServlet {
 	
 	private Question makeQuestion(HttpSession session, HttpServletRequest request) {
 		Map<String, Integer> questionTypeMap = (Map<String, Integer>) session.getAttribute("question-type map");
-		String question = request.getParameter("question");
 		String questionTypeString = request.getParameter("question type");
 		int questionType = questionTypeMap.get(questionTypeString);
+
+		String question = request.getParameter("question");
+		
 		//Set<String> is all synonyms for one answer (e.g. {Los Angeles, LA, L.A})
 		//ArrayList holds multiple answers (e.g. 5 largest cities -> {LA, NY, Boston})
 		ArrayList<Set<String>> allAnswers = null;
+		
+		addAnswerToAnswersList(request, allAnswers);
+		
+		double pointValue = 1;//default point value for each question depending on difficulty
+		String pointValueStr = request.getParameter("correct_answer_score");
+		if(pointValueStr.length() != 0)
+			pointValue = Double.parseDouble(pointValueStr);
+		return makeQuestion();
+
+		return newQuestion;
+	}
+	
+	
+	private void addAnswerToAnswersList(HttpServletRequest request, ArrayList<Set<String>> allAnswers) {
 		Map<String, String[]> answersMap = request.getParameterMap();
-		String choices[] = null;
-		if(questionType == MULTIPLE_CHOICE) choices = answersMap.get("multiple choice options");
 		java.util.Iterator<String> iter = answersMap.keySet().iterator();
 		while(iter.hasNext()) {
 			String answerName = iter.next();
-			if(answerName == "question" || answerName == "question type" || answerName == "multiple choice options") {}//ignore
+			if(answerName.indexOf("correct_answer_key") == -1) {}//ignore
 			else {
 				Set<String> synonymsOfAnswerSet = new HashSet<String>();
 				String[] synonyms = answersMap.get(answerName);
@@ -96,45 +110,47 @@ public class CreateServlet extends HttpServlet {
 				}
 				allAnswers.add(synonymsOfAnswerSet);
 			}	
-		}
-		double pointValue = 1;//default point value for each question depending on difficulty
-		String pointValueStr = request.getParameter("point value");
-		if(pointValueStr.length() != 0)
-			pointValue = Double.parseDouble(pointValueStr);
-		Question newQuestion = null;
-		switch(questionType) {//correspond to the question subclass .java filenames
-			case QUESTION_RESPONSE: 
-				newQuestion = new QuestionResponse(question, allAnswers, pointValue);
-				break;
-			case FILL_IN_THE_BLANK:
-				newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
-				break;
-			case MULTIPLE_CHOICE:
-				newQuestion = new MultipleChoice(question, choices, allAnswers, pointValue);
-				break;
-			case PICTURE_RESPONSE:
-				newQuestion = new PictureResponse(question, allAnswers, pointValue);
-				break;
-			case MULTIANSWER:
-			//	newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
-				break;
-			case MULTIPLE_CHOICE_MULTIPLE_ANSWERS:
-			//	newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
-				break;
-			case MATCHING:
-			//	newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
-				break;
-			case AUTO_GENERATED:
-			//	newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
-				break;
-			case HUMAN_GRADED:
-			//	newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
-				break;
-			case TIMED:
-			//	newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
-				break;
 		}	
-		return newQuestion;
 	}
+	
+	
+	private Question makeQuestion(int questionType, String question, ArrayList<Set<String>> allAnswers, 
+									double pointValue, HttpServletRequest request) {
+		switch(questionType) {//correspond to the question subclass .java filenames
+		case QUESTION_RESPONSE: 
+			return new QuestionResponse(question, allAnswers, pointValue);
+		case FILL_IN_THE_BLANK:
+			return new FillInTheBlank(question, allAnswers, pointValue);
+		case MULTIPLE_CHOICE:
+			String choices[] = getWrongChoices(request);	
+			return new MultipleChoice(question, choices, allAnswers, pointValue);
+		case PICTURE_RESPONSE:
+			return new PictureResponse(question, allAnswers, pointValue);
+		case MULTIANSWER:
+		//	newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
+		case MULTIPLE_CHOICE_MULTIPLE_ANSWERS:
+		//	newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
+		case MATCHING:
+		//	newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
+		case AUTO_GENERATED:
+		//	newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
+		case HUMAN_GRADED:
+		//	newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
+		case TIMED:
+		//	newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
+		}	
+		return null;
+		
+	}
+	
+	
+	
+	private String[] getWrongChoices(HttpServletRequest request) {
+		Map<String, String[]> answersMap = request.getParameterMap();
+		String choices[] = answersMap.get("incorrect_answer_key");
+		return choices;
+	}
+	
+	
 
 }
