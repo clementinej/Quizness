@@ -91,8 +91,6 @@ public class CreateServlet extends HttpServlet {
 		if(pointValueStr.length() != 0)
 			pointValue = Double.parseDouble(pointValueStr);
 		return makeQuestion();
-
-		return newQuestion;
 	}
 	
 	
