@@ -8,12 +8,15 @@ public class User {
 	private boolean isAdmin;
 	private ArrayList<Quiz> quizzesMade;
 	private ArrayList<QuizTry> quizzesTried;
+	private ArrayList<User> friendsList;
+	private ArrayList<Achievements> achievements;
 	
 	public User(int userID, boolean isAdmin){
 		this.userID = userID;
 		this.isAdmin = isAdmin;
 		this.quizzesMade = new ArrayList<Quiz>();
 		this.quizzesTried = new ArrayList<QuizTry>();
+		this.friendsList = new ArrayList<User>();
 	}
 	
 	public void addTry(QuizTry quizTry){
@@ -23,6 +26,10 @@ public class User {
 		} else {
 			quizzesTried.set(index, quizTry);
 		}
+	}
+	
+	public void addFriend(User friend){
+		friendsList.add(friend);
 	}
 	
 	public boolean isAdmin(){

@@ -14,9 +14,26 @@ public class Quiz {
 	private int quizID;
 	private int creatorID;
 	private ArrayList<Question> questions; 
+	private ArrayList<User> topScorers;
+	private double maxScore;
 	
 	public Quiz(int quizID, ArrayList<Question> questions){
-		
+		this.questions = questions;
+		this.topScorers = new ArrayList<User>();
+		this.maxScore = 0;
+	}
+	
+	public void addQuestion(Question question){
+		questions.add(question);
+	}
+	public double calculateScore(ArrayList<String[]> responses){
+		double score = 0;
+		for (int i = 0; i < questions.size(); i++){
+			Question question = questions.get(i);
+			String[] response = responses.get(i);
+			score += question.getPoints(response);
+		}
+		return score;
 	}
 	
 	public int getQuizID(){
