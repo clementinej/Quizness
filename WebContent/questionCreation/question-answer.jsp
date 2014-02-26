@@ -45,6 +45,9 @@
                   <tr>
                      <td align="center" colspan="2"><a href="#" id="new_option">Add Another Solution</a></td>
                   </tr>
+                   <tr>
+                     <td align="center" colspan="2"><a href="#" id="new_synonym">Add A Synonym</a></td>
+                  </tr>
                </tfoot>
             </table>
             <input type="submit" id="button-blue" value="Create Question"/>
@@ -64,6 +67,15 @@
               '</tr>');
           body.appendChild(newChild);
           });
+      var syn_button = document.getElementById("new_synonym");
+      syn_button.addEventListener("click", function() {
+      	var body = document.getElementById("contents");
+      	body.insertAdjacentHTML('beforeend',	'<tr>' +
+      			'<td><input type="text" name="correct_syn_key" style="width:100%"></td>' +
+      			'<td><input type="text" name="correct_syn_score" value="1" style="width:100%" /></td>' +
+      			'</tr>');
+      	body.appendChild(newChild);
+      	});
       
    </script>
 </html>

@@ -43,6 +43,9 @@
 		<tr>
 			<td align="center" colspan="3"><a href="#" id="new_option">Add Another Correct Answer</a></td>
 		</tr>
+		 <tr>
+            <td align="center" colspan="2"><a href="#" id="new_synonym">Add A Synonym</a></td>
+         </tr>
 	</tfoot>
 </table>
 <h3>Wrong Answers</h3>
@@ -61,6 +64,9 @@
 		<tr>
 			<td align="center" colspan="3"><a href="#" id="new_wrong_answer" >Add Another Wrong Answer</a></td>
 		</tr>
+		<tr>
+            <td align="center" colspan="2"><a href="#" id="new_wrong_synonym">Add A Synonym</a></td>
+         </tr>
 	</tfoot>
 </table>
 <input type="submit" id="button-blue" value="Create Question"></form>
@@ -83,6 +89,26 @@ button.addEventListener("click", function() {
 	body.insertAdjacentHTML('beforeend','<tr>' +
 			'<td><input type="text" name="incorrect_answer_key" style="width:100%"></td>' +
 			'<td><input type="text" name="incorrect_answer_score" value="0" style="width:100%" /></td>' +
+			'</tr>');
+	body.appendChild(newChild);
+	});
+	
+var syn_button = document.getElementById("new_synonym");
+syn_button.addEventListener("click", function() {
+	var body = document.getElementById("correct_contents");
+	body.insertAdjacentHTML('beforeend',	'<tr>' +
+			'<td><input type="text" name="correct_syn_blank" value="1" style="width:100%"></td>' + 
+			'<td><input type="text" name="correct_syn_key" style="width:100%"></td>' +
+			'<td><input type="text" name="correct_syn_score" value="1" style="width:100%" /></td>' +
+			'</tr>');
+	body.appendChild(newChild);
+	});
+var syn_button = document.getElementById("new_wrong_synonym");
+syn_button.addEventListener("click", function() {
+	var body = document.getElementById("correct_contents");
+	body.insertAdjacentHTML('beforeend',	'<tr>' +
+			'<td><input type="text" name="incorrect_syn_key" style="width:100%"></td>' +
+			'<td><input type="text" name="incorrect_syn_score" value="1" style="width:100%" /></td>' +
 			'</tr>');
 	body.appendChild(newChild);
 	});
