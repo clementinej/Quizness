@@ -90,7 +90,7 @@ public class CreateServlet extends HttpServlet {
 		String pointValueStr = request.getParameter("correct_answer_score");
 		if(pointValueStr.length() != 0)
 			pointValue = Double.parseDouble(pointValueStr);
-		return makeQuestion();
+		return makeQuestion(questionType, question, allAnswers, pointValue, request);
 	}
 	
 	
@@ -138,7 +138,6 @@ public class CreateServlet extends HttpServlet {
 		//	newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
 		}	
 		return null;
-		
 	}
 	
 	
