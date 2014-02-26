@@ -1,6 +1,7 @@
 package model;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,11 +9,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-public class Quiz {
+public class Quiz implements Serializable{
 	
 	private int quizID;
 	private int creatorID;
+<<<<<<< HEAD
 	private ArrayList<Question> questions; 
 	private ArrayList<User> topScorers;
 	private double maxScore;
@@ -34,6 +37,13 @@ public class Quiz {
 			score += question.getPoints(response);
 		}
 		return score;
+=======
+	private List<Question> questions; 
+	
+	public Quiz(int quizID, ArrayList<Question> questions){
+		this.quizID = quizID;
+		this.questions = questions;
+>>>>>>> 791a7f6e649f9d6fe8f63719ef62b9ce92123b75
 	}
 	
 	public int getQuizID(){
@@ -48,7 +58,7 @@ public class Quiz {
 		return ServerConnection.getQuiz(quizID);
 	}
 	
-	static void addQuiz(Quiz quiz){
+	static void addQuiz(Quiz quiz) throws SQLException, IOException{
 		ServerConnection.addQuiz(quiz.getQuizID(), quiz);
 	}
 
