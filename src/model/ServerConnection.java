@@ -13,8 +13,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.sql.rowset.serial.SerialBlob;
-
 public class ServerConnection {
 	static String account = MyDBInfo.MYSQL_USERNAME;
 	static String password = MyDBInfo.MYSQL_PASSWORD;
@@ -43,98 +41,76 @@ public class ServerConnection {
 	}
 	
 	// Convert an quiz object into byte[]
-	private byte[] convertToByteArray(Quiz quiz) throws IOException{
+	private byte[] convertToByteArray(Quiz quiz) throws Exception{
 		 ByteArrayOutputStream bos = new ByteArrayOutputStream();
 	     ObjectOutputStream oos = new ObjectOutputStream(bos);
 	     oos.writeObject(quiz);
-	     
 	     return bos.toByteArray();
 	}
 	
 	// Convert an user object into byte[]
-	private byte[] convertToByteArray(User user) throws IOException{
+	private byte[] convertToByteArray(User user) throws Exception{
 		 ByteArrayOutputStream bos = new ByteArrayOutputStream();
 	     ObjectOutputStream oos = new ObjectOutputStream(bos);
 	     oos.writeObject(user);
 	     return bos.toByteArray();
 	}
 	
-	// Convert byte[] into a quiz object
-	private Quiz convertToQuiz(ResultSet rs) 
-			throws IOException, SQLException, ClassNotFoundException{
-		 InputStream s = rs.getBlob("quiz").getBinaryStream();
+	// Convert byte[] into an object
+	private Object convertToObject(ResultSet rs, String objectType) throws Exception{
+		 InputStream s = rs.getBlob(objectType).getBinaryStream();
 	     ObjectInputStream ois = new ObjectInputStream(s);
-	     return (Quiz) ois.readObject();
-	}
-	
-	// Convert byte[] into a user object
-	private User convertToUser(ResultSet rs) 
-			throws IOException, SQLException, ClassNotFoundException{
-		 ByteArrayInputStream bis = new ByteArrayInputStream(rs.getBytes("user"));
-	     ObjectInputStream ois = new ObjectInputStream(bis);
-	     return (User) ois.readObject();
+	   	 return ois.readObject();
 	}
 	
 	// Add an user to the database
-	public void addUser(int userID, User user) 
-			throws SQLException, IOException {
+	public void addUser(int userID, User user) throws Exception {
 		String query = "INSERT INTO users VALUES(?,?)";
 		PreparedStatement ps = con.prepareStatement(query);
-		
 		ps.setInt(1, userID);
 		ps.setBytes(2, convertToByteArray(user));
 		ps.executeUpdate();
 	}
 	
-	// Return an user from the database given the userID
-	public User getUser(int userID) throws SQLException, ClassNotFoundException, IOException{
-		PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE userID = ?");
-		ps.setInt(1, userID);
-		ResultSet rs = ps.executeQuery();
-		rs.next();
-		return convertToUser(rs);
-	}
-	
 	// Remove the user from the database
-	public void removeUser(int userID) throws SQLException{
+	public void removeUser(int userID) throws Exception{
 		PreparedStatement ps = con.prepareStatement("DELETE FROM users WHERE userID = ?");
 		ps.setInt(1, userID);
 		ps.executeQuery();
 	}
 	
+	// Return an user from the database given the userID
+	public User getUser(int userID) throws Exception {
+		PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE userID = ?");
+		ps.setInt(1, userID);
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		return (User) convertToObject(rs, "user");
+	}
+	
 	// Add a quiz to the database
-	public void addQuiz(int quizID, Quiz quiz) throws SQLException, IOException{
+	public void addQuiz(int quizID, Quiz quiz) throws Exception {
 		String query = "INSERT INTO quizzes (quizID, quiz) VALUES(?, ?)";
 		PreparedStatement ps = con.prepareStatement(query);
-		ps.setInt(1, quizID);
-		
-		 ByteArrayOutputStream bos = new ByteArrayOutputStream();
-	     ObjectOutputStream oos = new ObjectOutputStream(bos);
-	     oos.writeObject(quiz);
-	     
-		byte[] bytes = bos.toByteArray();
-		ps.setBytes(2, bytes);
-		
-		//Object object = (Object) quiz;
-		//ps.setObject(2, object);
+		ps.setInt(1, quizID); 
+		ps.setBytes(2, convertToByteArray(quiz));
 		ps.executeUpdate();
 	}
 	
 	// Remove a quiz from the database
-	public void removeQuiz(int quizID) throws SQLException{
+	public void removeQuiz(int quizID) throws Exception{
 		PreparedStatement ps = con.prepareStatement("DELETE FROM quizzes WHERE quizID = ?");
 		ps.setInt(1, quizID);
 		ps.executeQuery();
 	}
 	
 	// Return a quiz from the database given the quizID
-	public Quiz getQuiz(int quizID) throws SQLException, IOException, ClassNotFoundException{
+	public Quiz getQuiz(int quizID) throws Exception {
 		PreparedStatement ps = con.prepareStatement("SELECT * FROM quizzes WHERE quizID = ?");
-		ps.executeQuery("USE " + database);
 		ps.setInt(1, quizID);
 		ResultSet rs = ps.executeQuery();
 		rs.next();
-		return convertToQuiz(rs);
+		return (Quiz) convertToObject(rs, "quiz");
 	}
 	
 	//Close the connection

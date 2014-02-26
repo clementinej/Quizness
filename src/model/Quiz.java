@@ -15,7 +15,10 @@ public class Quiz implements Serializable{
 	
 	private int quizID;
 	private int creatorID;
+	private int createTime; 
 	private List<Question> questions; 
+	private String description; 
+	
 	
 	public Quiz(int quizID, ArrayList<Question> questions){
 		this.quizID = quizID;
@@ -30,13 +33,20 @@ public class Quiz implements Serializable{
 		return questions.get(index);
 	}
 	
-	static Quiz getQuiz(int quizID) throws ClassNotFoundException, SQLException, IOException{
-		return ServerConnection.getQuiz(quizID);
+	
+	public void getTopQuizzes(){
+		
 	}
 	
-	static void addQuiz(Quiz quiz) throws SQLException, IOException{
-		ServerConnection.addQuiz(quiz.getQuizID(), quiz);
+	public void getRecentlyPlayedQuizzes(){
+		
 	}
-
 	
+	public void getRecentlyCreatedQuizzes(){
+		
+	}
+	
+	public void getHighScore(){
+		
+	}
 }

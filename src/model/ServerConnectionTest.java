@@ -14,7 +14,8 @@ import org.junit.Test;
 public class ServerConnectionTest {
 	
 	private ArrayList<Question> questions = new ArrayList<Question>();	
-	private Quiz quiz = new Quiz(1, questions);
+	private Quiz quiz = new Quiz(8, questions);
+	private User user = new User(8, false);
 	private ServerConnection con = new ServerConnection();
 	
 
@@ -24,8 +25,12 @@ public class ServerConnectionTest {
 	}
 
 	@Test
-	public void testAddUser() {
-		fail("Not yet implemented");
+	public void testAddUser() throws Exception {
+		con.open();
+		con.addUser(user.getUserID(), user);
+		User currUser = con.getUser(8);
+		assertEquals(currUser.getUserID(), 8);
+		con.close();
 	}
 
 	@Test
@@ -39,13 +44,12 @@ public class ServerConnectionTest {
 	}
 
 	@Test
-	public void testAddQuiz() throws SQLException, IOException, ClassNotFoundException {
+	public void testAddQuiz() throws Exception {
 		con.open();
 		con.addQuiz(quiz.getQuizID(), quiz);
-		
-		Quiz currQuiz = con.getQuiz(1);
-		
-		System.out.print(currQuiz.getQuizID());
+		Quiz currQuiz = con.getQuiz(8);
+		assertEquals(currQuiz.getQuizID(), 8);
+		con.close();
 	}
 
 	@Test
