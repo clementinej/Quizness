@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 import model.*;
 
 
-
 /**
  * Servlet implementation class CreateServlet
  */
