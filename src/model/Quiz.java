@@ -15,7 +15,6 @@ public class Quiz implements Serializable{
 	
 	private int quizID;
 	private int creatorID;
-<<<<<<< HEAD
 	private ArrayList<Question> questions; 
 	private ArrayList<User> topScorers;
 	private double maxScore;
