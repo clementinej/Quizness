@@ -3,27 +3,61 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class User implements Serializable {
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+import java.sql.*;
 
+public class User implements Serializable {
+	
 	private int userID;
 	private boolean isAdmin;
 	private String userName;
 	private String pw;
+	private String email;
 	private ArrayList<Quiz> quizzesMade;
 	private ArrayList<QuizTry> quizzesTried;
 	private ArrayList<User> friendsList;
 	private ArrayList<Achievement> achievements;
 	private ArrayList<Integer> achievementKeys;
 	
-	public User(boolean isAdmin, String userName, String pw){
+	public User(boolean isAdmin, String userName, String pw, String email){
 		this.isAdmin = isAdmin;
 		this.pw = pw;
 		this.userName = userName;
+		this.email = email;
 		this.quizzesMade = new ArrayList<Quiz>();
 		this.quizzesTried = new ArrayList<QuizTry>();
 		this.friendsList = new ArrayList<User>();
 		this.achievements = new ArrayList<Achievement>();
 		this.achievementKeys = new ArrayList<Integer>();
+	}
+	
+	public boolean nameIsAvailable(String userName){
+		Connection con = ServerConnection.getConnection();
+		PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE userName = ?");
+		ps.setString(1, userName);
+		ResultSet rs = ps.executeQuery();
+		rs.beforeFirst();
+		if (!rs.next()){
+			return true;
+		}
+		return false;
+	}
+	
+	public String getPasswordHash(String userName){
+		Connection con = ServerConnection.getConnection();
+		PreparedStatement ps = con.prepareStatement("SELECT password FROM users WHERE userName = ?");
+		ps.setString(1, userName);
+		ResultSet rs = ps.executeQuery();
+		rs.beforeFirst();
+	}
+	
+	public String getUserName(){
+		return userName;
+	}
+	
+	public String getPassword(){
+		return pw;
 	}
 	
 	public void addAchievement(Achievement achievement){

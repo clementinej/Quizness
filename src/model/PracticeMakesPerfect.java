@@ -1,15 +1,15 @@
 package model;
 
-public class TestTakerRecognized extends Achievement{
+public class PracticeMakesPerfect extends Achievement {
 
 	@Override
 	public String getAchievement() {
-		return "Test Taker - Recognized";
+		return "Practice Makes Perfect";
 	}
 
 	@Override
 	public String getDescription() {
-		return "This user is known to like taking quizzes. At least 50 of them";
+		return "The user took a quiz in practice mode";
 	}
 
 	@Override

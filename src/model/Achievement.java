@@ -10,14 +10,12 @@ public abstract class Achievement {
 	
 	/*
 	 * KEY
-	 * 1 - TestCreator - Noob
-	 * 2 - TestTaker - Noob
-	 * 3 - TestCreator - Novice
-	 * 4 - TestTaker - Novice
-	 * 5 - TestCreator - Certified
-	 * 6 - TestTaker - Recognized
-	 * 7 - TestCreator - Professor
-	 * 8 - TestTaker - Student
+	 * 1 - Amateur Author
+	 * 2 - Prolific Author
+	 * 3 - Prodigious Author
+	 * 4 - QuizMachine
+	 * 5 - I am the Greatest
+	 * 6 - Practice Makes Perfect
 	 */
 
 }

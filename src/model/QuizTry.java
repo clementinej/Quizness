@@ -39,6 +39,10 @@ public class QuizTry {
 		}
 	}
 	
+	public boolean isPractice(){
+		return isPractice;
+	}
+	
 	public ArrayList<Question> getQuestions(int index){
 		return quiz.getQuestions(index);
 	}
@@ -61,6 +65,9 @@ public class QuizTry {
 		elapsedTime = System.currentTimeMillis() - startTime;
 		this.responses = responses;
 		score = quiz.calculateScore(responses);
+		if (score > quiz.getHighScore()){
+			user.addAchievement(new TheGreatest());
+		}
 		inProgress = false;
 		user.addTry(this);
 		checkTryAchievements();
@@ -68,15 +75,8 @@ public class QuizTry {
 	}
 	
 	private void checkTryAchievements(){
-		if (user.numQuizzesTaken() == 1){
-			user.addAchievement(new TestTakerNoob());
-		} else if (user.numQuizzesTaken() == 10){
-			user.addAchievement(new TestTakerNovice());
-		} else if (user.numQuizzesTaken() == 50){
-			user.addAchievement(new TestTakerRecognized());
-		} else if (user.numQuizzesTaken() == 100){
-			user.addAchievement(new TestTakerStudent());
-		}
+		if (user.numQuizzesTaken() == 10)
+			user.addAchievement(new QuizMachine());
 	}
 	
 	public boolean isInProgress(){

@@ -1,20 +1,20 @@
 package model;
 
-public class TestCreatorNovice extends Achievement{
+public class QuizMachine extends Achievement {
 
 	@Override
 	public String getAchievement() {
-		return "Test Creator - Novice";
+		return "Quiz Machine";
 	}
 
 	@Override
 	public String getDescription() {
-		return "This user has created 10 quizzes";
+		return "The user took ten quizzes.";
 	}
 
 	@Override
 	public int getKey() {
-		return 3;
+		return 4;
 	}
 
 }

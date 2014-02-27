@@ -1,15 +1,15 @@
 package model;
 
-public class TestCreatorCertified extends Achievement{
+public class TheGreatest extends Achievement{
 
 	@Override
 	public String getAchievement() {
-		return "Test Creator - Certified";
+		return "I am the Greatest";
 	}
 
 	@Override
 	public String getDescription() {
-		return "This user has created 25 quizzes";
+		return "The user had the highest score on a quiz.";
 	}
 
 	@Override
