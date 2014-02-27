@@ -58,6 +58,7 @@ public class QuizTry {
 	public void saveProgress(ArrayList<String[]> responses) throws Exception{
 		elapsedTime = System.currentTimeMillis() - startTime;
 		this.responses = responses;
+		User user = ServerConnection.getUser(userID);
 		user.addTry(this);
 	}
 	

@@ -11,14 +11,18 @@ public class Quiz implements Serializable{
 	// Basic quiz information
 	private int quizID;
 	private int creatorID;
+	private int createTime;
 	private boolean isPracticeMode;
 	private String description; 
 	private ArrayList<Question> questions; 
 	private double maxScore;
+	private ArrayList<User> topScorers;
+
 	
 	// Frequently updated informations
 	private String lastPlayTimeStamp;
 	private int numOfTimesPlayed;
+
 	
 	// Provide basic performance information
 	private Set<User> sortedByTime;
@@ -32,6 +36,7 @@ public class Quiz implements Serializable{
 		this.isPracticeMode = isPracticeMode;
 		this.maxScore = 0;
 		this.numOfTimesPlayed = 0;
+		this.topScorers = new ArrayList<User>();
 		this.description = description; 
 		
 		// TODO store in the database the quiz creation time
