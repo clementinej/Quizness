@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,8 +34,8 @@ ServletContext context = getServletContext();
 		HttpSession session = request.getSession();
 		
 		//what the user types in to "user name" the page will be stored in "userName"
-		String userName = request.getParameter("user name");		
-		session.setAttribute("user name", userName);
+		String userName = request.getParameter("login");		
+		session.setAttribute("login", userName);
 		
 		
 		//what the user types into the "password" form will be stored in "pw"
@@ -44,15 +45,17 @@ ServletContext context = getServletContext();
 		PrintWriter out = response.getWriter();
 		
 		if(manager.validLogin(userName, pw)) {//go to "user welcome" page
-			out.println("<!DOCTYPE html>");
-			out.println("<html>");
-			out.println("<head>");
-			out.println("<title>Welcome " + userName + "</title>");
-			out.println("</head>");
-			out.println("<body>");
-			out.println("<h1>Welcome " + userName + "</h1>");
-			out.println("</body>");
-			out.println("</html>");
+			RequestDispatcher dispatch = request.getRequestDispatcher("home.html"); 
+			dispatch.forward(request, response); 
+//			out.println("<!DOCTYPE html>");
+//			out.println("<html>");
+//			out.println("<head>");
+//			out.println("<title>Welcome " + userName + "</title>");
+//			out.println("</head>");
+//			out.println("<body>");
+//			out.println("<h1>Welcome " + userName + "</h1>");
+//			out.println("</body>");
+//			out.println("</html>");
 			
 		} else { //go to "Please Try Again" page
 			out.println("<!DOCTYPE html>");

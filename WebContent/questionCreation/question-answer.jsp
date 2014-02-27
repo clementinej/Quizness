@@ -11,7 +11,7 @@
  	 <div id="form-div">
          <span class="scroll"></span>
          <h3>Question</h3>
-         <form method="post" action="/CreateServlet" class="form" id="form1" >
+         <form method="post" action="../CreateServlet" class="form" id="form1" >
             <p>Enter either a question in text or a picture in the image url field. If you leave the Image URL
                field blank, no image will be displayed.
             </p>

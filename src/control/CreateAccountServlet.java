@@ -3,6 +3,7 @@ package control;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,8 +33,8 @@ public class CreateAccountServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		//what the user types in to "user name" the page will be stored in "userName"
-		String userName = request.getParameter("user name");		
-		session.setAttribute("user name", userName);
+		String userName = request.getParameter("login");		
+		session.setAttribute("login", userName);
 
 		//what the user types into the "password" form will be stored in "pw"
 		String pw = request.getParameter("password");
@@ -41,16 +42,18 @@ public class CreateAccountServlet extends HttpServlet {
 
 		PrintWriter out = response.getWriter();
 		
-		if(manager.createNewAccount(userName, pw)) {//go to "user welcome" page
-			out.println("<!DOCTYPE html>");
-			out.println("<html>");
-			out.println("<head>");
-			out.println("<title>Welcome " + userName + "</title>");
-			out.println("</head>");
-			out.println("<body>");
-			out.println("<h1>Welcome " + userName + "</h1>");
-			out.println("</body>");
-			out.println("</html>");
+		if(manager.createNewAccount(userName, pw, false)) {//go to "user welcome" page
+			RequestDispatcher dispatch = request.getRequestDispatcher("home.html"); 
+			dispatch.forward(request, response); 
+//			out.println("<!DOCTYPE html>");
+//			out.println("<html>");
+//			out.println("<head>");
+//			out.println("<title>Welcome " + userName + "</title>");
+//			out.println("</head>");
+//			out.println("<body>");
+//			out.println("<h1>Welcome " + userName + "</h1>");
+//			out.println("</body>");
+//			out.println("</html>");
 			
 		} else {//go to "Account Name is in Use" page		
 			out.println("<!DOCTYPE html>");

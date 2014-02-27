@@ -21,6 +21,7 @@ import model.*;
 @WebServlet("/CreateServlet")
 public class CreateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
 	public static final int QUESTION_RESPONSE = 1;
 	public static final int FILL_IN_THE_BLANK = 2;
 	public static final int MULTIPLE_CHOICE = 3;
@@ -50,32 +51,40 @@ public class CreateServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String userIntent = request.getParameter("intent");
-		session.setAttribute("intent", userIntent);
-		ArrayList<Question> questionList = (ArrayList<Question>) session.getAttribute("question list");		
-		if(userIntent == "add question") {
-			Question newQuestion = makeQuestion(session, request);
+		ArrayList<Question> questionList = (ArrayList<Question>) session.getAttribute("question list");	
+		
+		if(getUserIntent(session, request) == "add question") {
+			System.out.println("Content Received");
+			Question newQuestion = constructQuestion(session, request);
 			questionList.add(newQuestion);
-			RequestDispatcher dispatch = //foward back to create-quiz.jsp
-					 request.getRequestDispatcher("create-quiz.jsp"); 
-					 dispatch.forward(request, response); 
-		} else if(userIntent == "create quiz") {
+			RequestDispatcher dispatch = request.getRequestDispatcher("create-quiz.jsp"); 
+			dispatch.forward(request, response); 
+		} else if(getUserIntent(session, request) == "create quiz") {
 			//int newQuizID = ServerConnection.getUnusedQuizID();
 			int temporaryID = 1;
 			Quiz quiz = new Quiz(temporaryID, questionList);
-			try {
-				ServerConnection.addQuiz(temporaryID, quiz);
-			} catch (Exception e) { }//might want to store as attribute			
+			
+			//add Server --> Tony's implementation
+			//ServerConnection.addQuiz(temporaryID, quiz);//might want to store as attribute	
+			
 			for(int i = 0; i < questionList.size(); i++) //restart question list
 				questionList.remove(i);	//may want to store questionLists in a map depending on potential quizID
 			//forward back to create-quiz.jsp or maybe create-quiz-success.html
-			RequestDispatcher dispatch = 
-					 request.getRequestDispatcher("create-quiz.jsp"); 
-					 dispatch.forward(request, response); 
+			RequestDispatcher dispatch = request.getRequestDispatcher("create-quiz.jsp"); 
+			dispatch.forward(request, response); 
 		}	
 	}
 	
-	private Question makeQuestion(HttpSession session, HttpServletRequest request) {
+	private String getUserIntent(HttpSession session, HttpServletRequest request) {
+		String userIntent = request.getParameter("intent");
+		session.setAttribute("intent", userIntent);
+		return userIntent;
+	}
+	
+	/*
+	 * 
+	 */
+	private Question constructQuestion(HttpSession session, HttpServletRequest request) {
 		Map<String, Integer> questionTypeMap = (Map<String, Integer>) session.getAttribute("question-type map");
 		String questionTypeString = request.getParameter("question type");
 		int questionType = questionTypeMap.get(questionTypeString);

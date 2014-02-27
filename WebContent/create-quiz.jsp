@@ -8,7 +8,7 @@ User currUser = (User) session.getAttribute("currentUser");//user ID should be
 %>
 
 <body>
-	<form method="post" action="quiz/servlet/CreateServlet">
+	<form method="post" action="CreateServlet">
 		<table cellspacing="3" cellpadding="3" border="0">
 			<tr>
 				<th>Quiz Title</th>
