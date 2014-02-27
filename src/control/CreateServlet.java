@@ -62,10 +62,19 @@ public class CreateServlet extends HttpServlet {
 		} else if(getUserIntent(session, request) == "create quiz") {
 			//int newQuizID = ServerConnection.getUnusedQuizID();
 			int temporaryID = 1;
-			Quiz quiz = new Quiz(temporaryID, questionList);
+			int quizID = 0;
+			int creatorID = 0;
+			String description = "";
+			boolean isPracticeMode = false;
+			//int quizID, int creatorID, String description, ArrayList<Question> questions, boolean isPracticeMode
+			Quiz quiz = new Quiz(quizID, creatorID, description, questionList, isPracticeMode);
 			
 			//add Server --> Tony's implementation
-			//ServerConnection.addQuiz(temporaryID, quiz);//might want to store as attribute	
+			try {
+				ServerConnection.addQuiz(quizID, quiz);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	
 			
 			for(int i = 0; i < questionList.size(); i++) //restart question list
 				questionList.remove(i);	//may want to store questionLists in a map depending on potential quizID
@@ -134,7 +143,8 @@ public class CreateServlet extends HttpServlet {
 			String choices[] = getWrongChoices(request);	
 			return new MultipleChoice(question, choices, allAnswers, pointValue);
 		case PICTURE_RESPONSE:
-			return new PictureResponse(question, allAnswers, pointValue);
+			String url = "";//implement
+			return new PictureResponse(question, url, allAnswers, pointValue);
 		case MULTIANSWER:
 		//	newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
 		case MULTIPLE_CHOICE_MULTIPLE_ANSWERS:

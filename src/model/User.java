@@ -2,29 +2,32 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.sql.*;
-=======
->>>>>>> 207d09290cd4742d8fec6d08be7ea77026d222ae
 
 public class User implements Serializable {
 
 	private int userID;
 	private boolean isAdmin;
+	private String userName;
+	private String pw;
+	private String email;
+	private int numQuizzesTaken;
 	private ArrayList<Quiz> quizzesMade;
 	private ArrayList<QuizTry> quizzesTried;
 	private ArrayList<User> friendsList;
-	private ArrayList<Achievements> achievements;
+	private ArrayList<Achievement> achievements;
+	private ArrayList<Integer> achievementKeys;
 	
-	public User(int userID, boolean isAdmin){
-		this.userID = userID;
+	public User(boolean isAdmin, String userName, String pw, String email){
 		this.isAdmin = isAdmin;
+		this.pw = pw;
+		this.userName = userName;
+		this.email = email;
 		this.quizzesMade = new ArrayList<Quiz>();
 		this.quizzesTried = new ArrayList<QuizTry>();
 		this.friendsList = new ArrayList<User>();
-<<<<<<< HEAD
-		this.achievements = new ArrayList<Achievement>();
 		this.achievementKeys = new ArrayList<Integer>();
+		numQuizzesTaken = 0;
 	}
 	
 	public boolean nameIsAvailable(String userName) throws SQLException{
@@ -75,8 +78,6 @@ public class User implements Serializable {
 	
 	public User getUser(int userID) throws Exception{
 		return ServerConnection.getUser(userID);
-=======
->>>>>>> 207d09290cd4742d8fec6d08be7ea77026d222ae
 	}
 	
 	public void addTry(QuizTry quizTry){
@@ -106,5 +107,9 @@ public class User implements Serializable {
 	
 	public void deleteQuiz(Quiz quiz){
 		quizzesMade.remove(quiz);
+	}
+
+	public int numQuizzesTaken() {
+		return numQuizzesTaken;
 	}
 }

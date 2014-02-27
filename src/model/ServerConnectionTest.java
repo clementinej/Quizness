@@ -3,13 +3,14 @@ package model;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+
 import org.junit.Test;
 
 public class ServerConnectionTest {
 	
 	private ArrayList<Question> questions = new ArrayList<Question>();	
-	private Quiz quiz = new Quiz(8, questions);
-	private User user = new User(8, false);
+	private Quiz quiz = new Quiz(1, 1, "About Presidents", questions, true);
+	private User user = new User(true, "Patrick", "[imagineThisButHashed]", "pYoung@stanford.edu");
 	private ServerConnection con = new ServerConnection();
 	
 
