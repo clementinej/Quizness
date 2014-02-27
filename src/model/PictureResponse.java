@@ -6,11 +6,13 @@ import java.util.Set;
 public class PictureResponse extends Question {
 
 	private String url;
+	private String question;
 	private Answers answer; 
 	private double pointValue;
 	
 	//Picture response supports one picture as the question and one answer
-	public PictureResponse(String url, ArrayList<Set<String>> answer, double pointValue){
+	public PictureResponse(String question, String url, ArrayList<Set<String>> answer, double pointValue){
+		this.question = question; 
 		this.url = url;
 		this.answer = new Answers(answer);
 		this.pointValue = pointValue;
@@ -30,9 +32,14 @@ public class PictureResponse extends Question {
 		return pointValue * answer.getNumCorrect(response);
 	}
 
-	//Return the url that points to the picture
+	//Return the question
 	@Override
 	public String getQuestion() {
+		return question;
+	}
+	
+	// Return the url that points to the picture
+	public String getUrl(){
 		return url;
 	}
 }
