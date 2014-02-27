@@ -1,0 +1,73 @@
+#score {
+	 text-align: center;
+}
+#choose-time {
+  margin: 80px auto;
+  width: 300px;
+  text-align: center;
+}
+#set-button,
+#submit {
+  background-color: #888;
+  color: #fff;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  padding: 2px 6px;
+  padding-bottom: 4px;
+  cursor: pointer;
+  margin-left: 5px;
+  opacity: 0.95;
+  filter: alpha(opacity=95);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=95)";
+  font-size: 20px;
+}
+#set-button:hover,
+#submit:hover {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+}
+.demo {
+  margin: 0 auto;
+  -webkit-filter: drop-shadow(30px 30px 23px rgba(0,0,0,0.3));
+  -moz-filter: drop-shadow(30px 30px 23px rgba(0,0,0,0.3));
+  filter: drop-shadow(30px 30px 23px rgba(0,0,0,0.3));
+}
+#cubes{
+  margin-bottom: 4rem;
+}
+#cubes .hexaflip-cube {
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+}
+#cubes .hexaflip-cube .hexaflip-left,
+#cubes .hexaflip-cube .hexaflip-right {
+  background-color: #222 !important;
+}
+#cubes .hexaflip-cube > div {
+  font-weight: 100;
+  text-shadow: none;
+}
+#cubes .hexaflip-cube > div:nth-child(1n+1) {
+  background-color: #069ad5;
+}
+#cubes .hexaflip-cube > div:nth-child(2n+2) {
+  background-color: #fc5215;
+}
+#cubes .hexaflip-cube > div:nth-child(3n+3){
+  background-color: #30b71d;
+}
+#cubes .hexaflip-cube > div:nth-child(4n+4) {
+  background-color: #eee;
+  color: #222;
+}
+#prev {
+  float: left;
+}
+#next {
+  float: right;
+}
+#output {
+  line-height: 2;
+}
