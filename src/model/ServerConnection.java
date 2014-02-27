@@ -33,10 +33,6 @@ public class ServerConnection {
 		return null;	
 	}
 	
-	public Connection getConnection(){
-		return con;
-	}
-	
 	// Convert an quiz object into byte[]
 	private static byte[] convertToByteArray(Quiz quiz) throws Exception{
 		 ByteArrayOutputStream bos = new ByteArrayOutputStream();
