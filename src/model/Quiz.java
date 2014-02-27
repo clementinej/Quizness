@@ -2,27 +2,39 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Quiz implements Serializable{
 	
+	// Basic quiz information
 	private int quizID;
 	private int creatorID;
-	private int createTime; 
+	private boolean isPracticeMode;
 	private String description; 
 	private ArrayList<Question> questions; 
 	private double maxScore;
 	
-	private static Set<Quiz> 
+	// Frequently updated informations
+	private String lastPlayTimeStamp;
+	private int numOfTimesPlayed;
 	
-	private QuizPerformance quizPerformance;
+	// Provide basic performance information
+	private Set<User> sortedByTime;
+	private Set<User> sortedByScore;
+	private Map<Integer, List<QuizTry>> pastPerformance;
+	
 	
 	public Quiz(int quizID, int creatorID, String description, ArrayList<Question> questions, boolean isPracticeMode){
 		this.questions = questions;
 		this.creatorID = creatorID; 
-		this.quizPerformance = new QuizPerformance(isPracticeMode);
+		this.isPracticeMode = isPracticeMode;
 		this.maxScore = 0;
+		this.numOfTimesPlayed = 0;
 		this.description = description; 
+		
+		// TODO store in the database the quiz creation time
 	}
 	
 	// Return the ID of the quiz
@@ -67,13 +79,15 @@ public class Quiz implements Serializable{
 	}
 	
 	// Set if the practice mode is available
-	public void setPracticeMode(boolean isPracticeMode){
-		quizPerformance.setPracticeMode(isPracticeMode);
+	public void setPracticeMode(int userID, boolean isPracticeMode){
+		if(userID == creatorID){
+			this.isPracticeMode = isPracticeMode;
+		}
 	}
 	
 	// Returns true if practice mode is turned on
 	public boolean isPracticeMode(){
-		return quizPerformance.isPracticeMode();
+		return isPracticeMode();
 	}
 	
 	// Return the total score for this question
@@ -102,4 +116,38 @@ public class Quiz implements Serializable{
 	public void getHighScore(){
 		
 	}
+	
+	public void addQuizTry(int userID, QuizTry quizTry){
+		
+	}
+	
+	public List<QuizTry> getPerformanceByDate(int userID){
+		return null;
+	}
+	
+	public List<QuizTry> getPerformanceByScore(int userId){
+		return null;
+	}
+	
+	public List<QuizTry> getPerformancyByTime(int userID){
+		return null;
+	}
+	
+	public List<Integer> getAllTimeTopPerformers(int numOfUsers){
+		return null;
+	}
+	
+	public List<Integer> getLastDayTopPerformers(int numOfUsers){
+		return null;
+	}
+	
+	public List<Integer> getLastDayTopPerformers(){
+		return null;
+	}
+	
+	public List<Integer> getRecentTestTakers(int numOfUsers){
+		return null;
+	}
+	
+	// TODO Provide methods for getting summary statistics 
 }
