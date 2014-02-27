@@ -1,6 +1,7 @@
 package model;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -9,32 +10,50 @@ public class QuizTry {
 	private int userID;
 	private int quizID;
 	private Quiz quiz;
+	private User user;
 	private double elapsedTime;
 	private double startTime;
 	private ArrayList<String[]> responses;
 	private boolean inProgress;
 	private double score;
+	private Date dateTaken;
+	private boolean isPractice;
 	
-	public QuizTry(String tryID, int userID, int quizID) throws Exception{
+	public QuizTry(String tryID, int userID, int quizID, boolean mode) throws Exception{
 		this.tryID = tryID;
 		this.userID = userID;
 		this.quizID = quizID;
+		this.user = ServerConnection.getUser(userID);
 		this.quiz = ServerConnection.getQuiz(quizID);
 
 		this.startTime = System.currentTimeMillis();
 		this.elapsedTime = 0;
 		this.inProgress = true;
 		this.score = -1;
+		
+		//if there is no practice mode available, then isPractice will also be false
+		if (quiz.isPracticeMode())
+			this.isPractice = mode;
+		else{
+			this.isPractice = false;
+		}
 	}
 	
-	public Question getQuestion(int index){
-		return quiz.getQuestion(index);
+	public ArrayList<Question> getQuestions(int index){
+		return quiz.getQuestions(index);
+	}
+	
+	public double getScore(){
+		return score;
+	}
+	
+	public Date getDate(){
+		return dateTaken;
 	}
 	
 	public void saveProgress(ArrayList<String[]> responses) throws Exception{
 		elapsedTime = System.currentTimeMillis() - startTime;
 		this.responses = responses;
-		User user = ServerConnection.getUser(userID);
 		user.addTry(this);
 	}
 	
@@ -43,7 +62,21 @@ public class QuizTry {
 		this.responses = responses;
 		score = quiz.calculateScore(responses);
 		inProgress = false;
-		
+		user.addTry(this);
+		checkTryAchievements();
+		//dateTaken = new Date();
+	}
+	
+	private void checkTryAchievements(){
+		if (user.numQuizzesTaken() == 1){
+			user.addAchievement(new TestTakerNoob());
+		} else if (user.numQuizzesTaken() == 10){
+			user.addAchievement(new TestTakerNovice());
+		} else if (user.numQuizzesTaken() == 50){
+			user.addAchievement(new TestTakerRecognized());
+		} else if (user.numQuizzesTaken() == 100){
+			user.addAchievement(new TestTakerStudent());
+		}
 	}
 	
 	public boolean isInProgress(){
