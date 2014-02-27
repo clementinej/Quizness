@@ -33,7 +33,7 @@ public class ServerConnection {
 		return null;	
 	}
 	
-	public Connection getConnection(){
+	public static Connection getConnection(){
 		return con;
 	}
 	

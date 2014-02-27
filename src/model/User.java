@@ -2,9 +2,6 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
 import java.sql.*;
 
 public class User implements Serializable {
@@ -32,9 +29,10 @@ public class User implements Serializable {
 		this.achievementKeys = new ArrayList<Integer>();
 	}
 	
-	public boolean nameIsAvailable(String userName){
+	public boolean nameIsAvailable(String userName) throws SQLException{
 		Connection con = ServerConnection.getConnection();
-		PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE userName = ?");
+		PreparedStatement ps;
+		ps = con.prepareStatement("SELECT * FROM users WHERE userName = ?");
 		ps.setString(1, userName);
 		ResultSet rs = ps.executeQuery();
 		rs.beforeFirst();
@@ -44,12 +42,17 @@ public class User implements Serializable {
 		return false;
 	}
 	
-	public String getPasswordHash(String userName){
+	public String getPasswordHash(String userName) throws SQLException{
 		Connection con = ServerConnection.getConnection();
-		PreparedStatement ps = con.prepareStatement("SELECT password FROM users WHERE userName = ?");
+		PreparedStatement ps;
+		String passwordHash = null;	
+		ps = con.prepareStatement("SELECT password FROM users WHERE userName = ?");	
 		ps.setString(1, userName);
 		ResultSet rs = ps.executeQuery();
-		rs.beforeFirst();
+		//rs.beforeFirst();
+		rs.first();
+		passwordHash = rs.getString("password");
+		return passwordHash;
 	}
 	
 	public String getUserName(){
