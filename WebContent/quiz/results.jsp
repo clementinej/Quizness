@@ -9,8 +9,8 @@
       <link href="../css/hexaflip.css" rel="stylesheet" type="text/css">
       <link href="../css/results.css" rel="stylesheet" type="text/css">
    </head>
-   <%--@page import="model.*", import="java.util.ArrayList"--%>
-   <%--
+   <%@page import="model.*", import="java.util.ArrayList"%>
+   <%
       //Get the user
       User user = (User)session.getAttribute("currUser");
       //Get the quiz try by id
@@ -23,7 +23,7 @@
       if(quizTry.isInProgress()) {
       	return;
       }
-      --%>
+      %>
    <body>
       <div class="container">
          <header class="clearfix">
@@ -32,11 +32,11 @@
             <div id="cubes" class="demo"></div>
          </div>
          <form method="post" action="/SaveResults">
-            <%--
-               double score = quizTry.getScore()
+            <%
+               double score = quizTry.getScore();
                double time = quizTry.getTime();
                ArrayList<String[]> responses = quizTry.getResponses();
-               --%>
+               %>
             <!-- Potentially do a switch statement on score and give them different messages 
                depending on how well they did.  -->
             <div id="score">

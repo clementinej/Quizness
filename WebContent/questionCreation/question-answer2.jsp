@@ -12,7 +12,6 @@
          <span class="scroll"></span>
          <h3>Question</h3>
          <form method="post" action="../CreateServlet" class="form" id="form1" >
-        
             <p>Enter either a question in text or a picture in the image url field. If you leave the Image URL
                field blank, no image will be displayed.
             </p>
@@ -48,6 +47,8 @@
                   </tr>
                </tfoot>
             </table>
+            <input name="intent" type="hidden" value="add question"/>
+            <input name="question type" type="hidden" value="question-answer"/>
             <input type="submit" id="button-blue" value="Create Question"/>
          </form>
          </div>

@@ -51,25 +51,26 @@ public class CreateServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		ArrayList<Question> questionList = (ArrayList<Question>) session.getAttribute("question list");	
-		
-		if(getUserIntent(session, request) == "add question") {
+		List<Question> questionList = (ArrayList<Question>) session.getAttribute("q");	
+		session.setAttribute("q", questionList);
+	//	questionList.get(0);
+		System.out.println("In CreateServlet");
+		if(getUserIntent(session, request).equals("add question")) {
 			System.out.println("Content Received");
 			Question newQuestion = constructQuestion(session, request);
+		//	System.out.println(questionList.get(0));
 			questionList.add(newQuestion);
 			RequestDispatcher dispatch = request.getRequestDispatcher("create-quiz.jsp"); 
 			dispatch.forward(request, response); 
-		} else if(getUserIntent(session, request) == "create quiz") {
-			//int newQuizID = ServerConnection.getUnusedQuizID();
-			int temporaryID = 1;
+		} else if(getUserIntent(session, request).equals("create quiz")) {
+
 			int quizID = 0;
 			int creatorID = 0;
 			String description = "";
 			boolean isPracticeMode = false;
-			//int quizID, int creatorID, String description, ArrayList<Question> questions, boolean isPracticeMode
-			Quiz quiz = new Quiz(quizID, creatorID, description, questionList, isPracticeMode);
 			
-			//add Server --> Tony's implementation
+			Quiz quiz = null;//new Quiz(quizID, creatorID, description, questionList, isPracticeMode);
+			
 			try {
 				ServerConnection.addQuiz(quizID, quiz);
 			} catch (Exception e) {
@@ -87,6 +88,7 @@ public class CreateServlet extends HttpServlet {
 	private String getUserIntent(HttpSession session, HttpServletRequest request) {
 		String userIntent = request.getParameter("intent");
 		session.setAttribute("intent", userIntent);
+		System.out.println(userIntent);
 		return userIntent;
 	}
 	
@@ -94,15 +96,24 @@ public class CreateServlet extends HttpServlet {
 	 * 
 	 */
 	private Question constructQuestion(HttpSession session, HttpServletRequest request) {
-		Map<String, Integer> questionTypeMap = (Map<String, Integer>) session.getAttribute("question-type map");
+		HashMap<String, Integer> questionTypeMap = (HashMap<String, Integer>) session.getAttribute("question-type map");
+		session.setAttribute("question-type map", questionTypeMap);
 		String questionTypeString = request.getParameter("question type");
-		int questionType = questionTypeMap.get(questionTypeString);
+		System.out.println("questionTypeString = " + questionTypeString);
+		int size = questionTypeMap.size();
+		System.out.println("questionTypeMap.size() = " + size);
+		int questionType = 1;
+		if(questionTypeMap.containsKey(questionTypeString)) {
+			System.out.println("Contains answer");
+			questionType = questionTypeMap.get("question-answer");
+			System.out.println(questionType);
+		} else System.out.println("Does not contain key");
 
-		String question = request.getParameter("question");
+		String question = request.getParameter("question_text");
 		
 		//Set<String> is all synonyms for one answer (e.g. {Los Angeles, LA, L.A})
 		//ArrayList holds multiple answers (e.g. 5 largest cities -> {LA, NY, Boston})
-		ArrayList<Set<String>> allAnswers = null;
+		ArrayList<Set<String>> allAnswers = new ArrayList<Set<String>>();
 		
 		addAnswerToAnswersList(request, allAnswers);
 		
@@ -124,6 +135,7 @@ public class CreateServlet extends HttpServlet {
 				Set<String> synonymsOfAnswerSet = new HashSet<String>();
 				String[] synonyms = answersMap.get(answerName);
 				for(int i = 0; i < synonyms.length; i++) {
+					System.out.println("Solution = " + synonyms[i]);
 					synonymsOfAnswerSet.add(synonyms[i]);
 				}
 				allAnswers.add(synonymsOfAnswerSet);
@@ -136,7 +148,12 @@ public class CreateServlet extends HttpServlet {
 									double pointValue, HttpServletRequest request) {
 		switch(questionType) {//correspond to the question subclass .java filenames
 		case QUESTION_RESPONSE: 
-			return new QuestionResponse(question, allAnswers, pointValue);
+			Question newQuestion;
+			System.out.println("Making a question response");
+			newQuestion = new QuestionResponse(question, allAnswers, pointValue);
+			System.out.println("Question: " + newQuestion.getQuestion());
+			System.out.println("Solution: " + newQuestion.getAnswer());			
+			return newQuestion;
 		case FILL_IN_THE_BLANK:
 			return new FillInTheBlank(question, allAnswers, pointValue);
 		case MULTIPLE_CHOICE:

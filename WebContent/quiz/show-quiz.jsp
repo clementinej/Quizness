@@ -18,7 +18,7 @@
       </div>
       <div class="sep"></div>
       <div class="inputs">
-      <%
+      <%--
  	String quizIdAsString = request.getParameter("quiz_id");
 	int quizID = Integer.parseInt(quizIdAsString);
  	Quiz currQuiz = Quiz.getQuiz(quizID);
@@ -31,7 +31,7 @@
  	QuestionType next_question_type = q.getType();
  	boolean multiPage = currQuiz.getDisplay();
  	if(multiPage == true) {
- 		%>
+ 		--%>
  		<select name="question-type" id="question-type">
                      <option value="0" selected></option>
                      <option value="question-answer">Question-Answer</option>

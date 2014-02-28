@@ -51,6 +51,7 @@
                   <select name="question-type" id="question-type">
                      <option value="0" selected></option>
                      <option value="question-answer">Question-Answer</option>
+                     <option value="question-answer2">Question-Answer</option>
                      <option value="picture-response">Picture-Response</option>
                      <option value="multiple-answer">Multiple Answer</option>
                      <option value="fill-in-blanks">Fill-in-the-Blank</option>
@@ -84,6 +85,8 @@
    		window.location = "/Quizness/quiz/questionCreation/question-answer.jsp";
    	} else if (value == "multiple-choice" || value == "multiple-choice-multiple-answer") {
    		window.location = "/Quizness/quiz/questionCreation/multiple-choice.jsp";
+   	} else if (value == "question-answer2") {
+   		window.location = "/Quizness/quiz/questionCreation/question-answer2.jsp";
    	} else {
    		window.location = "/Quizness/quiz/questionCreation/" + value + ".jsp";
    	}
