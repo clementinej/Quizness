@@ -128,14 +128,15 @@ public class CreateServlet extends HttpServlet {
 	private void addAnswerToAnswersList(HttpServletRequest request, ArrayList<Set<String>> allAnswers) {
 		Map<String, String[]> answersMap = request.getParameterMap();
 		java.util.Iterator<String> iter = answersMap.keySet().iterator();
-		while(iter.hasNext()) {
+		int solNum = 0;
+		while(iter.hasNext()) {	
 			String answerName = iter.next();
 			if(answerName.indexOf("correct_answer_key") == -1) {}//ignore
 			else {
 				Set<String> synonymsOfAnswerSet = new HashSet<String>();
 				String[] synonyms = answersMap.get(answerName);
 				for(int i = 0; i < synonyms.length; i++) {
-					System.out.println("Solution = " + synonyms[i]);
+					System.out.println("Solution: " + solNum + " = " + synonyms[i]);
 					synonymsOfAnswerSet.add(synonyms[i]);
 				}
 				allAnswers.add(synonymsOfAnswerSet);

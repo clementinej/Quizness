@@ -50,6 +50,8 @@
                   </tr>
                </tfoot>
             </table>
+            <input name="intent" type="hidden" value="add question"/>
+            <input name="question type" type="hidden" value="question-answer"/>
             <input type="submit" id="button-blue" value="Create Question"/>
          </form>
          </div>
