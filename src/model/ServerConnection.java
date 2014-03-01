@@ -118,8 +118,6 @@ public class ServerConnection {
 		return getGeneratedKey(ps);
 	}
 	
-
-	
 	// Return a quiz from the database given the quizID
 	public static Quiz getQuiz(int quizID) throws Exception {
 		PreparedStatement ps = con.prepareStatement("SELECT * FROM quizzes WHERE quizID = ?");
