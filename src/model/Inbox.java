@@ -4,7 +4,7 @@ public class Inbox {
 
 	
 	public Message getMessage(int messageID){
-		return null; 
+		return new Message(); 
 	}
 	
 	public int numFriendReqs(int userID){
