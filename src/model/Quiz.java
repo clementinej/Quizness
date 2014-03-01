@@ -1,7 +1,9 @@
 package model;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -181,47 +183,80 @@ public class Quiz implements Serializable{
 	}
 	
 	// Return the top x number of quizzes
-	public void getTopQuizzes(int num){
-		
+	public ArrayList<Integer> getTopQuizzes(int num){
+		Connection con = ServerConnection.getConnection();
+		String query = "SELECT quizID FROM quizzes ORDER BY numTimesTaken DESC LIMIT" + num;
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.executeQuery();
+		return resultSetToArray(ps.getResultSet()); 
 	}
 	
-	public void getRecentlyPlayedQuizzes(){
-		
+	// Return x number of recently played quizzes
+	public ArrayList<Integer> getRecentlyPlayedQuizzes(int num){
+		Connection con = ServerConnection.getConnection();
+		String query = "SELECT quizID FROM quizzes ORDER BY dateLastPlayed DESC LIMIT" + num;
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.executeUpdate();
+		return resultSetToArray(ps.getResultSet()); 
 	}
 	
-	public void getRecentlyCreatedQuizzes(){
-		
+	// Return x number of recently created quizzes
+	public ArrayList<Integer> getRecentlyCreatedQuizzes(int num){
+		Connection con = ServerConnection.getConnection();
+		String query = "SELECT quizID FROM quizzes ORDER BY dateCreated DESC LIMIT" + num;
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.executeUpdate();
+		return resultSetToArray(ps.getResultSet()); 
 	}
 	
+	// TODO: Need more work, not compete
 	public double getHighScore(){
-		return 0;
+		Connection con = ServerConnection.getConnection();
+		String query = "SELECT quizID FROM quizzes ORDER BY dateCreated DESC LIMIT" + num;
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.executeUpdate();
+		return resultSetToArray(ps.getResultSet()); 
 	}
 	
-	public void addQuizTry(int userID, QuizTry quizTry){
-		
+	// Return x number of performances on this specific quiz, order by date 
+	public ArrayList<Integer> getPerformanceByDate(int userID, int num){
+		Connection con = ServerConnection.getConnection();
+		String query = "SELECT quizTryID FROM quizTries WHERE userID = ?"
+				+ "AND WHERE quizID = " + this.quizID + " ORDER BY dateCreated DESC LIMIT" + num;
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.executeUpdate();
+		return resultSetToArray(ps.getResultSet()); 
 	}
 	
-	public List<QuizTry> getPerformanceByDate(int userID){
+	// Return x number of performances on this specific quiz, order by score 
+	public ArrayList<Integer> getPerformanceByScore(int userId, int num){
+		Connection con = ServerConnection.getConnection();
+		String query = "SELECT quizTryID FROM quizTries WHERE userID = ?"
+				+ "AND WHERE quizID = " + this.quizID + " ORDER BY score DESC LIMIT" + num;
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.executeUpdate();
+		return resultSetToArray(ps.getResultSet()); 
+	}
+	
+	// Return x number of performances on this specific quiz, order by time spent 
+	public ArrayList<Integer> getPerformancyByTime(int userID, int num){
+		Connection con = ServerConnection.getConnection();
+		String query = "SELECT quizTryID FROM quizTries WHERE userID = ?"
+				+ "AND WHERE quizID = " + this.quizID + " ORDER BY timeSpent DESC LIMIT" + num;
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.executeUpdate();
+		return resultSetToArray(ps.getResultSet()); 
+	}
+	
+	public ArrayList<Integer> getAllTimeTopPerformers(int num){
 		return null;
 	}
 	
-	public List<QuizTry> getPerformanceByScore(int userId){
+	public ArrayList<Integer> getLastDayTopPerformers(int num){
 		return null;
 	}
 	
-	public List<QuizTry> getPerformancyByTime(int userID){
-		return null;
-	}
-	
-	public List<Integer> getAllTimeTopPerformers(int numOfUsers){
-		return null;
-	}
-	
-	public List<Integer> getLastDayTopPerformers(int numOfUsers){
-		return null;
-	}
-	
-	public List<Integer> getLastDayTopPerformers(){
+	public ArrayList<Integer> getLastDayTopPerformers(){
 		return null;
 	}
 	
@@ -238,4 +273,13 @@ public class Quiz implements Serializable{
 	
 	public void getStatistics(){
 	// TODO Provide methods for getting summary statistics 
+		
+	// Return a set of IDs from a ResultSet
+	public ArrayList<Integer> resultSetToArray(ResultSet rs){
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		while(rs.next()){
+			result.add(rs.getInt(1)); 
+		}
+		return result; 
+	}
 }
