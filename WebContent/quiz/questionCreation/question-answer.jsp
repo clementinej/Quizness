@@ -5,6 +5,9 @@
       <link rel="stylesheet" type="text/css" href="../../css/style_login.css" />
    </head>
    <body>
+   <%
+   int questionType = request.getParameter("question-type");
+   %>
       <div class="container">
          <form method="post" action="../../CreateServlet" class="form" id="form1" >
             <div class="header">
@@ -39,6 +42,8 @@
                   </tr>
                </tfoot>
             </table>
+            <input name="intent" type="hidden" value="add question"/>
+            <input name="question type" type="hidden" value="<%=questionType%>"/>
             <input id="submit" type="submit" value="Create Question"/>
          </form>
       </div>

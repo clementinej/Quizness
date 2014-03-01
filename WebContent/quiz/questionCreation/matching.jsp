@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+<input name="intent" type="hidden" value="add question"/>
+<input name="question type" type="hidden" value="7"/>
 
 </body>
 </html>

@@ -77,18 +77,16 @@
 <script>
    var button = document.getElementById("add-question");
    button.addEventListener("click", function() {
-   	var type = document.getElementById("question-type");
-   	var value = type.options[type.selectedIndex].value;
-   	if(value == 0) {
-   		alert("Please choose a question type");
-   	} else if(value =="question-answer" || value == "picture-response" || value == "multiple-answer"){
-   		window.location = "/Quizness/quiz/questionCreation/question-answer.jsp";
-   	} else if (value == "multiple-choice" || value == "multiple-choice-multiple-answer") {
-   		window.location = "/Quizness/quiz/questionCreation/multiple-choice.jsp";
-   	} else if (value == "question-answer2") {
-   		window.location = "/Quizness/quiz/questionCreation/question-answer2.jsp";
-   	} else {
-   		window.location = "/Quizness/quiz/questionCreation/" + value + ".jsp";
-   	}
-   	});
+	   	var type = document.getElementById("question-type");
+	   	var value = type.options[type.selectedIndex].value;
+	   	if(value == 0) {
+	   		alert("Please choose a question type");
+	   	} else if(value =="question-answer" || value == "picture-response" || value == "multiple-answer"){
+	   		window.location = "/Quizness/quiz/questionCreation/question-answer.jsp" +"?question-type=" + value;
+	   	} else if (value == "multiple-choice" || value == "multiple-choice-multiple-answer") {
+	   		window.location = "/Quizness/quiz/questionCreation/multiple-choice.jsp" +"?question-type=" + value;
+	   	} else {
+	   		window.location = "/Quizness/quiz/questionCreation/" + value + ".jsp";
+	   	}
+	   	});
 </script>
