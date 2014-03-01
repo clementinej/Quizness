@@ -7,7 +7,7 @@
    <head>
       <meta charset="utf-8" />
       <title>Profile Page</title>
-      <link rel="stylesheet" type="text/css" href="global.css" />
+      <link rel="stylesheet" type="text/css" href="../css/global.css" />
    </head>
    <body>
    <%
@@ -75,7 +75,7 @@
                   <p>Great Job!</p>
                   <div class="badgeCount">
                   <%for(String a: achievements) { %>
-                     <a href="#"><img src="" /><%=a%></a>
+                     <p><%=a%></p>
                      <%} %>
 
                   </div>

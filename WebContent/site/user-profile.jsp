@@ -4,15 +4,21 @@
 	<meta charset="utf-8" />
 	<title>Profile Page</title>
 	<link rel="stylesheet" type="text/css" href="global.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style_login.css" />
 </head>
 
+<style>
+#submit {
+float:right;
+
+}
+</style>
+
 <body>	
-	<header>
-	</header>
 	
 	<nav>
 		<ul id="n" class="clearfix">
-			<li class="sel"><a href="#">Profile</a></li>
+			<li><a href="#">Profile</a></li>
 		</ul>
 	</nav>
 	
@@ -55,8 +61,9 @@
 				</div>
 			</div>
 			
+			
 			<div class="gcontent">
-				<div class="head"><h1>Friends List</h1></div>
+				<div class="head"><h1>Friends List</h1><div class="inputs"><input id="submit" type="submit" value="Let's Be Friends!"></div></div>
 				<div class="boxy">
 					<p>Your friends - 106 total</p>
 					
@@ -75,6 +82,20 @@
 					</div>
 					
 					<span><a href="#">See all...</a></span>
+				</div>
+			</div>
+		</section>
+		
+		<!-- Show nothing if no friend requests.
+		If friend requests, display them.
+		If not your profile, display friend request button. -->
+
+		<section id="left">
+			<div class="gcontent">
+				<div class="head"><h1>Friend Requests</h1></div>
+				<div class="boxy">
+					<p>People who wanna be your friends</p>
+					
 				</div>
 			</div>
 		</section>
