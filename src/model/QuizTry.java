@@ -1,11 +1,12 @@
 package model;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class QuizTry {
+public class QuizTry implements Serializable {
 	private String tryID;
 	private int userID;
 	private int quizID;

@@ -33,7 +33,7 @@ public class User implements Serializable {
 	public boolean nameIsAvailable(String userName) throws SQLException{
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps;
-		ps = con.prepareStatement("SELECT * FROM users WHERE userName = ?");
+		ps = con.prepareStatement("SELECT * FROM users WHERE username = ?");
 		ps.setString(1, userName);
 		ResultSet rs = ps.executeQuery();
 		rs.beforeFirst();
@@ -47,7 +47,7 @@ public class User implements Serializable {
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps;
 		String passwordHash = null;	
-		ps = con.prepareStatement("SELECT password FROM users WHERE userName = ?");	
+		ps = con.prepareStatement("SELECT password FROM users WHERE username = ?");	
 		ps.setString(1, userName);
 		ResultSet rs = ps.executeQuery();
 		//rs.beforeFirst();
@@ -62,6 +62,10 @@ public class User implements Serializable {
 	
 	public String getPassword(){
 		return pw;
+	}
+	
+	public String getEmail(){
+		return email;
 	}
 	
 	public void addAchievement(Achievement achievement){

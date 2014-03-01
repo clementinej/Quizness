@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ public class Quiz implements Serializable{
 	private int createTime;
 	private boolean isPracticeMode;
 	private String description; 
+	private String title; 
 	private ArrayList<Question> questions; 
 	private double maxScore;
 	private ArrayList<User> topScorers;
@@ -106,6 +108,10 @@ public class Quiz implements Serializable{
 		return score;
 	}
 	
+	public int getNumOfTimesPlayed(){
+		return numOfTimesPlayed; 
+	}
+	
 	public void getTopQuizzes(){
 		
 	}
@@ -154,5 +160,13 @@ public class Quiz implements Serializable{
 		return null;
 	}
 	
+	// Remove a quiz from the database
+	public static void removeQuiz(int quizID) throws Exception{
+		PreparedStatement ps = con.prepareStatement("DELETE FROM quizzes WHERE quizID = ?");
+		ps.setInt(1, quizID);
+		ps.executeQuery();
+	}
+	
+	public void getStatistics(){
 	// TODO Provide methods for getting summary statistics 
 }
