@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -214,15 +215,6 @@ public class Quiz implements Serializable{
 		return resultSetToArray(ps.getResultSet()); 
 	}
 	
-	// TODO: Need more work, not compete
-	public double getHighScore(){
-		Connection con = ServerConnection.getConnection();
-		String query = "SELECT quizID FROM quizzes ORDER BY dateCreated DESC LIMIT" + num;
-		PreparedStatement ps = con.prepareStatement(query);
-		ps.executeUpdate();
-		return resultSetToArray(ps.getResultSet()); 
-	}
-	
 	// Return x number of performances on this specific quiz, order by date 
 	public ArrayList<Integer> getPerformanceByDate(int userID, int num){
 		Connection con = ServerConnection.getConnection();
@@ -253,16 +245,23 @@ public class Quiz implements Serializable{
 		return resultSetToArray(ps.getResultSet()); 
 	}
 	
-	public ArrayList<Integer> getAllTimeTopPerformers(int num){
-		return null;
+	public ArrayList<Integer> getTopPerformers(int num){
+		Connection con = ServerConnection.getConnection();
+		String query = "SELECT quizTryiD FROM quizTries WHERE quizID = " + this.quizID 
+				+ " ORDER BY score DESC LIMIT" + num;
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.executeUpdate();
+		return resultSetToArray(ps.getResultSet()); 
 	}
 	
-	public ArrayList<Integer> getLastDayTopPerformers(int num){
-		return null;
-	}
-	
-	public ArrayList<Integer> getLastDayTopPerformers(){
-		return null;
+	public ArrayList<Integer> getTopPerformers(int num, int numOfDays){
+		Connection con = ServerConnection.getConnection();
+		String query = "SELECT quizTryiD FROM quizTries WHERE quizID = " + this.quizID
+				+ " AND WHERE dateCreated >= NOW() - INTERVAL " + numOfDays + " DAY "
+				+ " ORDER BY score DESC LIMIT" + num;
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.executeUpdate();
+		return resultSetToArray(ps.getResultSet()); 
 	}
 	
 	public List<Integer> getRecentTestTakers(int numOfUsers){
@@ -270,7 +269,8 @@ public class Quiz implements Serializable{
 	}
 	
 	// Remove a quiz from the database
-	public static void removeQuiz(int quizID) throws Exception{
+	public static void removeQuiz(int quizID) throws Exception {
+		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps = con.prepareStatement("DELETE FROM quizzes WHERE quizID = ?");
 		ps.setInt(1, quizID);
 		ps.executeQuery();
@@ -281,7 +281,7 @@ public class Quiz implements Serializable{
 	}
 		
 	// Return a set of IDs from a ResultSet
-	public ArrayList<Integer> resultSetToArray(ResultSet rs){
+	public ArrayList<Integer> resultSetToArray(ResultSet rs) throws Exception{
 		ArrayList<Integer> result = new ArrayList<Integer>();
 		while(rs.next()){
 			result.add(rs.getInt(1)); 

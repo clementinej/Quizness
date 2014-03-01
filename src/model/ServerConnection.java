@@ -74,7 +74,7 @@ public class ServerConnection {
 	// Add an user to the database
 	// Return the ID if success
 	// Otherwise return -1;
-	public static int addUser(int userID, User user) throws Exception {
+	public static int addUser(User user) throws Exception {
 		String query = "INSERT INTO users (username, password, user, email) VALUES(?,?,?,?)";
 		PreparedStatement ps = con.prepareStatement(query);
 		ps.setString(1, user.getUserName());
@@ -117,8 +117,6 @@ public class ServerConnection {
 		
 		return getGeneratedKey(ps);
 	}
-	
-
 	
 	// Return a quiz from the database given the quizID
 	public static Quiz getQuiz(int quizID) throws Exception {
