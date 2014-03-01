@@ -30,7 +30,7 @@ public class User implements Serializable {
 		numQuizzesTaken = 0;
 	}
 	
-	public boolean nameIsAvailable(String userName) throws SQLException{
+	public static boolean nameIsAvailable(String userName) throws SQLException{
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps;
 		ps = con.prepareStatement("SELECT * FROM users WHERE username = ?");
@@ -47,7 +47,7 @@ public class User implements Serializable {
 		return friendsList;
 	}
 	
-	public String getPasswordHash(String userName) throws SQLException{
+	public static String getPasswordHash(String userName) throws SQLException{
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps;
 		String passwordHash = null;	

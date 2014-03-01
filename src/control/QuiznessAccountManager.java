@@ -10,14 +10,14 @@ import model.*;
 
 public class QuiznessAccountManager {
 
-	Map<String, String> accounts;//should not need this later, should read from db
+	//Map<String, String> accounts;//should not need this later, should read from db
 	private String salt;
 	
 	/*
 	 *  Creates Patrick and Molly as admins
 	 */
-	public QuiznessAccountManager() {//initialize with two accounts
-		accounts = new HashMap<String, String>();
+	public QuiznessAccountManager() throws Exception {//initialize with two accounts
+	//	accounts = new HashMap<String, String>();
 		salt = "@#$%@#FERYS^%#$YSEAH#$E73452WE@#%3#$";
 		createNewAccount("Patrick", "1234", true);//add emails
 		createNewAccount("Molly", "FloPup", true);
@@ -28,7 +28,7 @@ public class QuiznessAccountManager {
 	 *  Returns false if the username is already taken.
 	 *  Adds a grain of salt to the password for extra security before hashing.
 	 */
-	public boolean createNewAccount(String userName, String pw, boolean isAdmin) throws SQLException {
+	public boolean createNewAccount(String userName, String pw, boolean isAdmin) throws Exception {
 		boolean accountFree = false;
 		
 		if(User.nameIsAvailable(userName)) { //read from database
@@ -39,7 +39,7 @@ public class QuiznessAccountManager {
 			User newUser = new User(isAdmin, userName, hashedPW, email);
 			model.ServerConnection.addUser(newUser);
 			
-			accounts.put(userName, hashedPW);
+		//	accounts.put(userName, hashedPW);
 			accountFree = true;
 		}		
 		return accountFree;
@@ -48,16 +48,17 @@ public class QuiznessAccountManager {
 	/*
 	 * will return true if the userName and pw and hash function is in stored within the account manager.
 	 */
-	public boolean validLogin(String userName, String pw) {
+	public boolean validLogin(String userName, String pw) throws SQLException {
 		boolean validLogin = false;
 		
-		//if(User.nameIsAvailable(userName)) { //read from database
-		if(accounts.containsKey(userName)) {//if username is stored in database
+		if(User.nameIsAvailable(userName)) { //read from database
+		//if(accounts.containsKey(userName)) {//if username is stored in database
+			System.out.println("read from db");
 			String unencryptedPlusSalt = pw + salt;
 			String hashedPW = generateHash(unencryptedPlusSalt);
 			
-			//String stored_pw = User.getPasswordHash(userName);
-			String stored_pw = accounts.get(userName);
+			String stored_pw = User.getPasswordHash(userName);
+			//String stored_pw = accounts.get(userName);
 			
 			if(stored_pw.equals(hashedPW))//if password is correct
 				validLogin = true;
@@ -107,7 +108,7 @@ public class QuiznessAccountManager {
 	/*
 	 * For testing purposes
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		QuiznessAccountManager manager = new QuiznessAccountManager();
 		System.out.println("Start");
 		if(manager.createNewAccount("Lloyd", "ILikeCats29", true));
