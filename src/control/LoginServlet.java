@@ -3,6 +3,7 @@ package control;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
@@ -44,9 +45,10 @@ ServletContext context = getServletContext();
 		
 		PrintWriter out = response.getWriter();
 		
-		if(manager.validLogin(userName, pw)) {//go to "user welcome" page
-			RequestDispatcher dispatch = request.getRequestDispatcher("home.html"); 
-			dispatch.forward(request, response); 
+		try {
+			if(manager.validLogin(userName, pw)) {//go to "user welcome" page
+				RequestDispatcher dispatch = request.getRequestDispatcher("home.html"); 
+				dispatch.forward(request, response); 
 //			out.println("<!DOCTYPE html>");
 //			out.println("<html>");
 //			out.println("<head>");
@@ -56,23 +58,27 @@ ServletContext context = getServletContext();
 //			out.println("<h1>Welcome " + userName + "</h1>");
 //			out.println("</body>");
 //			out.println("</html>");
-			
-		} else { //go to "Please Try Again" page
-			out.println("<!DOCTYPE html>");
-			out.println("<html>");
-			out.println("<head>");
-			out.println("<title>Information Incorrect</title>");
-			out.println("</head>");
-			out.println("<body>");
-			out.println("<h1>Please Try Again</h1>");
-			out.println("<p>Either your user name or password is incorrect. Please try again.</p>");
-			out.println("<form action=\"LoginServlet\" method=\"post\">");
-			out.println("<p>User Name: <input type=\"text\" name=\"user name\" /></p>");
-			out.println("<p>Password: <input type=\"password\" name=\"password\"/><input type=\"submit\" value=\"Login\"/ ></p>");
-			out.println("</form>");
-			out.println("<p><a href=\"createnewaccount.html\">Create New Account</a></p>");
-			out.println("</body>");
-			out.println("</html>");	
+				
+			} else { //go to "Please Try Again" page
+				out.println("<!DOCTYPE html>");
+				out.println("<html>");
+				out.println("<head>");
+				out.println("<title>Information Incorrect</title>");
+				out.println("</head>");
+				out.println("<body>");
+				out.println("<h1>Please Try Again</h1>");
+				out.println("<p>Either your user name or password is incorrect. Please try again.</p>");
+				out.println("<form action=\"LoginServlet\" method=\"post\">");
+				out.println("<p>User Name: <input type=\"text\" name=\"user name\" /></p>");
+				out.println("<p>Password: <input type=\"password\" name=\"password\"/><input type=\"submit\" value=\"Login\"/ ></p>");
+				out.println("</form>");
+				out.println("<p><a href=\"createnewaccount.html\">Create New Account</a></p>");
+				out.println("</body>");
+				out.println("</html>");	
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}	
 	}
 }
