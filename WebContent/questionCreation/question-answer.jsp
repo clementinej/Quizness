@@ -2,51 +2,40 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
    <head>
-     <link rel="stylesheet" type="text/css" href="../css/normalize.css" />
-      <link rel="stylesheet" type="text/css" href="../css/component.css" />
-      <link rel="stylesheet" type="text/css" href="../css/create-question.css" />
+      <link rel="stylesheet" type="text/css" href="../../css/style_login.css" />
    </head>
    <body>
- 	<div id="form-main">
- 	 <div id="form-div">
-         <span class="scroll"></span>
-         <h3>Question</h3>
-         <form method="post" action="../CreateServlet" class="form" id="form1" >
+      <div class="container">
+         <form method="post" action="../../CreateServlet" class="form" id="form1" >
+            <div class="header">
+               <h3>Create a Question</h3>
+            </div>
             <p>Enter either a question in text or a picture in the image url field. If you leave the Image URL
                field blank, no image will be displayed.
             </p>
-            <br>
-            <table>
-               <tr>
-                  <th>Question Text</th>
-                  <td>
-                     <textarea name="question_text" style="width:500px;height:80px;"></textarea>
-                  </td>
-               </tr>
-               <tr>
-                  <th>Image URL</th>
-                  <td><input name="question_image" type="text" value="" style="width:500px"></td>
-               </tr>
-            </table>
+            <div class="inputs">
+               <div><br>
+                  <input type="name" name="question_text" style="width:500px;height:50px" placeholder="Question Text"></input>
+               </div>
+               <div id="img_url" class="terms">
+                  <input type="name" name="question_image" placeholder="Image url" autofocus/>
+               </div>
             <h3>Solutions</h3>
-            <table id="contents" class="table1">
-               <tr>
-                  <th width="500">Solution Text</th>
-                  <th>Score</th>
-               </tr></br>
+            <table id="contents" class="inputs">
+               <th width="500">Solution Text</th>
+               <th>Score</th>
                <tbody>
                   <tr>
-                     <td><input type="text" name="correct_answer_key" style="width:100%" value=""></td>
-                     <td><input type="text" name="correct_answer_score" style="width:100%" value="" /></td>
+                     <td><input type="name" name="correct_answer_0" style="width:100%" placeholder="Solution"></td>
+                     <td><input type="name" name="correct_answer_score" style="width:320%" /></td>
                   </tr>
                </tbody>
-               
                <tfoot>
                   <tr>
-                     <td align="center" colspan="2"><a href="#" id="new_option">Add Another Solution</a></td>
+                     <td align="center" class="terms"><a href="#" id="new_option">Add Another Solution</a></td>
                   </tr>
-                   <tr>
-                     <td align="center" colspan="2"><a href="#" id="new_synonym">Add A Synonym</a></td>
+                  <tr>
+                     <td align="center" class="terms"><a href="#" id="new_synonym">Add A Synonym</a></td>
                   </tr>
                </tfoot>
             </table>
@@ -54,29 +43,26 @@
             <input name="question type" type="hidden" value="question-answer"/>
             <input type="submit" id="button-blue" value="Create Question"/>
          </form>
-         </div>
-         </div>
-         </table>
       </div>
+       </div>
    </body>
    <script type="text/javascript">
       var button = document.getElementById("new_option");
+      var solutionNumber = 0;
       button.addEventListener("click", function() {
+    	  solutionNumber++;
           var body = document.getElementById("contents");
           body.insertAdjacentHTML('beforeend', '<tr>' +
-                  '<td><input type="text" name="correct_answer_key" style="width:100%"></td>' +
-                  '<td><input type="text" name="correct_answer_score" value="0" style="width:100%" /></td>' +
+                  '<td><input type="name" name="correct_answer_' + solutionNumber + '" style="width:100%" placeholder="Solution"></td>' +
+                  '<td><input type="name" name="correct_answer_score_' + solutionNumber + '" value="0" style="width:320%" /></td>' +
               '</tr>');
-          body.appendChild(newChild);
           });
       var syn_button = document.getElementById("new_synonym");
       syn_button.addEventListener("click", function() {
       	var body = document.getElementById("contents");
       	body.insertAdjacentHTML('beforeend',	'<tr>' +
-      			'<td><input type="text" name="correct_syn_key" style="width:100%"></td>' +
-      			'<td><input type="text" name="correct_syn_score" value="1" style="width:100%" /></td>' +
+      			'<td><input type="name" name="correct_syn_' + solutionNumber + '" style="width:100%" placeholder="Synonym"></td>' +
       			'</tr>');
-      	body.appendChild(newChild);
       	});
       
    </script>
