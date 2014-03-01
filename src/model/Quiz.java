@@ -12,46 +12,55 @@ public class Quiz implements Serializable{
 	// Basic quiz information
 	private int quizID;
 	private int creatorID;
-	private int createTime;
-	private boolean isPracticeMode;
+	//private int createTime;
+	private boolean hasPracticeMode;
+	private boolean hasRandomMode; 
+	private boolean hasTimedMode; 
+	
+	
 	private String description; 
 	private String title; 
+	
 	private ArrayList<Question> questions; 
+	
 	private double maxScore;
-	private ArrayList<User> topScorers;
+	
+	//private ArrayList<User> topScorers;
 
 	
 	// Frequently updated informations
-	private String lastPlayTimeStamp;
+	private String dateLastPlayed;
 	private int numOfTimesPlayed;
 
-	
-	// Provide basic performance information
-	private Set<User> sortedByTime;
-	private Set<User> sortedByScore;
-	private Map<Integer, List<QuizTry>> pastPerformance;
+
 	
 	//NOTE: CONSTRUCTOR SHOULD NOT STORE QUIZ ID.
-	public Quiz(int quizID, int creatorID, String description, ArrayList<Question> questions, boolean isPracticeMode){
+	public Quiz(int quizID, int creatorID, int maxScore, String description, String title, ArrayList<Question> questions, 
+			boolean hasPracticeMode, boolean hasRandomMode, boolean hasTimedMode){
 		this.questions = questions;
 		this.creatorID = creatorID; 
-		this.isPracticeMode = isPracticeMode;
-		this.maxScore = 0;
-		this.numOfTimesPlayed = 0;
-		this.topScorers = new ArrayList<User>();
-		this.description = description; 
+		this.maxScore = maxScore;
 		
-		// TODO store in the database the quiz creation time
-	}
-	
-	// Return the ID of the quiz
-	public int getQuizID(){
-		return quizID;
+		this.hasPracticeMode = hasPracticeMode;
+		this.hasRandomMode = hasRandomMode;
+		this.hasTimedMode = hasTimedMode; 
+		
+		this.numOfTimesPlayed = 0;
+		
+		//this.topScorers = new ArrayList<User>();
+		this.description = description; 
+		this.title = title; 
+
 	}
 	
 	// Return a question specified by the index
 	public Question getQuestion(int index){
 		return questions.get(index);
+	}
+	
+	// Return the number of questions
+	public int getNumQuestions(){
+		return questions.size(); 
 	}
 	
 	// Add question to the quiz
@@ -75,26 +84,89 @@ public class Quiz implements Serializable{
 		}
 	}
 	
+	// Return the ID of the quiz
+	public int getQuizID(){
+		return quizID;
+	}
+	
+	// Return the ID of the creator
+	public int getCreatorID(){
+		return creatorID;
+	}
+	
+	// Return the maximum score achievable on this quiz
+	public double getMaxScore(){
+		return maxScore; 
+	}
+	
+	// Returns true if practice mode is available
+	public boolean hasPracticeMode(){
+		return hasPracticeMode;
+	}
+	
+	// Returns true if random mode is available
+	public boolean hasRandomMode(){
+		return hasRandomMode;
+	}
+	
+	// Returns true if timed mode is available
+	public boolean hasTimedMode(){
+		return hasTimedMode;
+	}
+	
 	// Return the description of the quiz
 	public String getDescription(){
 		return description;
 	}
 	
-	// Set the description of the quiz
-	public void setDescription(String description){
-		this.description = description; 
+	// Return the title of the quiz
+	public String getTitle(){
+		return title;
+	}
+	
+	// Return the number of times this quiz was played 
+	public int getNumOfTimesPlayed(){
+		return numOfTimesPlayed; 
+	}
+	
+	// Set the maximum score achievable on this quiz
+	public void setMaxScore(int maxScore){
+		this.maxScore = maxScore; 
 	}
 	
 	// Set if the practice mode is available
-	public void setPracticeMode(int userID, boolean isPracticeMode){
-		if(userID == creatorID){
-			this.isPracticeMode = isPracticeMode;
+	public void setPracticeMode(int userID, boolean hasPracticeMode){
+		if(userID == creatorID){	
+			this.hasPracticeMode = hasPracticeMode;
 		}
 	}
 	
-	// Returns true if practice mode is turned on
-	public boolean isPracticeMode(){
-		return isPracticeMode();
+	// Set if the timed mode is available	
+	public void setTimedMode(int userID, boolean hasTimedMode){
+		if(userID == creatorID){	
+			this.hasTimedMode = hasTimedMode;
+		}
+	}
+	
+	// Set if the random mode is available
+	public void setRandom(int userID, boolean hasRandomMode){
+		if(userID == creatorID){
+			this.hasRandomMode = hasRandomMode;
+		}
+	}
+	
+	// Set the description of the quiz
+	public void setDescription(int userID, String description){
+		if(userID == creatorID){
+			this.description = description;
+		}
+	}
+	
+	// Set the title of the quiz
+	public void setTitle(int userID, String title){
+		if(userID == creatorID){ 
+			this.title = title;
+		}	
 	}
 	
 	// Return the total score for this question
@@ -108,11 +180,8 @@ public class Quiz implements Serializable{
 		return score;
 	}
 	
-	public int getNumOfTimesPlayed(){
-		return numOfTimesPlayed; 
-	}
-	
-	public void getTopQuizzes(){
+	// Return the top x number of quizzes
+	public void getTopQuizzes(int num){
 		
 	}
 	
