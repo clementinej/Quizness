@@ -43,6 +43,10 @@ public class User implements Serializable {
 		return false;
 	}
 	
+	public ArrayList<User> getFriends() {
+		return friendsList;
+	}
+	
 	public String getPasswordHash(String userName) throws SQLException{
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps;
@@ -80,7 +84,7 @@ public class User implements Serializable {
 		this.userID = userID;
 	}
 	
-	public User getUser(int userID) throws Exception{
+	public static User getUser(int userID) throws Exception{
 		return ServerConnection.getUser(userID);
 	}
 	

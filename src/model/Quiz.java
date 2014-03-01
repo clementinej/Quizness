@@ -182,6 +182,11 @@ public class Quiz implements Serializable{
 		return score;
 	}
 	
+	// Return the quiz given the ID
+	public Quiz getQuiz(int quizID){
+		return ServerConnection.getQuiz(quizID);
+	}
+	
 	// Return the top x number of quizzes
 	public ArrayList<Integer> getTopQuizzes(int num){
 		Connection con = ServerConnection.getConnection();

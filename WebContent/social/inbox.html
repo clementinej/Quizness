@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+   <head>
+      <meta charset="UTF-8" />
+      <title>Inbox</title>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" type="text/css" href="../css/normalize.css" />
+      <link rel="stylesheet" type="text/css" href="../css/inbox.css" />
+      <script src="../js/modernizr-2.6.2.min.js"></script>
+   </head>
+   <body>
+      <div class="container">
+         <section class="color-1">
+            <nav class="cl-effect-14">
+               <a href="challenges.jsp">Challenges</a>
+               <a href="messages.html">Messages</a>
+               <a href="friend-requests.jsp">Friend Requests</a>
+            </nav>
+         </section>
+      </div>
+      <!-- /container -->
+      <div id="compose">
+      <!--TODO CHANGE TO POST TO COMPOSE-MAIL.JSP-->
+         <form method="post" action="compose-mail.html">
+            <input type="submit" value="Compose" />
+         </form>
+      </div>
+      <hr id="inbox"/>
+      <div id="num-messages">
+         <h4> You've got no messages. Zero. None.</h4>
+      </div>
+      <form method="post" action="MessageServlet">
+         <div id="table-container">
+            <table id="table">
+               <tbody>
+                  <tr>
+                     <!-- DISPLAY UNREAD LINKS IN BOLD -->
+                     <td align="left" width="7%">
+                        <input type="checkbox" id="checkbox<%=i%>" name="check" value="<%=messageID%>">
+                     </td>
+                     <!-- LINK TO SENDER'S PROFILE -->
+                     <td align="left" width="25%"><a href="user/profile.jsp?user=<%=fromID%>"><font><b>From</b></font></a></td>
+                     <!-- LINK TO MESSAGE -->
+                     <td align="left" width="50%"><a href="messaging/readMsgs.jsp?msg_id=<%=messageID%>"><font color><b>Subject</b></font></a></td>
+                     <td align="right" width="20%"><b>10:00AM</b></td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <div>
+            <span id="footer">
+               <b>Selected Messages :</b>
+               <select name="update_type">
+                  <option value="delete">Delete Messages</option>
+                  <option value="read">Mark as Read</option>
+                  <option value="unread">Mark as Unread</option>
+               </select>
+               <input type="hidden" name="quiz_id" value="s">
+               <input type="submit" name="inbox_update" value="Update">
+            </span>
+         </div>
+      </form>
+   </body>
+</html>
