@@ -1,14 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
    pageEncoding="ISO-8859-1"%>
+<%--@ page import="model.*" --%>
+<%@ page import="java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
    <head>
       <meta charset="utf-8" />
       <title>Profile Page</title>
       <link rel="stylesheet" type="text/css" href="global.css" />
-      <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
    </head>
    <body>
+   <%
+   // COMMENT THIS IN. EVERYTHING SHOULD WORK. ALSO REMEMBER TO COMMENT IN THE 
+   // MODEL IMPORT AT THE TOP OF THE PAGE. THAT'S THE BIT THAT I CAN'T COMPILE
+   
+   //User u = (User)session.getAttribute("currUser");
+   //String name = u.getName();
+   //int numQuizzesTaken = u.getQuizzesTaken();
+   //int highScore = u.getHighScore();
+   //int friends = u.getFriends().size();
+   //String aboutMe = u.getAboutMe(); // Allow user to add this as easy extension?
+	//ArrayList<String> achievements = u.getAcheivements();
+   //ArrayList<String> friends = u.getFriends();
+   
+   // COMMENT OUT THESE PLACEHOLDERS. ALL THE FIELDS SHOULD BY DYNAMICALLY 
+   // POPULATED BY THE DATA ABOVE
+	String name = "Clementine Jacoby";
+	int numQuizzesTaken = 187;
+	int highScore = 490;
+	String numFriends = "24";
+   String location = "San Francisco, CA"; // Allow user to add this as easy extension?
+	String aboutMe = "I figured we could add this as an extension easily.";
+	ArrayList<String> achievements = new ArrayList<String>();
+	achievements.add("acheived!");
+	achievements.add("acheived!");
+	achievements.add("acheived!");
+	ArrayList<String> friends = new ArrayList<String>();
+	friends.add("Gene O.");
+	friends.add("Lloyd L.");
+	friends.add("Tony W.");
+
+   %>
       <nav>
          <ul id="n" class="clearfix">
             <li><a href="#">Profile</a></li>
@@ -21,32 +53,33 @@
                   <a href="#"><img width="150" height="150" /></a>
                </div>
                <div class="data">
-                  <h1>Johnny Appleseed</h1>
-                  <h3>San Francisco, CA</h3>
+                  <h1><%=name%></h1>
+                  <h3><%=location%></h3>
                   <div class="sep"></div>
                   <ul class="numbers clearfix">
-                     <li>Quizes Taken<strong>185</strong></li>
-                     <li>Highest Score<strong>344</strong></li>
-                     <li class="nobrdr">Last Quiz Taken<strong>127</strong></li>
+                     <li>Quizzes Taken<strong><%=numQuizzesTaken%></strong></li>
+                     <li>Highest Score<strong><%=highScore%></strong></li>
+                     <li class="nobrdr">Last Quiz Taken<strong><%=numFriends%></strong></li>
                   </ul>
                </div>
             </div>
             <h1>About Me:</h1>
-            <p>I figured we could add this as an extension easily.</p>
+            <p><%=aboutMe%></p>
          </section>
          <section id="right">
             <div class="gcontent">
                <div class="head">
-                  <h1>Acheivements</h1>
+                  <h1>Achievements</h1>
                </div>
                <div class="boxy">
-                  <p>Keep going!</p>
+                  <p>Great Job!</p>
                   <div class="badgeCount">
-                     <a href="#"><img src="" /></a>
-                     <a href="#"><img src="" /></a>
-                     <a href="#"><img src="" /></a>
+                  <%for(String a: achievements) { %>
+                     <a href="#"><img src="" /><%=a%></a>
+                     <%} %>
+
                   </div>
-                  <span><a href="#">See all…</a></span>
+                  <span><a href="#">See all...</a></span>
                </div>
             </div>
             <div class="gcontent">
@@ -57,15 +90,11 @@
                <div class="boxy">
                   <p>Your friends - 106 total</p>
                   <div class="friendslist clearfix">
+                  <% for(String f: friends) { %>
                      <div class="friend">
-                        <span class="friendly"><a href="#">Jerry K.</a></span>
+                        <span class="friendly"><a href="#"><%=f%></a></span>
                      </div>
-                     <div class="friend">
-                        <span class="friendly"><a href="#">Katie F.</a></span>
-                     </div>
-                     <div class="friend">
-                        <span class="friendly"><a href="#">Ash K.</a></span>
-                     </div>
+                     <%} %>
                   </div>
                   <span><a href="#">See all...</a></span>
                </div>
@@ -78,12 +107,11 @@
             boolean myProfile = true;
             boolean pendingRequests = true;
             boolean alreadyFriends = true;
-            String name = "Johnny";
             %>
          <section id="left">
             <div class="gcontent">
-               <% if(myProfile==true) {
-                  if(pendingRequests==true) {
+               <% if(myProfile==false) {
+                  if(pendingRequests==false) {
                   %>
                <div class="head">
                   <h1>Friend Requests</h1>
