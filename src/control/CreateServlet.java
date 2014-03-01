@@ -51,28 +51,28 @@ public class CreateServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		List<Question> questionList = (ArrayList<Question>) session.getAttribute("q");	
-		session.setAttribute("q", questionList);
-	//	questionList.get(0);
+		ArrayList<Question> questionList = (ArrayList<Question>) session.getAttribute("question list");	
+		session.setAttribute("question list", questionList);
 		System.out.println("In CreateServlet");
 		if(getUserIntent(session, request).equals("add question")) {
 			System.out.println("Content Received");
 			Question newQuestion = constructQuestion(session, request);
-		//	System.out.println(questionList.get(0));
 			questionList.add(newQuestion);
 			RequestDispatcher dispatch = request.getRequestDispatcher("create-quiz.jsp"); 
 			dispatch.forward(request, response); 
 		} else if(getUserIntent(session, request).equals("create quiz")) {
 
-			int quizID = 0;
-			int creatorID = 0;
-			String description = "";
-			boolean isPracticeMode = false;
-			
-			Quiz quiz = null;//new Quiz(quizID, creatorID, description, questionList, isPracticeMode);
+			int quizID = 0, creatorID = 0, maxScore = 0;
+			String description = request.getParameter("description"), title = request.getParameter("name");
+			boolean isPracticeMode = false, hasTimedMode = false; 
+			boolean multiplePages = Boolean.parseBoolean(request.getParameter("multiple_pages"));
+			boolean hasRandomMode = Boolean.parseBoolean(request.getParameter("random_questions"));
+			boolean immediateCorrection = Boolean.parseBoolean(request.getParameter("immediate_correction"));
+			Quiz quiz = new Quiz(quizID, creatorID, maxScore, description, title, 
+					questionList, isPracticeMode, hasRandomMode, hasTimedMode);
 			
 			try {
-				ServerConnection.addQuiz(quizID, quiz);
+				ServerConnection.addQuiz(quiz);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}	

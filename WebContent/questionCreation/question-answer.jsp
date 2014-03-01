@@ -6,7 +6,7 @@
    </head>
    <body>
       <div class="container">
-         <form method="post" action="../../CreateServlet" class="form" id="form1" >
+         <form method="post" action="../CreateServlet" class="form" id="form1" >
             <div class="header">
                <h3>Create a Question</h3>
             </div>
@@ -40,7 +40,7 @@
                </tfoot>
             </table>
             <input name="intent" type="hidden" value="add question"/>
-            <input name="question type" type="hidden" value="question-answer"/>
+            <input name="question type" type="hidden" value="1"/>
             <input type="submit" id="button-blue" value="Create Question"/>
          </form>
       </div>

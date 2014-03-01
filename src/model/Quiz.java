@@ -273,6 +273,7 @@ public class Quiz implements Serializable{
 	
 	public void getStatistics(){
 	// TODO Provide methods for getting summary statistics 
+	}
 		
 	// Return a set of IDs from a ResultSet
 	public ArrayList<Integer> resultSetToArray(ResultSet rs){

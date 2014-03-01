@@ -2,8 +2,10 @@ package control;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+
 import model.*;
 
 public class QuiznessAccountManager {
@@ -26,15 +28,16 @@ public class QuiznessAccountManager {
 	 *  Returns false if the username is already taken.
 	 *  Adds a grain of salt to the password for extra security before hashing.
 	 */
-	public boolean createNewAccount(String userName, String pw, boolean isAdmin) {
+	public boolean createNewAccount(String userName, String pw, boolean isAdmin) throws SQLException {
 		boolean accountFree = false;
 		
-		//if(User.nameIsAvailable(userName)) { //read from database
-		if(!accounts.containsKey(userName)) {//if there account is free add it
+		if(User.nameIsAvailable(userName)) { //read from database
+		//if(!accounts.containsKey(userName)) {//if there account is free add it
 			String unencryptedPlusSalt = pw + salt;
 			String hashedPW = generateHash(unencryptedPlusSalt);
-			//User newUser = new User(isAdmin, userName, hashedPW, email)
-			//model.ServerConnection.addUser(newUser);
+			String email = "";
+			User newUser = new User(isAdmin, userName, hashedPW, email);
+			model.ServerConnection.addUser(newUser);
 			
 			accounts.put(userName, hashedPW);
 			accountFree = true;

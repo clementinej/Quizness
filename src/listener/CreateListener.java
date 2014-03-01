@@ -18,7 +18,8 @@ import model.*;
  */
 @WebListener
 public class CreateListener implements HttpSessionListener {
-
+	private User currUser;
+	
 	/**
 	 * 
 	 */
@@ -27,7 +28,44 @@ public class CreateListener implements HttpSessionListener {
     	HttpSession session = event.getSession(); 
       	List<Question> questionList = new ArrayList<Question>();
       	        
-		String q = "Who was the 16th president? Who was the first?";
+		addOneToQuestionList(questionList);//testing
+		System.out.println(questionList.get(0));//testing
+        session.setAttribute("question list", questionList);
+
+        Map<String, Integer> questionTypeMap = new HashMap<String, Integer>();
+        makeQuestionTypeMap(questionTypeMap);
+        session.setAttribute("question-type map", questionTypeMap);
+        
+        currUser = null;//updated for every login, set to null for every logout
+        session.setAttribute("current user", currUser);
+    }
+    
+	
+	private void makeQuestionTypeMap(Map<String, Integer> questionTypeMap) {
+        questionTypeMap.put("question-answer", 1);
+        questionTypeMap.put("fill in the blank", 2);
+        questionTypeMap.put("multiple choice", 3);
+        questionTypeMap.put("picture reponse", 4);
+        questionTypeMap.put("multi-answer", 5);
+        questionTypeMap.put("multiple choice with multiple answers", 6);
+        questionTypeMap.put("matching", 7);
+        questionTypeMap.put("auto-generated", 8);
+        questionTypeMap.put("human graded", 9);
+        questionTypeMap.put("timed", 10);	
+        //add questions later   
+	}
+
+
+	/**
+     * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
+     */
+    public void sessionDestroyed(HttpSessionEvent arg0) {
+        currUser = null;
+    }
+	
+    
+    private void addOneToQuestionList(List<Question> questionList) {
+    	String q = "Who was the 16th president? Who was the first?";
 		
 		ArrayList<Set<String>> answer = new ArrayList<Set<String>>();
 		Set<String> a = new HashSet<String>();
@@ -43,34 +81,5 @@ public class CreateListener implements HttpSessionListener {
 		double pointValue = 3;
 		QuestionResponse question = new QuestionResponse(q, answer, pointValue);
 		questionList.add(question);
-		System.out.println(questionList.get(0));
-		
-        session.setAttribute("q", questionList);
-
-        Map<String, Integer> questionTypeMap = new HashMap<String, Integer>();
-        questionTypeMap.put("question-answer", 1);
-        questionTypeMap.put("fill in the blank", 2);
-        questionTypeMap.put("multiple choice", 3);
-        questionTypeMap.put("picture reponse", 4);
-        questionTypeMap.put("multi-answer", 5);
-        questionTypeMap.put("multiple choice with multiple answers", 6);
-        questionTypeMap.put("matching", 7);
-        questionTypeMap.put("auto-generated", 8);
-        questionTypeMap.put("human graded", 9);
-        questionTypeMap.put("timed", 10);	
-        session.setAttribute("question-type map", questionTypeMap);
-        //add questions later       
-        
-        User curUser = null;//updated for every login, set to null for every logout
-        session.setAttribute("current user", curUser);
     }
-    
-	
-	/**
-     * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
-     */
-    public void sessionDestroyed(HttpSessionEvent arg0) {
-        // TODO Auto-generated method stub
-    }
-	
 }
