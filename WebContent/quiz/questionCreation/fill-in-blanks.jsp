@@ -41,6 +41,8 @@
 		</tr>
 	</tfoot>
 </table>
+<input name="intent" type="hidden" value="add question"/>
+<input name="question type" type="hidden" value="2"/>
 <input id="button-blue" type="submit" value="Create Question">
 </form></div></div>
 <script type="text/javascript">
