@@ -5,7 +5,7 @@
       <link rel="stylesheet" type="text/css" href="../../css/create-question.css" />
 </head>
 <%
-int questionType = request.getParameter("question-type");
+int questionType = Integer.parseInt(request.getParameter("question-type"));
 %>
 <div id="form-main">
   <div id="form-div">

@@ -6,7 +6,7 @@
    </head>
    <body>
    <%
-   int questionType = request.getParameter("question-type");
+   int questionType = Integer.parseInt(request.getParameter("question-type"));
    %>
       <div class="container">
          <form method="post" action="../../CreateServlet" class="form" id="form1" >
