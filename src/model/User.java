@@ -43,6 +43,10 @@ public class User implements Serializable {
 		return false;
 	}
 	
+	public ArrayList<User> getFriends() {
+		return friendsList;
+	}
+	
 	public String getPasswordHash(String userName) throws SQLException{
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps;

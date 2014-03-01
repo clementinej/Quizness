@@ -46,11 +46,18 @@ public class Message {
 		public String subject;
 		public String body;
 		public Date sentAt;
+		public boolean viewed;
 		
 		public Date getSentAt() {
 			return sentAt;
 		}
 		public void setSentAt(Date sentAt) {
 			this.sentAt = sentAt;
+		}
+		public void markAsRead() {
+			viewed = true;
+		}
+		public boolean getViewed() {
+			return viewed;
 		}
 }
