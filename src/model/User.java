@@ -129,6 +129,10 @@ public class User implements Serializable {
 		userB.addFriendRequest(request);	
 	}
 	
+	public void deleteFriendRequest(FriendRequest request){
+		friendRequests.remove(request);
+	}
+	
 	public void addFriendRequest(FriendRequest request){
 		if (!friendRequests.contains(request)){
 			friendRequests.add(request);
@@ -146,9 +150,7 @@ public class User implements Serializable {
 	}
 	
 	
-	
-	
-	
+
 	
 	
 /*Random functions that return the stored variable of User 
