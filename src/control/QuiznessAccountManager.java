@@ -34,10 +34,13 @@ public class QuiznessAccountManager {
 			String unencryptedPlusSalt = pw + salt;
 			String hashedPW = generateHash(unencryptedPlusSalt);
 			String email = "";
-			User newUser = new User(isAdmin, userName, hashedPW, email);
+			String aboutMe = "";
+			String location = "";
+			User newUser = new User(isAdmin, userName, hashedPW, email, aboutMe, location);
 			model.ServerConnection.addUser(newUser);
 			accountFree = true;
 		}		
+		
 		return accountFree;
 	}
 	

@@ -30,6 +30,11 @@ public class MultipleChoice extends Question {
 	public double getPoints(String[] response) {
 		return pointValue * answer.getNumCorrect(response);
 	}
+	
+	@Override
+	public double getMaxPoints() {
+		return pointValue;
+	}
 
 	//simply returns the question
 	@Override

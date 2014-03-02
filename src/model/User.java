@@ -26,6 +26,8 @@ public class User implements Serializable {
 	private String location;
 	private int highScore;
 	
+
+	//constructor
 	public User(boolean isAdmin, String userName, String pw, String email, String aboutMe, String location){
 		this.isAdmin = isAdmin;
 		this.pw = pw;
@@ -54,12 +56,21 @@ public class User implements Serializable {
 	public String getAboutMe(){
 		return aboutMe;
 	}
-	
+		
 	public String getLocation(){
 		return location;
 	}
 	
 	//checks the database to see if an entry with the same username already exists
+	public void setAboutMe(String aboutMe) {
+		this.aboutMe = aboutMe;
+	}
+	
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	
+	
 	public static boolean nameIsAvailable(String userName) throws SQLException{
 		ServerConnection.open();
 		Connection con = ServerConnection.getConnection();
@@ -67,7 +78,6 @@ public class User implements Serializable {
 		Statement stmt = con.createStatement();
 		stmt.executeQuery("USE " + MYSQL_DATABASE_NAME);
 		ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username = \""+ userName + "\"");
-
 		rs.beforeFirst();
 		if (!rs.next()){
 			return true;
@@ -90,6 +100,19 @@ public class User implements Serializable {
 		rs.first();
 		passwordHash = rs.getString("password");
 		return passwordHash;
+	}
+	
+	
+	public static int getUserID(String userName) throws SQLException{
+		Connection con = ServerConnection.getConnection();
+		PreparedStatement ps;
+		int id = -1;	
+		ps = con.prepareStatement("SELECT id FROM users WHERE username = ?");	
+		ps.setString(1, userName);
+		ResultSet rs = ps.executeQuery();
+		rs.first();
+		id = rs.getInt("id");
+		return id;
 	}
 	
 	public String getUserName(){
@@ -117,8 +140,8 @@ public class User implements Serializable {
 		return achievements;
 	}
 	
-	public static User getUser(int userID) throws Exception{
-		return ServerConnection.getUser(userID);
+	public static User getUser(String username) throws Exception{
+		return ServerConnection.getUser(username);
 	}
 	
 	//adds the current QuizTry to the user's history. if the QuizTry already existed and was
@@ -142,18 +165,6 @@ public class User implements Serializable {
 	
 	public void setUserID(int userID){
 		this.userID = userID;
-	}
-	
-	//opens the database to grab the userID
-	public int getUserID() throws SQLException{
-		Connection con = ServerConnection.getConnection();
-		PreparedStatement ps;	
-		ps = con.prepareStatement("SELECT id FROM users WHERE username = ?");	
-		ps.setString(1, userName);
-		ResultSet rs = ps.executeQuery();
-		rs.first();
-		int userID = rs.getInt("id");
-		return userID;
 	}
 	
 	public void makeQuiz(Quiz quiz){

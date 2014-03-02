@@ -1,11 +1,13 @@
 package control;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -49,42 +51,49 @@ public class CreateServlet extends HttpServlet {
 	 * If the intent is to create a quiz, a quiz is saved in the database.   It is constructed by a 
 	 * newly generated quizID and the current questionList.
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		HttpSession session = request.getSession();
+		
 		ArrayList<Question> questionList = (ArrayList<Question>) session.getAttribute("question list");	
 		session.setAttribute("question list", questionList);
-		System.out.println("In CreateServlet");
+			
+		User currUser = (User) session.getAttribute("current user");
+		int creatorID = getUserID(currUser);	
+		if(creatorID == -1) return; //should redirect to a "You are not logged in" page
+		
 		if(getUserIntent(session, request).equals("add question")) {
-			System.out.println("Content Received");
 			Question newQuestion = constructQuestion(session, request);
-			questionList.add(newQuestion);
-			RequestDispatcher dispatch = request.getRequestDispatcher("create-quiz.jsp"); 
-			dispatch.forward(request, response); 
-		} else if(getUserIntent(session, request).equals("create quiz")) {
+			questionList.add(newQuestion);			
+			forwardToPage("create-quiz.jsp", request, response);
 
-			int quizID = 0, creatorID = 0, maxScore = 0;
-			String description = request.getParameter("description"), title = request.getParameter("name");
-			boolean isPracticeMode = false, hasTimedMode = false; 
-			boolean multiplePages = Boolean.parseBoolean(request.getParameter("multiple_pages"));
-			boolean hasRandomMode = Boolean.parseBoolean(request.getParameter("random_questions"));
-			boolean immediateCorrection = Boolean.parseBoolean(request.getParameter("immediate_correction"));
-			Quiz quiz = new Quiz(quizID, creatorID, maxScore, description, title, 
-					questionList, isPracticeMode, hasRandomMode, hasTimedMode);
-			
-			try {
-				ServerConnection.addQuiz(quiz);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}	
-			
-			for(int i = 0; i < questionList.size(); i++) //restart question list
-				questionList.remove(i);	//may want to store questionLists in a map depending on potential quizID
-			//forward back to create-quiz.jsp or maybe create-quiz-success.html
-			RequestDispatcher dispatch = request.getRequestDispatcher("create-quiz.jsp"); 
-			dispatch.forward(request, response); 
+		} else if(getUserIntent(session, request).equals("create quiz")) {
+			makeQuizAndAddToDB(questionList, request, currUser);	
+			clearQuestionList(questionList);
+			forwardToPage("create-quiz.jsp", request, response);		
 		}	
 	}
 	
+	
+//--------Helper Functions---------//
+	/*
+	 * Takes in a current user and reads the ID from the database
+	 * @param currUser
+	 * @return id of user
+	 */
+	private int getUserID(User currUser) {
+		int creatorID = -1;
+		try {
+			creatorID = User.getUserID(currUser.getUserName());
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		return creatorID;
+	}
+	
+	
+	/*
+	 * Reads what user intends to do from HttpServletRequest request
+	 */
 	private String getUserIntent(HttpSession session, HttpServletRequest request) {
 		String userIntent = request.getParameter("intent");
 		session.setAttribute("intent", userIntent);
@@ -92,31 +101,53 @@ public class CreateServlet extends HttpServlet {
 		return userIntent;
 	}
 	
-	/*
-	 * 
-	 */
-	private Question constructQuestion(HttpSession session, HttpServletRequest request) {
-		HashMap<String, Integer> questionTypeMap = (HashMap<String, Integer>) session.getAttribute("question-type map");
-		session.setAttribute("question-type map", questionTypeMap);
-		String questionTypeString = request.getParameter("question type");
-		System.out.println("questionTypeString = " + questionTypeString);
-		int size = questionTypeMap.size();
-		System.out.println("questionTypeMap.size() = " + size);
-		int questionType = 1;
-		if(questionTypeMap.containsKey(questionTypeString)) {
-			System.out.println("Contains answer");
-			questionType = questionTypeMap.get("question-answer");
-			System.out.println(questionType);
-		} else System.out.println("Does not contain key");
+	private void forwardToPage(String string, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher dispatch = request.getRequestDispatcher("create-quiz.jsp"); 
+		dispatch.forward(request, response); 
+	}
 
+	private void makeQuizAndAddToDB(ArrayList<Question> questionList, HttpServletRequest request, User currUser) {
+		int creatorID = getUserID(currUser);	
+		double maxScore = getMaxScore(questionList);
+		String description = request.getParameter("description"), title = request.getParameter("name");
+		boolean isPracticeMode = false, hasTimedMode = false; //extensions add later
+		boolean multiplePages = Boolean.parseBoolean(request.getParameter("multiple_pages"));
+		boolean hasRandomMode = Boolean.parseBoolean(request.getParameter("random_questions"));
+		boolean immediateCorrection = Boolean.parseBoolean(request.getParameter("immediate_correction"));
+		Quiz quiz = new Quiz(creatorID, maxScore, description, title, 
+				questionList, isPracticeMode, hasRandomMode, hasTimedMode, immediateCorrection, multiplePages);
+		try {
+			ServerConnection.addQuiz(quiz);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+
+	private void clearQuestionList(ArrayList<Question> questionList) {
+		for(int i = 0; i < questionList.size(); i++) //restart question list
+			questionList.remove(i);	//may want to store questionLists in a map depending on potential quizID
+	}
+
+
+
+	private double getMaxScore(ArrayList<Question> questionList) {
+		double pointCount = 0;
+		for(Question question: questionList) {
+			pointCount += question.getMaxPoints();
+		}
+		return pointCount;
+	}
+
+
+	
+	/*
+	 * Makes a new question given the information passed in by the user
+	 */
+	private Question constructQuestion(HttpSession session, HttpServletRequest request) {		
+		int questionType = Integer.parseInt(request.getParameter("question type"));
 		String question = request.getParameter("question_text");
-		
-		//Set<String> is all synonyms for one answer (e.g. {Los Angeles, LA, L.A})
-		//ArrayList holds multiple answers (e.g. 5 largest cities -> {LA, NY, Boston})
 		ArrayList<Set<String>> allAnswers = new ArrayList<Set<String>>();
-		
 		addAnswerToAnswersList(request, allAnswers);
-		
 		double pointValue = 1;//default point value for each question depending on difficulty
 		String pointValueStr = request.getParameter("correct_answer_score");
 		if(pointValueStr.length() != 0)

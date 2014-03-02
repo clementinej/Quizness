@@ -21,7 +21,7 @@ public class CreateListener implements HttpSessionListener {
 	private User currUser;
 	
 	/**
-	 * 
+	 * When a browser is opened, a questionList is created, and
 	 */
     public void sessionCreated(HttpSessionEvent event) {
      	System.out.println("Session Created");
@@ -31,33 +31,14 @@ public class CreateListener implements HttpSessionListener {
 		addOneToQuestionList(questionList);//testing
 		System.out.println(questionList.get(0));//testing
         session.setAttribute("question list", questionList);
-
-        Map<String, Integer> questionTypeMap = new HashMap<String, Integer>();
-        makeQuestionTypeMap(questionTypeMap);
-        session.setAttribute("question-type map", questionTypeMap);
         
-        currUser = null;//updated for every login, set to null for every logout
+        currUser = null;
         session.setAttribute("current user", currUser);
     }
-    
-	
-	private void makeQuestionTypeMap(Map<String, Integer> questionTypeMap) {
-        questionTypeMap.put("question-answer", 1);
-        questionTypeMap.put("fill in the blank", 2);
-        questionTypeMap.put("multiple choice", 3);
-        questionTypeMap.put("picture reponse", 4);
-        questionTypeMap.put("multi-answer", 5);
-        questionTypeMap.put("multiple choice with multiple answers", 6);
-        questionTypeMap.put("matching", 7);
-        questionTypeMap.put("auto-generated", 8);
-        questionTypeMap.put("human graded", 9);
-        questionTypeMap.put("timed", 10);	
-        //add questions later   
-	}
 
 
 	/**
-     * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
+     * user is signed out if web browser exits
      */
     public void sessionDestroyed(HttpSessionEvent arg0) {
         currUser = null;

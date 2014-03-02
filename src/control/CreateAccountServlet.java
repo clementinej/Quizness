@@ -46,16 +46,6 @@ public class CreateAccountServlet extends HttpServlet {
 			if(manager.createNewAccount(userName, pw, false)) {//go to "user welcome" page
 				RequestDispatcher dispatch = request.getRequestDispatcher("home.html"); 
 				dispatch.forward(request, response); 
-//			out.println("<!DOCTYPE html>");
-//			out.println("<html>");
-//			out.println("<head>");
-//			out.println("<title>Welcome " + userName + "</title>");
-//			out.println("</head>");
-//			out.println("<body>");
-//			out.println("<h1>Welcome " + userName + "</h1>");
-//			out.println("</body>");
-//			out.println("</html>");
-				
 			} else {//go to "Account Name is in Use" page		
 				out.println("<!DOCTYPE html>");
 				out.println("<html>");
