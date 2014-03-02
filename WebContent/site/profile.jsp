@@ -19,19 +19,18 @@
    model.User u = new model.User(false, "Gene Oetomo", "gene", "goetomo@stanford.edu", "my name is gene", "stanford");
    String name = u.getUserName();
    int numQuizzesTaken = u.numQuizzesTaken();
-//   int highScore = u.getHighScore();
    int numFriends = u.getFriends().size();
    String aboutMe = u.getAboutMe(); // Allow user to add this as easy extension?
    String location = u.getLocation();
 	ArrayList<Achievement> achievements = u.getAchievements();
    ArrayList<User> friends = u.getFriends();
-//   String highScore = u.getHighScore();
+   String highScore = u.getHighScore();
    
    // COMMENT OUT THESE PLACEHOLDERS. ALL THE FIELDS SHOULD BY DYNAMICALLY 
    // POPULATED BY THE DATA ABOVE
 // 	String name = "Clementine Jacoby";
 //	int numQuizzesTaken = 187;
-	int highScore = 490;
+//	int highScore = 490;
 //	String numFriends = "24";
 //   String location = "San Francisco, CA"; // Allow user to add this as easy extension?
 //	String aboutMe = "I figured we could add this as an extension easily.";

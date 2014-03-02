@@ -44,12 +44,15 @@ public class User implements Serializable {
 		this.highScore = -1;
 	}
 	
+	//returns a string of the high score. if there is no score stored, it returns a string
+	//saying that the user has not taken any quizzes
 	public String getHighScore(){
 		if (highScore == -1)
 			return "This user hasn't taken any quizzes yet!";
 		String score = "" + highScore;
 		return score;
 	}
+	
 	public String getAboutMe(){
 		return aboutMe;
 	}
@@ -58,6 +61,7 @@ public class User implements Serializable {
 		return location;
 	}
 	
+	//checks the database to see if an entry with the same username already exists
 	public void setAboutMe(String aboutMe) {
 		this.aboutMe = aboutMe;
 	}
@@ -81,6 +85,7 @@ public class User implements Serializable {
 		return false;
 	}
 	
+	//opens the database to grab the password hash from email
 	public static boolean emailIsAvailable(String email) throws SQLException{
 		ServerConnection.open();
 		Connection con = ServerConnection.getConnection();
@@ -98,7 +103,8 @@ public class User implements Serializable {
 	public ArrayList<User> getFriends() {
 		return friendsList;
 	}
-	
+
+	//opens the database to grab the password hash from username
 	public static String getPasswordHashFromUserName(String userName) throws SQLException{
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps;
@@ -148,6 +154,7 @@ public class User implements Serializable {
 		return email;
 	}
 	
+	//adds the achievement is it has not already been added
 	public void addAchievement(Achievement achievement){
 		int key = achievement.getKey();
 		if (!achievementKeys.contains(key)){
@@ -164,6 +171,8 @@ public class User implements Serializable {
 		return ServerConnection.getUser(username);
 	}
 	
+	//adds the current QuizTry to the user's history. if the QuizTry already existed and was
+	//saved but unfinished, it just replaces it with the new one
 	public void addTry(QuizTry quizTry){
 		int index = quizzesTried.indexOf(quizTry);
 		if (index == -1){
