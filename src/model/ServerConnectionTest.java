@@ -9,11 +9,9 @@ import org.junit.Test;
 public class ServerConnectionTest {
 	
 	private ArrayList<Question> questions = new ArrayList<Question>();	
-	//private Quiz quiz = new Quiz(1, 1, "About Presidents", questions, true);
+	//private Quiz quiz = new Quiz(1, "About Presidents", questions, true);
 	private User user = new User(true, "Patrick", "[imagineThisButHashed]", "pYoung@stanford.edu");
-	private ServerConnection con = new ServerConnection();
 	
-
 	@Test
 	public void testOpen() {
 		fail("Not yet implemented");
@@ -21,11 +19,13 @@ public class ServerConnectionTest {
 
 	@Test
 	public void testAddUser() throws Exception {
-		con.open();
-		//con.addUser(user.getUserID(), user);
-		User currUser = con.getUser(8);
-		assertEquals(currUser.getUserID(), 8);
-		con.close();
+		ServerConnection.open();
+		int userID = ServerConnection.addUser(user);
+		user.setUserID(userID);
+		User currUser = ServerConnection.getUser(userID);
+		
+		assertEquals(currUser.getUserID(), userID);
+		ServerConnection.close();
 	}
 
 	@Test
@@ -40,11 +40,14 @@ public class ServerConnectionTest {
 
 	@Test
 	public void testAddQuiz() throws Exception {
+		
+		/*
 		con.open();
-	//	con.addQuiz(quiz.getQuizID(), quiz);
+		con.addQuiz(quiz);
 		Quiz currQuiz = con.getQuiz(8);
 		assertEquals(currQuiz.getQuizID(), 8);
 		con.close();
+		*/
 	}
 
 	@Test

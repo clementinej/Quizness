@@ -1,121 +1,109 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="model.*" %>
 <head>
-   <link rel="stylesheet" type="text/css" href="../../css/normalize.css" />
-      <link rel="stylesheet" type="text/css" href="../../css/component.css" />
-      <link rel="stylesheet" type="text/css" href="../../css/create-question.css" />
+   <link rel="stylesheet" type="text/css" href="../../css/style_login.css" />
 </head>
-<%
-int questionType = request.getParameter("question-type");
-%>
-<div id="form-main">
-  <div id="form-div">
-    <form class="form" id="form1" method="post" action="/CreateServlet">
+<body>
+   <div class="container">
+      <form method="post" action="../CreateServlet" id="signup">
+         <div class="header">
+            <h3>Create a Question</h3>
+            <p>When you're done, click "Add Question" to return to creating your quiz.</p>
+         </div>
+         <div class="sep"></div>
+         <div class="inputs">
+            <div>
+               <input type="name" name="question_text" style="width:500px;height:50px" placeholder="Question Text">
+            </div>
+            <table>
+               <tr>
+                  <th>Multiple Selections</th>
+                  <td>
+                     <p><input value="1" type="checkbox" name="multi_select">
+                        Let the user check multiple correct answers
+                     </p>
+                  </td>
+               </tr>
+            </table>
+            <br>
+            <h3>Correct Solutions</h3>
+            <table id="correct_contents" class="inputs">
+               <th width="500">Solution Text</th>
+               <th>Score</th>
+               <tbody>
+                  <tr>
+                     <td><input type="name" name="correct_answer" style="width:100%" placeholder="Solution"></td>
+                     <td><input type="name" name="correct_answer_score" style="width:100%"/></td>
+                  </tr>
+               </tbody>
+               <tfoot>
+                  <tr>
+                     <td align="center" class="terms"><a href="#" id="new_option">Add Another Solution</a></td>
+                  </tr>
+                  <tr>
+                     <td align="center" class="terms"><a href="#" id="new_synonym">Add A Synonym</a></td>
+                  </tr>
+               </tfoot>
+            </table><br>	
+            <h3>Incorrect Solutions</h3>
+            <table id="incorrect_contents" class="inputs">
+               <th width="500">Solution Text</th>
+               <th>Score</th>
+               <tbody>
+                  <tr>
+                     <td><input type="name" name="incorrect_answer" style="width:100%" placeholder="Solution"></td>
+                     <td><input type="name" name="incorrect_answer_score" style="width:100%"/></td>
+                  </tr>
+               </tbody>
+               <tfoot>
+                  <tr>
+                     <td align="center" class="terms"><a href="#" id="new_wrong_answer">Add Another Solution</a></td>
+                  </tr>
+                  <tr>
+                     <td align="center" class="terms"><a href="#" id="new_wrong_synonym">Add A Synonym</a></td>
+                  </tr>
+               </tfoot>
+            </table>
+            <input name="intent" type="hidden" value="add question"/>
+            <input name="question type" type="hidden" value="1"/>
+            <br><input id="submit" type="submit" value="Add Question!"><!-- Store new quiz in database -->
+         </div>
+   </form>
+   </div>
+   <script type="text/javascript">
+      var button = document.getElementById("new_option");
+      button.addEventListener("click", function() {
+      	var correct = document.getElementById("correct_contents");
+      	correct.insertAdjacentHTML('beforeend', '<tr>'+
+        '<td><input type="name" name="correct_answer" style="width:100%" placeholder="Solution"></td>' +
+        '<td><input type="name" name="correct_answer_score" style="width:100%"/></td>' +
+     	'</tr>');
+      	});
       
-      <!-- When the user is done creating a question, submit should post to the CreateServlet, 
-	which adds the new question object to the List<Question> associated with the quiz -->
-<h3>Question</h3>
-<h5>Enter your question below.</h5>
-<table>
-	<tr>
-		<th>Enter text:</th>
-		<td>
-			<textarea name="question_text" style="width:600px;height:80px;"></textarea>
-		</td>
-	</tr>
-	<tr>
-		<th>Multiple Selections</th>
-		<td>
-			<p><input value="1" type="checkbox" name="multi_select">
-			This will mean using check boxes instead of radio buttons.</p>
-		</td>
-	</tr>
-</table>
-<h3>Correct Answers</h3>
-<table id="correct_contents" width="700" cellspacing="6" cellpadding="6" border="0">
-	<tr>
-		<th width="500">Correct Options</th>
-		<th>Score</th>
-	</tr>
-	<tbody>
-		<tr>
-			<td><input type="text" name="correct_answer_key" style="width:100%" value=""></td>
-			<td><input type="text" name="correct_answer_score" style="width:100%" value="" /></td>
-		</tr>
-	</tbody>
-	<tfoot>
-		<tr>
-			<td align="center" colspan="3"><a href="#" id="new_option">Add Another Correct Answer</a></td>
-		</tr>
-		 <tr>
-            <td align="center" colspan="2"><a href="#" id="new_synonym">Add A Synonym</a></td>
-         </tr>
-	</tfoot>
-</table>
-<h3>Wrong Answers</h3>
-<table id="incorrect_contents" width="700" cellspacing="6" cellpadding="6" border="0">
-	<tr>
-		<th width="500">Incorrect Options</th>
-		<th>Score</th>
-	</tr>
-	<tbody>
-		<tr>
-			<td><input type="text" name="incorrect_answer_key" style="width:100%" value=""></td>
-			<td><input type="text" name="incorrect_answer_score" style="width:100%" value="" /></td>
-		</tr>
-	</tbody>
-	<tfoot>
-		<tr>
-			<td align="center" colspan="3"><a href="#" id="new_wrong_answer" >Add Another Wrong Answer</a></td>
-		</tr>
-		<tr>
-            <td align="center" colspan="2"><a href="#" id="new_wrong_synonym">Add A Synonym</a></td>
-         </tr>
-	</tfoot>
-</table>
-<input name="intent" type="hidden" value="add question"/>
-<input name="question type" type="hidden" value="<%=questionType%>"/>
-<input type="submit" id="button-blue" value="Create Question"></form>
-  </div></div>
-<script type="text/javascript">
-
-var button = document.getElementById("new_option");
-button.addEventListener("click", function() {
-	var body = document.getElementById("correct_contents");
-	body.insertAdjacentHTML('beforeend', '<tr>' +
-			'<td><input type="text" name="correct_answer_key" style="width:100%"></td>' +
-			'<td><input type="text" name="correct_answer_score" value="1" style="width:100%" /></td>' +
-		'</tr>');
-	body.appendChild(newChild);
-	});
-
-var button = document.getElementById("new_wrong_answer");
-button.addEventListener("click", function() {
-	var body = document.getElementById("incorrect_contents");
-	body.insertAdjacentHTML('beforeend','<tr>' +
-			'<td><input type="text" name="incorrect_answer_key" style="width:100%"></td>' +
-			'<td><input type="text" name="incorrect_answer_score" value="0" style="width:100%" /></td>' +
-			'</tr>');
-	body.appendChild(newChild);
-	});
-	
-var syn_button = document.getElementById("new_synonym");
-syn_button.addEventListener("click", function() {
-	var body = document.getElementById("correct_contents");
-	body.insertAdjacentHTML('beforeend',	'<tr>' +
-			'<td><input type="text" name="correct_syn_blank" value="1" style="width:100%"></td>' + 
-			'<td><input type="text" name="correct_syn_key" style="width:100%"></td>' +
-			'<td><input type="text" name="correct_syn_score" value="1" style="width:100%" /></td>' +
-			'</tr>');
-	body.appendChild(newChild);
-	});
-var syn_button = document.getElementById("new_wrong_synonym");
-syn_button.addEventListener("click", function() {
-	var body = document.getElementById("correct_contents");
-	body.insertAdjacentHTML('beforeend',	'<tr>' +
-			'<td><input type="text" name="incorrect_syn_key" style="width:100%"></td>' +
-			'<td><input type="text" name="incorrect_syn_score" value="1" style="width:100%" /></td>' +
-			'</tr>');
-	body.appendChild(newChild);
-	});
-
-	</script>
+      var button = document.getElementById("new_wrong_answer");
+      button.addEventListener("click", function() {
+      	var wrong = document.getElementById("incorrect_contents");
+      	wrong.insertAdjacentHTML('beforeend','<tr>' +
+      			'<td><input type="name" name="incorrect_answer" style="width:100%" placeholder="Solution"></td>' +
+      			'<td><input type="name" name="incorrect_answer_score" style="width:100%"/></td>' +
+      			'</tr>');
+      	});
+      	
+      var syn_button = document.getElementById("new_synonym");
+      syn_button.addEventListener("click", function() {
+    	var correct = document.getElementById("correct_contents");
+      correct.insertAdjacentHTML('beforeend',	'<tr>' +
+      			'<td><input type="name" name="correct_answer" style="width:100%" placeholder="Synonym"></td>'+
+      			'<td><input type="name" name="correct_answer_score" style="width:100%"/></td>'+
+      			'</tr>');
+      	});
+      var syn_button = document.getElementById("new_wrong_synonym");
+      syn_button.addEventListener("click", function() {
+    	  var wrong = document.getElementById("incorrect_contents");
+      wrong.insertAdjacentHTML('beforeend',	'<tr>' +
+      			'<td><input type="name" name="incorrect_answer" style="width:100%" placeholder="Synonym"></td>' +
+      			'<td><input type="name" name="incorrect_answer_score" style="width:100%"/></td>' +
+      			'</tr>');
+      	});
+   </script>
+</body>

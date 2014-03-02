@@ -51,7 +51,6 @@
                   <select name="question-type" id="question-type">
                      <option value="0" selected></option>
                      <option value="question-answer">Question-Answer</option>
-                     <option value="question-answer2">Question-Answer</option>
                      <option value="picture-response">Picture-Response</option>
                      <option value="multiple-answer">Multiple Answer</option>
                      <option value="fill-in-blanks">Fill-in-the-Blank</option>
@@ -81,10 +80,16 @@
 	   	var value = type.options[type.selectedIndex].value;
 	   	if(value == 0) {
 	   		alert("Please choose a question type");
-	   	} else if(value =="question-answer" || value == "picture-response" || value == "multiple-answer"){
-	   		window.location = "/Quizness/quiz/questionCreation/question-answer.jsp" +"?question-type=" + value;
-	   	} else if (value == "multiple-choice" || value == "multiple-choice-multiple-answer") {
-	   		window.location = "/Quizness/quiz/questionCreation/multiple-choice.jsp" +"?question-type=" + value;
+	   	} else if(value =="question-answer") {
+	   		window.location = "/Quizness/quiz/questionCreation/question-answer.jsp?question-type=1";
+	   	} else if(value == "picture-response")  {
+	   		window.location = "/Quizness/quiz/questionCreation/question-answer.jsp?question-type=4";
+	   	} else if(value == "multiple-answer"){
+	   		window.location = "/Quizness/quiz/questionCreation/question-answer.jsp?question-type=5";
+	   	} else if (value == "multiple-choice") {
+	   		window.location = "/Quizness/quiz/questionCreation/multiple-choice.jsp?question-type=3";
+	   	} else if(value == "multiple-choice-multiple-answer") {
+	   		window.location = "/Quizness/quiz/questionCreation/multiple-choice.jsp?question-type=6";
 	   	} else {
 	   		window.location = "/Quizness/quiz/questionCreation/" + value + ".jsp";
 	   	}
