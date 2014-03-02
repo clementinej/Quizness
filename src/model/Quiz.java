@@ -186,60 +186,75 @@ public class Quiz implements Serializable{
 		return ServerConnection.getQuiz(quizID);
 	}
 	
+	public static double getHighScore(int userID, int quizID) throws Exception {
+		double result = 0; 
+		String query = "SELECT MAX(score) FROM quizTries "
+				+ "WHERE userID = " + userID
+				+ "AND WHERE quizID = " + quizID;
+		Connection con = ServerConnection.getConnection();
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.executeUpdate();
+		ResultSet rs = ps.getResultSet();
+		while(rs.next()){
+			result = rs.getDouble(1);
+		}
+		return result; 
+	}
+	
 	// Return the top x number of quizzes
-	public ArrayList<Integer> getTopQuizzes(int num) throws Exception{
+	public static ArrayList<Integer> getTopQuizzes(int num) throws Exception{
 		String query = "SELECT quizID FROM quizzes ORDER BY numTimesTaken DESC LIMIT" + num;
 		return executeQuery(query); 
 	}
 	
 	// Return x number of recently played quizzes
-	public ArrayList<Integer> getRecentlyPlayedQuizzes(int num) throws Exception{
+	public static ArrayList<Integer> getRecentlyPlayedQuizzes(int num) throws Exception{
 		String query = "SELECT quizID FROM quizzes ORDER BY dateLastPlayed DESC LIMIT" + num;
 		return executeQuery(query);
 	}
 	
 	// Return x number of recently created quizzes
-	public ArrayList<Integer> getRecentlyCreatedQuizzes(int num) throws Exception{
+	public static ArrayList<Integer> getRecentlyCreatedQuizzes(int num) throws Exception{
 		String query = "SELECT quizID FROM quizzes ORDER BY dateCreated DESC LIMIT" + num;
 		return executeQuery(query); 
 	}
 	
 	// Return x number of performances on this specific quiz, order by date 
-	public ArrayList<Integer> getPerformanceByDate(int userID, int num) throws Exception{
+	public static ArrayList<Integer> getPerformanceByDate(int userID, int quizID, int num) throws Exception{
 		String query = "SELECT quizTryID FROM quizTries WHERE userID = ?"
-				+ "AND WHERE quizID = " + this.quizID + " ORDER BY dateCreated DESC LIMIT" + num;
+				+ "AND WHERE quizID = " + quizID + " ORDER BY dateCreated DESC LIMIT" + num;
 		return executeQuery(query);
 	}
 	
 	// Return x number of performances on this specific quiz, order by score 
-	public ArrayList<Integer> getPerformanceByScore(int userId, int num) throws Exception{
+	public static ArrayList<Integer> getPerformanceByScore(int userId, int quizID, int num) throws Exception{
 		String query = "SELECT quizTryID FROM quizTries WHERE userID = ?"
-				+ "AND WHERE quizID = " + this.quizID + " ORDER BY score DESC LIMIT" + num;
+				+ "AND WHERE quizID = " + quizID + " ORDER BY score DESC LIMIT" + num;
 		return executeQuery(query);
 	}
 	
 	// Return x number of performances on this specific quiz, order by time spent 
-	public ArrayList<Integer> getPerformancyByTime(int userID, int num) throws Exception{
+	public static ArrayList<Integer> getPerformancyByTime(int userID, int quizID, int num) throws Exception{
 		String query = "SELECT quizTryID FROM quizTries WHERE userID = ?"
-				+ "AND WHERE quizID = " + this.quizID + " ORDER BY timeSpent DESC LIMIT" + num;
+				+ "AND WHERE quizID = " + quizID + " ORDER BY timeSpent DESC LIMIT" + num;
 		return executeQuery(query);
 	}
 	
-	public ArrayList<Integer> getTopPerformers(int num) throws Exception{
-		String query = "SELECT quizTryID FROM quizTries WHERE quizID = " + this.quizID 
+	public static ArrayList<Integer> getTopPerformers(int num, int quizID) throws Exception{
+		String query = "SELECT quizTryID FROM quizTries WHERE quizID = " + quizID 
 				+ " ORDER BY score DESC LIMIT" + num;
 		return executeQuery(query);
 	}
 	
-	public ArrayList<Integer> getTopPerformers(int num, int numOfDays) throws Exception{
-		String query = "SELECT quizTryID FROM quizTries WHERE quizID = " + this.quizID
+	public static ArrayList<Integer> getTopPerformers(int num, int quizID, int numOfDays) throws Exception{
+		String query = "SELECT quizTryID FROM quizTries WHERE quizID = " + quizID
 				+ " AND WHERE dateCreated >= NOW() - INTERVAL " + numOfDays + " DAY "
 				+ " ORDER BY score DESC LIMIT" + num;
 		return executeQuery(query);
 	}
 	
-	public ArrayList<Integer> getRecentTestTakers(int num, int numOfDays) throws Exception{
-		String query = "SELECT DISTINCT userID FROM quizTries WHERE quizID = " + this.quizID
+	public static ArrayList<Integer> getRecentTestTakers(int num, int quizID, int numOfDays) throws Exception{
+		String query = "SELECT DISTINCT userID FROM quizTries WHERE quizID = " + quizID
 				+ " AND WHERE dateCreated >= NOW() - INTERVAL " + numOfDays + " DAY "
 				+ " ORDER BY score DESC LIMIT" + num;
 		return executeQuery(query);
@@ -261,7 +276,7 @@ public class Quiz implements Serializable{
 	// Private helper methods
 	
 	// Return a set of IDs from a ResultSet
-	private ArrayList<Integer> resultSetToArray(ResultSet rs) throws Exception{
+	private static ArrayList<Integer> resultSetToArray(ResultSet rs) throws Exception{
 		ArrayList<Integer> result = new ArrayList<Integer>();
 		while(rs.next()){
 			result.add(rs.getInt(1)); 
@@ -270,7 +285,7 @@ public class Quiz implements Serializable{
 	}
 	
 	// Execute the given query, throws exception=
-	private ArrayList<Integer> executeQuery(String query) throws Exception{
+	private static ArrayList<Integer> executeQuery(String query) throws Exception{
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps = con.prepareStatement(query);
 		ps.executeUpdate();

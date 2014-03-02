@@ -29,4 +29,8 @@ public class Challenge extends Message {
 		accepted = true; 
 	}
 	
+	// Get the challenger's high score on this quiz
+	public double getChallengerHighScore() throws Exception{
+		return Quiz.getHighScore(fromID, quizID);
+	}
 }
