@@ -36,12 +36,10 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletContext context = getServletContext();
-		QuiznessAccountManager manager = (QuiznessAccountManager) context.getAttribute("manager");
-
 		HttpSession session = request.getSession();
 
+		QuiznessAccountManager manager = (QuiznessAccountManager) context.getAttribute("manager");
 		String userName = request.getParameter("login");		
-
 		String pw = request.getParameter("password");
 		
 		try {

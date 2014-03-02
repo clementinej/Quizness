@@ -26,45 +26,45 @@ public class CreateAccountServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletContext context = getServletContext();
-		
-		//grabs the manager.  Needs a typecast because returns an object
-		QuiznessAccountManager manager = (QuiznessAccountManager) context.getAttribute("manager");
-
 		HttpSession session = request.getSession();
-		
-		//what the user types in to "user name" the page will be stored in "userName"
+		QuiznessAccountManager manager = (QuiznessAccountManager) context.getAttribute("manager");
 		String userName = request.getParameter("login");		
-		session.setAttribute("login", userName);
-
-		//what the user types into the "password" form will be stored in "pw"
-		String pw = request.getParameter("password");
-		session.setAttribute("password", pw);
-
-		PrintWriter out = response.getWriter();
+		String pw = request.getParameter("password");		
+		String email = request.getParameter("email");
 		
 		try {
-			if(manager.createNewAccount(userName, pw, false)) {//go to "user welcome" page
-				RequestDispatcher dispatch = request.getRequestDispatcher("home.html"); 
-				dispatch.forward(request, response); 
-			} else {//go to "Account Name is in Use" page		
-				out.println("<!DOCTYPE html>");
-				out.println("<html>");
-				out.println("<head>");
-				out.println("<title>Create Account</title>");
-				out.println("</head>");
-				out.println("<body>");
-				out.println("<h1>The Name " + userName + " is Already In Use</h1>");
-				out.println("<p>Please enter another user name and password.</p>");
-				out.println("<form action=\"CreateAccountServlet\" method=\"post\">");
-				out.println("<p>User Name: <input type=\"text\" name=\"user name\" /></p>");
-				out.println("<p>Password: <input type=\"text\" name=\"password\"/><input type=\"submit\" value=\"Login\"/></p>");
-				out.println("</form>");
-				out.println("</body>");
-				out.println("</html>");	
+			if(manager.createNewAccount(userName, email, pw, false)) {//go to "user welcome" page
+				redirectToPage("site/home.html", request, response);	
+			} else {		
+				redirectToAccountIsInUse(response, userName);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	
+	private void redirectToPage(String pageName, HttpServletRequest request,
+		HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher dispatch = request.getRequestDispatcher(pageName); 
+		dispatch.forward(request, response); 		
+	}
+
+	private void redirectToAccountIsInUse(HttpServletResponse response, String userName) throws IOException {
+		PrintWriter out = response.getWriter();
+		out.println("<!DOCTYPE html>");
+		out.println("<html>");
+		out.println("<head>");
+		out.println("<title>Create Account</title>");
+		out.println("</head>");
+		out.println("<body>");
+		out.println("<h1>The Name " + userName + " is Already In Use</h1>");
+		out.println("<p>Please enter another user name and password.</p>");
+		out.println("<form action=\"CreateAccountServlet\" method=\"post\">");
+		out.println("<p>User Name: <input type=\"text\" name=\"user name\" /></p>");
+		out.println("<p>Password: <input type=\"text\" name=\"password\"/><input type=\"submit\" value=\"Login\"/></p>");
+		out.println("</form>");
+		out.println("</body>");
+		out.println("</html>");	
 	}
 }

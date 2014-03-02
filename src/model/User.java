@@ -70,12 +70,25 @@ public class User implements Serializable {
 	public static boolean nameIsAvailable(String userName) throws SQLException{
 		ServerConnection.open();
 		Connection con = ServerConnection.getConnection();
-		System.out.println("Reading from DB in Users");
 		Statement stmt = con.createStatement();
 		stmt.executeQuery("USE " + MYSQL_DATABASE_NAME);
 		ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username = \""+ userName + "\"");
 		rs.beforeFirst();
-		ServerConnection.close();
+		//ServerConnection.close();
+		if (!rs.next()){
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean emailIsAvailable(String email) throws SQLException{
+		ServerConnection.open();
+		Connection con = ServerConnection.getConnection();
+		Statement stmt = con.createStatement();
+		stmt.executeQuery("USE " + MYSQL_DATABASE_NAME);
+		ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE email = \""+ email + "\"");
+		rs.beforeFirst();
+		//ServerConnection.close();
 		if (!rs.next()){
 			return true;
 		}
@@ -86,12 +99,24 @@ public class User implements Serializable {
 		return friendsList;
 	}
 	
-	public static String getPasswordHash(String userName) throws SQLException{
+	public static String getPasswordHashFromUserName(String userName) throws SQLException{
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps;
 		String passwordHash = null;	
 		ps = con.prepareStatement("SELECT password FROM users WHERE username = ?");	
 		ps.setString(1, userName);
+		ResultSet rs = ps.executeQuery();
+		rs.first();
+		passwordHash = rs.getString("password");
+		return passwordHash;
+	}
+	
+	public static String getPasswordHashFromEmail(String email) throws SQLException{
+		Connection con = ServerConnection.getConnection();
+		PreparedStatement ps;
+		String passwordHash = null;	
+		ps = con.prepareStatement("SELECT password FROM users WHERE email = ?");	
+		ps.setString(1, email);
 		ResultSet rs = ps.executeQuery();
 		rs.first();
 		passwordHash = rs.getString("password");

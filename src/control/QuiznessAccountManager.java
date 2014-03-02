@@ -19,8 +19,8 @@ public class QuiznessAccountManager {
 	public QuiznessAccountManager() throws Exception {//initialize with two accounts
 	//	accounts = new HashMap<String, String>();
 		salt = "@#$%@#FERYS^%#$YSEAH#$E73452WE@#%3#$";
-		createNewAccount("Patrick", "1234", true);//add emails
-		createNewAccount("Molly", "FloPup", true);
+		createNewAccount("Patrick", "patrick@stanford.edu" ,"1234", true);//add emails
+		createNewAccount("Molly", "molly@dog.com","FloPup", true);
 	}
 
 	/*
@@ -28,37 +28,43 @@ public class QuiznessAccountManager {
 	 *  Returns false if the username is already taken.
 	 *  Adds a grain of salt to the password for extra security before hashing.
 	 */
-	public boolean createNewAccount(String userName, String pw, boolean isAdmin) throws Exception {
+	public boolean createNewAccount(String userName, String email, String pw, boolean isAdmin) throws Exception {
 		boolean accountFree = false;	
-		if(User.nameIsAvailable(userName)) { //read from database			
+		if(User.nameIsAvailable(userName) && User.emailIsAvailable(email)) { //read from database			
 			String unencryptedPlusSalt = pw + salt;
 			String hashedPW = generateHash(unencryptedPlusSalt);
-			String email = "";
 			String aboutMe = "";
 			String location = "";
 			User newUser = new User(isAdmin, userName, hashedPW, email, aboutMe, location);
 			model.ServerConnection.addUser(newUser);
 			accountFree = true;
 		}		
-		
 		return accountFree;
 	}
 	
 	/*
-	 * will return true if the userName and pw and hash function is in stored within the account manager.
+	 * Will return true if the login and pw and hash function is in stored within the account manager.
+	 * login string can either be an email or a username.
 	 */
-	public boolean validLogin(String userName, String pw) throws SQLException {
-		boolean validLogin = false;		
-		if(!User.nameIsAvailable(userName)) { //read from database
+	public boolean validLogin(String login, String pw) throws SQLException {
+		boolean validLogin = false;	
+		boolean loginFromUserName = !User.nameIsAvailable(login), loginFromEmail = false;
+		if(!loginFromUserName)
+			loginFromEmail = !User.emailIsAvailable(login);
+		
+		if(loginFromUserName || loginFromEmail) { //read from database
 			System.out.println("read from db");
 			String unencryptedPlusSalt = pw + salt;
 			String hashedPW = generateHash(unencryptedPlusSalt);
-			String stored_pw = User.getPasswordHash(userName);
+			String stored_pw = "";
+			if(loginFromUserName)
+				stored_pw = User.getPasswordHashFromUserName(login);
+			else if(loginFromEmail)
+				stored_pw = User.getPasswordHashFromEmail(login);
 			if(stored_pw.equals(hashedPW))//if password is correct
 				validLogin = true;
-			else //if incorrect password
-				validLogin = false;
-		}
+		} 
+		
 		return validLogin;
 	}
 	
@@ -105,10 +111,12 @@ public class QuiznessAccountManager {
 	public static void main(String[] args) throws Exception {
 		QuiznessAccountManager manager = new QuiznessAccountManager();
 		System.out.println("Start");
-		if(manager.createNewAccount("Lloyd", "ILikeCats29", true));
+		if(manager.createNewAccount("Lloyd2", "lglucin@stanford.edu","ILikeCats29", true));
 			System.out.println("Successfully Created New Account");
-		if(manager.validLogin("Lloyd", "ILikeCats29"))
+		if(manager.validLogin("Lloyd2", "ILikeCats29"))
 			System.out.println("Successful Login");
+		if(manager.validLogin("lglucin@stanford.edu", "ILikeCats29"))
+			System.out.println("Successful Login From email");
 		if(manager.validLogin("Patrick", "1234"))
 			System.out.println("Successful Login");
 	}

@@ -10,6 +10,7 @@ public class QuizTry implements Serializable {
 	private String tryID;
 	private int userID;
 	private int quizID;
+	private String userName;
 	private Quiz quiz;
 	private User user;
 	private double elapsedTime;
@@ -20,11 +21,12 @@ public class QuizTry implements Serializable {
 	private Date dateTaken;
 	private boolean isPractice;
 	
-	public QuizTry(String tryID, int userID, int quizID, boolean mode) throws Exception{
+	public QuizTry(String tryID, String userName, int quizID, boolean mode) throws Exception{
 		this.tryID = tryID;
-		this.userID = userID;
+		this.userName = userName;
+		this.userID = User.getUserID(userName);
 		this.quizID = quizID;
-		this.user = ServerConnection.getUser(userID);
+		this.user = ServerConnection.getUser(userName);
 		this.quiz = ServerConnection.getQuiz(quizID);
 
 		this.startTime = System.currentTimeMillis();
@@ -59,7 +61,7 @@ public class QuizTry implements Serializable {
 	public void saveProgress(ArrayList<String[]> responses) throws Exception{
 		elapsedTime = System.currentTimeMillis() - startTime;
 		this.responses = responses;
-		User user = ServerConnection.getUser(userID);
+		User user = ServerConnection.getUser(userName);
 		user.addTry(this);
 	}
 	

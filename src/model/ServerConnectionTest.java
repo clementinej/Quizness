@@ -10,7 +10,7 @@ public class ServerConnectionTest {
 	
 	private ArrayList<Question> questions = new ArrayList<Question>();	
 	//private Quiz quiz = new Quiz(1, "About Presidents", questions, true);
-	private User user = new User(true, "Patrick", "[imagineThisButHashed]", "pYoung@stanford.edu");
+	private User user = new User(true, "Patrick", "[imagineThisButHashed]", "pYoung@stanford.edu", "", "");
 	
 	@Test
 	public void testOpen() {
@@ -22,9 +22,9 @@ public class ServerConnectionTest {
 		ServerConnection.open();
 		int userID = ServerConnection.addUser(user);
 		user.setUserID(userID);
-		User currUser = ServerConnection.getUser(userID);
+		User currUser = ServerConnection.getUser(user.getUserName());
 		
-		assertEquals(currUser.getUserID(), userID);
+		assertEquals(currUser.getUserID(user.getUserName()), userID);
 		ServerConnection.close();
 	}
 
