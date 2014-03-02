@@ -11,8 +11,8 @@ public class User implements Serializable {
 	public static final String MYSQL_DATABASE_SERVER = "mysql-user.stanford.edu";
 	public static final String MYSQL_DATABASE_NAME = "c_cs108_wang8";
 
-	private int userID;
 	private boolean isAdmin;
+	private int userID;
 	private String userName;
 	private String pw;
 	private String email;
@@ -22,8 +22,13 @@ public class User implements Serializable {
 	private ArrayList<User> friendsList;
 	private ArrayList<Achievement> achievements;
 	private ArrayList<Integer> achievementKeys;
+	private String aboutMe;
+	private String location;
+	private int highScore;
 	
-	public User(boolean isAdmin, String userName, String pw, String email){
+
+	//constructor
+	public User(boolean isAdmin, String userName, String pw, String email, String aboutMe, String location){
 		this.isAdmin = isAdmin;
 		this.pw = pw;
 		this.userName = userName;
@@ -32,18 +37,45 @@ public class User implements Serializable {
 		this.quizzesTried = new ArrayList<QuizTry>();
 		this.friendsList = new ArrayList<User>();
 		this.achievementKeys = new ArrayList<Integer>();
+		this.achievements = new ArrayList<Achievement>();
 		numQuizzesTaken = 0;
+		this.aboutMe = aboutMe;
+		this.location = location;
+		this.highScore = -1;
 	}
+	
+	public String getHighScore(){
+		if (highScore == -1)
+			return "This user hasn't taken any quizzes yet!";
+		String score = "" + highScore;
+		return score;
+	}
+	public String getAboutMe(){
+		return aboutMe;
+	}
+		
+	public String getLocation(){
+		return location;
+	}
+	
+	public void setAboutMe(String aboutMe) {
+		this.aboutMe = aboutMe;
+	}
+	
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	
 	
 	public static boolean nameIsAvailable(String userName) throws SQLException{
 		ServerConnection.open();
 		Connection con = ServerConnection.getConnection();
-		PreparedStatement ps;
 		System.out.println("Reading from DB in Users");
 		Statement stmt = con.createStatement();
 		stmt.executeQuery("USE " + MYSQL_DATABASE_NAME);
 		ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username = \""+ userName + "\"");
 		rs.beforeFirst();
+		ServerConnection.close();
 		if (!rs.next()){
 			return true;
 		}
@@ -99,8 +131,8 @@ public class User implements Serializable {
 		}
 	}
 	
-	public void setUserID(int userID){
-		this.userID = userID;
+	public ArrayList<Achievement> getAchievements(){
+		return achievements;
 	}
 	
 	public static User getUser(String username) throws Exception{
@@ -124,8 +156,8 @@ public class User implements Serializable {
 		return isAdmin;
 	}
 	
-	public int getUserID(){
-		return userID;
+	public void setUserID(int userID){
+		this.userID = userID;
 	}
 	
 	public void makeQuiz(Quiz quiz){

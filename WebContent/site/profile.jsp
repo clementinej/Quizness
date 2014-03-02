@@ -14,31 +14,35 @@
    // COMMENT THIS IN. EVERYTHING SHOULD WORK. ALSO REMEMBER TO COMMENT IN THE 
    // MODEL IMPORT AT THE TOP OF THE PAGE. THAT'S THE BIT THAT I CAN'T COMPILE
    
-   //User u = (User)session.getAttribute("current user");
-   //String name = u.getName();
-   //int numQuizzesTaken = u.getQuizzesTaken();
-   //int highScore = u.getHighScore();
-   //int friends = u.getFriends().size();
-   //String aboutMe = u.getAboutMe(); // Allow user to add this as easy extension?
-	//ArrayList<String> achievements = u.getAcheivements();
-   //ArrayList<String> friends = u.getFriends();
+
+//   User u = (User)session.getAttribute("currUser");
+   model.User u = new model.User(false, "Gene Oetomo", "gene", "goetomo@stanford.edu", "my name is gene", "stanford");
+   String name = u.getUserName();
+   int numQuizzesTaken = u.numQuizzesTaken();
+//   int highScore = u.getHighScore();
+   int numFriends = u.getFriends().size();
+   String aboutMe = u.getAboutMe(); // Allow user to add this as easy extension?
+   String location = u.getLocation();
+	ArrayList<Achievement> achievements = u.getAchievements();
+   ArrayList<User> friends = u.getFriends();
+//   String highScore = u.getHighScore();
    
    // COMMENT OUT THESE PLACEHOLDERS. ALL THE FIELDS SHOULD BY DYNAMICALLY 
    // POPULATED BY THE DATA ABOVE
-	String name = "Clementine Jacoby";
-	int numQuizzesTaken = 187;
+// 	String name = "Clementine Jacoby";
+//	int numQuizzesTaken = 187;
 	int highScore = 490;
-	String numFriends = "24";
-   String location = "San Francisco, CA"; // Allow user to add this as easy extension?
-	String aboutMe = "I figured we could add this as an extension easily.";
-	ArrayList<String> achievements = new ArrayList<String>();
-	achievements.add("acheived!");
-	achievements.add("acheived!");
-	achievements.add("acheived!");
-	ArrayList<String> friends = new ArrayList<String>();
-	friends.add("Gene O.");
-	friends.add("Lloyd L.");
-	friends.add("Tony W.");
+//	String numFriends = "24";
+//   String location = "San Francisco, CA"; // Allow user to add this as easy extension?
+//	String aboutMe = "I figured we could add this as an extension easily.";
+//	ArrayList<String> achievements = new ArrayList<String>();
+//	achievements.add("acheived!");
+//	achievements.add("acheived!");
+//	achievements.add("acheived!");
+//	ArrayList<String> friends = new ArrayList<String>();
+//	friends.add("Gene O.");
+//	friends.add("Lloyd L.");
+//	friends.add("Tony W."); 
 
    %>
       <nav>
@@ -74,8 +78,8 @@
                <div class="boxy">
                   <p>Great Job!</p>
                   <div class="badgeCount">
-                  <%for(String a: achievements) { %>
-                     <p><%=a%></p>
+                  <%for(Achievement a: achievements) { %>
+                     <p><%=a.getAchievement()%></p>
                      <%} %>
 
                   </div>
@@ -90,9 +94,9 @@
                <div class="boxy">
                   <p>Your friends - 106 total</p>
                   <div class="friendslist clearfix">
-                  <% for(String f: friends) { %>
+                  <% for(User f: friends) { %>
                      <div class="friend">
-                        <span class="friendly"><a href="#"><%=f%></a></span>
+                        <span class="friendly"><a href="#"><%=f.getUserName()%></a></span>
                      </div>
                      <%} %>
                   </div>
