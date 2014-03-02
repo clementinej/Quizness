@@ -14,15 +14,15 @@
       //Get the user
       User user = (User)session.getAttribute("currUser");
       //Get the quiz try by id
-      QuizTry quizTry = QuizTry.getQuizTry(Integer.parseInt(request.getParameter("quizTryID")));
+  //    QuizTry quizTry = QuizTry.getQuizTry(Integer.parseInt(request.getParameter("quizTryID")));
       //Only let users see their own quiz results
-      if(quizTry.getUserID() != user.getUserID() && !user.isAdmin()) {
-      	return;
-      }
+  //    if(quizTry.getUserID() != user.getUserID() && !user.isAdmin()) {
+    //  	return;
+  //    }
       //Only let users see completed quizes
-      if(quizTry.isInProgress()) {
-      	return;
-      }
+      //if(quizTry.isInProgress()) {
+   //   	return;
+    //  }
       %>
    <body>
       <div class="container">
@@ -33,9 +33,9 @@
          </div>
          <form method="post" action="/SaveResults">
             <%
-               double score = quizTry.getScore();
-               double time = quizTry.getTime();
-               ArrayList<String[]> responses = quizTry.getResponses();
+ //              double score = quizTry.getScore();
+ //              double time = quizTry.getTime();
+ //              ArrayList<String[]> responses = quizTry.getResponses();
                %>
             <!-- Potentially do a switch statement on score and give them different messages 
                depending on how well they did.  -->

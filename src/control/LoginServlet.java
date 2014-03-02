@@ -27,7 +27,6 @@ public class LoginServlet extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//ignore since we don't use
-
 	}
 	
 	/*
@@ -45,8 +44,9 @@ public class LoginServlet extends HttpServlet {
 		try {
 			if(manager.validLogin(userName, pw)) {
 				User newUser = (User) session.getAttribute("current user");
+				newUser = setCurrentUser(newUser, userName);
+	//			System.out.println("current user set to "+ newUser.getUserName());
 				session.setAttribute("current user", newUser);
-				setCurrentUser(newUser, userName);
 				redirectToPage("site/home.html", request, response);
 			} else { 
 				redirectToTryAgain(response);
@@ -60,12 +60,17 @@ public class LoginServlet extends HttpServlet {
 	/*
 	 * sets current user
 	 */
-	private void setCurrentUser(User newUser, String userName) {
+	private User setCurrentUser(User newUser, String userName) {
+		System.out.println("In setCurrentUser");
+		ServerConnection.open();
 		try {
 			newUser = ServerConnection.getUser(userName);
+			System.out.println("username = " + newUser.getUserName());
 		} catch (Exception e) {
+			System.out.println("you're fucked");
 			e.printStackTrace();
 		}
+		return newUser;
 	}
 	
 	
@@ -93,7 +98,7 @@ public class LoginServlet extends HttpServlet {
 		out.println("<h1>Please Try Again</h1>");
 		out.println("<p>Either your user name or password is incorrect. Please try again.</p>");
 		out.println("<form action=\"LoginServlet\" method=\"post\">");
-		out.println("<p>User Name: <input type=\"text\" name=\"user name\" /></p>");
+		out.println("<p>User Name: <input type=\"text\" name=\"login\" /></p>");
 		out.println("<p>Password: <input type=\"password\" name=\"password\"/><input type=\"submit\" value=\"Login\"/ ></p>");
 		out.println("</form>");
 		out.println("<p><a href=\"createnewaccount.html\">Create New Account</a></p>");

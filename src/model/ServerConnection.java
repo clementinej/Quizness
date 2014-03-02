@@ -78,7 +78,7 @@ public class ServerConnection {
 	// Otherwise return -1;
 	public static int addUser(User user) throws Exception {
 		String query = "INSERT INTO users (username, password, user, email) VALUES(?,?,?,?)";
-		PreparedStatement ps = con.prepareStatement(query);
+		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		ps.setString(1, user.getUserName());
 		ps.setString(2, user.getPassword());
 		System.out.println(user.getPassword());
@@ -100,7 +100,7 @@ public class ServerConnection {
 	
 	// Return an User object from the database given the userID
 	public static User getUser(String userName) throws Exception {
-		PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE username = ?");
+		PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE username = ?", Statement.RETURN_GENERATED_KEYS);
 		ps.setString(1, userName);
 		ResultSet rs = ps.executeQuery();
 		if(rs.next()) return (User) convertToObject(rs, "user");
@@ -110,7 +110,7 @@ public class ServerConnection {
 	// Add a quiz to the database
 	public static int addQuiz(Quiz quiz) throws Exception {
 		String query = "INSERT INTO quizzes (quiz, numTimesTaken, dateCreated) VALUES(?, ?, ?)";
-		PreparedStatement ps = con.prepareStatement(query); 
+		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
 		Date date = new Date();
 		Timestamp timestamp = new Timestamp(date.getTime());
 		
@@ -124,7 +124,7 @@ public class ServerConnection {
 	
 	// Return a quiz from the database given the quizID
 	public static Quiz getQuiz(int quizID) throws Exception {
-		PreparedStatement ps = con.prepareStatement("SELECT * FROM quizzes WHERE quizID = ?");
+		PreparedStatement ps = con.prepareStatement("SELECT * FROM quizzes WHERE quizID = ?", Statement.RETURN_GENERATED_KEYS);
 		ps.setInt(1, quizID);
 		ResultSet rs = ps.executeQuery();
 		rs.next();
@@ -149,7 +149,7 @@ public class ServerConnection {
 	
 	// Return a quizTry from the database given the quizID
 	public static QuizTry getQuizTry(int quizTryID) throws Exception {
-		PreparedStatement ps = con.prepareStatement("SELECT * FROM quizTries WHERE quizTryID = ?");
+		PreparedStatement ps = con.prepareStatement("SELECT * FROM quizTries WHERE quizTryID = ?", Statement.RETURN_GENERATED_KEYS);
 		ps.setInt(1, quizTryID);
 		ResultSet rs = ps.executeQuery();
 		rs.next();

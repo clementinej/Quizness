@@ -58,18 +58,19 @@ public class CreateServlet extends HttpServlet {
 		session.setAttribute("question list", questionList);
 			
 		User currUser = (User) session.getAttribute("current user");
+		System.out.println("In CreateServlet, user = " + currUser.getUserName());
 		int creatorID = getUserID(currUser);	
 		if(creatorID == -1) return; //should redirect to a "You are not logged in" page
 		
 		if(getUserIntent(session, request).equals("add question")) {
 			Question newQuestion = constructQuestion(session, request);
 			questionList.add(newQuestion);			
-			forwardToPage("create-quiz.jsp", request, response);
+			forwardToPage("quiz/create-quiz.jsp", request, response);
 
 		} else if(getUserIntent(session, request).equals("create quiz")) {
 			makeQuizAndAddToDB(questionList, request, currUser);	
 			clearQuestionList(questionList);
-			forwardToPage("create-quiz.jsp", request, response);		
+			forwardToPage("quiz/create-quiz.jsp", request, response);		
 		}	
 	}
 	
@@ -83,6 +84,7 @@ public class CreateServlet extends HttpServlet {
 	private int getUserID(User currUser) {
 		int creatorID = -1;
 		try {
+			System.out.println("currUser.getUserName =" + currUser.getUserName());
 			creatorID = User.getUserID(currUser.getUserName());
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -101,10 +103,7 @@ public class CreateServlet extends HttpServlet {
 		return userIntent;
 	}
 	
-	private void forwardToPage(String string, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatch = request.getRequestDispatcher("create-quiz.jsp"); 
-		dispatch.forward(request, response); 
-	}
+
 
 	private void makeQuizAndAddToDB(ArrayList<Question> questionList, HttpServletRequest request, User currUser) {
 		int creatorID = getUserID(currUser);	
@@ -162,7 +161,7 @@ public class CreateServlet extends HttpServlet {
 		int solNum = 0;
 		while(iter.hasNext()) {	
 			String answerName = iter.next();
-			if(answerName.indexOf("correct_answer_key") == -1) {}//ignore
+			if(answerName.indexOf("correct_answer_text") == -1) {}//ignore
 			else {
 				Set<String> synonymsOfAnswerSet = new HashSet<String>();
 				String[] synonyms = answersMap.get(answerName);
@@ -216,6 +215,14 @@ public class CreateServlet extends HttpServlet {
 		Map<String, String[]> answersMap = request.getParameterMap();
 		String choices[] = answersMap.get("incorrect_answer_key");
 		return choices;
+	}
+	
+	/*
+	 * Forwards to specified page.  I might have to hard code it again here.
+	 */
+	private void forwardToPage(String page, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher dispatch = request.getRequestDispatcher(page); 
+		dispatch.forward(request, response); 
 	}
 	
 	

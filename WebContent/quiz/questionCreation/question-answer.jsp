@@ -5,7 +5,7 @@
 </head>
 <body>
    <div class="container">
-   <form method="post" action="../CreateServlet" id="signup">
+   <form method="post" action="../../CreateServlet" id="signup">
       <div class="header">
          <h3>Create a Question</h3>
          <p>When you're done, click "Add Question" to return to creating your quiz.</p>
@@ -24,7 +24,7 @@
                   <th>Score</th>
                   <tbody>
                      <tr>
-                        <td><input type="name" name="correct_answer" style="width:100%" placeholder="Solution"></td>
+                        <td><input type="name" name="correct_answer_text" style="width:100%" placeholder="Solution"></td>
                         <td><input type="name" name="correct_answer_score" style="width:100%"/></td>
                      </tr>
                   </tbody>

@@ -11,7 +11,7 @@
    --%>
 <body>
    <div class="container">
-      <form method="post" action="../CreateServlet" id="signup">
+      <form method="post" action="../../CreateServlet" id="signup">
          <div class="header">
             <h3>Create a Question</h3>
             <p>Click "Add Question!" to return to creating your quiz.</p>
@@ -30,7 +30,7 @@
                   <tbody>
                      <tr>
                      	<td><input type="name" name="correct_answer_blank" style="width:100%"></td>
-                        <td><input type="name" name="correct_answer_key" style="width:100%" placeholder="Solution"></td>
+                        <td><input type="name" name="correct_answer_text" style="width:100%" placeholder="Solution"></td>
                         <td><input type="name" name="correct_answer_score" style="width:100%" /></td>
                      </tr>
                     </tbody>
@@ -57,7 +57,7 @@
              var body = document.getElementById("contents");
              body.insertAdjacentHTML('beforeend',  '<tr>' +
           	'<td><input type="name" name="correct_answer_blank" style="width:100%"></td>'+
-            '<td><input type="name" name="correct_answer_key" style="width:100%" placeholder="Solution"></td>' +
+            '<td><input type="name" name="correct_answer_text" style="width:100%" placeholder="Solution"></td>' +
             '<td><input type="name" name="correct_answer_score" style="width:100%" /></td>' +
          	'</tr>');
              body.appendChild(newChild);
@@ -67,7 +67,7 @@
          	var body = document.getElementById("contents");
          	body.insertAdjacentHTML('beforeend',	'<tr>' +
          			'<td><input type="name" name="correct_syn_blank" style="width:100%"></td>' +
-         			'<td><input type="name" name="correct_syn_key" style="width:100%" placeholder="Synonym"></td>' +
+         			'<td><input type="name" name="correct_syn_text" style="width:100%" placeholder="Synonym"></td>' +
          			'<td><input type="name" name="correct_syn_score" style="width:100%" /></td>' +
          			'</tr>');
          	body.appendChild(newChild);

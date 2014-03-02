@@ -4,10 +4,17 @@
    <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
 </head>
 <%--
-   User currUser = (User) session.getAttribute("currentUser");
-   int currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
-   Quiz currQuiz = Quiz.getQuiz(currQuizID);
-   if(!currUser.isAdmin() && currQuiz.getUserID() != currUser.getUserID()) return;
+	String forwardTo = "../CreateServlet";
+   	Integer comingFromServlet = (Integer) session.getAttribute("coming from servlet");
+	if(comingFromServlet > 0) {
+		forwardTo = "CreateServlet";
+		comingFromServlet--;
+	}
+	session.setAttribute("coming from servlet", comingFromServlet);
+	//User currUser = (User) session.getAttribute("current user");
+   //int currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
+   //Quiz currQuiz = Quiz.getQuiz(currQuizID);
+   //if(!currUser.isAdmin() && currQuiz.getUserID() != currUser.getUserID()) return;
    --%>
 <body>
    <div class="container">
@@ -48,6 +55,7 @@
             <tr>
                <th>
                   <input type="hidden" name="quiz_id" value=""/>
+                  <input type="hidden" name="intent" value="create quiz"/>
                   <select name="question-type" id="question-type">
                      <option value="0" selected></option>
                      <option value="question-answer">Question-Answer</option>

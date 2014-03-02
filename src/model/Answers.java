@@ -1,13 +1,18 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 //import com.sun.tools.javac.util.List;
 
-public class Answers {
+public class Answers implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Set<String>> answers;
 	
 	/*

@@ -6,6 +6,10 @@ import java.sql.*;
 
 public class User implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6009362599324498971L;
 	public static final String MYSQL_USERNAME = "ccs108wang8";
 	public static final String MYSQL_PASSWORD = "vohpaifa";
 	public static final String MYSQL_DATABASE_SERVER = "mysql-user.stanford.edu";
@@ -22,6 +26,7 @@ public class User implements Serializable {
 	private ArrayList<User> friendsList;
 	private ArrayList<Achievement> achievements;
 	private ArrayList<Integer> achievementKeys;
+	private ArrayList<FriendRequest> friendRequests;
 	private String aboutMe;
 	private String location;
 	private int highScore;
@@ -38,10 +43,133 @@ public class User implements Serializable {
 		this.friendsList = new ArrayList<User>();
 		this.achievementKeys = new ArrayList<Integer>();
 		this.achievements = new ArrayList<Achievement>();
+		this.friendRequests = new ArrayList<FriendRequest>();
 		numQuizzesTaken = 0;
 		this.aboutMe = aboutMe;
 		this.location = location;
 		this.highScore = -1;
+	}
+
+	
+	
+/*
+ * Achievements section. Adds the achievement if it doesn't already exist
+ */
+	public void addAchievement(Achievement achievement){
+		int key = achievement.getKey();
+		if (!achievementKeys.contains(key)){
+			achievementKeys.add(key);
+			achievements.add(achievement);
+		}
+	}
+	
+	public ArrayList<Achievement> getAchievements(){
+		return achievements;
+	}
+	
+	
+/*
+ * QuizTry Section
+ */
+	//adds the current QuizTry to the user's history. if the QuizTry already existed and was
+	//saved but unfinished, it just replaces it with the new one
+	public void addTry(QuizTry quizTry){
+		int index = quizzesTried.indexOf(quizTry);
+		if (index == -1){
+			quizzesTried.add(quizTry);
+		} else {
+			quizzesTried.set(index, quizTry);
+		}
+	}
+	
+	public void makeQuiz(Quiz quiz){
+		quizzesMade.add(quiz);
+	}
+	
+	public void deleteQuiz(Quiz quiz){
+		quizzesMade.remove(quiz);
+	}
+
+	public int numQuizzesTaken() {
+		return numQuizzesTaken;
+	}
+	
+	
+	
+	
+/*Everything friend related
+ * getFriends
+ * getNumFriends
+ * addFriend
+ * deleteFriend
+ * getFriendRequests
+ * hasPendingFriendRequests
+ * 
+ * STATIC: createFriendRequest
+ */
+	public ArrayList<User> getFriends() {
+		return friendsList;
+	}
+	
+	public int getNumFriends(){
+		return friendsList.size();
+	}
+	
+	public void addFriend(User friend){
+		friendsList.add(friend);
+	}
+	
+	public void deleteFriend(User friend){
+		friendsList.remove(friend);
+	}
+	
+	//adds the same friend request to both users
+	public static void createFriendRequest(String fromUser, String toUser, String subject, String body) throws Exception{
+		FriendRequest request = new FriendRequest(fromUser, toUser, subject, body);
+		User userA = ServerConnection.getUser(fromUser);
+		User userB = ServerConnection.getUser(toUser);
+		userA.addFriendRequest(request);
+		userB.addFriendRequest(request);	
+	}
+	
+	public void deleteFriendRequest(FriendRequest request){
+		friendRequests.remove(request);
+	}
+	
+	public void addFriendRequest(FriendRequest request){
+		if (!friendRequests.contains(request)){
+			friendRequests.add(request);
+		}
+	}
+	
+	public ArrayList<FriendRequest> getFriendRequests(){
+		return friendRequests;
+	}
+	
+	public boolean hasPendingFriendRequests(){
+		if (friendRequests.size() > 0)
+			return true;
+		return false;
+	}
+	
+	
+
+	
+	
+/*Random functions that return the stored variable of User 
+ * 
+ */
+	
+	public static User getUser(String username) throws Exception{
+		return ServerConnection.getUser(username);
+	}
+
+	public boolean isAdmin(){
+		return isAdmin;
+	}
+	
+	public void setUserID(int userID){
+		this.userID = userID;
 	}
 	
 	//returns a string of the high score. if there is no score stored, it returns a string
@@ -99,10 +227,6 @@ public class User implements Serializable {
 		}
 		return false;
 	}
-	
-	public ArrayList<User> getFriends() {
-		return friendsList;
-	}
 
 	//opens the database to grab the password hash from username
 	public static String getPasswordHashFromUserName(String userName) throws SQLException{
@@ -154,55 +278,5 @@ public class User implements Serializable {
 		return email;
 	}
 	
-	//adds the achievement is it has not already been added
-	public void addAchievement(Achievement achievement){
-		int key = achievement.getKey();
-		if (!achievementKeys.contains(key)){
-			achievementKeys.add(key);
-			achievements.add(achievement);
-		}
-	}
-	
-	public ArrayList<Achievement> getAchievements(){
-		return achievements;
-	}
-	
-	public static User getUser(String username) throws Exception{
-		return ServerConnection.getUser(username);
-	}
-	
-	//adds the current QuizTry to the user's history. if the QuizTry already existed and was
-	//saved but unfinished, it just replaces it with the new one
-	public void addTry(QuizTry quizTry){
-		int index = quizzesTried.indexOf(quizTry);
-		if (index == -1){
-			quizzesTried.add(quizTry);
-		} else {
-			quizzesTried.set(index, quizTry);
-		}
-	}
-	
-	public void addFriend(User friend){
-		friendsList.add(friend);
-	}
-	
-	public boolean isAdmin(){
-		return isAdmin;
-	}
-	
-	public void setUserID(int userID){
-		this.userID = userID;
-	}
-	
-	public void makeQuiz(Quiz quiz){
-		quizzesMade.add(quiz);
-	}
-	
-	public void deleteQuiz(Quiz quiz){
-		quizzesMade.remove(quiz);
-	}
 
-	public int numQuizzesTaken() {
-		return numQuizzesTaken;
-	}
 }
