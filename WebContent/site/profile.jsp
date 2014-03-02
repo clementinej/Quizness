@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
    pageEncoding="ISO-8859-1"%>
-<%--@ page import="model.*" --%>
+<%@ page import="model.*" %>
 <%@ page import="java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
@@ -14,7 +14,7 @@
    // COMMENT THIS IN. EVERYTHING SHOULD WORK. ALSO REMEMBER TO COMMENT IN THE 
    // MODEL IMPORT AT THE TOP OF THE PAGE. THAT'S THE BIT THAT I CAN'T COMPILE
    
-   //User u = (User)session.getAttribute("currUser");
+   //User u = (User)session.getAttribute("current user");
    //String name = u.getName();
    //int numQuizzesTaken = u.getQuizzesTaken();
    //int highScore = u.getHighScore();

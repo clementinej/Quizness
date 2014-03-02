@@ -11,4 +11,6 @@ public abstract class Question implements Serializable{
 	abstract public double getPoints(String[] response);
 	
 	abstract public String getQuestion();
+	
+	abstract public double getMaxPoints();
 }

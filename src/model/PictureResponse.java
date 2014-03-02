@@ -31,6 +31,11 @@ public class PictureResponse extends Question {
 	public double getPoints(String[] response) {
 		return pointValue * answer.getNumCorrect(response);
 	}
+	
+	@Override
+	public double getMaxPoints() {
+		return pointValue;
+	}
 
 	//Return the question
 	@Override

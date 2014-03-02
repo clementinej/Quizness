@@ -18,7 +18,9 @@ public class Quiz implements Serializable{
 	//private int createTime;
 	private boolean hasPracticeMode;
 	private boolean hasRandomMode; 
-	private boolean hasTimedMode; 
+	private boolean hasTimedMode;
+	private boolean immediateCorrection;
+	private boolean multiplePages;
 	
 	
 	private String description; 
@@ -35,8 +37,9 @@ public class Quiz implements Serializable{
 	private String dateLastPlayed;
 	private int numOfTimesPlayed;
 
-	public Quiz(int creatorID, int maxScore, String description, String title, ArrayList<Question> questions, 
-			boolean hasPracticeMode, boolean hasRandomMode, boolean hasTimedMode){
+	public Quiz(int creatorID, double maxScore, String description, String title, ArrayList<Question> questions, 
+			boolean hasPracticeMode, boolean hasRandomMode, boolean hasTimedMode, boolean immediateCorrection,
+				boolean multiplePages){
 		this.questions = questions;
 		this.creatorID = creatorID; 
 		this.maxScore = maxScore;
@@ -44,6 +47,8 @@ public class Quiz implements Serializable{
 		this.hasPracticeMode = hasPracticeMode;
 		this.hasRandomMode = hasRandomMode;
 		this.hasTimedMode = hasTimedMode; 
+		this.immediateCorrection = immediateCorrection;
+		this.multiplePages = multiplePages;
 		
 		this.numOfTimesPlayed = 0;
 		
@@ -112,6 +117,16 @@ public class Quiz implements Serializable{
 	// Returns true if timed mode is available
 	public boolean hasTimedMode(){
 		return hasTimedMode;
+	}
+	
+	//Returns true if immediateCorrection setting is on
+	public boolean immediateCorrection() {
+		return immediateCorrection();
+	}
+	
+	//Returns true if multiple pages setting is on
+	public boolean multiplePages() {
+		return multiplePages;
 	}
 	
 	// Return the description of the quiz

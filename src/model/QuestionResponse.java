@@ -33,6 +33,11 @@ public class QuestionResponse extends Question {
 		double fractionCorrect = (double)answers.getNumCorrect(responses) / (double)answers.numEntries();
 		return fractionCorrect * pointValue;
 	}
+	
+	@Override
+	public double getMaxPoints() {
+		return pointValue;
+	}
 
 	//returns the question
 	@Override

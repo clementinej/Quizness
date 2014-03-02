@@ -23,7 +23,6 @@ public class User implements Serializable {
 	private ArrayList<Achievement> achievements;
 	private ArrayList<Integer> achievementKeys;
 	
-	//constructor
 	public User(boolean isAdmin, String userName, String pw, String email){
 		this.isAdmin = isAdmin;
 		this.pw = pw;
@@ -36,8 +35,6 @@ public class User implements Serializable {
 		numQuizzesTaken = 0;
 	}
 	
-
-	//genes comment
 	public static boolean nameIsAvailable(String userName) throws SQLException{
 		ServerConnection.open();
 		Connection con = ServerConnection.getConnection();
@@ -46,10 +43,6 @@ public class User implements Serializable {
 		Statement stmt = con.createStatement();
 		stmt.executeQuery("USE " + MYSQL_DATABASE_NAME);
 		ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username = \""+ userName + "\"");
-//
-//		ps = con.prepareStatement("SELECT * FROM users WHERE username = \""+ userName + "\"");
-//		ps.setString(1, userName);
-//		ResultSet rs = 
 		rs.beforeFirst();
 		if (!rs.next()){
 			return true;
@@ -68,10 +61,22 @@ public class User implements Serializable {
 		ps = con.prepareStatement("SELECT password FROM users WHERE username = ?");	
 		ps.setString(1, userName);
 		ResultSet rs = ps.executeQuery();
-		//rs.beforeFirst();
 		rs.first();
 		passwordHash = rs.getString("password");
 		return passwordHash;
+	}
+	
+	
+	public static int getUserID(String userName) throws SQLException{
+		Connection con = ServerConnection.getConnection();
+		PreparedStatement ps;
+		int id = -1;	
+		ps = con.prepareStatement("SELECT id FROM users WHERE username = ?");	
+		ps.setString(1, userName);
+		ResultSet rs = ps.executeQuery();
+		rs.first();
+		id = rs.getInt("id");
+		return id;
 	}
 	
 	public String getUserName(){
@@ -98,8 +103,8 @@ public class User implements Serializable {
 		this.userID = userID;
 	}
 	
-	public static User getUser(int userID) throws Exception{
-		return ServerConnection.getUser(userID);
+	public static User getUser(String username) throws Exception{
+		return ServerConnection.getUser(username);
 	}
 	
 	public void addTry(QuizTry quizTry){

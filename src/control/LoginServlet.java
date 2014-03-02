@@ -9,11 +9,14 @@ import java.util.Enumeration;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import model.*;
 
 /**
  * Servlet implementation class LoginServlet
@@ -26,59 +29,77 @@ public class LoginServlet extends HttpServlet {
 		//ignore since we don't use
 
 	}
+	
+	/*
+	 * If a user provides a valid login, then log him in and set him as the current user.  
+	 * Otherwise, redirect him to the try again page.
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-ServletContext context = getServletContext();
-		
-		//grabs the manager.  Needs a typecast because returns an object
+		ServletContext context = getServletContext();
 		QuiznessAccountManager manager = (QuiznessAccountManager) context.getAttribute("manager");
 
 		HttpSession session = request.getSession();
-		
-		//what the user types in to "user name" the page will be stored in "userName"
+
 		String userName = request.getParameter("login");		
-		session.setAttribute("login", userName);
-		
-		
-		//what the user types into the "password" form will be stored in "pw"
+
 		String pw = request.getParameter("password");
-		session.setAttribute("password", pw);
-		
-		PrintWriter out = response.getWriter();
 		
 		try {
-			if(manager.validLogin(userName, pw)) {//go to "user welcome" page
-				RequestDispatcher dispatch = request.getRequestDispatcher("home.html"); 
-				dispatch.forward(request, response); 
-//			out.println("<!DOCTYPE html>");
-//			out.println("<html>");
-//			out.println("<head>");
-//			out.println("<title>Welcome " + userName + "</title>");
-//			out.println("</head>");
-//			out.println("<body>");
-//			out.println("<h1>Welcome " + userName + "</h1>");
-//			out.println("</body>");
-//			out.println("</html>");
-				
-			} else { //go to "Please Try Again" page
-				out.println("<!DOCTYPE html>");
-				out.println("<html>");
-				out.println("<head>");
-				out.println("<title>Information Incorrect</title>");
-				out.println("</head>");
-				out.println("<body>");
-				out.println("<h1>Please Try Again</h1>");
-				out.println("<p>Either your user name or password is incorrect. Please try again.</p>");
-				out.println("<form action=\"LoginServlet\" method=\"post\">");
-				out.println("<p>User Name: <input type=\"text\" name=\"user name\" /></p>");
-				out.println("<p>Password: <input type=\"password\" name=\"password\"/><input type=\"submit\" value=\"Login\"/ ></p>");
-				out.println("</form>");
-				out.println("<p><a href=\"createnewaccount.html\">Create New Account</a></p>");
-				out.println("</body>");
-				out.println("</html>");	
+			if(manager.validLogin(userName, pw)) {
+				User newUser = (User) session.getAttribute("current user");
+				session.setAttribute("current user", newUser);
+				setCurrentUser(newUser, userName);
+				redirectToPage("site/home.html", request, response);
+			} else { 
+				redirectToTryAgain(response);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
+		}
+	}
+	
+
+	/*
+	 * sets current user
+	 */
+	private void setCurrentUser(User newUser, String userName) {
+		try {
+			newUser = ServerConnection.getUser(userName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/*
+	 * redirects to homepage
+	 */
+	private void redirectToPage(String pageName, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher dispatch = request.getRequestDispatcher(pageName); 
+		dispatch.forward(request, response); 
+	}
+	
+	
+	/*
+	 * redirects to try again page
+	 */
+	private void redirectToTryAgain(HttpServletResponse response) throws IOException {
+		PrintWriter out = response.getWriter();
+		out.println("<!DOCTYPE html>");
+		out.println("<html>");
+		out.println("<head>");
+		out.println("<title>Information Incorrect</title>");
+		out.println("</head>");
+		out.println("<body>");
+		out.println("<h1>Please Try Again</h1>");
+		out.println("<p>Either your user name or password is incorrect. Please try again.</p>");
+		out.println("<form action=\"LoginServlet\" method=\"post\">");
+		out.println("<p>User Name: <input type=\"text\" name=\"user name\" /></p>");
+		out.println("<p>Password: <input type=\"password\" name=\"password\"/><input type=\"submit\" value=\"Login\"/ ></p>");
+		out.println("</form>");
+		out.println("<p><a href=\"createnewaccount.html\">Create New Account</a></p>");
+		out.println("</body>");
+		out.println("</html>");	
 	}
 }

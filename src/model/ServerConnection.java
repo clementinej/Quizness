@@ -99,9 +99,9 @@ public class ServerConnection {
 	*/
 	
 	// Return an User object from the database given the userID
-	public static User getUser(int userID) throws Exception {
-		PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE id = ?");
-		ps.setInt(1, userID);
+	public static User getUser(String userName) throws Exception {
+		PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE username = ?");
+		ps.setString(1, userName);
 		ResultSet rs = ps.executeQuery();
 		if(rs.next()) return (User) convertToObject(rs, "user");
 		return null; 

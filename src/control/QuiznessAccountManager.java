@@ -36,8 +36,10 @@ public class QuiznessAccountManager {
 			String email = "";
 			User newUser = new User(isAdmin, userName, hashedPW, email);
 			model.ServerConnection.addUser(newUser);
+			//newUser.setUserID(userName);
 			accountFree = true;
 		}		
+		
 		return accountFree;
 	}
 	
