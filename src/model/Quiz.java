@@ -35,10 +35,7 @@ public class Quiz implements Serializable{
 	private String dateLastPlayed;
 	private int numOfTimesPlayed;
 
-
-	
-	//NOTE: CONSTRUCTOR SHOULD NOT STORE QUIZ ID.
-	public Quiz(int quizID, int creatorID, int maxScore, String description, String title, ArrayList<Question> questions, 
+	public Quiz(int creatorID, int maxScore, String description, String title, ArrayList<Question> questions, 
 			boolean hasPracticeMode, boolean hasRandomMode, boolean hasTimedMode){
 		this.questions = questions;
 		this.creatorID = creatorID; 
