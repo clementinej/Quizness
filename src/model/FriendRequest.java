@@ -7,11 +7,15 @@ import java.util.Date;
 
 public class FriendRequest extends Message {
 	
-	private boolean accepted; 
+	private boolean accepted;
+	private String fromUserName;
+	private String toUserName;
 	
-	public FriendRequest(int fromID, int toID, String subject, String body){
-		this.fromID = fromID;
-		this.toID = toID; 
+	public FriendRequest(String fromUserName, String toUserName, String subject, String body){
+		//this.fromID = fromID;
+		//this.toID = toID;
+		this.fromUserName = fromUserName;
+		this.toUserName = toUserName;
 		this.unread = true;
 		this.subject = subject;
 		this.body = body; 
@@ -26,6 +30,14 @@ public class FriendRequest extends Message {
 			accepted = true; 
 		}
 		updateFriendGraph(fromID, toID);
+		addFriends();
+	}
+	
+	private void addFriends() throws Exception{
+		User fromUser = ServerConnection.getUser(fromUserName);
+		User toUser = ServerConnection.getUser(toUserName);
+		fromUser.addFriend(toUser);
+		toUser.addFriend(fromUser);
 	}
 	
 	// Return the status of this request
