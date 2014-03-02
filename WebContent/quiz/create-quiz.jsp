@@ -51,7 +51,6 @@
                   <select name="question-type" id="question-type">
                      <option value="0" selected></option>
                      <option value="question-answer">Question-Answer</option>
-                     <option value="question-answer2">Question-Answer</option>
                      <option value="picture-response">Picture-Response</option>
                      <option value="multiple-answer">Multiple Answer</option>
                      <option value="fill-in-blanks">Fill-in-the-Blank</option>
