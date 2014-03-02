@@ -1,9 +1,28 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Message {
+public class Message implements Serializable {
 		public int id;
+		public int fromID;
+		public int toID;
+		public boolean unread;
+		public String subject;
+		public String body;
+		public Date sentAt;
+		public boolean viewed;
+		
+		// Add a message to the database
+		public static int addMessage(Message message) throws Exception{
+			return ServerConnection.addMessage(message);
+		}
+		
+		// Return a message from the database
+		public static Message getMessage(int messageID) throws Exception{
+			return ServerConnection.getMessage(messageID);
+		}
+		
 		public int getId() {
 			return id;
 		}
@@ -40,13 +59,6 @@ public class Message {
 		public void setBody(String body) {
 			this.body = body;
 		}
-		public int fromID;
-		public int toID;
-		public boolean unread;
-		public String subject;
-		public String body;
-		public Date sentAt;
-		public boolean viewed;
 		
 		public Date getSentAt() {
 			return sentAt;
