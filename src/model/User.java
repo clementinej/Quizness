@@ -36,6 +36,7 @@ public class User implements Serializable {
 		numQuizzesTaken = 0;
 	}
 	
+	//lloyd's comment
 	public static boolean nameIsAvailable(String userName) throws SQLException{
 		ServerConnection.open();
 		Connection con = ServerConnection.getConnection();
