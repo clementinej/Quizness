@@ -184,12 +184,12 @@ public class Quiz implements Serializable{
 	}
 	
 	// Return the quiz given the ID
-	public Quiz getQuiz(int quizID){
+	public Quiz getQuiz(int quizID) throws Exception{
 		return ServerConnection.getQuiz(quizID);
 	}
 	
 	// Return the top x number of quizzes
-	public ArrayList<Integer> getTopQuizzes(int num){
+	public ArrayList<Integer> getTopQuizzes(int num) throws Exception{
 		Connection con = ServerConnection.getConnection();
 		String query = "SELECT quizID FROM quizzes ORDER BY numTimesTaken DESC LIMIT" + num;
 		PreparedStatement ps = con.prepareStatement(query);
@@ -198,7 +198,7 @@ public class Quiz implements Serializable{
 	}
 	
 	// Return x number of recently played quizzes
-	public ArrayList<Integer> getRecentlyPlayedQuizzes(int num){
+	public ArrayList<Integer> getRecentlyPlayedQuizzes(int num) throws Exception{
 		Connection con = ServerConnection.getConnection();
 		String query = "SELECT quizID FROM quizzes ORDER BY dateLastPlayed DESC LIMIT" + num;
 		PreparedStatement ps = con.prepareStatement(query);
@@ -207,7 +207,7 @@ public class Quiz implements Serializable{
 	}
 	
 	// Return x number of recently created quizzes
-	public ArrayList<Integer> getRecentlyCreatedQuizzes(int num){
+	public ArrayList<Integer> getRecentlyCreatedQuizzes(int num) throws Exception{
 		Connection con = ServerConnection.getConnection();
 		String query = "SELECT quizID FROM quizzes ORDER BY dateCreated DESC LIMIT" + num;
 		PreparedStatement ps = con.prepareStatement(query);
@@ -216,7 +216,7 @@ public class Quiz implements Serializable{
 	}
 	
 	// Return x number of performances on this specific quiz, order by date 
-	public ArrayList<Integer> getPerformanceByDate(int userID, int num){
+	public ArrayList<Integer> getPerformanceByDate(int userID, int num) throws Exception{
 		Connection con = ServerConnection.getConnection();
 		String query = "SELECT quizTryID FROM quizTries WHERE userID = ?"
 				+ "AND WHERE quizID = " + this.quizID + " ORDER BY dateCreated DESC LIMIT" + num;
@@ -226,7 +226,7 @@ public class Quiz implements Serializable{
 	}
 	
 	// Return x number of performances on this specific quiz, order by score 
-	public ArrayList<Integer> getPerformanceByScore(int userId, int num){
+	public ArrayList<Integer> getPerformanceByScore(int userId, int num) throws Exception{
 		Connection con = ServerConnection.getConnection();
 		String query = "SELECT quizTryID FROM quizTries WHERE userID = ?"
 				+ "AND WHERE quizID = " + this.quizID + " ORDER BY score DESC LIMIT" + num;
@@ -236,7 +236,7 @@ public class Quiz implements Serializable{
 	}
 	
 	// Return x number of performances on this specific quiz, order by time spent 
-	public ArrayList<Integer> getPerformancyByTime(int userID, int num){
+	public ArrayList<Integer> getPerformancyByTime(int userID, int num) throws Exception{
 		Connection con = ServerConnection.getConnection();
 		String query = "SELECT quizTryID FROM quizTries WHERE userID = ?"
 				+ "AND WHERE quizID = " + this.quizID + " ORDER BY timeSpent DESC LIMIT" + num;
@@ -245,7 +245,7 @@ public class Quiz implements Serializable{
 		return resultSetToArray(ps.getResultSet()); 
 	}
 	
-	public ArrayList<Integer> getTopPerformers(int num){
+	public ArrayList<Integer> getTopPerformers(int num) throws Exception{
 		Connection con = ServerConnection.getConnection();
 		String query = "SELECT quizTryiD FROM quizTries WHERE quizID = " + this.quizID 
 				+ " ORDER BY score DESC LIMIT" + num;
@@ -254,7 +254,7 @@ public class Quiz implements Serializable{
 		return resultSetToArray(ps.getResultSet()); 
 	}
 	
-	public ArrayList<Integer> getTopPerformers(int num, int numOfDays){
+	public ArrayList<Integer> getTopPerformers(int num, int numOfDays) throws Exception{
 		Connection con = ServerConnection.getConnection();
 		String query = "SELECT quizTryiD FROM quizTries WHERE quizID = " + this.quizID
 				+ " AND WHERE dateCreated >= NOW() - INTERVAL " + numOfDays + " DAY "
@@ -264,7 +264,7 @@ public class Quiz implements Serializable{
 		return resultSetToArray(ps.getResultSet()); 
 	}
 	
-	public List<Integer> getRecentTestTakers(int numOfUsers){
+	public List<Integer> getRecentTestTakers(int numOfUsers) throws Exception{
 		return null;
 	}
 	

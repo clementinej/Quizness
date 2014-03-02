@@ -33,7 +33,7 @@ public class QuizTry implements Serializable {
 		this.score = -1;
 		
 		//if there is no practice mode available, then isPractice will also be false
-		if (quiz.isPracticeMode())
+		if (quiz.hasPracticeMode())
 			this.isPractice = mode;
 		else{
 			this.isPractice = false;
@@ -67,7 +67,7 @@ public class QuizTry implements Serializable {
 		elapsedTime = System.currentTimeMillis() - startTime;
 		this.responses = responses;
 		score = quiz.calculateScore(responses);
-		if (score > quiz.getHighScore()){
+		if (score > quiz.getMaxScore()){
 			user.addAchievement(new TheGreatest());
 		}
 		inProgress = false;

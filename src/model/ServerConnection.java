@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import com.mysql.jdbc.Statement;
+
 public class ServerConnection {
 	static String account = MyDBInfo.MYSQL_USERNAME;
 	static String password = MyDBInfo.MYSQL_PASSWORD;
@@ -79,8 +81,10 @@ public class ServerConnection {
 		PreparedStatement ps = con.prepareStatement(query);
 		ps.setString(1, user.getUserName());
 		ps.setString(2, user.getPassword());
+		System.out.println(user.getPassword());
 		ps.setBytes(3, convertToByteArray(user));
 		ps.setString(4,  user.getEmail());
+		System.out.println(query);
 		ps.executeUpdate();
 		return getGeneratedKey(ps);
 	}
@@ -130,7 +134,7 @@ public class ServerConnection {
 	// Add a quizTry to the database and return the auto generated key
 	public static int addQuizTry(QuizTry quizTry) throws Exception {
 		String query = "INSERT INTO quizTries (quizTry, userID, quizID, score, timeSpent, dateCreated) VALUES(?, ?, ?, ?, ?, ?)";
-		PreparedStatement ps = con.prepareStatement(query);
+		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		Date date = new Date();
 		ps.setBytes(1,  convertToByteArray(quizTry));
 		ps.setInt(2, quizTry.getUserID());

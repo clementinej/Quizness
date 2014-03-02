@@ -17,7 +17,13 @@ public class AccountListener implements ServletContextListener {
 
 
     public void contextInitialized(ServletContextEvent arg0) {
-    	QuiznessAccountManager manager = new QuiznessAccountManager();//creates an instance of an AccountManager
+    	QuiznessAccountManager manager = null;
+		try {
+			manager = new QuiznessAccountManager();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//creates an instance of an AccountManager
     	ServletContext context = arg0.getServletContext();
     	context.setAttribute("manager", manager);//grabable attribute
     	

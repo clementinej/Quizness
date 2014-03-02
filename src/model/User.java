@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.sql.*;
 
 public class User implements Serializable {
+	
+	public static final String MYSQL_USERNAME = "ccs108wang8";
+	public static final String MYSQL_PASSWORD = "vohpaifa";
+	public static final String MYSQL_DATABASE_SERVER = "mysql-user.stanford.edu";
+	public static final String MYSQL_DATABASE_NAME = "c_cs108_wang8";
 
 	private int userID;
 	private boolean isAdmin;
@@ -31,11 +36,17 @@ public class User implements Serializable {
 	}
 	
 	public static boolean nameIsAvailable(String userName) throws SQLException{
+		ServerConnection.open();
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps;
-		ps = con.prepareStatement("SELECT * FROM users WHERE username = ?");
-		ps.setString(1, userName);
-		ResultSet rs = ps.executeQuery();
+		System.out.println("Reading from DB in Users");
+		Statement stmt = con.createStatement();
+		stmt.executeQuery("USE " + MYSQL_DATABASE_NAME);
+		ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username = \""+ userName + "\"");
+//
+//		ps = con.prepareStatement("SELECT * FROM users WHERE username = \""+ userName + "\"");
+//		ps.setString(1, userName);
+//		ResultSet rs = 
 		rs.beforeFirst();
 		if (!rs.next()){
 			return true;

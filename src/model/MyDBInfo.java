@@ -1,5 +1,7 @@
 package model;
 
+import com.mysql.jdbc.Statement;
+
 /*
  * CS108 Student: This file will be replaced when we test your code. So, do not add any of your
  * assignment code to this file. Also, do not modify the public interface of this file.
@@ -12,5 +14,9 @@ public class MyDBInfo {
 	public static final String MYSQL_PASSWORD = "vohpaifa";
 	public static final String MYSQL_DATABASE_SERVER = "mysql-user.stanford.edu";
 	public static final String MYSQL_DATABASE_NAME = "c_cs108_wang8";
-
+	
+	//mysql -h mysql-user.stanford.edu -u ccs108wang8 -p
+	//vohpaifa
+	//USE c_cs108_wang8
+	
 }

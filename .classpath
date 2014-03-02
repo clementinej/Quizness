@@ -2,9 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/Home"/>
 	<classpathentry kind="lib" path="/Users/lloydlucin/Downloads/apache-tomcat-7.0.50/mysql-connector-java-5.1.29/mysql-connector-java-5.1.29-bin.jar"/>
 	<classpathentry exported="true" kind="lib" path="/Users/lloydlucin/Downloads/apache-tomcat-7.0.50/lib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="WebContent/questionCreation/question-answer.jsp"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/CDC-1.0%Foundation-1.0"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

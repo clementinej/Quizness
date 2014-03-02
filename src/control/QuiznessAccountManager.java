@@ -29,19 +29,15 @@ public class QuiznessAccountManager {
 	 *  Adds a grain of salt to the password for extra security before hashing.
 	 */
 	public boolean createNewAccount(String userName, String pw, boolean isAdmin) throws Exception {
-		boolean accountFree = false;
-		
-//		if(User.nameIsAvailable(userName)) { //read from database
-//		//if(!accounts.containsKey(userName)) {//if there account is free add it
-//			String unencryptedPlusSalt = pw + salt;
-//			String hashedPW = generateHash(unencryptedPlusSalt);
-//			String email = "";
-//			User newUser = new User(isAdmin, userName, hashedPW, email);
-//			model.ServerConnection.addUser(newUser);
-//			
-//		//	accounts.put(userName, hashedPW);
-//			accountFree = true;
-//		}		
+		boolean accountFree = false;	
+		if(User.nameIsAvailable(userName)) { //read from database			
+			String unencryptedPlusSalt = pw + salt;
+			String hashedPW = generateHash(unencryptedPlusSalt);
+			String email = "";
+			User newUser = new User(isAdmin, userName, hashedPW, email);
+			model.ServerConnection.addUser(newUser);
+			accountFree = true;
+		}		
 		return accountFree;
 	}
 	
@@ -49,17 +45,12 @@ public class QuiznessAccountManager {
 	 * will return true if the userName and pw and hash function is in stored within the account manager.
 	 */
 	public boolean validLogin(String userName, String pw) throws SQLException {
-		boolean validLogin = false;
-		
-		if(User.nameIsAvailable(userName)) { //read from database
-		//if(accounts.containsKey(userName)) {//if username is stored in database
+		boolean validLogin = false;		
+		if(!User.nameIsAvailable(userName)) { //read from database
 			System.out.println("read from db");
 			String unencryptedPlusSalt = pw + salt;
 			String hashedPW = generateHash(unencryptedPlusSalt);
-			
 			String stored_pw = User.getPasswordHash(userName);
-			//String stored_pw = accounts.get(userName);
-			
 			if(stored_pw.equals(hashedPW))//if password is correct
 				validLogin = true;
 			else //if incorrect password
@@ -109,14 +100,14 @@ public class QuiznessAccountManager {
 	 * For testing purposes
 	 */
 	public static void main(String[] args) throws Exception {
-//		QuiznessAccountManager manager = new QuiznessAccountManager();
-//		System.out.println("Start");
-//		if(manager.createNewAccount("Lloyd", "ILikeCats29", true));
-//			System.out.println("Successfully Created New Account");
-//		if(manager.validLogin("Lloyd", "ILikeCats29"))
-//			System.out.println("Successful Login");
-//		if(manager.validLogin("Patrick", "1234"))
-//			System.out.println("Successful Login");
+		QuiznessAccountManager manager = new QuiznessAccountManager();
+		System.out.println("Start");
+		if(manager.createNewAccount("Lloyd", "ILikeCats29", true));
+			System.out.println("Successfully Created New Account");
+		if(manager.validLogin("Lloyd", "ILikeCats29"))
+			System.out.println("Successful Login");
+		if(manager.validLogin("Patrick", "1234"))
+			System.out.println("Successful Login");
 	}
 
 }
