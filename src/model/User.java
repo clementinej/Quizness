@@ -18,6 +18,7 @@ public class User implements Serializable {
 	private ArrayList<Achievement> achievements;
 	private ArrayList<Integer> achievementKeys;
 	
+	//constructor
 	public User(boolean isAdmin, String userName, String pw, String email){
 		this.isAdmin = isAdmin;
 		this.pw = pw;
