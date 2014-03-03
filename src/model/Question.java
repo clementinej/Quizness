@@ -13,4 +13,8 @@ public abstract class Question implements Serializable{
 	abstract public String getQuestion();
 	
 	abstract public double getMaxPoints();
+	
+	public String getQuestionType(){
+		return this.getQuestionType(); 
+	}
 }

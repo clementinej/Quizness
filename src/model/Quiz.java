@@ -47,6 +47,8 @@ public class Quiz implements Serializable{
 		this.hasPracticeMode = hasPracticeMode;
 		this.hasRandomMode = hasRandomMode;
 		this.hasTimedMode = hasTimedMode; 
+		
+		//TODO: add getters and setters
 		this.immediateCorrection = immediateCorrection;
 		this.multiplePages = multiplePages;
 		
@@ -61,6 +63,11 @@ public class Quiz implements Serializable{
 	// Return a question specified by the index
 	public Question getQuestion(int index){
 		return questions.get(index);
+	}
+	
+	// Return all of the questions as an array
+	public ArrayList<Question> getQuestions(){
+		return questions;
 	}
 	
 	// Return the number of questions
@@ -120,12 +127,12 @@ public class Quiz implements Serializable{
 	}
 	
 	//Returns true if immediateCorrection setting is on
-	public boolean immediateCorrection() {
-		return immediateCorrection();
+	public boolean hasImmediateCorrection() {
+		return immediateCorrection;
 	}
 	
 	//Returns true if multiple pages setting is on
-	public boolean multiplePages() {
+	public boolean hasMultiplePages() {
 		return multiplePages;
 	}
 	
@@ -170,6 +177,20 @@ public class Quiz implements Serializable{
 		}
 	}
 	
+	// Set if the multiple page mode is available
+	public void setMultiplePages(int userID, boolean multiplePages){
+		if(userID == creatorID){
+			this.multiplePages = multiplePages;
+		}
+	}
+	
+	// Set if the immediate correction mode is available
+	public void setImmediateCorrection(int userID, boolean immediateCorrection){
+		if(userID == creatorID){
+			this.immediateCorrection = immediateCorrection;
+		}
+	}
+	
 	// Set the description of the quiz
 	public void setDescription(int userID, String description){
 		if(userID == creatorID){
@@ -194,7 +215,7 @@ public class Quiz implements Serializable{
 	}
 	
 	// Return the quiz given the ID
-	public Quiz getQuiz(int quizID) throws Exception{
+	public static Quiz getQuiz(int quizID) throws Exception{
 		return ServerConnection.getQuiz(quizID);
 	}
 	
@@ -284,6 +305,16 @@ public class Quiz implements Serializable{
 		PreparedStatement ps = con.prepareStatement("DELETE FROM quizzes WHERE quizID = ?");
 		ps.setInt(1, quizID);
 		ps.executeQuery();
+	}
+	
+	// Convert IDs into Quiz object
+	public static ArrayList<Quiz> iDToQuizzes(ArrayList<Integer> quizIDs) throws Exception{
+		ArrayList<Quiz> results = new ArrayList<Quiz>();
+		int num = quizIDs.size();
+		for(int i = 0; i < num; i++){
+			results.add(Quiz.getQuiz(quizIDs.get(i)));
+		}
+		return results; 
 	}
 	
 	public void getStatistics(){

@@ -37,6 +37,7 @@ public class User implements Serializable {
 		this.isAdmin = isAdmin;
 		this.pw = pw;
 		this.userName = userName;
+		this.userID = -1;
 		this.email = email;
 		this.quizzesMade = new ArrayList<Quiz>();
 		this.quizzesTried = new ArrayList<QuizTry>();
@@ -252,7 +253,11 @@ public class User implements Serializable {
 		passwordHash = rs.getString("password");
 		return passwordHash;
 	}
-	
+/*	
+	public int getUserID(){
+		return userID;
+	}
+	*/
 	
 	public static int getUserID(String userName) throws SQLException{
 		Connection con = ServerConnection.getConnection();

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class QuizTry implements Serializable {
+	
 	private String tryID;
 	private int userID;
 	private int quizID;
@@ -40,6 +41,10 @@ public class QuizTry implements Serializable {
 		else{
 			this.isPractice = false;
 		}
+	}
+	
+	public QuizTry getTry(int quizTryID) throws Exception{
+		return ServerConnection.getQuizTry(quizTryID);
 	}
 	
 	public boolean isPractice(){
