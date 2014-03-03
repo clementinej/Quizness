@@ -2,13 +2,14 @@ package model;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Collections;
+import java.util.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class QuizTry implements Serializable {
 	
-	private String tryID;
+	private int tryID;
 	private int userID;
 	private int quizID;
 	private String userName;
@@ -21,15 +22,23 @@ public class QuizTry implements Serializable {
 	private double score;
 	private Date dateTaken;
 	private boolean isPractice;
+	private int index;
+	private ArrayList<Question> questions;
 	
-	public QuizTry(String tryID, String userName, int quizID, boolean mode) throws Exception{
-		this.tryID = tryID;
-		this.userName = userName;
-		this.userID = User.getUserID(userName);
-		this.quizID = quizID;
-		this.user = ServerConnection.getUser(userName);
+	public QuizTry(String tryID, int userID, int quizID, boolean mode, boolean random) throws Exception{
+		this.user = ServerConnection.getUser(userID);
 		this.quiz = ServerConnection.getQuiz(quizID);
-
+		this.tryID = -1;
+		this.userName = user.getUserName();
+		this.userID = user.getUserID();
+		this.quizID = quizID;
+		this.index = 0;
+		this.questions = quiz.getQuestions();
+		
+		if (quiz.hasRandomMode()){
+			if (random)
+				shuffleQuestions();
+		}
 		this.startTime = System.currentTimeMillis();
 		this.elapsedTime = 0;
 		this.inProgress = true;
@@ -43,25 +52,38 @@ public class QuizTry implements Serializable {
 		}
 	}
 	
+	private void shuffleQuestions(){
+		Collections.shuffle(questions);
+	}
+	
+/*
+ * All the "gets" 
+ * i.e. getTry, getQuestions, getQuiz, etc	
+ */
 	public QuizTry getTry(int quizTryID) throws Exception{
 		return ServerConnection.getQuizTry(quizTryID);
-	}
-	
-	public boolean isPractice(){
-		return isPractice;
-	}
-	
-	public ArrayList<Question> getQuestions(int index){
-		return null;//quiz.getQuestions(index);
-	}
-	
-	public double getScore(){
-		return score;
 	}
 	
 	public Date getDate(){
 		return dateTaken;
 	}
+	public boolean isPractice(){
+		return isPractice;
+	}
+	
+	public ArrayList<Question> getQuestions(){
+		return questions;
+	}
+	
+	public Question getNextQuestion(){
+		index ++;
+		return questions.get(index - 1);
+	}
+	
+	public double getScore(){
+		return score;
+	}
+
 	
 	public void saveProgress(ArrayList<String[]> responses) throws Exception{
 		elapsedTime = System.currentTimeMillis() - startTime;
@@ -80,7 +102,7 @@ public class QuizTry implements Serializable {
 		inProgress = false;
 		user.addTry(this);
 		checkTryAchievements();
-		//dateTaken = new Date();
+		dateTaken = new Date();
 	}
 	
 	private void checkTryAchievements(){
@@ -103,7 +125,7 @@ public class QuizTry implements Serializable {
 		return elapsedTime;
 	}
 	
-	public String getTryID(){
+	public int getTryID(){
 		return tryID;
 	}
 	
@@ -113,5 +135,9 @@ public class QuizTry implements Serializable {
 	
 	public int getQuizID(){
 		return quizID;
+	}
+	
+	public void setID(int tryID){
+		this.tryID = tryID;
 	}
 }

@@ -30,7 +30,6 @@ public class User implements Serializable {
 	private String aboutMe;
 	private String location;
 	private int highScore;
-	
 
 	//constructor
 	public User(boolean isAdmin, String userName, String pw, String email, String aboutMe, String location){
@@ -169,10 +168,6 @@ public class User implements Serializable {
 		return isAdmin;
 	}
 	
-	public void setUserID(int userID){
-		this.userID = userID;
-	}
-	
 	//returns a string of the high score. if there is no score stored, it returns a string
 	//saying that the user has not taken any quizzes
 	public String getHighScore(){
@@ -253,12 +248,16 @@ public class User implements Serializable {
 		passwordHash = rs.getString("password");
 		return passwordHash;
 	}
-/*	
+	
 	public int getUserID(){
 		return userID;
 	}
-	*/
 	
+	public void setUserID(int userID){
+		this.userID = userID;
+	}
+	
+	/*
 	public static int getUserID(String userName) throws SQLException{
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps;
@@ -270,6 +269,7 @@ public class User implements Serializable {
 		id = rs.getInt("id");
 		return id;
 	}
+	*/
 	
 	public String getUserName(){
 		return userName;
