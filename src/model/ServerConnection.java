@@ -113,6 +113,13 @@ public class ServerConnection {
 	public static int addQuiz(Quiz quiz) throws Exception {
 		String query = "INSERT INTO quizzes (quiz, numTimesTaken, dateCreated) VALUES(?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
+		
+		// Update the id of the object
+		ResultSet rs = ps.executeQuery("SHOW TABLE STATUS WHERE 'Name' = 'quizzes'");
+		rs.next();
+		int nextid = rs.getInt("Auto_increment");
+		quiz.setID(nextid);
+		
 		Date date = new Date();
 		Timestamp timestamp = new Timestamp(date.getTime());
 		
@@ -137,6 +144,13 @@ public class ServerConnection {
 	public static int addQuizTry(QuizTry quizTry) throws Exception {
 		String query = "INSERT INTO quizTries (quizTry, userID, quizID, score, timeSpent, dateCreated) VALUES(?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+		
+		// Update the id of the object
+		ResultSet rs = ps.executeQuery("SHOW TABLE STATUS WHERE 'Name' = 'quizTries'");
+		rs.next();
+		int nextid = rs.getInt("Auto_increment");
+		quizTry.setID(nextid);
+		
 		Date date = new Date();
 		ps.setBytes(1,  convertToByteArray((Object)quizTry));
 		ps.setInt(2, quizTry.getUserID());
@@ -153,6 +167,13 @@ public class ServerConnection {
 	public static int addMessage(Message message) throws Exception {
 		String query = "INSERT INTO messages (fromID, toID, message) VALUE (?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+		
+		// Update the id of the object
+		ResultSet rs = ps.executeQuery("SHOW TABLE STATUS WHERE 'Name' = 'messages'");
+		rs.next();
+		int nextid = rs.getInt("Auto_increment");
+		message.setId(nextid);
+		
 		ps.setInt(1, message.fromID);
 		ps.setInt(2, message.toID);
 		ps.setBytes(3,  convertToByteArray((Object)message));
@@ -174,6 +195,13 @@ public class ServerConnection {
 		public static int addInbox(Inbox inbox) throws Exception {
 			String query = "INSERT INTO inboxes (numRequests, numMessages, numChallenges, inbox) VALUE (?, ?, ?, ?)";
 			PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			
+			// Update the id of the object
+			ResultSet rs = ps.executeQuery("SHOW TABLE STATUS WHERE 'Name' = 'inboxes'");
+			rs.next();
+			int nextid = rs.getInt("Auto_increment");
+			inbox.setID(nextid);
+			
 			ps.setInt(1, 0);
 			ps.setInt(2, 0);
 			ps.setInt(3, 0);
@@ -182,7 +210,7 @@ public class ServerConnection {
 			return getGeneratedKey(ps); 
 		}
 		
-	// Return a message from the database given the messageID
+	// Return an inbox from the database given the messageID
 	public static Inbox getInboxWithInboxID(int inboxID) throws Exception {
 		PreparedStatement ps = con.prepareStatement("SELECT * FROM inboxes WHERE id = ?", Statement.RETURN_GENERATED_KEYS);
 		ps.setInt(1, inboxID);
@@ -191,7 +219,7 @@ public class ServerConnection {
 		return (Inbox) convertToObject(rs, "inbox");
 	}
 	
-	// Return a message from the database given the messageID
+	// Return an inbox from the database given the userID
 	public static Inbox getInboxWithUserID(int userID) throws Exception {
 		PreparedStatement ps = con.prepareStatement("SELECT * FROM inboxes WHERE userID = ?", Statement.RETURN_GENERATED_KEYS);
 		ps.setInt(1, userID);

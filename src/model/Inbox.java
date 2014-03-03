@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Inbox {
 	
 	private int userID;
+	private int inboxID;
 	private ArrayList<Integer> requests; 
 	private ArrayList<Integer> messages; 
 	private ArrayList<Integer> challenges; 
@@ -16,6 +17,10 @@ public class Inbox {
 		this.challenges = new ArrayList<Integer>(); 
 	}
 	
+	// Set the ID of the inbox
+	public void setID(int inboxID){
+		this.inboxID = inboxID;
+	}
 	// Add an existing Message to this Inbox, using its ID
 	public void addMessage(int messageID) throws Exception{
 		Message message = getMessage(messageID);
@@ -67,7 +72,7 @@ public class Inbox {
 	}
 	
 	// Return the inbox for this specific user
-	public Inbox getInbox(int userID) throws Exception {
+	public static Inbox getInbox(int userID) throws Exception {
 		return ServerConnection.getInboxWithUserID(userID); 
 	}
 }

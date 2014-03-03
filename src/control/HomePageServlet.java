@@ -35,5 +35,37 @@ public class HomePageServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
+	
+	private void getAnnouncement(){
+		
+	}
+	
+	private void getPopularQuizzes(){
+		
+	}
+	
+	private void getRecentlyCreatedQuizzes(){
+		
+	}
+	
+	private void getRecentlyTakenQuizzes(){
+		
+	}
+	
+	private void getRecentlyCreatedQuizzesByUser(){
+		
+	}
+	
+	private void getAchievements(){
+		
+	}
+	
+	private void getMessages(){
+		
+	}
+	
+	private void getRecentActivityByFriend(){
+		
+	}
 
 }
