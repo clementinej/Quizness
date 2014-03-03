@@ -43,13 +43,13 @@ public class ServerConnection {
 	}
 	
 	// Convert an quiz object into byte[]
-	private static byte[] convertToByteArray(Object obj) throws Exception{
+	private static byte[] convertToByteArray(Quiz quiz) throws Exception{
 		 ByteArrayOutputStream bos = new ByteArrayOutputStream();
 	     ObjectOutputStream oos = new ObjectOutputStream(bos);
-	     oos.writeObject(obj);
+	     oos.writeObject(quiz);
 	     return bos.toByteArray();
 	}
-	/*
+	
 	// Convert an user object into byte[]
 	private static byte[] convertToByteArray(User user) throws Exception{
 		 ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -65,7 +65,22 @@ public class ServerConnection {
 	     oos.writeObject(quizTry);
 	     return bos.toByteArray();
 	}
-	*/
+	
+	// Convert an message object into byte[]
+	private static byte[] convertToByteArray(Message message) throws Exception{
+		 ByteArrayOutputStream bos = new ByteArrayOutputStream();
+	     ObjectOutputStream oos = new ObjectOutputStream(bos);
+	     oos.writeObject(message);
+	     return bos.toByteArray();
+	}
+	
+	// Convert an inbox object into byte[]
+	private static byte[] convertToByteArray(Inbox inbox) throws Exception{
+		 ByteArrayOutputStream bos = new ByteArrayOutputStream();
+	     ObjectOutputStream oos = new ObjectOutputStream(bos);
+	     oos.writeObject(inbox);
+	     return bos.toByteArray();
+	}
 	
 	// Convert byte[] into an object
 	private static Object convertToObject(ResultSet rs, String objectType) throws Exception{
@@ -83,7 +98,7 @@ public class ServerConnection {
 		ps.setString(1, user.getUserName());
 		ps.setString(2, user.getPassword());
 		System.out.println(user.getPassword());
-		ps.setBytes(3, convertToByteArray((Object)user));
+		ps.setBytes(3, convertToByteArray(user));
 		ps.setString(4,  user.getEmail());
 		System.out.println(query);
 		ps.executeUpdate();
@@ -123,7 +138,7 @@ public class ServerConnection {
 		Date date = new Date();
 		Timestamp timestamp = new Timestamp(date.getTime());
 		
-		ps.setBytes(1, convertToByteArray((Object)quiz));
+		ps.setBytes(1, convertToByteArray(quiz));
 		ps.setInt(2, quiz.getNumOfTimesPlayed());
 		ps.setTimestamp(3, timestamp);
 		ps.executeUpdate();
@@ -152,7 +167,7 @@ public class ServerConnection {
 		quizTry.setID(nextid);
 		
 		Date date = new Date();
-		ps.setBytes(1,  convertToByteArray((Object)quizTry));
+		ps.setBytes(1,  convertToByteArray(quizTry));
 		ps.setInt(2, quizTry.getUserID());
 		ps.setInt(3, quizTry.getQuizID());
 		ps.setDouble(4, quizTry.getScore());
@@ -176,7 +191,7 @@ public class ServerConnection {
 		
 		ps.setInt(1, message.fromID);
 		ps.setInt(2, message.toID);
-		ps.setBytes(3,  convertToByteArray((Object)message));
+		ps.setBytes(3,  convertToByteArray(message));
 		ps.executeUpdate();
 		
 		return getGeneratedKey(ps); 
@@ -205,7 +220,7 @@ public class ServerConnection {
 			ps.setInt(1, 0);
 			ps.setInt(2, 0);
 			ps.setInt(3, 0);
-			ps.setBytes(4,  convertToByteArray((Object)inbox));
+			ps.setBytes(4,  convertToByteArray(inbox));
 			ps.executeUpdate();
 			return getGeneratedKey(ps); 
 		}
