@@ -3,12 +3,12 @@
 <head>
    <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
 </head>
-<%--
-   User currUser = (User) session.getAttribute("currentUser");
+<%
+   User currUser = (User) session.getAttribute("current user");
    int currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
    Quiz currQuiz = Quiz.getQuiz(currQuizID);
-   if(!currUser.isAdmin() && currQuiz.getUserID() != currUser.getUserID()) return;
-   --%>
+   if(!currUser.isAdmin() && currQuiz.getCreatorID() != currUser.getUserID()) return;
+%>
 <body>
    <div class="container">
    <form method="post" action="../CreateServlet" id="signup">
@@ -18,7 +18,7 @@
       </div>
       <div class="sep"></div>
       <div class="inputs">
-      <%--
+      <%
  	String quizIdAsString = request.getParameter("quiz_id");
 	int quizID = Integer.parseInt(quizIdAsString);
  	Quiz currQuiz = Quiz.getQuiz(quizID);
@@ -31,7 +31,7 @@
  	QuestionType next_question_type = q.getType();
  	boolean multiPage = currQuiz.getDisplay();
  	if(multiPage == true) {
- 		--%>
+ 		%>
  		<select name="question-type" id="question-type">
                      <option value="0" selected></option>
                      <option value="question-answer">Question-Answer</option>

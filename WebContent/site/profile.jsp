@@ -15,7 +15,7 @@
    // MODEL IMPORT AT THE TOP OF THE PAGE. THAT'S THE BIT THAT I CAN'T COMPILE
    
 
-//   User u = (User)session.getAttribute("currUser");
+//   User u = (User)session.getAttribute("current user");
    model.User u = new model.User(false, "Gene Oetomo", "gene", "goetomo@stanford.edu", "my name is gene", "stanford");
    String name = u.getUserName();
    int numQuizzesTaken = u.numQuizzesTaken();

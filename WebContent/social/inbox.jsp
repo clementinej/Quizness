@@ -2,11 +2,11 @@
 <%@page import="model.*, java.util.*" %>
 <%
 // GET USER INFO
-User u = (User) session.getAttribute("currUser");
+User u = (User) session.getAttribute("current user");
+Inbox inbox = User.getInbox(u.getUserID());
 
 // GET MESSAGE INFO
 int message = Integer.parseInt(request.getParameter("messageID"));
-Inbox inbox = u.getInbox();
 Message m = inbox.getMessage(message);
 m.markAsRead();
 String subject = m.getSubject();
@@ -15,9 +15,9 @@ Date timeSent = m.getSentAt();
 User from = User.getUser(m.getFromID());
 
 // GET INBOX INFO
-int numRequests = inbox.numFriendReqs();
-int numMessages = inbox.numNewMessages();
-int numChallenges = inbox.numChallenges();
+int numRequests = inbox.getNumFriendReqs();
+int numMessages = inbox.getNumNewMessages();
+int numChallenges = inbox.getNumChallenges();
 
 // GET CHALLENGE INFO
 Challenge challenge = null;
