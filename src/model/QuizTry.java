@@ -43,6 +43,10 @@ public class QuizTry implements Serializable {
 		}
 	}
 	
+	public QuizTry getTry(int quizTryID) throws Exception{
+		return ServerConnection.getQuizTry(quizTryID);
+	}
+	
 	public boolean isPractice(){
 		return isPractice;
 	}
