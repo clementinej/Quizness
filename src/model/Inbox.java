@@ -52,20 +52,22 @@ public class Inbox {
 	}
 	
 	// Return the number of friend requests
-	public int numFriendReqs(int userID){
-		if(userID == this.userID) return requests.size();
-		else return -1; 
+	public int getNumFriendReqs(){
+		return requests.size();
 	}
 	
 	// Return the number of new messages
-	public int numNewMessages(int userID){
-		if(userID == this.userID) return messages.size();
-		else return -1; 
+	public int getNumNewMessages(){
+		return messages.size(); 
 	}
 	
 	// Return the number of challenges
-	public int  numChallenges(int userID){
-		if(userID == this.userID) return challenges.size();
-		else return -1; 
+	public int getNumChallenges(){
+		return challenges.size(); 
+	}
+	
+	// Return the inbox for this specific user
+	public Inbox getInbox(int userID) throws Exception {
+		return ServerConnection.getInboxWithUserID(userID); 
 	}
 }

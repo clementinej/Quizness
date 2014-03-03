@@ -182,9 +182,18 @@ public class ServerConnection {
 		}
 		
 	// Return a message from the database given the messageID
-	public static Inbox getInbox(int inboxID) throws Exception {
+	public static Inbox getInboxWithInboxID(int inboxID) throws Exception {
 		PreparedStatement ps = con.prepareStatement("SELECT * FROM inboxes WHERE id = ?", Statement.RETURN_GENERATED_KEYS);
 		ps.setInt(1, inboxID);
+		ResultSet rs = ps.executeQuery();
+		rs.next(); 
+		return (Inbox) convertToObject(rs, "inbox");
+	}
+	
+	// Return a message from the database given the messageID
+	public static Inbox getInboxWithUserID(int userID) throws Exception {
+		PreparedStatement ps = con.prepareStatement("SELECT * FROM inboxes WHERE userID = ?", Statement.RETURN_GENERATED_KEYS);
+		ps.setInt(1, userID);
 		ResultSet rs = ps.executeQuery();
 		rs.next(); 
 		return (Inbox) convertToObject(rs, "inbox");
