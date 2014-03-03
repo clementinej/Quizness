@@ -8,7 +8,7 @@ public class FillInTheBlank extends Question {
 	private String question;
 	private Answers answers;
 	private double pointValue;
-	
+	private String questionType = "FillInTheBlank"; 
 	/*
 	 * FillInTheBlank will always only have one question. The number of blanks is determined
 	 * from the number of answers that the user provides

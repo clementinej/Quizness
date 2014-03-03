@@ -47,6 +47,8 @@ public class Quiz implements Serializable{
 		this.hasPracticeMode = hasPracticeMode;
 		this.hasRandomMode = hasRandomMode;
 		this.hasTimedMode = hasTimedMode; 
+		
+		//TODO: add getters and setters
 		this.immediateCorrection = immediateCorrection;
 		this.multiplePages = multiplePages;
 		
@@ -194,7 +196,7 @@ public class Quiz implements Serializable{
 	}
 	
 	// Return the quiz given the ID
-	public Quiz getQuiz(int quizID) throws Exception{
+	public static Quiz getQuiz(int quizID) throws Exception{
 		return ServerConnection.getQuiz(quizID);
 	}
 	
@@ -284,6 +286,16 @@ public class Quiz implements Serializable{
 		PreparedStatement ps = con.prepareStatement("DELETE FROM quizzes WHERE quizID = ?");
 		ps.setInt(1, quizID);
 		ps.executeQuery();
+	}
+	
+	// Convert IDs into Quiz object
+	public static ArrayList<Quiz> iDToQuizzes(ArrayList<Integer> quizIDs) throws Exception{
+		ArrayList<Quiz> results = new ArrayList<Quiz>();
+		int num = quizIDs.size();
+		for(int i = 0; i < num; i++){
+			results.add(Quiz.getQuiz(quizIDs.get(i)));
+		}
+		return results; 
 	}
 	
 	public void getStatistics(){

@@ -9,6 +9,7 @@ public class MultipleChoice extends Question {
 	private String[] choices;
 	private double pointValue;
 	private Answers answer; 
+	private String questionType = "MultipleChoice"; 
 	
 	//Multiple choice questions support one question and one correct answer among a string of choices
 	public MultipleChoice(String question, String[] choices, ArrayList<Set<String>> answer, double pointValue){

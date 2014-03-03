@@ -8,6 +8,7 @@ public class QuestionResponse extends Question {
 	private String question;
 	private Answers answers;
 	private double pointValue;
+	private String questionType = "QuestionResponse"; 
 	
 	/*
 	 * QuestionResponse is much like Fill In the Blank - there is only one question. There can be multiple 
@@ -44,5 +45,4 @@ public class QuestionResponse extends Question {
 	public String getQuestion() {
 		return question;
 	}
-
 }

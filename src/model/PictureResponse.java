@@ -9,6 +9,7 @@ public class PictureResponse extends Question {
 	private String question;
 	private Answers answer; 
 	private double pointValue;
+	private String questionType = "PictureResponse"; 
 	
 	//Picture response supports one picture as the question and one answer
 	public PictureResponse(String question, String url, ArrayList<Set<String>> answer, double pointValue){
