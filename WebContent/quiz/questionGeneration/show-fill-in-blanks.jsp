@@ -3,24 +3,17 @@
 <head>
    <link rel="stylesheet" type="text/css" href="../../css/style_login.css" />
 </head>
-<%--
-   User currUser = (User) session.getAttribute("currentUser");
-   int currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
-   Quiz currQuiz = Quiz.getQuiz(currQuizID);
-   if(!currUser.isAdmin() && currQuiz.getUserID() != currUser.getUserID()) return;
-   --%>
 <body>
-<%--
+<%
 // Get type-specific question object
-	int currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
-	Quiz currQuiz = getQuiz(currQuizID); 
-	QuestionResponse qr = (QuestionResponse)currQuiz.getNextQuestion(); //this should pop, previous call to get type should peek
-	String question = qr.getQuestion();
-	ArrayList<Set<String>> answers = qr.getAnswer();
-	for (Set<String> a: answers) {
+	int quizID = Integer.parseInt(request.getParameter("quiz_id"));
+	Quiz currQuiz = Quiz.getQuiz(quizID); 
+	Question question = currQuiz.nextQuestion();
+	ArrayList<Set<String>> answers = question.getAnswer();
+	for (Set<String> answerType: answers) {
 		//print checkbox for a
 	}
---%>
+%>
    <div class="container">
    <form method="post" action="../CreateServlet" id="signup">
       <div class="header">
