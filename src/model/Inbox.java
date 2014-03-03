@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Inbox {
 	
 	private int userID;
+	private int inboxID;
 	private ArrayList<Integer> requests; 
 	private ArrayList<Integer> messages; 
 	private ArrayList<Integer> challenges; 
@@ -16,6 +17,10 @@ public class Inbox {
 		this.challenges = new ArrayList<Integer>(); 
 	}
 	
+	// Set the ID of the inbox
+	public void setID(int inboxID){
+		this.inboxID = inboxID;
+	}
 	// Add an existing Message to this Inbox, using its ID
 	public void addMessage(int messageID) throws Exception{
 		Message message = getMessage(messageID);
@@ -52,20 +57,22 @@ public class Inbox {
 	}
 	
 	// Return the number of friend requests
-	public int numFriendReqs(int userID){
-		if(userID == this.userID) return requests.size();
-		else return -1; 
+	public int getNumFriendReqs(){
+		return requests.size();
 	}
 	
 	// Return the number of new messages
-	public int numNewMessages(int userID){
-		if(userID == this.userID) return messages.size();
-		else return -1; 
+	public int getNumNewMessages(){
+		return messages.size(); 
 	}
 	
 	// Return the number of challenges
-	public int  numChallenges(int userID){
-		if(userID == this.userID) return challenges.size();
-		else return -1; 
+	public int getNumChallenges(){
+		return challenges.size(); 
+	}
+	
+	// Return the inbox for this specific user
+	public static Inbox getInbox(int userID) throws Exception {
+		return ServerConnection.getInboxWithUserID(userID); 
 	}
 }

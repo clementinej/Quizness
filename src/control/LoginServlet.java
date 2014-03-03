@@ -38,14 +38,13 @@ public class LoginServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		QuiznessAccountManager manager = (QuiznessAccountManager) context.getAttribute("manager");
-		String userName = request.getParameter("login");		
+		String email = request.getParameter("login");		
 		String pw = request.getParameter("password");
 		
 		try {
-			if(manager.validLogin(userName, pw)) {
+			if(manager.validLogin(email, pw)) {
 				User newUser = (User) session.getAttribute("current user");
-				newUser = setCurrentUser(newUser, userName);
-	//			System.out.println("current user set to "+ newUser.getUserName());
+				newUser = setCurrentUser(newUser, email);
 				session.setAttribute("current user", newUser);
 				redirectToPage("site/home.html", request, response);
 			} else { 
@@ -60,14 +59,14 @@ public class LoginServlet extends HttpServlet {
 	/*
 	 * sets current user
 	 */
-	private User setCurrentUser(User newUser, String userName) {
+	private User setCurrentUser(User newUser, String email) {
 		System.out.println("In setCurrentUser");
 		ServerConnection.open();
 		try {
-			newUser = ServerConnection.getUser(userName);
+			newUser = ServerConnection.getUser(email);
 			System.out.println("username = " + newUser.getUserName());
 		} catch (Exception e) {
-			System.out.println("you're fucked");
+			System.out.println("skipped try");
 			e.printStackTrace();
 		}
 		return newUser;

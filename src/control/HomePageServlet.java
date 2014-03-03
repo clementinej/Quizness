@@ -1,31 +1,23 @@
 package control;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import model.Quiz;
 
 /**
- * Servlet implementation class TopQuizzesServlet
+ * Servlet implementation class HomePageServlet
  */
-@WebServlet("/TopQuizzesServlet")
-public class TopQuizzesServlet extends HttpServlet {
-	
-	private static final int DEFAULT_NUM_OF_QUIZZES = 20; 
+@WebServlet("/HomePageServlet")
+public class HomePageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TopQuizzesServlet() {
+    public HomePageServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,16 +33,39 @@ public class TopQuizzesServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		int numOfQuizzes = (Integer) session.getAttribute("numOfQuizzes");
-		if(numOfQuizzes == 0) numOfQuizzes = DEFAULT_NUM_OF_QUIZZES; 
-		try {
-			ArrayList<Quiz> topQuizzes = Quiz.iDToQuizzes(Quiz.getTopQuizzes(numOfQuizzes));
-			session.setAttribute("topQuizzes", topQuizzes);
-		} catch (Exception e) {}
+		// TODO Auto-generated method stub
+	}
+	
+	private void getAnnouncement(){
 		
-		RequestDispatcher dispatch = request.getRequestDispatcher(page); 
-		dispatch.forward(request, response); 
+	}
+	
+	private void getPopularQuizzes(){
+		
+	}
+	
+	private void getRecentlyCreatedQuizzes(){
+		
+	}
+	
+	private void getRecentlyTakenQuizzes(){
+		
+	}
+	
+	private void getRecentlyCreatedQuizzesByUser(){
+		
+	}
+	
+	private void getAchievements(){
+		
+	}
+	
+	private void getMessages(){
+		
+	}
+	
+	private void getRecentActivityByFriend(){
+		
 	}
 
 }

@@ -47,24 +47,16 @@ public class QuiznessAccountManager {
 	 * login string can either be an email or a username.
 	 */
 	public boolean validLogin(String login, String pw) throws SQLException {
-		boolean validLogin = false;	
-		boolean loginFromUserName = !User.nameIsAvailable(login), loginFromEmail = false;
-		if(!loginFromUserName)
-			loginFromEmail = !User.emailIsAvailable(login);
-		
-		if(loginFromUserName || loginFromEmail) { //read from database
+		boolean validLogin = false;		
+		if(!User.emailIsAvailable(login)) { //read from database
 			System.out.println("read from db");
 			String unencryptedPlusSalt = pw + salt;
 			String hashedPW = generateHash(unencryptedPlusSalt);
 			String stored_pw = "";
-			if(loginFromUserName)
-				stored_pw = User.getPasswordHashFromUserName(login);
-			else if(loginFromEmail)
-				stored_pw = User.getPasswordHashFromEmail(login);
+			stored_pw = User.getPasswordHashFromEmail(login);
 			if(stored_pw.equals(hashedPW))//if password is correct
 				validLogin = true;
 		} 
-		
 		return validLogin;
 	}
 	

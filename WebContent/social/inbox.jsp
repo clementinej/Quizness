@@ -6,7 +6,8 @@ User u = (User) session.getAttribute("currUser");
 
 // GET MESSAGE INFO
 int message = Integer.parseInt(request.getParameter("messageID"));
-Message m = Inbox.getMessage(message);
+Inbox inbox = u.getInbox();
+Message m = inbox.getMessage(message);
 m.markAsRead();
 String subject = m.getSubject();
 String body = m.getBody();
@@ -14,16 +15,17 @@ Date timeSent = m.getSentAt();
 User from = User.getUser(m.getFromID());
 
 // GET INBOX INFO
-int numRequests = Inbox.numFriendReqs(u.getUserID());
-int numMessages = Inbox.numNewMessages(u.getUserID());
-int numChallenges = Inbox.numChallenges(u.getUserID());
+int numRequests = inbox.numFriendReqs();
+int numMessages = inbox.numNewMessages();
+int numChallenges = inbox.numChallenges();
 
 // GET CHALLENGE INFO
 Challenge challenge = null;
+Quiz challengeQuiz = null;
 int challengeQuizID = -1;
 if(numChallenges != 0) {
-	challengeQuizID = m.getQuizID();
-	challenge = Quiz.getQuiz(challengeQuizID);
+	challengeQuizID = m.getId();
+	challengeQuiz = Quiz.getQuiz(challengeQuizID);
 }
  %>
 
@@ -36,7 +38,7 @@ if(numChallenges != 0) {
 		</form>
 	</div>	
 	<%if (challengeQuizID != -1) { %>
-		<h3><%=from%> has challenged you to take <a href="quiz/show-quiz.jsp?quiz_id=<%=challengeQuizID%>"><%=challenge.getTitle()%></a>!</h3>
+		<h3><%=from%> has challenged you to take <a href="quiz/show-quiz.jsp?quiz_id=<%=challengeQuizID%>"><%=challengeQuiz.getTitle()%></a>!</h3>
 	<%} else { %>
 		<h3><%=subject%></h3>
 	<%} %>

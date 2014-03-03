@@ -151,6 +151,11 @@ public class Quiz implements Serializable{
 		return numOfTimesPlayed; 
 	}
 	
+	// Set the quizID
+	public void setID(int quizID){
+		this.quizID = quizID; 
+	}
+	
 	// Set the maximum score achievable on this quiz
 	public void setMaxScore(int maxScore){
 		this.maxScore = maxScore; 

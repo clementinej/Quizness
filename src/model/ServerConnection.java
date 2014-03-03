@@ -43,13 +43,13 @@ public class ServerConnection {
 	}
 	
 	// Convert an quiz object into byte[]
-	private static byte[] convertToByteArray(Object obj) throws Exception{
+	private static byte[] convertToByteArray(Quiz quiz) throws Exception{
 		 ByteArrayOutputStream bos = new ByteArrayOutputStream();
 	     ObjectOutputStream oos = new ObjectOutputStream(bos);
-	     oos.writeObject(obj);
+	     oos.writeObject(quiz);
 	     return bos.toByteArray();
 	}
-	/*
+	
 	// Convert an user object into byte[]
 	private static byte[] convertToByteArray(User user) throws Exception{
 		 ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -65,7 +65,22 @@ public class ServerConnection {
 	     oos.writeObject(quizTry);
 	     return bos.toByteArray();
 	}
-	*/
+	
+	// Convert an message object into byte[]
+	private static byte[] convertToByteArray(Message message) throws Exception{
+		 ByteArrayOutputStream bos = new ByteArrayOutputStream();
+	     ObjectOutputStream oos = new ObjectOutputStream(bos);
+	     oos.writeObject(message);
+	     return bos.toByteArray();
+	}
+	
+	// Convert an inbox object into byte[]
+	private static byte[] convertToByteArray(Inbox inbox) throws Exception{
+		 ByteArrayOutputStream bos = new ByteArrayOutputStream();
+	     ObjectOutputStream oos = new ObjectOutputStream(bos);
+	     oos.writeObject(inbox);
+	     return bos.toByteArray();
+	}
 	
 	// Convert byte[] into an object
 	private static Object convertToObject(ResultSet rs, String objectType) throws Exception{
@@ -83,7 +98,7 @@ public class ServerConnection {
 		ps.setString(1, user.getUserName());
 		ps.setString(2, user.getPassword());
 		System.out.println(user.getPassword());
-		ps.setBytes(3, convertToByteArray((Object)user));
+		ps.setBytes(3, convertToByteArray(user));
 		ps.setString(4,  user.getEmail());
 		System.out.println(query);
 		ps.executeUpdate();
@@ -98,11 +113,12 @@ public class ServerConnection {
 		ps.executeQuery();
 	}
 	*/
+
 	
-	// Return an User object from the database given the username
-	public static User getUser(String userName) throws Exception {
-		PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE username = ?", Statement.RETURN_GENERATED_KEYS);
-		ps.setString(1, userName);
+	// Return an User object from the database given the userID
+	public static User getUser(String email) throws Exception {
+		PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE email = ?", Statement.RETURN_GENERATED_KEYS);
+		ps.setString(1, email);
 		ResultSet rs = ps.executeQuery();
 		if(rs.next()) return (User) convertToObject(rs, "user");
 		return null; 
@@ -112,10 +128,17 @@ public class ServerConnection {
 	public static int addQuiz(Quiz quiz) throws Exception {
 		String query = "INSERT INTO quizzes (quiz, numTimesTaken, dateCreated) VALUES(?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
+		
+		// Update the id of the object
+		ResultSet rs = ps.executeQuery("SHOW TABLE STATUS WHERE 'Name' = 'quizzes'");
+		rs.next();
+		int nextid = rs.getInt("Auto_increment");
+		quiz.setID(nextid);
+		
 		Date date = new Date();
 		Timestamp timestamp = new Timestamp(date.getTime());
 		
-		ps.setBytes(1, convertToByteArray((Object)quiz));
+		ps.setBytes(1, convertToByteArray(quiz));
 		ps.setInt(2, quiz.getNumOfTimesPlayed());
 		ps.setTimestamp(3, timestamp);
 		ps.executeUpdate();
@@ -136,8 +159,15 @@ public class ServerConnection {
 	public static int addQuizTry(QuizTry quizTry) throws Exception {
 		String query = "INSERT INTO quizTries (quizTry, userID, quizID, score, timeSpent, dateCreated) VALUES(?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+		
+		// Update the id of the object
+		ResultSet rs = ps.executeQuery("SHOW TABLE STATUS WHERE 'Name' = 'quizTries'");
+		rs.next();
+		int nextid = rs.getInt("Auto_increment");
+		quizTry.setID(nextid);
+		
 		Date date = new Date();
-		ps.setBytes(1,  convertToByteArray((Object)quizTry));
+		ps.setBytes(1,  convertToByteArray(quizTry));
 		ps.setInt(2, quizTry.getUserID());
 		ps.setInt(3, quizTry.getQuizID());
 		ps.setDouble(4, quizTry.getScore());
@@ -152,9 +182,16 @@ public class ServerConnection {
 	public static int addMessage(Message message) throws Exception {
 		String query = "INSERT INTO messages (fromID, toID, message) VALUE (?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+		
+		// Update the id of the object
+		ResultSet rs = ps.executeQuery("SHOW TABLE STATUS WHERE 'Name' = 'messages'");
+		rs.next();
+		int nextid = rs.getInt("Auto_increment");
+		message.setId(nextid);
+		
 		ps.setInt(1, message.fromID);
 		ps.setInt(2, message.toID);
-		ps.setBytes(3,  convertToByteArray((Object)message));
+		ps.setBytes(3,  convertToByteArray(message));
 		ps.executeUpdate();
 		
 		return getGeneratedKey(ps); 
@@ -173,18 +210,34 @@ public class ServerConnection {
 		public static int addInbox(Inbox inbox) throws Exception {
 			String query = "INSERT INTO inboxes (numRequests, numMessages, numChallenges, inbox) VALUE (?, ?, ?, ?)";
 			PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			
+			// Update the id of the object
+			ResultSet rs = ps.executeQuery("SHOW TABLE STATUS WHERE 'Name' = 'inboxes'");
+			rs.next();
+			int nextid = rs.getInt("Auto_increment");
+			inbox.setID(nextid);
+			
 			ps.setInt(1, 0);
 			ps.setInt(2, 0);
 			ps.setInt(3, 0);
-			ps.setBytes(4,  convertToByteArray((Object)inbox));
+			ps.setBytes(4,  convertToByteArray(inbox));
 			ps.executeUpdate();
 			return getGeneratedKey(ps); 
 		}
 		
-	// Return a message from the database given the messageID
-	public static Inbox getInbox(int inboxID) throws Exception {
+	// Return an inbox from the database given the messageID
+	public static Inbox getInboxWithInboxID(int inboxID) throws Exception {
 		PreparedStatement ps = con.prepareStatement("SELECT * FROM inboxes WHERE id = ?", Statement.RETURN_GENERATED_KEYS);
 		ps.setInt(1, inboxID);
+		ResultSet rs = ps.executeQuery();
+		rs.next(); 
+		return (Inbox) convertToObject(rs, "inbox");
+	}
+	
+	// Return an inbox from the database given the userID
+	public static Inbox getInboxWithUserID(int userID) throws Exception {
+		PreparedStatement ps = con.prepareStatement("SELECT * FROM inboxes WHERE userID = ?", Statement.RETURN_GENERATED_KEYS);
+		ps.setInt(1, userID);
 		ResultSet rs = ps.executeQuery();
 		rs.next(); 
 		return (Inbox) convertToObject(rs, "inbox");

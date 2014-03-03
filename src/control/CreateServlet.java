@@ -221,6 +221,7 @@ public class CreateServlet extends HttpServlet {
 	 * Forwards to specified page.  I might have to hard code it again here.
 	 */
 	private void forwardToPage(String page, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		RequestDispatcher dispatch = request.getRequestDispatcher(page); 
 		dispatch.forward(request, response); 
 	}
