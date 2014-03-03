@@ -65,6 +65,11 @@ public class Quiz implements Serializable{
 		return questions.get(index);
 	}
 	
+	// Return all of the questions as an array
+	public ArrayList<Question> getQuestions(){
+		return questions;
+	}
+	
 	// Return the number of questions
 	public int getNumQuestions(){
 		return questions.size(); 
@@ -122,12 +127,12 @@ public class Quiz implements Serializable{
 	}
 	
 	//Returns true if immediateCorrection setting is on
-	public boolean immediateCorrection() {
-		return immediateCorrection();
+	public boolean hasImmediateCorrection() {
+		return immediateCorrection;
 	}
 	
 	//Returns true if multiple pages setting is on
-	public boolean multiplePages() {
+	public boolean hasMultiplePages() {
 		return multiplePages;
 	}
 	
@@ -169,6 +174,20 @@ public class Quiz implements Serializable{
 	public void setRandom(int userID, boolean hasRandomMode){
 		if(userID == creatorID){
 			this.hasRandomMode = hasRandomMode;
+		}
+	}
+	
+	// Set if the multiple page mode is available
+	public void setMultiplePages(int userID, boolean multiplePages){
+		if(userID == creatorID){
+			this.multiplePages = multiplePages;
+		}
+	}
+	
+	// Set if the immediate correction mode is available
+	public void setImmediateCorrection(int userID, boolean immediateCorrection){
+		if(userID == creatorID){
+			this.immediateCorrection = immediateCorrection;
 		}
 	}
 	
