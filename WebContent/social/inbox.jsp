@@ -12,7 +12,7 @@ m.markAsRead();
 String subject = m.getSubject();
 String body = m.getBody();
 Date timeSent = m.getSentAt();
-User from = User.getUser(m.getFromID());
+User from = ServerConnection.getUser(m.getFromID());
 
 // GET INBOX INFO
 int numRequests = inbox.getNumFriendReqs();
