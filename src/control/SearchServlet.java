@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import store.Product;
 import model.Quiz;
 import model.ServerConnection;
 import model.User;
