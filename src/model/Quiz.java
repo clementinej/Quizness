@@ -247,7 +247,6 @@ public class Quiz implements Serializable{
 	}
 	
 	// Return x number of recently played quizzes
-
 	public static ArrayList<Integer> getRecentlyPlayedQuizzes(int num) throws Exception{
 		String query = "SELECT quizID FROM quizzes ORDER BY dateLastPlayed DESC LIMIT" + num;
 		return executeQuery(query);
@@ -256,6 +255,13 @@ public class Quiz implements Serializable{
 	// Return x number of recently created quizzes
 	public static ArrayList<Integer> getRecentlyCreatedQuizzes(int num) throws Exception{
 		String query = "SELECT quizID FROM quizzes ORDER BY dateCreated DESC LIMIT" + num;
+		return executeQuery(query); 
+	}
+	
+	// Return x number of recently created quizzes by this user
+	public static ArrayList<Integer> getRecentlyCreatedQuizzesByUser(int num, int userID) throws Exception{
+		String query = "SELECT quizID FROM quizzes WHERE userID = " + userID + 
+				" ORDER BY dateCreated DESC LIMIT" + num;
 		return executeQuery(query); 
 	}
 	
@@ -304,6 +310,17 @@ public class Quiz implements Serializable{
 		return executeQuery(query);
 	}
 	
+	
+	// Do a innner join
+	public static ArrayList<Integer> getFriendActivities(int num, int userID) throws Exception{
+		Connection con = ServerConnection.getConnection();
+		for(int i = 0; i < userIDs.size(); i++){
+			String query = "SELECT quizTry FROM quizTries WHERE userID = '" + userIDs.get(i) + " ORDER BY score DESC LIMIT" + num;
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.executeUpdate();
+		return executeQuery(query);
+	}
+	
 	// Remove a quiz from the database
 	public static void removeQuiz(int quizID) throws Exception {
 		Connection con = ServerConnection.getConnection();
@@ -313,11 +330,21 @@ public class Quiz implements Serializable{
 	}
 	
 	// Convert IDs into Quiz object
-	public static ArrayList<Quiz> iDToQuizzes(ArrayList<Integer> quizIDs) throws Exception{
+	public static ArrayList<Quiz> toQuizzes(ArrayList<Integer> quizIDs) throws Exception{
 		ArrayList<Quiz> results = new ArrayList<Quiz>();
 		int num = quizIDs.size();
 		for(int i = 0; i < num; i++){
 			results.add(Quiz.getQuiz(quizIDs.get(i)));
+		}
+		return results; 
+	}
+	
+	// Convert IDs into QuizTry object
+	public static ArrayList<QuizTry> toQuizTries(ArrayList<Integer> quizTryIDs) throws Exception{
+		ArrayList<QuizTry> results = new ArrayList<QuizTry>();
+		int num = quizTryIDs.size();
+		for(int i = 0; i < num; i++){
+			results.add(QuizTry.getQuizTry(quizTryIDs.get(i)));
 		}
 		return results; 
 	}
