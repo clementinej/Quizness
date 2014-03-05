@@ -115,7 +115,7 @@ public class ServerConnection {
 	*/
 
 	
-	// Return an User object from the database given the userID
+	// Return an User object from the database given the user email
 	public static User getUser(String email) throws Exception {
 		PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE email = ?", Statement.RETURN_GENERATED_KEYS);
 		ps.setString(1, email);
@@ -124,9 +124,18 @@ public class ServerConnection {
 		return null; 
 	}
 	
+	// Return an User object from the database given the userID
+	public static User getUser(int userID) throws Exception {
+		PreparedStatement ps = con.prepareStatement("SELECT * FROM users id = ?", Statement.RETURN_GENERATED_KEYS);
+		ps.setInt(1, userID);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()) return (User) convertToObject(rs, "user");
+		return null; 
+	}
+	
 	// Add a quiz to the database
 	public static int addQuiz(Quiz quiz) throws Exception {
-		String query = "INSERT INTO quizzes (quiz, numTimesTaken, dateCreated) VALUES(?, ?, ?)";
+		String query = "INSERT INTO quizzes (quiz, numTimesTaken, dateCreated, creatorID) VALUES(?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
 		
 		// Update the id of the object
@@ -141,6 +150,7 @@ public class ServerConnection {
 		ps.setBytes(1, convertToByteArray(quiz));
 		ps.setInt(2, quiz.getNumOfTimesPlayed());
 		ps.setTimestamp(3, timestamp);
+		ps.setInt(4, quiz.getCreatorID());
 		ps.executeUpdate();
 		
 		return getGeneratedKey(ps);

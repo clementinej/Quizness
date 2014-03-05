@@ -52,7 +52,8 @@ public class HomePageServlet extends HttpServlet {
 			getRecentlyCreatedQuizzesByUser(session, userID);
 			getAchievements(session, username);
 			getMessages(session, userID);
-			getFriendActivity(session, userID, 20);
+			getRecentlyCreatedByFriends(session, userID, 20);
+			getRecentlyTakenByFriends(session, userID, 20);
 			getFriendAchievement(session,  userID, username);
 		} catch (Exception e) {
 		}
@@ -106,9 +107,14 @@ public class HomePageServlet extends HttpServlet {
 		session.setAttribute("inbox", inbox);
 	}
 	
-	private void getFriendActivity(HttpSession session, int userID, int num) throws Exception{
-		ArrayList<QuizTry> result = Quiz.toQuizTries(Quiz.getFriendActivities(num, userID)); 
-		session.setAttribute("friend activities", result);
+	private void getRecentlyCreatedByFriends(HttpSession session, int userID, int num) throws Exception{
+		ArrayList<QuizTry> result = Quiz.toQuizTries(Quiz.getRecentlyCreatedByFriends(num, userID)); 
+		session.setAttribute("friends recently created", result);
+	}
+	
+	private void getRecentlyTakenByFriends(HttpSession session, int userID, int num) throws Exception{
+		ArrayList<QuizTry> result = Quiz.toQuizTries(Quiz.getRecentlyTakenByFriends(num, userID)); 
+		session.setAttribute("friends recently taken", result);
 	}
 
 	private void getFriendAchievement(HttpSession session, int userID, String username) throws Exception{

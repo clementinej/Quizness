@@ -5,7 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,7 +36,7 @@ public class Quiz implements Serializable{
 
 	
 	// Frequently updated informations
-	private String dateLastPlayed;
+	private Date dateLastPlayed;
 	private int numOfTimesPlayed;
 
 	public Quiz(int creatorID, double maxScore, String description, String title, ArrayList<Question> questions, 
@@ -156,6 +158,17 @@ public class Quiz implements Serializable{
 		this.quizID = quizID; 
 	}
 	
+	// Set the date this quiz was last taken
+	public void setDateLastPlayed(Date date) throws Exception{
+		Connection con = ServerConnection.getConnection();
+		this.dateLastPlayed = date;
+		Timestamp timestamp = new Timestamp(date.getTime());
+		String query = "UPDATE quizzes SET dateLastPlayed = ? WHERE id = " + this.quizID;
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.setTimestamp(1, timestamp);
+		ps.executeQuery(); 
+	}
+	
 	// Set the maximum score achievable on this quiz
 	public void setMaxScore(int maxScore){
 		this.maxScore = maxScore; 
@@ -203,6 +216,16 @@ public class Quiz implements Serializable{
 		}
 	}
 	
+	// Increment the number of times that this quiz was played
+	public void incrementNumOfTimesPlayed() throws Exception{
+		numOfTimesPlayed++;
+		Connection con = ServerConnection.getConnection();
+		String query = "UPDATE quizzes SET numTimesTaken = ? WHERE id = " + this.quizID;
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.setInt(1, numOfTimesPlayed);
+		ps.executeQuery();
+	}
+	
 	// Set the title of the quiz
 	public void setTitle(int userID, String title){
 		if(userID == creatorID){ 
@@ -222,6 +245,11 @@ public class Quiz implements Serializable{
 	// Return the quiz given the ID
 	public static Quiz getQuiz(int quizID) throws Exception{
 		return ServerConnection.getQuiz(quizID);
+	}
+	
+	// Return the date last played
+	public Date getDateLastPlayed(){
+		return this.dateLastPlayed;
 	}
 	
 
@@ -310,14 +338,21 @@ public class Quiz implements Serializable{
 		return executeQuery(query);
 	}
 	
-	
-	// Do a innner join
-	public static ArrayList<Integer> getFriendActivities(int num, int userID) throws Exception{
+	public static ArrayList<Integer> getRecentlyCreatedByFriends(int num, int userID) throws Exception{
 		Connection con = ServerConnection.getConnection();
-		for(int i = 0; i < userIDs.size(); i++){
-			String query = "SELECT quizTry FROM quizTries WHERE userID = '" + userIDs.get(i) + " ORDER BY score DESC LIMIT" + num;
-			PreparedStatement ps = con.prepareStatement(query);
-			ps.executeUpdate();
+		String query = "SELECT id FROM quizzes INNER JOIN friendships USING (toID) WHERE fromID = " + userID
+				+ " ORDER BY dateCreated DESC LIMIT" + num; 
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.executeUpdate();
+		return executeQuery(query);
+	}
+	 
+	public static ArrayList<Integer> getRecentlyTakenByFriends(int num, int userID) throws Exception{
+		Connection con = ServerConnection.getConnection();
+		String query = "SELECT id FROM quizTries INNER JOIN friendships USING (toID) WHERE fromID = " + userID
+				+ " ORDER BY dateCreated DESC LIMIT" + num; 
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.executeUpdate();
 		return executeQuery(query);
 	}
 	
@@ -344,7 +379,7 @@ public class Quiz implements Serializable{
 		ArrayList<QuizTry> results = new ArrayList<QuizTry>();
 		int num = quizTryIDs.size();
 		for(int i = 0; i < num; i++){
-			results.add(QuizTry.getQuizTry(quizTryIDs.get(i)));
+			results.add(ServerConnection.getQuizTry((quizTryIDs.get(i))));
 		}
 		return results; 
 	}
