@@ -4,37 +4,15 @@
 <%
 User currentUser = (User) session.getAttribute("current user");
 java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat();
-<<<<<<< HEAD
 int numQuizzes = Site.getTotalNumberOfQuizzes();
 int numUsers = Site.getTotalNumberOfUsers();
-=======
-
-int numQuizzes = Site.getTotalNumberOfQuizzes();
-int numUsers = Site.getTotalNumberUsers();
->>>>>>> Added getCount in Site
 int numTags = Site.getTotalNumberTags();
 int numQuizzesTaken = Site.getTotalNumberQuizzesTaken();
 
 int numFriends = Site.getNumFriendships();
-<<<<<<< HEAD
 int numMsgsSent = Site.getNumMsgs();
 int numChallenges = Site.getNumChallenges();
 int numFriendReqs = Site.getNumReqs();
-=======
-int numMsgsSent = Messaging.getNumMsgs();
-int numChallenges = Messaging.getNumChallenges();
-int numFriendReqs = Messaging.getNumReqs();
-
-/* int numQuizzes = 9;
-int numUsers = 10;
-int numTags = 16;
-int numQuizzesTaken = 11;
-int numFriends = 12;
-int numMsgsSent = 13;
-int numChallenges = 14;
-int numFriendReqs = 15;
-*/
->>>>>>> Added getCount in Site
 
 String user_search = request.getParameter("user_search");
 String quiz_search = request.getParameter("quiz_search");
