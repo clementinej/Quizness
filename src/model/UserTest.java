@@ -25,18 +25,25 @@ public class UserTest {
 		ArrayList<Achievement> achievements = u.getAchievements();
 		ArrayList<User> friends = u.getFriends();
 		
-		System.out.println("Friends:");
-		for (User f : friends){
-			System.out.println(f.getUserName());
-		}
-		System.out.println();
-		System.out.println("Achievements: ");
-		for (Achievement a : achievements){
-			System.out.print(a.getAchievement() + ": ");
-			System.out.println(a.getDescription());
-		}
+//		System.out.println("Friends:");
+//		for (User f : friends){
+//			System.out.println(f.getUserName());
+//		}
+//		System.out.println();
+//		System.out.println("Achievements: ");
+//		for (Achievement a : achievements){
+//			System.out.print(a.getAchievement() + ": ");
+//			System.out.println(a.getDescription());
+//		}
 		
 		assertTrue(friends.size() == 3);
+	}
+	
+	@Test
+	public void getUserTest() throws Exception{
+		ServerConnection.open();
+		User u = User.getUser(1);
+		System.out.println(u.getUserName());
 	}
 
 }

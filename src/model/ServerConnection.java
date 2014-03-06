@@ -132,7 +132,7 @@ public class ServerConnection {
 	
 	// Return an User object from the database given the userID
 	public static User getUser(int userID) throws Exception {
-		PreparedStatement ps = con.prepareStatement("SELECT * FROM users id = ?", Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE id = ?", Statement.RETURN_GENERATED_KEYS);
 		ps.setInt(1, userID);
 		ResultSet rs = ps.executeQuery();
 		if(rs.next()) return (User) convertToObject(rs, "user");
