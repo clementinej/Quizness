@@ -232,8 +232,7 @@ public class User implements Serializable {
 		ps = con.prepareStatement("SELECT password FROM users WHERE username = ?");	
 		ps.setString(1, userName);
 		ResultSet rs = ps.executeQuery();
-		rs.first();
-		passwordHash = rs.getString("password");
+		if(rs.first()) passwordHash = rs.getString("password");
 		return passwordHash;
 	}
 	
@@ -244,8 +243,7 @@ public class User implements Serializable {
 		ps = con.prepareStatement("SELECT password FROM users WHERE email = ?");	
 		ps.setString(1, email);
 		ResultSet rs = ps.executeQuery();
-		rs.first();
-		passwordHash = rs.getString("password");
+		if(rs.first())passwordHash = rs.getString("password");
 		return passwordHash;
 	}
 	

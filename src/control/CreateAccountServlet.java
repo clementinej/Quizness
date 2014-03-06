@@ -34,7 +34,7 @@ public class CreateAccountServlet extends HttpServlet {
 		
 		try {
 			if(manager.createNewAccount(userName, email, pw, false)) {//go to "user welcome" page
-				redirectToPage("site/home.html", request, response);	
+				redirectToPage("site/home.jsp", request, response);	
 			} else {		
 				redirectToAccountIsInUse(response, userName);
 			}
