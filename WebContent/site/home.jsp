@@ -34,15 +34,65 @@
 				<input type="name" name="search" placeholder="Search for quizzes, friends, etc."></input>
 				</form>
 			</div>
-			
 			<div style="float:right">
-			<p>Popular Quizzes</p> 
-			<p>Recently Created Quizzes</p>
-			<p>Quizzes You've Taken Recently</p>
-			<p>Quizzes You've Taken Recently</p>
-			<p>Recent Achievements</p>
-			<p>Messages</p>
 			
+			<h1>Popular Quizzes</h1> 
+			<% 
+			ArrayList<Integer> topQuizzes = UserHome.getTopQuizzes(5);
+			for(int i = 0; i < 5; i++) {
+				Quiz topQuiz = Quiz.getQuiz(topQuizzes.get(i));
+				int topQuizID = topQuizzes.get(i);
+			%>
+			<p><a href="../quiz/show-quiz.jsp?quiz-id=<%=topQuizID%>"><%=topQuiz.getTitle()%></a></p>
+			<%}%>
+			
+			<h1>New Quizzes</h1>
+			<% 
+			ArrayList<Integer> newQuizzes = UserHome.getRecentlyCreatedQuizzes(5);
+			for(int i = 0; i < 5; i++) {
+				Quiz newQuiz = Quiz.getQuiz(newQuizzes.get(i));
+				int newQuizID = newQuizzes.get(i);
+			%>
+			<p><a href="../quiz/show-quiz.jsp?quiz-id=<%=newQuizID%>"><%=newQuiz.getTitle()%></a></p>
+			<%}%>
+			
+			
+			<h1>Quizzes You've Taken Recently</h1>
+			<%
+			ArrayList<Integer> userRecentQuizzesTaken = UserHome.getRecentlyTakenQuizzesByUser(5, userID);
+			for(int i = 0; i < 5; i++) {
+				int quizID = userRecentQuizzesTaken.get(i);
+				Quiz takenQuiz = Quiz.getQuiz(quizID);
+			%>
+			<p><a href="../quiz/quiz-list.jsp?quiz-id=<%=quizID%>"><%=takenQuiz.getTitle()%></a><p>
+			<%} %>
+		
+			<h1>Quizzes You've Created Recently</h1>
+			<%
+			ArrayList<Integer> userRecentQuizzes = UserHome.getRecentlyCreatedQuizzesByUser(5, userID);
+			for(int i = 0; i < 5; i++) {
+				int quizID = userRecentQuizzes.get(i);
+				Quiz createdQuiz = Quiz.getQuiz(quizID);
+			%>
+			<p><a href="../quiz/quiz-list.jsp?quiz-id=<%=quizID%>"><%=createdQuiz.getTitle()%></a><p>
+			<%} %>
+
+			<h1>Recent Achievements</h1>
+			<%
+			ArrayList<Achievement> achievements = user.getAchievements();
+			for(int i = 0; i < 5; i++) {
+				Achievement a = achievements.get(i);
+			%>
+			<p>You earned <%=a.getDescription()%></p>	
+			
+			<%}%>
+			
+			<h1>Messages</h1>
+			<%
+			Inbox inbox = Inbox.getInbox(userID);
+			int numMessages = inbox.getNumNewMessages();
+			%>
+			<p>You have <%=numMessages %> new messages! <a href="../inbox/user?id=<%=userID %>">Go to your inbox.</a></p>
 			
 			<h1>Challenges</h1>
 			<%

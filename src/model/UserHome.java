@@ -8,9 +8,14 @@ import java.util.ArrayList;
 public class UserHome {
 
 	// Return the top x number of quizzes
-	public static ArrayList<Integer> getTopQuizzes(int num) throws Exception{
+	public static ArrayList<Integer> getTopQuizzes(int num) {
+		try {
 		String query = "SELECT id FROM quizzes ORDER BY numTimesTaken DESC LIMIT" + num;
 		return executeQuery(query); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<Integer>();
 	}
 	
 
