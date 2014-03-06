@@ -41,7 +41,7 @@ public class UserTest {
 	
 	@Test
 	public void getUserTest() throws Exception{
-		ServerConnection.open();
+//		ServerConnection.open();
 		User u = User.getUser(1);
 		System.out.println(u.getUserName());
 	}
