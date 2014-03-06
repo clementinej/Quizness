@@ -3,12 +3,12 @@
 <head>
    <link rel="stylesheet" type="text/css" href="../../css/style_login.css" />
 </head>
-<%--
-   User currUser = (User) session.getAttribute("currentUser");
+<%
+   User currUser = (User) session.getAttribute("current user");
    int currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
    Quiz currQuiz = Quiz.getQuiz(currQuizID);
-   if(!currUser.isAdmin() && currQuiz.getUserID() != currUser.getUserID()) return;
-   --%>
+   if(!currUser.isAdmin() && currQuiz.getCreatorID() != currUser.getUserID()) return;
+   %>
 <body>
    <div class="container">
       <form method="post" action="../../CreateServlet" id="signup">

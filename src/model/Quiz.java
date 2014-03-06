@@ -23,8 +23,6 @@ public class Quiz implements Serializable{
 	private boolean hasTimedMode;
 	private boolean immediateCorrection;
 	private boolean multiplePages;
-	
-	
 	private String description; 
 	private String title; 
 	
@@ -308,7 +306,6 @@ public class Quiz implements Serializable{
 	}
 	
 	// Return x number of performances on this specific quiz, order by time spent 
-
 	public static ArrayList<Integer> getPerformancyByTime(int userID, int quizID, int num) throws Exception{
 		String query = "SELECT quizTryID FROM quizTries WHERE userID = ?"
 				+ "AND WHERE quizID = " + quizID + " ORDER BY timeSpent DESC LIMIT" + num;
