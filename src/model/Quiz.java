@@ -23,8 +23,6 @@ public class Quiz implements Serializable{
 	private boolean hasTimedMode;
 	private boolean immediateCorrection;
 	private boolean multiplePages;
-	
-	
 	private String description; 
 	private String title; 
 	
@@ -252,6 +250,20 @@ public class Quiz implements Serializable{
 		return this.dateLastPlayed;
 	}
 	
+	// Return the date this quiz was created
+	// Check for runtime index error
+	public Date getDateCreated() throws Exception{
+		Date date = null; 
+		Connection con = ServerConnection.getConnection();
+		String query = "SELECT dateCreated FROM quizzes WHERE quizID = " + this.quizID; 
+		PreparedStatement ps = con.prepareStatement(query);
+		ResultSet rs = ps.executeQuery(); 
+		while(rs.next()){
+			date = rs.getTimestamp(1);
+		}
+		return date;
+	}
+	
 
 	public static double getHighScore(int userID, int quizID) throws Exception {
 		double result = 0; 
@@ -266,54 +278,7 @@ public class Quiz implements Serializable{
 			result = rs.getDouble(1);
 		}
 		return result; 
-	}
-	
-	// Return the top x number of quizzes
-	public static ArrayList<Integer> getTopQuizzes(int num) throws Exception{
-		String query = "SELECT quizID FROM quizzes ORDER BY numTimesTaken DESC LIMIT" + num;
-		return executeQuery(query); 
-	}
-	
-	// Return x number of recently played quizzes
-	public static ArrayList<Integer> getRecentlyPlayedQuizzes(int num) throws Exception{
-		String query = "SELECT quizID FROM quizzes ORDER BY dateLastPlayed DESC LIMIT" + num;
-		return executeQuery(query);
-	}
-	
-	// Return x number of recently created quizzes
-	public static ArrayList<Integer> getRecentlyCreatedQuizzes(int num) throws Exception{
-		String query = "SELECT quizID FROM quizzes ORDER BY dateCreated DESC LIMIT" + num;
-		return executeQuery(query); 
-	}
-	
-	// Return x number of recently created quizzes by this user
-	public static ArrayList<Integer> getRecentlyCreatedQuizzesByUser(int num, int userID) throws Exception{
-		String query = "SELECT quizID FROM quizzes WHERE userID = " + userID + 
-				" ORDER BY dateCreated DESC LIMIT" + num;
-		return executeQuery(query); 
-	}
-	
-	// Return x number of performances on this specific quiz, order by date 
-	public static ArrayList<Integer> getPerformanceByDate(int userID, int quizID, int num) throws Exception{
-		String query = "SELECT quizTryID FROM quizTries WHERE userID = ?"
-				+ "AND WHERE quizID = " + quizID + " ORDER BY dateCreated DESC LIMIT" + num;
-		return executeQuery(query);
-	}
-	
-	// Return x number of performances on this specific quiz, order by score 
-	public static ArrayList<Integer> getPerformanceByScore(int userId, int quizID, int num) throws Exception{
-		String query = "SELECT quizTryID FROM quizTries WHERE userID = ?"
-				+ "AND WHERE quizID = " + quizID + " ORDER BY score DESC LIMIT" + num;
-		return executeQuery(query);
-	}
-	
-	// Return x number of performances on this specific quiz, order by time spent 
-
-	public static ArrayList<Integer> getPerformancyByTime(int userID, int quizID, int num) throws Exception{
-		String query = "SELECT quizTryID FROM quizTries WHERE userID = ?"
-				+ "AND WHERE quizID = " + quizID + " ORDER BY timeSpent DESC LIMIT" + num;
-		return executeQuery(query);
-	}
+	}	
 	
 
 	public static ArrayList<Integer> getTopPerformers(int num, int quizID) throws Exception{
@@ -331,7 +296,7 @@ public class Quiz implements Serializable{
 	}
 	
 
-	public static ArrayList<Integer> getRecentTestTakers(int num, int quizID, int numOfDays) throws Exception{
+	public static ArrayList<Integer> getTopPerformers(int num, int quizID, int numOfDays) throws Exception{
 		String query = "SELECT DISTINCT userID FROM quizTries WHERE quizID = " + quizID
 				+ " AND WHERE dateCreated >= NOW() - INTERVAL " + numOfDays + " DAY "
 				+ " ORDER BY score DESC LIMIT" + num;
@@ -382,29 +347,5 @@ public class Quiz implements Serializable{
 			results.add(ServerConnection.getQuizTry((quizTryIDs.get(i))));
 		}
 		return results; 
-	}
-	
-	public void getStatistics(){
-	// TODO Provide methods for getting summary statistics 
-	}
-		
-	
-	// Private helper methods
-	
-	// Return a set of IDs from a ResultSet
-	private static ArrayList<Integer> resultSetToArray(ResultSet rs) throws Exception{
-		ArrayList<Integer> result = new ArrayList<Integer>();
-		while(rs.next()){
-			result.add(rs.getInt(1)); 
-		}
-		return result; 
-	}
-	
-	// Execute the given query, throws exception=
-	private static ArrayList<Integer> executeQuery(String query) throws Exception{
-		Connection con = ServerConnection.getConnection();
-		PreparedStatement ps = con.prepareStatement(query);
-		ps.executeUpdate();
-		return resultSetToArray(ps.getResultSet()); 
 	}
 }

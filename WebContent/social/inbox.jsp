@@ -3,11 +3,11 @@
 <%
 // GET USER INFO
 User u = (User) session.getAttribute("current user");
-Inbox inbox = User.getInbox(u.getUserID());
+Inbox inbox = Inbox.getInbox(u.getUserID());
 
 // GET MESSAGE INFO
-int message = Integer.parseInt(request.getParameter("messageID"));
-Message m = inbox.getMessage(message);
+int messageID = Integer.parseInt(request.getParameter("messageID"));
+Message m = inbox.getMessage(messageID);
 m.markAsRead();
 String subject = m.getSubject();
 String body = m.getBody();

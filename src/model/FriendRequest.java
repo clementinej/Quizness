@@ -22,8 +22,17 @@ public class FriendRequest extends Message {
 		this.sentAt = new Date(); 
 		this.viewed = false;
 		this.accepted = false; 
+		this.messageType = "friendRequest";
 	}
 
+	public String getFrom() {
+		return fromUserName;
+	}
+	
+	public String getTo() {
+		return toUserName;
+	}
+	
 	// Accept the friend request and update the database
 	public void accept(int userID) throws Exception{
 		if(userID == toID){

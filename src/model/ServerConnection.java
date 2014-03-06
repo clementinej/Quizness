@@ -93,16 +93,22 @@ public class ServerConnection {
 	// Return the ID if success
 	// Otherwise return -1;
 	public static int addUser(User user) throws Exception {
-		String query = "INSERT INTO users (username, password, user, email) VALUES(?,?,?,?)";
+		String query = "INSERT INTO users (username, password, email) VALUES(?,?,?,?)";
 		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		ps.setString(1, user.getUserName());
 		ps.setString(2, user.getPassword());
-		System.out.println(user.getPassword());
-		ps.setBytes(3, convertToByteArray(user));
-		ps.setString(4,  user.getEmail());
-		System.out.println(query);
+		ps.setString(3,  user.getEmail());
 		ps.executeUpdate();
-		return getGeneratedKey(ps);
+		
+		int userID = getGeneratedKey(ps);
+		user.setUserID(userID);
+		
+		query = "UPDATE users SET user = ? WHERE id = " + userID; 
+		ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
+		ps.setBytes(1, convertToByteArray(user));
+		ps.executeUpdate();
+
+		return userID;
 	}
 	
 	/* Move to the User object
@@ -135,25 +141,25 @@ public class ServerConnection {
 	
 	// Add a quiz to the database
 	public static int addQuiz(Quiz quiz) throws Exception {
-		String query = "INSERT INTO quizzes (quiz, numTimesTaken, dateCreated, creatorID) VALUES(?, ?, ?, ?)";
+		String query = "INSERT INTO quizzes (numTimesTaken, dateCreated, creatorID) VALUES(?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
-		
-		// Update the id of the object
-		ResultSet rs = ps.executeQuery("SHOW TABLE STATUS WHERE 'Name' = 'quizzes'");
-		rs.next();
-		int nextid = rs.getInt("Auto_increment");
-		quiz.setID(nextid);
-		
 		Date date = new Date();
 		Timestamp timestamp = new Timestamp(date.getTime());
-		
-		ps.setBytes(1, convertToByteArray(quiz));
-		ps.setInt(2, quiz.getNumOfTimesPlayed());
-		ps.setTimestamp(3, timestamp);
-		ps.setInt(4, quiz.getCreatorID());
+
+		ps.setInt(1, quiz.getNumOfTimesPlayed());
+		ps.setTimestamp(2, timestamp);
+		ps.setInt(3, quiz.getCreatorID());
 		ps.executeUpdate();
 		
-		return getGeneratedKey(ps);
+		int quizID =  getGeneratedKey(ps);
+		quiz.setID(quizID);
+		
+		query = "UPDATE quizzes SET quiz = ? WHERE id = " + quizID; 
+		ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
+		ps.setBytes(1, convertToByteArray(quiz));
+		ps.executeUpdate();
+		
+		return quizID; 
 	}
 	
 	// Return a quiz from the database given the quizID
@@ -167,44 +173,47 @@ public class ServerConnection {
 	
 	// Add a quizTry to the database and return the auto generated key
 	public static int addQuizTry(QuizTry quizTry) throws Exception {
-		String query = "INSERT INTO quizTries (quizTry, userID, quizID, score, timeSpent, dateCreated) VALUES(?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO quizTries (userID, quizID, score, timeSpent, dateCreated) VALUES(?, ?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		
-		// Update the id of the object
-		ResultSet rs = ps.executeQuery("SHOW TABLE STATUS WHERE 'Name' = 'quizTries'");
-		rs.next();
-		int nextid = rs.getInt("Auto_increment");
-		quizTry.setID(nextid);
-		
 		Date date = new Date();
-		ps.setBytes(1,  convertToByteArray(quizTry));
-		ps.setInt(2, quizTry.getUserID());
-		ps.setInt(3, quizTry.getQuizID());
-		ps.setDouble(4, quizTry.getScore());
-		ps.setDouble(5, quizTry.getTime());
-		ps.setTimestamp(6, new Timestamp(date.getTime()));
+		ps.setInt(1, quizTry.getUserID());
+		ps.setInt(2, quizTry.getQuizID());
+		ps.setDouble(3, quizTry.getScore());
+		ps.setDouble(4, quizTry.getTime());
+		ps.setTimestamp(5, new Timestamp(date.getTime()));
 		ps.executeUpdate();
 		
-		return getGeneratedKey(ps);
+		int quizTryID =  getGeneratedKey(ps);
+		quizTry.setID(quizTryID);
+		
+		query = "UPDATE quizTries SET quizTry = ? WHERE id = " + quizTryID; 
+		ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
+		ps.setBytes(1, convertToByteArray(quizTry));
+		ps.executeUpdate();
+		
+		return quizTryID;
 	}
 	
 	// Add a message to the database and return the auto generated key 
 	public static int addMessage(Message message) throws Exception {
-		String query = "INSERT INTO messages (fromID, toID, message) VALUE (?, ?, ?)";
+		String query = "INSERT INTO messages (fromID, toID, messageType) VALUE (?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-		
-		// Update the id of the object
-		ResultSet rs = ps.executeQuery("SHOW TABLE STATUS WHERE 'Name' = 'messages'");
-		rs.next();
-		int nextid = rs.getInt("Auto_increment");
-		message.setId(nextid);
 		
 		ps.setInt(1, message.fromID);
 		ps.setInt(2, message.toID);
-		ps.setBytes(3,  convertToByteArray(message));
+		ps.setString(3, message.getMessageType());
 		ps.executeUpdate();
 		
-		return getGeneratedKey(ps); 
+		int messageID =  getGeneratedKey(ps);
+		message.setId(messageID);
+		
+		query = "UPDATE messages SET message = ? WHERE id = " + messageID; 
+		ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
+		ps.setBytes(1, convertToByteArray(message));
+		ps.executeUpdate();
+		
+		return messageID;
 	}
 	
 	// Return a message from the database given the messageID
@@ -218,21 +227,23 @@ public class ServerConnection {
 	
 	// Add a Inbox  to the database and return the auto generated key 
 		public static int addInbox(Inbox inbox) throws Exception {
-			String query = "INSERT INTO inboxes (numRequests, numMessages, numChallenges, inbox) VALUE (?, ?, ?, ?)";
+			String query = "INSERT INTO inboxes (numRequests, numMessages, numChallenges) VALUE (?, ?, ?)";
 			PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-			
-			// Update the id of the object
-			ResultSet rs = ps.executeQuery("SHOW TABLE STATUS WHERE 'Name' = 'inboxes'");
-			rs.next();
-			int nextid = rs.getInt("Auto_increment");
-			inbox.setID(nextid);
 			
 			ps.setInt(1, 0);
 			ps.setInt(2, 0);
 			ps.setInt(3, 0);
-			ps.setBytes(4,  convertToByteArray(inbox));
 			ps.executeUpdate();
-			return getGeneratedKey(ps); 
+			
+			int inboxID =  getGeneratedKey(ps);
+			inbox.setID(inboxID);
+			
+			query = "UPDATE inboxes SET inbox = ? WHERE id = " + inboxID; 
+			ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
+			ps.setBytes(1, convertToByteArray(inbox));
+			ps.executeUpdate();
+			
+			return inboxID;
 		}
 		
 	// Return an inbox from the database given the messageID

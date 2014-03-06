@@ -9,20 +9,22 @@
       <link href="../css/hexaflip.css" rel="stylesheet" type="text/css">
       <link href="../css/results.css" rel="stylesheet" type="text/css">
    </head>
-   <%@page import="model.*", import="java.util.ArrayList"%>
+   <%@page import="model.*"%>
+   <%@page import="java.util.*"%>
    <%
       //Get the user
-      User user = (User)session.getAttribute("currUser");
+      User user = (User)session.getAttribute("currrent user");
       //Get the quiz try by id
-  //    QuizTry quizTry = QuizTry.getQuizTry(Integer.parseInt(request.getParameter("quizTryID")));
+      int quizID = Integer.parseInt(request.getParameter("quizTryID"));
+  	  QuizTry quizTry = QuizTry.getTry(quizID);
       //Only let users see their own quiz results
-  //    if(quizTry.getUserID() != user.getUserID() && !user.isAdmin()) {
-    //  	return;
-  //    }
+      if(quizTry.getUserID() != user.getUserID() && !user.isAdmin()) {
+     	return;
+      }
       //Only let users see completed quizes
-      //if(quizTry.isInProgress()) {
-   //   	return;
-    //  }
+      if(quizTry.isInProgress()) {
+   	  	return;
+      }
       %>
    <body>
       <div class="container">
@@ -33,67 +35,46 @@
          </div>
          <form method="post" action="/SaveResults">
             <%
- //              double score = quizTry.getScore();
- //              double time = quizTry.getTime();
- //              ArrayList<String[]> responses = quizTry.getResponses();
-               %>
-            <!-- Potentially do a switch statement on score and give them different messages 
-               depending on how well they did.  -->
+              double score = quizTry.getScore();
+              double time = quizTry.getTime()/1000;
+              ArrayList<String[]> responses = quizTry.getResponses();
+              
+              double userAverageScore = History.getAverageScoreByUser(user.getUserID(), quizID);
+              double userAverageTime = History.getAverageTimeByUser(user.getUserID(), quizID);
+              int userNumTries = History.getNumTriesByUser(user.getUserID(), quizID);
+              Date userLastTry = History.getLastTryByUser(user.getUserID(), quizID);
+              
+              double averageScore = History.getAverageScore(quizID);
+              double averageTime = History.getAverageTime(quizID);
+              int numTries = History.getNumTries(quizID);
+              int numTriesToday = History.getNumTriesToday(quizID);
+           	%>
+             
             <div id="score">
-               <p>Your score is [Score]</p>
-               <p>It took you [Insert elapsed time] seconds to complete this quiz</p>
+               <p>Your score is<%=score %></p>
+               <p>It took you <%=time %> seconds to complete this quiz</p>
             </div>
+            
+            <h1>Your History</h1>
+            <p>Your average score on this quiz is<%userAverageScore %></p>
+            <p>On average, this quiz takes you <%=userAverageTime %> seconds to complete </p>
+            <p>You've taken this quiz <%=userNumTries %> times </p>
+            <p>You last took this quiz on <%=userLastTry %></p>
+            
+            <h1>Quiz History</h1>
+            <p>On average, users score <%averageScore %> on this quiz.</p>
+            <p>On average, this quiz takes users <%=averageTime %> seconds to complete.</p>
+            <p>This quiz has been taken <%=numTries %> times.</p>
+            <p>This quiz has been taken <%=numTriesToday %> times today.</p>
          </form>
+         
+         <%
+         for(int i = 0; i < responses.size(); i++) {
+         %>
+         <p><%=responses %></p>
+         <%} %>
       </div>
       <script src="../js/hexaflip.js"></script>
-      <script>
-         var hexa,
-             text1 = 'SCORE'.split(''),
-             settings = {
-                 size: 150,
-                 margin: 12,
-                 fontSize: 100,
-                 perspective: 450
-             },
-             makeObject = function(a){
-                 var o = {};
-                 for(var i = 0, l = a.length; i < l; i++){
-                     o['letter' + i] = a;
-                 }
-                 return o;
-             },
-             getSequence = function(a, reverse, random){
-                 var o = {}, p;
-                 for(var i = 0, l = a.length; i < l; i++){
-                     if(reverse){
-                         p = l - i - 1;
-                     }else if(random){
-                         p = Math.floor(Math.random() * l);
-                     }else{
-                         p = i;
-                     }
-                     o['letter' + i] = a[p];
-                 }
-                 return o;
-             };
-         
-         document.addEventListener('DOMContentLoaded', function(){
-             hexa = new HexaFlip(document.getElementById('cubes'), makeObject(text1), settings);
-         
-             setTimeout(function(){
-                 hexa.setValue(getSequence(text1, true));
-             }, 0);
-         
-             setTimeout(function(){
-                 hexa.setValue(getSequence(text1));
-             }, 1000);
-         
-             setTimeout(function(){
-                 setInterval(function(){
-                     hexa.setValue(getSequence(text1, false, true));
-                 }, 3000);
-             }, 5000);
-         }, false);
-      </script>
+      <script src="../js/results.js"></script>
    </body>
 </html>

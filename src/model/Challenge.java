@@ -17,11 +17,16 @@ public class Challenge extends Message {
 		this.viewed = false;
 		this.accepted = false; 
 		this.quizID = quizID; 
+		this.messageType = "challenge"; 
 	}
 	
 	// Return the quizID of this challenge
 	public int getQuizID(){
 		return quizID; 
+	}
+	
+	public User getChallenger() {
+		return User.getUser(fromID);
 	}
 	
 	// Accept the challenge

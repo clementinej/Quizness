@@ -160,8 +160,8 @@ public class User implements Serializable {
  * 
  */
 	
-	public static User getUser(String username) throws Exception{
-		return ServerConnection.getUser(username);
+	public static User getUser(int userID) throws Exception{
+		return ServerConnection.getUser(userID);
 	}
 
 	public boolean isAdmin(){
