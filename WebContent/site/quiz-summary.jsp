@@ -37,11 +37,15 @@ String creator = "Clementine";
 int userHighScore = 10;
 int highScore = 20;
 int lastScore = 30;
-String lastTry = "Aug. 15th";
+ArrayList<QuizTry> lastTriesUser = new ArrayList<QuizTry>(); //should return the user's last five quiz tries 
+ArrayList<QuizTry> recentTries = new ArrayList<QuizTry>(); // should return the last five tries on this quiz
+ArrayList<QuizTry> bestTries = new ArrayList<QuizTry>(); // should return the last five tries on this quiz
+ArrayList<QuizTry> bestTriesToday = new ArrayList<QuizTry>(); // should return the last five tries on this quiz
+
 int numTries = 9;
 %>
 
-<div class="container">
+<div class="container" style="float:left;padding-left:100px;">
    <form method="post" action="../../InitQuizServlet??" id="signup">
       <div class="header">
          <h3>Quiz Summary</h3>
@@ -51,18 +55,61 @@ int numTries = 9;
       <div class="inputs">
          <h3>Quiz Title</h3>
          <p>Description</p><br>
-         <p><b>Created by</b> <%=creator %></p>
+         <p><b>Created by </b><a href="#"><%=creator %></a></p>
          
-         <br><h3>High Scores</h3>
+         <!-- Print info on the user's last five tries -->
+         <br><h3>Your History</h3>
          <p>Your high score on this quiz is <%=userHighScore %></p>
-         <p>The all time best score on this quiz is <%=highScore %> </p>
+         <%
+         for(int i = 0; i < 5; i++) {
+         %>
+         <p>On <%=lastTriesUser.get(i).getDate() %> you scored <%=lastTriesUser.get(i).getScore() %> </p>
+         <%
+         }
+         %>
          
-         <br><h3>History</h3>
-         <p>The last person to take this quiz scored <%=lastScore %></p>
-         <p>You last took this quiz on <%=lastTry %></p>
-         <p><%=numTries %> people have taken this quiz</p>
+         <!-- Print info on the last five tries of this quiz-->
+         <br><h3>Recent Activity</h3>
+         <%
+         for(int i = 0; i < 5; i++) {
+         %>
+         <p>At <%=recentTries.get(i).getTime() %> <%=User.getUser(recentTries.get(i).getUserID()).getUserName()%> scored <%=recentTries.get(i).getScore() %> </p>
+         <%
+         }
+         %>
          
-               
+      </div>	
+   </form>
+   </div>
+   
+    <!-- Print info on the top scores on this quiz-->
+   <div class="container" style="float:left;padding-left:200px;">
+   <form method="post" action="../../InitQuizServlet??" id="signup">
+      <div class="header">
+         <h3>Top Scores</h3>
+      </div>
+      <div class="sep"></div>
+      <div class="inputs">
+      	<br><h3>Top Scores Of All Time</h3>
+		 <%
+         for(int i = 0; i < 5; i++) {
+         %>
+         <p>On <%=bestTries.get(i).getDate() %> <%=User.getUser(bestTries.get(i).getUserID()).getUserName()%> scored <%=bestTries.get(i).getScore() %> </p>
+         <%
+         }
+         %>
+         
+         <br><h3>Top Scores Today</h3>
+		 <%
+         for(int i = 0; i < 5; i++) {
+         %>
+         <p>At <%=bestTriesToday.get(i).getTime() %> <%=User.getUser(bestTriesToday.get(i).getUserID()).getUserName()%> scored <%=bestTriesToday.get(i).getScore() %> </p>
+         <%
+         }
+         %>
+         
+         <!-- We also need to display like, summary statistics, i.e. the average score on the quiz, average amount of time it took, number of people who've taken it. -->
+         
          <br><input id="submit" type="submit" value="Take Quiz!">
          <!--A way to start the quiz in practice mode, if available. -->
          <br><input id="submit" type="submit" value="Practice Quiz">
