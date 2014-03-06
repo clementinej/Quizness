@@ -11,7 +11,7 @@
 
 </head>
 <body>
-<%--
+<%
 User user = (User) session.getAttribute("current user");
 //The text description of the quiz. 
 int quizID = Integer.parseInt(request.getParameter("quiz id"));
@@ -20,17 +20,22 @@ String description = quiz.getDescription();
 //The creator of the quiz (hot linked to the creator's profile). 
 User creator = User.getUser(quiz.getCreatorID());
 //A list of the user's past performance on this specific quiz. 
+
 //Consider allowing the user to order this by date, by percent correct, and by amount of time the quiz took. 
 Set<QuizTry> history = user.getHistory(quizID);
 //A list of the highest performers of all time. 
-ArrayList<User> topPerformers = History.getTopPerformersByQuiz(quizID);
-//A list of top performers in the last day.
-ArrayList<User> topToday = History.getTopPerformersToday(quizID);
+ArrayList<User> topPerformers = Quiz.getTopPerformersByQuiz(quizID);
+
+//A list of quiz ids for the top 5 performances on the quiz
+ArrayList<Integer> topQuizTriesToday = Quiz.getTopPerformers(5, quizID); //TODO
+
 //A list showing the performance of recent test takers (both good and bad). 
-ArrayList<QuizTry> recentTries = History.getTries(today);
+ArrayList<QuizTry> recentTries = Quiz.getRecentTries(5, quizID);
+
 //Summary statistics on how well all users have performed on the quiz. 
-Summary summary = quiz.getStatistics();
---%>
+Summary quizSummary = Summary.getStatistics(quizID);
+double userAverageScore = quizSummary.get
+%>
 
 <% 
 String creator = "Clementine";

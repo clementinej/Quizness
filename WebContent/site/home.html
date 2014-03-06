@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-		<link rel="stylesheet" type="text/css" href="css/circularmenu.css" />
-		<script src="js/modernizr-2.6.2.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/circularmenu.css" />
+		<script src="../js/modernizr-2.6.2.min.js"></script>
 	</head>
 	<body>
 		<div class="container">
@@ -16,7 +16,7 @@
 				<a href="quiz/create-quiz.jsp">Create (while I figure out why my pretty links are broken)</a>
 				<div class="cn-wrapper" id="cn-wrapper">
 					<ul>
-						<li id="profile"><a href="#"><span>Profile</span></a></li>
+						<li id="profile"><a href="quiz/create-quiz.jsp"><span>Profile</span></a></li>
 						<li id="announcements"><a href="#"><span>News</span></a></li>
 						<li id="popular"><a href="#"><span>Popular</span></a></li>
 						<li id="create"><a href="#"><span>Create <br> quiz</span></a></li>
@@ -28,13 +28,13 @@
 				<!-- End of Nav Structure -->
 			</div>
 		</div><!-- /container -->
-		<script src="js/polyfills.js"></script>
-		<script src="js/circularmenu.js"></script>
+		<script src="../js/polyfills.js"></script>
+		<script src="../js/circularmenu.js"></script>
 		<script>
 		var create = document.getElementById("create");
 		create.addEventListener("click", function() {
 			alert("here");
-				window.location = "../Quizness/create-quiz.jsp";
+				window.location = "../quiz/create-quiz.jsp";
 			});
 		</script>
 	</body>
