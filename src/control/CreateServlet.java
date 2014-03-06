@@ -60,17 +60,20 @@ public class CreateServlet extends HttpServlet {
 		User currUser = (User) session.getAttribute("current user");
 		System.out.println("In CreateServlet, user = " + currUser.getUserName());
 		int creatorID = getUserID(currUser);	
+
 		if(creatorID == -1) return; //should redirect to a "You are not logged in" page
 		
 		if(getUserIntent(session, request).equals("add question")) {
 			Question newQuestion = constructQuestion(session, request);
 			questionList.add(newQuestion);			
-			forwardToPage("quiz/create-quiz.jsp", request, response);
+			//forwardToPage("quiz/create-quiz.jsp", request, response);
+			forwardToPage("create-quiz.jsp", request, response);
 
 		} else if(getUserIntent(session, request).equals("create quiz")) {
 			makeQuizAndAddToDB(questionList, request, currUser);	
 			clearQuestionList(questionList);
-			forwardToPage("quiz/create-quiz.jsp", request, response);		
+			//forwardToPage("quiz/create-quiz.jsp", request, response);		
+			forwardToPage("create-quiz.jsp", request, response);		
 		}	
 	}
 	
@@ -113,6 +116,7 @@ public class CreateServlet extends HttpServlet {
 		boolean multiplePages = Boolean.parseBoolean(request.getParameter("multiple_pages"));
 		boolean hasRandomMode = Boolean.parseBoolean(request.getParameter("random_questions"));
 		boolean immediateCorrection = Boolean.parseBoolean(request.getParameter("immediate_correction"));
+		
 		Quiz quiz = new Quiz(creatorID, maxScore, description, title, 
 				questionList, isPracticeMode, hasRandomMode, hasTimedMode, immediateCorrection, multiplePages);
 		try {

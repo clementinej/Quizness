@@ -7,9 +7,9 @@ import java.sql.*;
 public class User implements Serializable {
 	
 	/**
-	 * 
+	 * nicolez@stanford.edu
 	 */
-	private static final long serialVersionUID = 6009362599324498971L;
+	private static final long serialVersionUID = -7722606251820079128L;
 	public static final String MYSQL_USERNAME = "ccs108wang8";
 	public static final String MYSQL_PASSWORD = "vohpaifa";
 	public static final String MYSQL_DATABASE_SERVER = "mysql-user.stanford.edu";
@@ -249,15 +249,16 @@ public class User implements Serializable {
 		return passwordHash;
 	}
 	
+	/*
 	public int getUserID(){
 		return userID;
-	}
+	}*/
 	
 	public void setUserID(int userID){
 		this.userID = userID;
 	}
 	
-	/*
+	//static method.  you must have this otherwise how will you get an id from db?
 	public static int getUserID(String userName) throws SQLException{
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps;
@@ -269,7 +270,7 @@ public class User implements Serializable {
 		id = rs.getInt("id");
 		return id;
 	}
-	*/
+	
 	
 	public String getUserName(){
 		return userName;
