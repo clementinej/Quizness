@@ -25,6 +25,10 @@ public class Challenge extends Message {
 		return quizID; 
 	}
 	
+	public User getChallenger() {
+		return User.getUser(fromID);
+	}
+	
 	// Accept the challenge
 	public void accept(){
 		accepted = true; 

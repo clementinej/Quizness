@@ -281,6 +281,45 @@ public class Quiz implements Serializable{
 	}	
 	
 
+	public static ArrayList<Integer> getTopPerformers(int num, int quizID) throws Exception{
+		String query = "SELECT quizTryID FROM quizTries WHERE quizID = " + quizID 
+				+ " ORDER BY score DESC LIMIT" + num;
+		return executeQuery(query);
+	}
+	
+
+	public static ArrayList<Integer> getTopPerformers(int num, int quizID, int numOfDays) throws Exception{
+		String query = "SELECT quizTryID FROM quizTries WHERE quizID = " + quizID
+				+ " AND WHERE dateCreated >= NOW() - INTERVAL " + numOfDays + " DAY "
+				+ " ORDER BY score DESC LIMIT" + num;
+		return executeQuery(query);
+	}
+	
+
+	public static ArrayList<Integer> getTopPerformers(int num, int quizID, int numOfDays) throws Exception{
+		String query = "SELECT DISTINCT userID FROM quizTries WHERE quizID = " + quizID
+				+ " AND WHERE dateCreated >= NOW() - INTERVAL " + numOfDays + " DAY "
+				+ " ORDER BY score DESC LIMIT" + num;
+		return executeQuery(query);
+	}
+	
+	public static ArrayList<Integer> getRecentlyCreatedByFriends(int num, int userID) throws Exception{
+		Connection con = ServerConnection.getConnection();
+		String query = "SELECT id FROM quizzes INNER JOIN friendships USING (toID) WHERE fromID = " + userID
+				+ " ORDER BY dateCreated DESC LIMIT" + num; 
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.executeUpdate();
+		return executeQuery(query);
+	}
+	 
+	public static ArrayList<Integer> getRecentlyTakenByFriends(int num, int userID) throws Exception{
+		Connection con = ServerConnection.getConnection();
+		String query = "SELECT id FROM quizTries INNER JOIN friendships USING (toID) WHERE fromID = " + userID
+				+ " ORDER BY dateCreated DESC LIMIT" + num; 
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.executeUpdate();
+		return executeQuery(query);
+	}
 	
 	// Remove a quiz from the database
 	public static void removeQuiz(int quizID) throws Exception {
