@@ -60,7 +60,7 @@ public class QuizTry implements Serializable {
  * All the "gets" 
  * i.e. getTry, getQuestions, getQuiz, etc	
  */
-	public QuizTry getTry(int quizTryID) throws Exception{
+	public static QuizTry getTry(int quizTryID) throws Exception{
 		return ServerConnection.getQuizTry(quizTryID);
 	}
 	
