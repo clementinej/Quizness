@@ -9,21 +9,22 @@
       <link href="../css/hexaflip.css" rel="stylesheet" type="text/css">
       <link href="../css/results.css" rel="stylesheet" type="text/css">
    </head>
-   <%@page import="model.*", import="java.util.ArrayList"%>
-   <%
+   <%@page import="model.*"%>
+   <%@page import="java.util.ArrayList"%>
+   <%--
       //Get the user
-      User user = (User)session.getAttribute("currUser");
+      User user = (User)session.getAttribute("currrent user");
       //Get the quiz try by id
-  //    QuizTry quizTry = QuizTry.getQuizTry(Integer.parseInt(request.getParameter("quizTryID")));
+  	  QuizTry quizTry = QuizTry.getQuizTry(Integer.parseInt(request.getParameter("quizTryID")));
       //Only let users see their own quiz results
-  //    if(quizTry.getUserID() != user.getUserID() && !user.isAdmin()) {
-    //  	return;
-  //    }
+      if(quizTry.getUserID() != user.getUserID() && !user.isAdmin()) {
+     	return;
+      }
       //Only let users see completed quizes
-      //if(quizTry.isInProgress()) {
-   //   	return;
-    //  }
-      %>
+      if(quizTry.isInProgress()) {
+   	  	return;
+      }
+      --%>
    <body>
       <div class="container">
          <header class="clearfix">
@@ -33,17 +34,22 @@
          </div>
          <form method="post" action="/SaveResults">
             <%
- //              double score = quizTry.getScore();
- //              double time = quizTry.getTime();
- //              ArrayList<String[]> responses = quizTry.getResponses();
+              double score = quizTry.getScore();
+              double time = quizTry.getTime();
+              ArrayList<String[]> responses = quizTry.getResponses();
                %>
-            <!-- Potentially do a switch statement on score and give them different messages 
-               depending on how well they did.  -->
+             
             <div id="score">
                <p>Your score is [Score]</p>
                <p>It took you [Insert elapsed time] seconds to complete this quiz</p>
             </div>
          </form>
+         
+         <%
+         for(int i = 0; i < responses.size(); i++) {
+         %>
+         <p><%=responses %></p>
+         <%} %>
       </div>
       <script src="../js/hexaflip.js"></script>
       <script>

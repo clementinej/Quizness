@@ -4,24 +4,15 @@
 <%
 User currentUser = (User) session.getAttribute("current user");
 java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat();
-/*int numQuizzes = Site.getTotalNumberQuizzes();
-int numUsers = Site.getTotalNumberUsers();
+int numQuizzes = Site.getTotalNumberOfQuizzes();
+int numUsers = Site.getTotalNumberOfUsers();
 int numTags = Site.getTotalNumberTags();
-int numQuizzesTaken = Site.getTotalNumQuizzesTaken();
+int numQuizzesTaken = Site.getTotalNumberQuizzesTaken();
 
 int numFriends = Site.getNumFriendships();
-int numMsgsSent = Messaging.getNumMsgs();
-int numChallenges = Messaging.getNumChallenges();
-int numFriendReqs = Messaging.getNumReqs();*/
-
-int numQuizzes = 9;
-int numUsers = 10;
-int numTags = 16;
-int numQuizzesTaken = 11;
-int numFriends = 12;
-int numMsgsSent = 13;
-int numChallenges = 14;
-int numFriendReqs = 15;
+int numMsgsSent = Site.getNumMsgs();
+int numChallenges = Site.getNumChallenges();
+int numFriendReqs = Site.getNumReqs();
 
 String user_search = request.getParameter("user_search");
 String quiz_search = request.getParameter("quiz_search");
@@ -135,8 +126,8 @@ String quiz_search = request.getParameter("quiz_search");
 					</div>
 					<div class="search_user_left">
 						<div align="left">
-						<span class="title-col1"><a href="user/profile.jsp?user=<%=u.user_id%>"></a></span>
-						<span class="title-col1"><%=u.email%></span>
+						<span class="title-col1"><a href="user/profile.jsp?user=<%=currentUser.getUserID()%>"></a></span>
+						<span class="title-col1"><%=currentUser.getEmail()%></span>
 							<span class="title-col3">ADMIN</span>
 							<span class="title-col3"></span>
 						</div>
@@ -148,6 +139,10 @@ String quiz_search = request.getParameter("quiz_search");
 		<br>
 		<a name="edit_quiz"></a>
 
+	<%
+	// get quizID from search query
+	Quiz quiz = Quiz.getQuiz(quizID);
+	%>
 		<div>
 			<div class="title-bar">Quick Quiz Edit</div>
 			<div class="search">
@@ -175,9 +170,9 @@ String quiz_search = request.getParameter("quiz_search");
 					</div>
 					<div class="search_user_left">
 						<div align="left">
-						<span style="width:32%;display:inline-block"><a href="quiz/info.jsp?quiz_id=<%=q.quiz_id%>"><%=q.name %></a></span>
-						<span style="width:27%;display:inline-block"><%=(User.getUser(q.user_id)).name%></span>
-						<span style="width:22%;display:inline-block"><%=sdf.format(q.created)%></span>
+						<span style="width:32%;display:inline-block"><a href="quiz/info.jsp?quiz_id=<%=quiz.getQuizID()%>"><%=quiz.getUserName()%></a></span>
+						<span style="width:27%;display:inline-block"><%=(User.getUser(quiz.getCreatorID())).getUserName()%></span>
+						<span style="width:22%;display:inline-block"><%=sdf.format(quiz.getDateCreated())%></span>
 						</div>
 					</div>
 				</div>
