@@ -43,8 +43,9 @@ public class SearchServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletContext context = request.getServletContext();
 		int numElem = (Integer) context.getAttribute("number of elements");
-		int searchType = (Integer) context.getAttribute("search type");
+		int searchFor = (Integer) context.getAttribute("search for");
 		String searchElem = (String) context.getAttribute("search name");
+		int searchType = (Integer) context.getAttribute("search type");
 		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -58,9 +59,14 @@ public class SearchServlet extends HttpServlet {
 		out.println("<p>Items available:</p>");
 		out.println("<ul>");
 		
-		switch(searchType){
+		switch(searchFor){
 		case SEARCH_QUIZZES:
-			ArrayList<Quiz> quizList = ServerConnection.getTopQuizzes(searchElem);
+			ArrayList<Quiz> quizList;
+			if (searchType == SEARCH_RECENT){
+				quizList = HomePageServlet.getRecentlyTakenQuizzes(searchElem);
+			} else {
+				quizList = ServerConnection.getPopularQuizzes(searchElem);
+			}
 			if (quizList.size() < numElem)
 				numElem = quizList.size();
 			for (int i = 0; i < numElem; i++){
@@ -90,4 +96,6 @@ public class SearchServlet extends HttpServlet {
 	
 	private static final int SEARCH_QUIZZES = 1;
 	private static final int SEARCH_USERS = 2;
+	private static final int SEARCH_RECENT = 3;
+	private static final int SEARCH_POPULAR = 4;
 }
