@@ -1,6 +1,8 @@
 package model;
 
-public abstract class Achievement {
+import java.io.Serializable;
+
+public abstract class Achievement implements Serializable {
 	
 	abstract public String getAchievement();
 	

@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Inbox {
+public class Inbox implements Serializable {
 	
 	private int userID;
 	private int inboxID;
