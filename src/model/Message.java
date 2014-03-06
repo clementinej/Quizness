@@ -12,6 +12,7 @@ public class Message implements Serializable {
 		public String body;
 		public Date sentAt;
 		public boolean viewed;
+		public String messageType; 
 		
 		// Add a message to the database
 		public static int addMessage(Message message) throws Exception{
@@ -21,6 +22,9 @@ public class Message implements Serializable {
 		// Return a message from the database
 		public static Message getMessage(int messageID) throws Exception{
 			return ServerConnection.getMessage(messageID);
+		}
+		public String getMessageType(){
+			return messageType; 
 		}
 		
 		public int getId() {

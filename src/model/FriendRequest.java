@@ -22,6 +22,7 @@ public class FriendRequest extends Message {
 		this.sentAt = new Date(); 
 		this.viewed = false;
 		this.accepted = false; 
+		this.messageType = "friendRequest";
 	}
 
 	// Accept the friend request and update the database

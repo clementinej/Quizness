@@ -17,6 +17,7 @@ public class Challenge extends Message {
 		this.viewed = false;
 		this.accepted = false; 
 		this.quizID = quizID; 
+		this.messageType = "challenge"; 
 	}
 	
 	// Return the quizID of this challenge

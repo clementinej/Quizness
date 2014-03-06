@@ -197,11 +197,12 @@ public class ServerConnection {
 	
 	// Add a message to the database and return the auto generated key 
 	public static int addMessage(Message message) throws Exception {
-		String query = "INSERT INTO messages (fromID, toID) VALUE (?, ?)";
+		String query = "INSERT INTO messages (fromID, toID, messageType) VALUE (?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		
 		ps.setInt(1, message.fromID);
 		ps.setInt(2, message.toID);
+		ps.setString(3, message.getMessageType());
 		ps.executeUpdate();
 		
 		int messageID =  getGeneratedKey(ps);

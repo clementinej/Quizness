@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -31,6 +32,29 @@ public class Site {
 	
 	public static int getNumFriendships() throws Exception{
 		return getCount("friendships"); 
+	}
+	
+	public static int getNumMsgs() throws Exception{
+		return getCount("messages", "note"); 
+	};
+	
+	public static int getNumChallenges() throws Exception {
+		return getCount("message", "challenge"); 
+	}
+	
+	public static int getNumReqs() throws Exception {
+		return getCount("message", "friendRequest"); 
+	}
+	
+	private static int getCount(String tablename, String type) throws Exception{
+		int count = 0;
+		String query = "SELECT COUNT(*) FROM ? WHERE messageType = ?";
+		PreparedStatement ps = ServerConnection.getConnection().prepareStatement(query);
+		ps.setString(1, tablename);
+		ps.setString(2,  type);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) rs.getInt(1);
+		return count; 
 	}
 	
 	private static int getCount(String tableName) throws Exception{

@@ -12,6 +12,7 @@ public class Note extends Message {
 		this.body = body; 
 		this.sentAt = new Date(); 
 		this.viewed = false;
+		this.messageType = "note";
 	}
 	
 	

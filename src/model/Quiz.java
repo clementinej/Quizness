@@ -250,6 +250,20 @@ public class Quiz implements Serializable{
 		return this.dateLastPlayed;
 	}
 	
+	// Return the date this quiz was created
+	// Check for runtime index error
+	public Date getDateCreated() throws Exception{
+		Date date = null; 
+		Connection con = ServerConnection.getConnection();
+		String query = "SELECT dateCreated FROM quizzes WHERE quizID = " + this.quizID; 
+		PreparedStatement ps = con.prepareStatement(query);
+		ResultSet rs = ps.executeQuery(); 
+		while(rs.next()){
+			date = rs.getTimestamp(1);
+		}
+		return date;
+	}
+	
 
 	public static double getHighScore(int userID, int quizID) throws Exception {
 		double result = 0; 
