@@ -3,8 +3,11 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class Site {
+	
+	private static ArrayList<String> announcement = new ArrayList<String>(); 
 
 	public static int getTotalNumberOfQuizzes() throws Exception{
 		return getCount("quizzes");
@@ -38,5 +41,21 @@ public class Site {
 		return count; 
 	}
 	
+	public static void setAnnouncement(int userID, String update) throws Exception{
+		User user = ServerConnection.getUser(userID);
+		if(user.isAdmin()){
+			announcement.add(update); 
+		}
+	}
 	
+	// Return the last num of announcements
+	public static ArrayList<String> getAnnouncement(int num){
+		if(announcement.size() < num) {
+			return announcement;
+		} else {
+			ArrayList<String> result = new ArrayList<String>(); 
+			result.addAll(announcement.size() - num, announcement); 
+			return result; 
+		} 
+	}
 }
