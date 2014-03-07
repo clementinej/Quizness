@@ -4,10 +4,10 @@
    <link rel="stylesheet" type="text/css" href="../../css/style_login.css" />
 </head>
 <%
-   User currUser = (User) session.getAttribute("current user");
+   User user = (User) session.getAttribute("current user");
    int currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
    Quiz currQuiz = Quiz.getQuiz(currQuizID);
-   if(!currUser.isAdmin() && currQuiz.getCreatorID() != currUser.getUserID()) return;
+   if(!user.isAdmin() && currQuiz.getCreatorID() != user.getUserID()) return;
    %>
 <body>
    <div class="container">
@@ -36,9 +36,6 @@
                     </tbody>
                                       <tfoot>
                      <tr>
-                        <td align="center" class="terms"><a href="#" id="new_option">Add Another Solution</a></td>
-                     </tr>
-                     <tr>
                         <td align="center" class="terms"><a href="#" id="new_synonym">Add A Synonym</a></td>
                      </tr>
                   </tfoot>
@@ -52,16 +49,6 @@
       </form>
    </div>
 <script type="text/javascript">
-         var button = document.getElementById("new_option");
-         button.addEventListener("click", function() {
-             var body = document.getElementById("contents");
-             body.insertAdjacentHTML('beforeend',  '<tr>' +
-          	'<td><input type="name" name="correct_answer_blank" style="width:100%"></td>'+
-            '<td><input type="name" name="correct_answer_text" style="width:100%" placeholder="Solution"></td>' +
-            '<td><input type="name" name="correct_answer_score" style="width:100%" /></td>' +
-         	'</tr>');
-             body.appendChild(newChild);
-             });
          var syn_button = document.getElementById("new_synonym");
          syn_button.addEventListener("click", function() {
          	var body = document.getElementById("contents");
