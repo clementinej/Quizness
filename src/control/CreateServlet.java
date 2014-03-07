@@ -111,7 +111,10 @@ public class CreateServlet extends HttpServlet {
 	private void makeQuizAndAddToDB(ArrayList<Question> questionList, HttpServletRequest request, User currUser) {
 		int creatorID = getUserID(currUser);	
 		double maxScore = getMaxScore(questionList);
-		String description = request.getParameter("description"), title = request.getParameter("name");
+		String description = request.getParameter("description"), title = request.getParameter("title");
+		System.out.println("Title: "+ title);
+		System.out.println("Description: "+ description);
+		System.out.println("Max Score: "+ maxScore);
 		boolean isPracticeMode = false, hasTimedMode = false; //extensions add later
 		boolean multiplePages = Boolean.parseBoolean(request.getParameter("multiple_pages"));
 		boolean hasRandomMode = Boolean.parseBoolean(request.getParameter("random_questions"));
@@ -129,6 +132,7 @@ public class CreateServlet extends HttpServlet {
 	private void clearQuestionList(ArrayList<Question> questionList) {
 		for(int i = 0; i < questionList.size(); i++) //restart question list
 			questionList.remove(i);	//may want to store questionLists in a map depending on potential quizID
+		System.out.println("Question List has been reset.");
 	}
 
 
@@ -149,6 +153,7 @@ public class CreateServlet extends HttpServlet {
 	private Question constructQuestion(HttpSession session, HttpServletRequest request) {		
 		int questionType = Integer.parseInt(request.getParameter("question type"));
 		String question = request.getParameter("question_text");
+		System.out.println("Question:" + question);
 		ArrayList<Set<String>> allAnswers = new ArrayList<Set<String>>();
 		addAnswerToAnswersList(request, allAnswers);
 		double pointValue = 1;//default point value for each question depending on difficulty
@@ -169,10 +174,15 @@ public class CreateServlet extends HttpServlet {
 			else {
 				Set<String> synonymsOfAnswerSet = new HashSet<String>();
 				String[] synonyms = answersMap.get(answerName);
+				int debugIndex = solNum + 1;
+				System.out.print("Solution " + debugIndex + ": ");
 				for(int i = 0; i < synonyms.length; i++) {
-					System.out.println("Solution: " + solNum + " = " + synonyms[i]);
+					System.out.print(synonyms[i]);
+					if(i != synonyms.length - 1)
+						System.out.print(", ");
 					synonymsOfAnswerSet.add(synonyms[i]);
 				}
+				System.out.println();
 				allAnswers.add(synonymsOfAnswerSet);
 			}	
 		}	
@@ -185,14 +195,13 @@ public class CreateServlet extends HttpServlet {
 		case QUESTION_RESPONSE: 
 			Question newQuestion;
 			System.out.println("Making a question response");
-			newQuestion = new QuestionResponse(question, allAnswers, pointValue);
-			System.out.println("Question: " + newQuestion.getQuestion());
-			System.out.println("Solution: " + newQuestion.getAnswer());			
+			newQuestion = new QuestionResponse(question, allAnswers, pointValue);		
 			return newQuestion;
 		case FILL_IN_THE_BLANK:
 			return new FillInTheBlank(question, allAnswers, pointValue);
 		case MULTIPLE_CHOICE:
 			String choices[] = getWrongChoices(request);	
+			System.out.println("Multiple Choice Question made.");
 			return new MultipleChoice(question, choices, allAnswers, pointValue);
 		case PICTURE_RESPONSE:
 			String url = "";//implement
@@ -217,7 +226,15 @@ public class CreateServlet extends HttpServlet {
 	
 	private String[] getWrongChoices(HttpServletRequest request) {
 		Map<String, String[]> answersMap = request.getParameterMap();
-		String choices[] = answersMap.get("incorrect_answer_key");
+		String choices[] = answersMap.get("incorrect_answer");
+		
+		System.out.print("Incorrect Answers: ");
+		for(int i = 0; i < choices.length; i++) {
+			System.out.print(choices[i] + ", ");
+			if(i != choices.length - 1) System.out.print(", ");
+		}
+		System.out.println();
+		
 		return choices;
 	}
 	

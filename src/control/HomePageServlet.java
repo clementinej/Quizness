@@ -41,6 +41,14 @@ public class HomePageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		
+		//-----------Note from Lloyd--------------
+		//Use:
+		//User newUser = (User) session.getAttribute("current user");
+		//newUser = setCurrentUser(newUser, email);
+		//session.setAttribute("current user", newUser);
+		//String username = newUser.getUserName();
+		//String userID = newUser.getUserID(/*username*/);
+		
 		String username = (String) session.getAttribute("username");
 		int userID = (Integer) session.getAttribute("userID"); 
 		
@@ -56,9 +64,9 @@ public class HomePageServlet extends HttpServlet {
 			getRecentlyTakenByFriends(session, userID, 20);
 			getFriendAchievement(session,  userID, username);
 		} catch (Exception e) {
-		}
+		}	
 
-		
+		//try home.jsp
 		RequestDispatcher dispatch = request.getRequestDispatcher("/home.html"); 
 		dispatch.forward(request, response); 
 	}

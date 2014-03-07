@@ -93,7 +93,7 @@ public class ServerConnection {
 	// Return the ID if success
 	// Otherwise return -1;
 	public static int addUser(User user) throws Exception {
-		String query = "INSERT INTO users (username, password, email) VALUES(?,?,?,?)";
+		String query = "INSERT INTO users (username, password, email) VALUES(?,?,?)";
 		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		ps.setString(1, user.getUserName());
 		ps.setString(2, user.getPassword());
@@ -107,7 +107,7 @@ public class ServerConnection {
 		ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
 		ps.setBytes(1, convertToByteArray(user));
 		ps.executeUpdate();
-
+		System.out.println("User at "+ user.getEmail() +" added to database");
 		return userID;
 	}
 	

@@ -1,5 +1,6 @@
 package listener;
 
+import java.sql.SQLException;
 import java.util.*;
 
 import javax.servlet.ServletContextAttributeEvent;
@@ -19,7 +20,7 @@ import model.*;
 @WebListener
 public class CreateListener implements HttpSessionListener {
 	private User currUser;
-	
+	private static final boolean debugging = true;
 	/**
 	 * When a browser is opened, a questionList is created, and
 	 */
@@ -28,11 +29,16 @@ public class CreateListener implements HttpSessionListener {
     	HttpSession session = event.getSession(); 
       	List<Question> questionList = new ArrayList<Question>();
       	        
-		addOneToQuestionList(questionList);//testing
-		System.out.println(questionList.get(0));//testing
+		//addOneToQuestionList(questionList);//testing
+		//System.out.println(questionList.get(0));//testing
         session.setAttribute("question list", questionList);
         
         currUser = null;
+        
+        if(debugging) {
+        	setAutomaticAccount();
+        }
+        
         session.setAttribute("current user", currUser);
         
         Integer comingFromServlet = 0;
@@ -47,6 +53,17 @@ public class CreateListener implements HttpSessionListener {
         currUser = null;
     }
 	
+    private void setAutomaticAccount() {
+    	try {
+			currUser = User.getUser(User.getUserID("a@a.com"));
+			System.out.println("Automatic user \"a\" in use.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	System.out.println("Automatic user debug failed.");
+    }
     
     private void addOneToQuestionList(List<Question> questionList) {
     	String q = "Who was the 16th president? Who was the first?";

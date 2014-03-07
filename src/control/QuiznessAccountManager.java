@@ -10,14 +10,12 @@ import model.*;
 
 public class QuiznessAccountManager {
 
-	//Map<String, String> accounts;//should not need this later, should read from db
 	private String salt;
 	
 	/*
 	 *  Creates Patrick and Molly as admins
 	 */
 	public QuiznessAccountManager() throws Exception {//initialize with two accounts
-	//	accounts = new HashMap<String, String>();
 		salt = "@#$%@#FERYS^%#$YSEAH#$E73452WE@#%3#$";
 		createNewAccount("Patrick", "patrick@stanford.edu" ,"1234", true);//add emails
 		createNewAccount("Molly", "molly@dog.com","FloPup", true);
@@ -30,7 +28,9 @@ public class QuiznessAccountManager {
 	 */
 	public boolean createNewAccount(String userName, String email, String pw, boolean isAdmin) throws Exception {
 		boolean accountFree = false;	
-		if(User.nameIsAvailable(userName) && User.emailIsAvailable(email)) { //read from database			
+		System.out.println("In account manager, createNewAccount.");
+		if(User.emailIsAvailable(email)) { //read from database			
+			System.out.println("createNewAccount: db read successful");
 			String unencryptedPlusSalt = pw + salt;
 			String hashedPW = generateHash(unencryptedPlusSalt);
 			String aboutMe = "";
@@ -38,7 +38,7 @@ public class QuiznessAccountManager {
 			User newUser = new User(isAdmin, userName, hashedPW, email, aboutMe, location);
 			model.ServerConnection.addUser(newUser);
 			accountFree = true;
-		}		
+		} else System.out.println("AccountManager: Email "+ email +" was not available.");
 		return accountFree;
 	}
 	
@@ -49,7 +49,7 @@ public class QuiznessAccountManager {
 	public boolean validLogin(String login, String pw) throws SQLException {
 		boolean validLogin = false;		
 		if(!User.emailIsAvailable(login)) { //read from database
-			System.out.println("read from db");
+			System.out.println("validLogin: db read successful");
 			String unencryptedPlusSalt = pw + salt;
 			String hashedPW = generateHash(unencryptedPlusSalt);
 			String stored_pw = "";
@@ -112,5 +112,4 @@ public class QuiznessAccountManager {
 		if(manager.validLogin("Patrick", "1234"))
 			System.out.println("Successful Login");
 	}
-
 }

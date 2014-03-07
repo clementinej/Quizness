@@ -112,10 +112,10 @@
 			<%
 			int numReqs = 0;
 			if(user.hasPendingFriendRequests()) {
-			ArrayList<FriendRequest> reqs = user.getFriendRequests();
-			numReqs = reqs.size();
-			for(int i = 0; i < numReqs; i++) {
-				String from = reqs.get(i).getFrom();
+				ArrayList<FriendRequest> reqs = user.getFriendRequests();
+				numReqs = reqs.size();
+				for(int i = 0; i < numReqs; i++) {
+					String from = reqs.get(i).getFrom();
 			%>
 			<!-- TODO link to friend's profile -->
 			<p><%=from %> has requested your friendship!</p>
@@ -140,10 +140,10 @@
 				Quiz q = Quiz.getQuiz(recentlyTakenByFriends.get(i));
 				String quizName = q.getTitle();
 				int creatorID = q.getCreatorID();
-				String creator = User.getUser(creatorID);
+				String creator = User.getUser(creatorID); 
 			%>
 			<p><a href="../profile?user=<%=creatorID%>"><%=creator %></a> + " took " + <%=quizName %></p>
-			<%}%>
+			<%}%> 
 			
 		 </div>
       </div>	

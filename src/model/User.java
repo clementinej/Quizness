@@ -9,7 +9,7 @@ public class User implements Serializable {
 	/**
 	 * nicolez@stanford.edu
 	 */
-	private static final long serialVersionUID = -7722606251820079128L;
+	private static final long serialVersionUID = -7722606251820079129L;
 	public static final String MYSQL_USERNAME = "ccs108wang8";
 	public static final String MYSQL_PASSWORD = "vohpaifa";
 	public static final String MYSQL_DATABASE_SERVER = "mysql-user.stanford.edu";

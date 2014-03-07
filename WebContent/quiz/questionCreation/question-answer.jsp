@@ -30,10 +30,7 @@
                   </tbody>
                   <tfoot>
                      <tr>
-                        <td align="center" class="terms"><a href="#" id="new_option">Add Another Solution</a></td>
-                     </tr>
-                     <tr>
-                        <td align="center" class="terms"><a href="#" id="new_synonym">Add A Synonym</a></td>
+                        <td align="center" class="terms"><a href="#" id="new_synonym">Add A Synonym For Your Solution</a></td>
                      </tr>
                   </tfoot>
                </table>
@@ -44,21 +41,11 @@
    </form>
    </div>
     <script type="text/javascript">
-         var button = document.getElementById("new_option");
-         button.addEventListener("click", function() {
-             var body = document.getElementById("contents");
-             body.insertAdjacentHTML('beforeend', '<tr>' +
-                     '<td><input type="name" name="correct_answer" style="width:100%" placeholder="Solution"></td>' +
-                     '<td><input type="name" name="correct_answer_score" style="width:100%" /></td>' +
-                 '</tr>');
-             body.appendChild(newChild);
-             });
          var syn_button = document.getElementById("new_synonym");
          syn_button.addEventListener("click", function() {
          	var body = document.getElementById("contents");
          	body.insertAdjacentHTML('beforeend',	'<tr>' +
-         			'<td><input type="name" name="correct_syn" style="width:100%" placeholder="Synonym"></td>' +
-         			'<td><input type="name" name="correct_syn_score" style="width:100%" /></td>' +
+         			'<td><input type="name" name="correct_answer_text" style="width:100%" placeholder="Synonym"></td>' +
          			'</tr>');
          	body.appendChild(newChild);
          	});   
