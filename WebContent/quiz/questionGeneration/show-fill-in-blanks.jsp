@@ -17,7 +17,7 @@
 	--%>
 	
 	<%
-	//dummy data
+	//dummydata
 	
 	int questionID = 3;
 	String title = "title";
@@ -43,11 +43,7 @@
 			%>
 			<input type="checkbox" value="<%=solution%>"><%=solution%><br>
 			<% 
-			//print checkbox for answer
-		//}
 	}
-	// delete selected
-	// add more solutions
 	
 %>
   	 	<div>
