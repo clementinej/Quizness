@@ -4,49 +4,60 @@
    <link rel="stylesheet" type="text/css" href="../../css/style_login.css" />
 </head>
 <body>
-<%
-// Get type-specific question object
-	int quizID = Integer.parseInt(request.getParameter("quiz_id"));
-	Quiz currQuiz = Quiz.getQuiz(quizID); 
-	Question question = currQuiz.nextQuestion();
+<%--
+	int quizID = Integer.parseInt(request.getParameter("quiz id"));
+	int questionID = Integer.parseInt(request.getParameter("question id"));
+	Quiz quiz = Quiz.getQuiz(quizID); 
+	Question question = quiz.getQuestion(questionID);
 	String questionText = question.getQuestion();
-	//print questionText
+	String title = quiz.getTitle();
 	ArrayList<Set<String>> answers = question.getAnswer();
 	int numBlanks = answers.size();
-	for(int i = 0; i < numBlanks; i++) {
-		// "options for blank # [blank]"
-		for (String answer: answers.get(i)) {
-			//print checkbox for answer
-		}
-	}
-%>
-   <div class="container">
+	
+	--%>
+	
+	<%
+	//dummy data
+	
+	int questionID = 3;
+	String title = "title";
+	String questionText = "question text";
+	int numBlanks = 6;
+	%>
+	<div class="container">
    <form method="post" action="../CreateServlet" id="signup">
       <div class="header">
-         <h3>Question [question number]</h3>
-         <h2><%=currQuiz.getTitle() %></h2>
-         <p>Click "next" when you're happy with your answer.</p>
+         <h2><%=title%></h2>
+         <h3>Question <%=questionID %></h3>
+         <p>Save your answer when you're done editing, or head back to the quiz to cancel.</p>
       </div>
       <div class="sep"></div>
       <div class="inputs">
  		<p><%=questionText %></p><br>
-		<p>Solution Text</p>
-		<button id="next">Next Question</button>
+		<p>Solutions</p>
+	<%
+	for(int i = 0; i < numBlanks; i++) {
+		// "options for blank # [blank]"
+		//for (String answer: answers.get(i)) {
+			String solution = "solution" + i;
+			%>
+			<input type="checkbox" value="<%=solution%>"><%=solution%><br>
+			<% 
+			//print checkbox for answer
+		//}
+	}
+	// delete selected
+	// add more solutions
+	
+%>
+  	 	<div>
+  	 	<input type="submit" value="Delete Selected"></input>
+  	 	<input type="submit" value="Edit Selected"></input>
+  	 	<input type="submit" value="Add A Solution"></input></div>
+		<div>
+		<input type="submit" value="Back to Quiz"></input>
+		<input type="submit" value="Save"></input></div>
       </div>
       </form>
    </div>
 </body>
-<script>
-var button = document.getElementById("next");
-button.addEventListener("click", function() {
-	var type = document.getElementById("question-type"); //somehow get the type of the next question
-	var value = type.options[type.selectedIndex].value;
-	if(value =="question-answer" || value == "picture-response" || value == "multiple-answer"){
-		window.location = "/Quizness/quiz/questionGeneration/show-question-answer.jsp";
-	} else if (value == "multiple-choice" || value == "multiple-choice-multiple-answer") {
-		window.location = "/Quizness/quiz/questionGeneration/show-multiple-choice.jsp";
-	} else {
-		window.location = "/Quizness/quiz/questionGeneration/show-" + value + ".jsp";
-	}
-	});
-</script>
