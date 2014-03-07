@@ -15,16 +15,6 @@
             <div>
                <input type="name" name="question_text" style="width:500px;height:50px" placeholder="Question Text">
             </div>
-            <table>
-               <tr>
-                  <th>Multiple Selections</th>
-                  <td>
-                     <p><input value="1" type="checkbox" name="multi_select">
-                        Let the user check multiple correct answers
-                     </p>
-                  </td>
-               </tr>
-            </table>
             <br>
             <h3>Correct Solutions</h3>
             <table id="correct_contents" class="inputs">

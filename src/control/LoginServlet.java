@@ -99,7 +99,7 @@ public class LoginServlet extends HttpServlet {
 		out.println("<h1>Please Try Again</h1>");
 		out.println("<p>Either your user name or password is incorrect. Please try again.</p>");
 		out.println("<form action=\"LoginServlet\" method=\"post\">");
-		out.println("<p>User Name: <input type=\"text\" name=\"login\" /></p>");
+		out.println("<p>Email: <input type=\"text\" name=\"login\" /></p>");
 		out.println("<p>Password: <input type=\"password\" name=\"password\"/><input type=\"submit\" value=\"Login\"/ ></p>");
 		out.println("</form>");
 		out.println("<p><a href=\"site/create-account.jsp\">Create New Account</a></p>");

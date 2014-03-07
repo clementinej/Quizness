@@ -18,6 +18,8 @@ public class Inbox implements Serializable {
 		this.challenges = new ArrayList<Integer>(); 
 	}
 	
+	// High Priority: TODO UPDATE the database on ADD 
+	
 	// Set the ID of the inbox
 	public void setID(int inboxID){
 		this.inboxID = inboxID;

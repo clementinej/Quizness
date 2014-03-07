@@ -54,8 +54,11 @@ public class QuiznessAccountManager {
 			String hashedPW = generateHash(unencryptedPlusSalt);
 			String stored_pw = "";
 			stored_pw = User.getPasswordHashFromEmail(login);
-			if(stored_pw.equals(hashedPW))//if password is correct
-				validLogin = true;
+			if(stored_pw != null){
+				if(stored_pw.equals(hashedPW)){//if password is correct
+					validLogin = true;
+				}
+			}
 		} 
 		return validLogin;
 	}
