@@ -35,6 +35,7 @@
       <div class="sep"></div>
       <div class="inputs">
  		<p><%=questionText %></p><br>
+ 		<div class="content" id="question_wrapper"> </div>
 		<p>Solutions</p>
 	<%
 	for(int i = 0; i < answers.size(); i++) {
@@ -50,12 +51,18 @@
   	 	<div>
   	 	<input type="submit" value="Delete Selected"></input>
   	 	<input type="submit" value="Edit Selected"></input>
-  	 	<input type="submit" value="Add A Solution"></input></div>
+  	 	<input type="submit" value="Add A Solution">
+		<input type="button" onclick="edit_question();" value="Edit Question" />
 		<div>
 		<input type="submit" value="Back to Quiz"></input>
 		<input type="submit" value="Save"></input></div>
       </div>
       </form>
    </div>
-
+   <script type="text/javascript">
+   function edit_question() {
+	    document.getElementById('question_wrapper').innerHTML += '<span>Revised Question Text: <input type="text"></span>\r\n';
+	}
+   </script>
+</body>
 </html>

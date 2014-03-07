@@ -35,17 +35,27 @@
       <div class="sep"></div>
       <div class="inputs">
  		<p><%=questionText %></p><br>
+ 		<div class="content" id="question_wrapper"> </div>
 		<h3>Solution</h3>
 		<p><%=solution%></p>
+		<div class="content" id="answer_wrapper"> </div>
 	
   	 	<div>
-  	 	<input type="submit" value="Edit Question"></input>
-  	 	<input type="submit" value="Edit Solution"></input>
+ 		<input type="button" onclick="edit_question();" value="Edit Question" />
+  	 	<input type="button" onclick="edit_answer();" value="Edit Answer" />
 		<div>
 		<input type="submit" value="Back to Quiz"></input>
 		<input type="submit" value="Save"></input></div>
       </div>
       </form>
    </div>
+      <script>
+   function edit_question() {
+	    document.getElementById('question_wrapper').innerHTML += '<span>Revised Question Text: <input type="text"></span>\r\n';
+	}
+   function edit_answer() {
+	    document.getElementById('answer_wrapper').innerHTML += '<span>Revised Solution Text: <input type="text"></span>\r\n';
+	}
+   </script>
 </body>
 </html>
