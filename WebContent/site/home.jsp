@@ -54,8 +54,8 @@
          // DOES THE USER HAVE ANY MESSAGES?
          int numMessages = 0;
          Inbox inbox = Inbox.getInbox(userID);
-         numMessages = inbox.getNumNewMessages();
-         
+         numMessages = inbox.getNumNotes();
+               
          // DOES THE USER HAVE ANY CHALLENGES?
          int numChallenges = 0;
          numChallenges = inbox.getNumChallenges();
