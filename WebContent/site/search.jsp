@@ -20,11 +20,11 @@
          <div class="inputs">
             <div>
                <input type="name" name="search" placeholder="Search for quizzes, friends, etc."></input>
-               <div>
+              <div>
                   <p>Order by:</p>
                   <br>
-                  <label><input type="checkbox" name="popular"/> Popular</label>
-                  <label><input type="checkbox" name="recent"/> Recent</label>
+                  <label><input type="radio" name="order" id="popular"/> Popular</label>
+                  <label><input type="radio" name="order" id="recent"/> Recent</label>
                </div>
                <input id="submit" type="submit" value="Search!">
             </div>
@@ -40,7 +40,6 @@
          <div class="inputs">
             <div>
                <input type="name" name="search" placeholder="Search for quizzes, friends, etc."></input>
-
                <input id="submit" type="submit" value="Search!">
             </div>
       </form>
