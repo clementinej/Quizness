@@ -3,8 +3,6 @@
     <%@page import="model.*" import="java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>   <link rel="stylesheet" type="text/css" href="../../css/style_login.css" />
-</head>
 <body>
 <%
 	int quizTryID = Integer.parseInt(request.getParameter("quiz try id"));
@@ -35,7 +33,7 @@
       <div class="inputs">
  		<p><%=questionText %></p><br>
 		<h3>Solution</h3>
-		<p><%=solution%></p>
+		<input name="user_solution"/>
       </div>
       </form>
    </div>

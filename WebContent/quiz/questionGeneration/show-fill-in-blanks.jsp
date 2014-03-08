@@ -4,55 +4,37 @@
    <link rel="stylesheet" type="text/css" href="../../css/style_login.css" />
 </head>
 <body>
-<%--
-	int quizID = Integer.parseInt(request.getParameter("quiz id"));
-	int questionID = Integer.parseInt(request.getParameter("question id"));
-	Quiz quiz = Quiz.getQuiz(quizID); 
-	Question question = quiz.getQuestion(questionID);
+<%
+	int quizTryID = Integer.parseInt(request.getParameter("quiz try id"));
+	int questionIndex = Integer.parseInt(request.getParameter("question index"));
+	QuizTry quizTry = QuizTry.getTry(quizTryID); 
+	ArrayList<Question> questions = quizTry.getQuestions();
+	Question question = questions.get(questionIndex);
 	String questionText = question.getQuestion();
-	String title = quiz.getTitle();
-	String solution = question.getAnswer();	
-	--%>
-	
-	<%
+	String title = Quiz.getQuiz(quizTry.getQuizID()).getTitle();
+	ArrayList<Set<String>> solution = question.getAnswer();
+	%>
+	<%--
 	//dummydata
 	
 	int questionID = 3;
 	String title = "title";
 	String questionText = "question text";
 	String solution = "solution";
-	%>
-	<div class="container">
+	--%>
+	
+<div class="container">
    <form method="post" action="../CreateServlet" id="signup">
       <div class="header">
          <h2><%=title%></h2>
-         <h3>Question <%=questionID %></h3>
-         <p>Save your answer when you're done editing, or head back to the quiz to cancel.</p>
+         <h3>Question <%=questionIndex %></h3>
       </div>
       <div class="sep"></div>
       <div class="inputs">
  		<p><%=questionText %></p><br>
- 		<div class="content" id="question_wrapper"> </div>
 		<h3>Solution</h3>
-		<p><%=solution%></p>
-		<div class="content" id="answer_wrapper"> </div>
-
-  	 	<div>
-		<input type="button" onclick="edit_question();" value="Edit Question" />
-  	 	<input type="button" onclick="edit_answer();" value="Edit Answer" />
-  	 	<input type="submit" value="Delete Question"></input>
-		<div>
-		<input type="submit" value="Back to Quiz"></input>
-		<input type="submit" value="Save"></input></div>
+		<input name="user_solution"/>
       </div>
       </form>
    </div>
-   <script>
-   function edit_question() {
-	    document.getElementById('question_wrapper').innerHTML += '<span>Revised Question Text: <input type="text"></span>\r\n';
-	}
-   function edit_answer() {
-	    document.getElementById('answer_wrapper').innerHTML += '<span>Revised Solution Text: <input type="text"></span>\r\n';
-	}
-   </script>
 </body>
