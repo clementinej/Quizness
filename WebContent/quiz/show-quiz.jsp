@@ -1,13 +1,21 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.*" %>
+<%@page import="java.util.*" %>
 <head>
    <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
 </head>
 <%
+	//this page seems to be coming from some link where the quiz id is passed in as a param.
+	//gets the current user, gets current quiz ID.
+	
    User currUser = (User) session.getAttribute("current user");
    int currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
    Quiz currQuiz = Quiz.getQuiz(currQuizID);
-   if(!currUser.isAdmin() && currQuiz.getCreatorID() != currUser.getUserID()) return;
+   //if the current user is not an admin and the current user not the creator of the quiz?
+   //if(!currUser.isAdmin() && currQuiz.getCreatorID() != currUser.getUserID()) return;
+   
+   //I think it should be that a creator cannot take his or her own quiz, or if not logged in
+   if(currUser == null  || currQuiz.getCreatorID() == currUser.getUserID()) return;
 %>
 <body>
    <div class="container">
@@ -19,17 +27,20 @@
       <div class="sep"></div>
       <div class="inputs">
       <%
- 	String quizIdAsString = request.getParameter("quiz_id");
-	int quizID = Integer.parseInt(quizIdAsString);
- 	Quiz currQuiz = Quiz.getQuiz(quizID);
+     //not sure at the moment why this is necessary
+ 	//String quizIdAsString = request.getParameter("quiz_id");
+	//int quizID = Integer.parseInt(quizIdAsString);
+ 	//Quiz currQuiz = Quiz.getQuiz(quizID);
 	
 	String title = currQuiz.getTitle();
-	boolean timed = currQuiz.getTimed();
+	//should we get the description as well?
+	//boolean timed = currQuiz.getTimed();//extension to worry about later
 
-	Queue questions = currQuiz.getQuestions();
- 	Question q = questions.peek();
+	//Queue questions = currQuiz.getQuestions();
+	
+ 	//Question q = questions.peek();
  	QuestionType next_question_type = q.getType();
- 	boolean multiPage = currQuiz.getDisplay();
+ 	boolean multiPage = currQuiz.hasMultiplePages();
  	if(multiPage == true) {
  		%>
  		<select name="question-type" id="question-type">
@@ -45,7 +56,7 @@
                      <option value="graded-question">Graded Question</option>
                   </select>
  		<button id="start-button">Start Quiz!</button>
- 		<%--
+ 		<%
  		if(type == "multiple-choice") {
  			 redirect to question page if multipage
  	 	} else if(type == "question-answer") {

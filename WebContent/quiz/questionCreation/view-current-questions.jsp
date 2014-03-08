@@ -18,10 +18,32 @@ for(int i = 0; i < questionList.size(); i++) {
 	String text = q.getQuestion();
 	ArrayList<Set<String>> solution = q.getAnswer();
 %>
-	<p><%=i%>.</p>
-	<p>Question Text: <%=text%></p>
-	<p>Solution: <%=solution%></p>
-<%} %>
+	<p><%=i + 1%>.</p>
+	<p>Question Text: "<%=text%>"</p>
+	<p>
+	<% 
+	//for each solution
+	for(int solIndex = 0; solIndex < solution.size(); solIndex++) {
+	%>
+	Solution: 
+	<%
+		Set<String> oneSolution = solution.get(solIndex);
+		//for each synonym of each solution
+		Iterator<String> iter = oneSolution.iterator();
+		while(iter.hasNext()) {
+			String s = iter.next();
+			%>
+			"<%=s%>"<%if(iter.hasNext())%>,
+			<%
+		}
+	}
+	%>
+<%	
+}
+%>
+	
+	</p>
+
 <input type="submit" id="submit" value="Back" href="create-quiz.jsp">Back</input>
 </body>
 </html>
