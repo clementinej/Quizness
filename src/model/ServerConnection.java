@@ -108,6 +108,9 @@ public class ServerConnection {
 		ps.setBytes(1, convertToByteArray(user));
 		ps.executeUpdate();
 		System.out.println("User at "+ user.getEmail() +" added to database");
+		
+		Inbox inbox = new Inbox(userID); 
+		addInbox(inbox);
 		return userID;
 	}
 	
