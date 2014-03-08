@@ -24,6 +24,11 @@ public class Inbox implements Serializable {
 	public void setID(int inboxID){
 		this.inboxID = inboxID;
 	}
+	
+	// Get the id of the user
+	public int getUserID(){
+		return this.userID;
+	}
 	// Add an existing Message to this Inbox, using its ID
 	public void addMessage(int messageID) throws Exception{
 		Message message = getMessage(messageID);

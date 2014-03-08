@@ -230,12 +230,13 @@ public class ServerConnection {
 	
 	// Add a Inbox  to the database and return the auto generated key 
 		public static int addInbox(Inbox inbox) throws Exception {
-			String query = "INSERT INTO inboxes (numRequests, numMessages, numChallenges) VALUE (?, ?, ?)";
+			String query = "INSERT INTO inboxes (numRequests, numMessages, numChallenges, userID) VALUE (?, ?, ?, ?)";
 			PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			
 			ps.setInt(1, 0);
 			ps.setInt(2, 0);
 			ps.setInt(3, 0);
+			ps.setInt(4, inbox.getUserID());
 			ps.executeUpdate();
 			
 			int inboxID =  getGeneratedKey(ps);
