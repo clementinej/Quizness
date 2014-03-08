@@ -144,7 +144,7 @@ public class ServerConnection {
 	
 	// Add a quiz to the database
 	public static int addQuiz(Quiz quiz) throws Exception {
-		String query = "INSERT INTO quizzes (numTimesTaken, dateCreated, creatorID) VALUES(?, ?, ?)";
+		String query = "INSERT INTO quizzes (numTimesTaken, dateCreated, creatorID, title, description) VALUES(?, ?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
 		Date date = new Date();
 		Timestamp timestamp = new Timestamp(date.getTime());
@@ -152,6 +152,8 @@ public class ServerConnection {
 		ps.setInt(1, quiz.getNumOfTimesPlayed());
 		ps.setTimestamp(2, timestamp);
 		ps.setInt(3, quiz.getCreatorID());
+		ps.setString(4, quiz.getTitle());
+		ps.setString(5, quiz.getDescription());
 		ps.executeUpdate();
 		
 		int quizID =  getGeneratedKey(ps);
@@ -165,13 +167,14 @@ public class ServerConnection {
 		return quizID; 
 	}
 	
+	
 	// Return a quiz from the database given the quizID
 	public static Quiz getQuiz(int quizID) throws Exception {
 		PreparedStatement ps = con.prepareStatement("SELECT * FROM quizzes WHERE id = ?", Statement.RETURN_GENERATED_KEYS);
 		ps.setInt(1, quizID);
 		ResultSet rs = ps.executeQuery();
-		rs.next();
-		return (Quiz) convertToObject(rs, "quiz");
+		if(rs.next()) return (Quiz) convertToObject(rs, "quiz");
+		return null;
 	}
 	
 	// Add a quizTry to the database and return the auto generated key

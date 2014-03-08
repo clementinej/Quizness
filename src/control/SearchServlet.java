@@ -44,7 +44,7 @@ public class SearchServlet extends HttpServlet {
 		ServletContext context = request.getServletContext();
 		int numElem = (Integer) context.getAttribute("number of elements");
 		int searchFor = (Integer) context.getAttribute("search for");
-		String searchElem = (String) context.getAttribute("search name");
+		String searchElem = (String) context.getAttribute("query string");
 		int searchType = (Integer) context.getAttribute("search type");
 		
 		response.setContentType("text/html; charset=UTF-8");
@@ -63,9 +63,9 @@ public class SearchServlet extends HttpServlet {
 		case SEARCH_QUIZZES:
 			ArrayList<Quiz> quizList;
 			if (searchType == SEARCH_RECENT){
-				quizList = HomePageServlet.getRecentlyTakenQuizzes(searchElem);
+				quizList = HomePageServlet.getRecentlyTakenQuizzesSearch(searchElem);
 			} else {
-				quizList = ServerConnection.getPopularQuizzes(searchElem);
+				quizList = ServerConnection.getPopularQuizzesSearch(searchElem);
 			}
 			if (quizList.size() < numElem)
 				numElem = quizList.size();
