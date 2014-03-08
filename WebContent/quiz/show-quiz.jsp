@@ -139,7 +139,7 @@
 				<p><input type="text" name="answer" /></p>
 				<input type="submit" name="submit" value="next"/>
 				<%--<jsp:include page="questionGeneration/show-question-answer.jsp" />--%><%
-				return;
+				break;
 			case 2:
 				int blankIndex = questionText.indexOf('_');
 				int lastBlankIndex = questionText.lastIndexOf('_');
