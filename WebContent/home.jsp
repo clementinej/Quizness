@@ -22,7 +22,7 @@
 				<a href="social/inbox_temp.jsp">Inbox</a>
                 </span>
                 <div class="clr"></div>
-            </div><!--/ Codrops top bar -->
+            </div>
       <div class="container_main">
       
          <section class="main">
