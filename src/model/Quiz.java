@@ -280,7 +280,7 @@ public class Quiz implements Serializable{
 		return result; 
 	}	
 	
-
+	/*
 	public static ArrayList<Integer> getTopPerformers(int num, int quizID) throws Exception{
 		String query = "SELECT quizTryID FROM quizTries WHERE quizID = " + quizID 
 				+ " ORDER BY score DESC LIMIT" + num;
@@ -348,4 +348,5 @@ public class Quiz implements Serializable{
 		}
 		return results; 
 	}
+	*/
 }

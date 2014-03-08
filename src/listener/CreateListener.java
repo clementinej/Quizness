@@ -40,9 +40,6 @@ public class CreateListener implements HttpSessionListener {
         }
         
         session.setAttribute("current user", currUser);
-        
-        Integer comingFromServlet = 0;
-        session.setAttribute("coming from servlet", comingFromServlet);
     }
 
 

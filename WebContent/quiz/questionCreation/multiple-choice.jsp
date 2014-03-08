@@ -7,7 +7,7 @@
    <div class="container">
       <form method="post" action="../../CreateServlet" id="signup">
          <div class="header">
-            <h3>Create a Question</h3>
+            <h3>Create a Question - Multiple Choice</h3>
             <p>When you're done, click "Add Question" to return to creating your quiz.</p>
          </div>
          <div class="sep"></div>

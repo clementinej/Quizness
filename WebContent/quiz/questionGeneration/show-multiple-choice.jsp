@@ -5,7 +5,7 @@
 <html>
 <body>
 
-<%
+<%--
 // Get type-specific question object
 	int currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
 	Quiz currQuiz = Quiz.getQuiz(currQuizID); 
@@ -15,9 +15,9 @@
 	for (Set<String> s: answers) {
 		//print checkbox for s
 	}
-%>
+--%>
 
-<p><%=questionText %></p><br>
+<p><%=questionText --%></p><br>
 <p>Solution Text</p>
 <button id="next">Next Question</button>
 

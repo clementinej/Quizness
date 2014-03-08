@@ -87,7 +87,6 @@ public class CreateServlet extends HttpServlet {
 	private int getUserID(User currUser) {
 		int creatorID = -1;
 		try {
-			System.out.println("currUser.getUserName =" + currUser.getUserName());
 			creatorID = User.getUserID(currUser.getUserName());
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -194,10 +193,11 @@ public class CreateServlet extends HttpServlet {
 		switch(questionType) {//correspond to the question subclass .java filenames
 		case QUESTION_RESPONSE: 
 			Question newQuestion;
-			System.out.println("Making a question response");
+			System.out.println("QuestionResponse made.");
 			newQuestion = new QuestionResponse(question, allAnswers, pointValue);		
 			return newQuestion;
 		case FILL_IN_THE_BLANK:
+			System.out.println("FillInTheBlank Question made.");
 			return new FillInTheBlank(question, allAnswers, pointValue);
 		case MULTIPLE_CHOICE:
 			String choices[] = getWrongChoices(request);	
@@ -230,7 +230,7 @@ public class CreateServlet extends HttpServlet {
 		
 		System.out.print("Incorrect Answers: ");
 		for(int i = 0; i < choices.length; i++) {
-			System.out.print(choices[i] + ", ");
+			System.out.print(choices[i]);
 			if(i != choices.length - 1) System.out.print(", ");
 		}
 		System.out.println();
