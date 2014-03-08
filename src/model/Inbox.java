@@ -73,7 +73,7 @@ public class Inbox implements Serializable {
 	}
 	
 	// Return the number of new messages
-	public int getNumNewMessages(){
+	public int getNumNotes(){
 		return notes.size(); 
 	}
 	
