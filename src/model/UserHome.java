@@ -28,7 +28,7 @@ public class UserHome {
 	// Return x number of their own recently played quizzes
 	public static ArrayList<Integer> getRecentlyPlayedQuizzes(int num, int userID) throws Exception{
 		String query = "SELECT DISTINCT quizID FROM quizTries WHERE userID = " + userID 
-				+ " ORDER BY dateLastPlayed DESC LIMIT " + num;
+				+ " ORDER BY dateCreated DESC LIMIT " + num;
 		return executeQuery(query);
 	}
 	
