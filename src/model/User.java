@@ -248,22 +248,21 @@ public class User implements Serializable {
 		return passwordHash;
 	}
 	
-	/*
 	public int getUserID(){
 		return userID;
-	}*/
+	}
 	
 	public void setUserID(int userID){
 		this.userID = userID;
 	}
 	
 	//static method.  you must have this otherwise how will you get an id from db?
-	public static int getUserID(String userName) throws SQLException{
+	public static int getUserID(int userID) throws SQLException{
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps;
 		int id = -1;	
 		ps = con.prepareStatement("SELECT id FROM users WHERE username = ?");	
-		ps.setString(1, userName);
+		ps.setInt(1, userID);
 		ResultSet rs = ps.executeQuery();
 		rs.first();
 		id = rs.getInt("id");

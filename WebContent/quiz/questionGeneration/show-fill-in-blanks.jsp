@@ -11,18 +11,16 @@
 	Question question = quiz.getQuestion(questionID);
 	String questionText = question.getQuestion();
 	String title = quiz.getTitle();
-	ArrayList<Set<String>> answers = question.getAnswer();
-	int numBlanks = answers.size();
-	
+	String solution = question.getAnswer();	
 	--%>
 	
 	<%
-	//dummy data
+	//dummydata
 	
 	int questionID = 3;
 	String title = "title";
 	String questionText = "question text";
-	int numBlanks = 6;
+	String solution = "solution";
 	%>
 	<div class="container">
    <form method="post" action="../CreateServlet" id="signup">
@@ -34,30 +32,27 @@
       <div class="sep"></div>
       <div class="inputs">
  		<p><%=questionText %></p><br>
-		<p>Solutions</p>
-	<%
-	for(int i = 0; i < numBlanks; i++) {
-		// "options for blank # [blank]"
-		//for (String answer: answers.get(i)) {
-			String solution = "solution" + i;
-			%>
-			<input type="checkbox" value="<%=solution%>"><%=solution%><br>
-			<% 
-			//print checkbox for answer
-		//}
-	}
-	// delete selected
-	// add more solutions
-	
-%>
+ 		<div class="content" id="question_wrapper"> </div>
+		<h3>Solution</h3>
+		<p><%=solution%></p>
+		<div class="content" id="answer_wrapper"> </div>
+
   	 	<div>
-  	 	<input type="submit" value="Delete Selected"></input>
-  	 	<input type="submit" value="Edit Selected"></input>
-  	 	<input type="submit" value="Add A Solution"></input></div>
+		<input type="button" onclick="edit_question();" value="Edit Question" />
+  	 	<input type="button" onclick="edit_answer();" value="Edit Answer" />
+  	 	<input type="submit" value="Delete Question"></input>
 		<div>
 		<input type="submit" value="Back to Quiz"></input>
 		<input type="submit" value="Save"></input></div>
       </div>
       </form>
    </div>
+   <script>
+   function edit_question() {
+	    document.getElementById('question_wrapper').innerHTML += '<span>Revised Question Text: <input type="text"></span>\r\n';
+	}
+   function edit_answer() {
+	    document.getElementById('answer_wrapper').innerHTML += '<span>Revised Solution Text: <input type="text"></span>\r\n';
+	}
+   </script>
 </body>
