@@ -147,7 +147,8 @@ public class ServerConnection {
 	
 	// Add a quiz to the database
 	public static int addQuiz(Quiz quiz) throws Exception {
-		String query = "INSERT INTO quizzes (numTimesTaken, dateCreated, creatorID, title, description) VALUES(?, ?, ?, ?, ?)";
+	//	String query = "INSERT INTO quizzes (numTimesTaken, dateCreated, creatorID, title, description) VALUES(?, ?, ?, ?, ?)";
+		String query = "INSERT INTO quizzes (numTimesTaken, dateCreated, creatorID) VALUES(?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
 		Date date = new Date();
 		Timestamp timestamp = new Timestamp(date.getTime());
@@ -155,8 +156,8 @@ public class ServerConnection {
 		ps.setInt(1, quiz.getNumOfTimesPlayed());
 		ps.setTimestamp(2, timestamp);
 		ps.setInt(3, quiz.getCreatorID());
-		ps.setString(4, quiz.getTitle());
-		ps.setString(5, quiz.getDescription());
+		//ps.setString(4, quiz.getTitle());
+		//ps.setString(5, quiz.getDescription());
 		ps.executeUpdate();
 		
 		int quizID =  getGeneratedKey(ps);
@@ -276,7 +277,7 @@ public class ServerConnection {
 	
 	// Return a quizTry from the database given the quizID
 	public static QuizTry getQuizTry(int quizTryID) throws Exception {
-		PreparedStatement ps = con.prepareStatement("SELECT * FROM quizTries WHERE quizTryID = ?", Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement ps = con.prepareStatement("SELECT * FROM quizTries WHERE id = ?", Statement.RETURN_GENERATED_KEYS);
 		ps.setInt(1, quizTryID);
 		ResultSet rs = ps.executeQuery();
 		rs.next();

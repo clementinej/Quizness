@@ -12,19 +12,28 @@
    </head>
 
    <%
+   request.getParameter("nothing");
+ 	  System.out.println("About to user check");
       //Get the user
-      User user = (User)session.getAttribute("currrent user");
+      User user = (User)session.getAttribute("current user");
+      System.out.println("Got Current User: " + user.getUserName());
+      
       //Get the quiz try by id
-      int quizID = Integer.parseInt(request.getParameter("quizTryID"));
-  	  QuizTry quizTry = QuizTry.getTry(quizID);
+      int quizTryID = Integer.parseInt(request.getParameter("quiz try id"));
+  	  QuizTry quizTry = QuizTry.getTry(quizTryID);
+  	System.out.println("QuizTry: "+ quizTry.getTryID());
+    		  
       //Only let users see their own quiz results
       if(quizTry.getUserID() != user.getUserID() && !user.isAdmin()) {
+    	  System.out.println("Only let users see their own quiz results");
      	return;
       }
       //Only let users see completed quizes
       if(quizTry.isInProgress()) {
-   	  	return;
+    	  System.out.println("Only let users see completed quizes");
+   	  //	return;
       }
+      System.out.println("User Checking is good");
       %>
    <body>
       <div class="container">
@@ -38,8 +47,8 @@
               double score = quizTry.getScore();
               double time = quizTry.getTime()/1000;
               ArrayList<String[]> responses = quizTry.getResponses();
-              
-              double userAverageScore = QuizResult.getUserAverageScore(user.getUserID(), quizID);
+              int quizID = quizTry.getQuizID();
+             // double userAverageScore = QuizResult.getUserAverageScore(user.getUserID(), quizID);
               //double userAverageTime = QuizResult.getAverageTimeByUser(user.getUserID(), quizID);
               //int userNumTries = QuizResult.getNumTriesByUser(user.getUserID(), quizID);
               //Date userLastTry = QuizResult.getLastTryByUser(user.getUserID(), quizID);
@@ -49,7 +58,7 @@
               //int numTries = History.getNumTries(quizID);
               //int numTriesToday = History.getNumTriesToday(quizID);
               
-              double friendsAverageScore = QuizResult.getFriendsAverageScore(user.getUserID(), quizID);
+             // double friendsAverageScore = QuizResult.getFriendsAverageScore(user.getUserID(), quizID);
               //double friendsAverageTime = getFriendsAverageTime();
            	%>
              
@@ -59,7 +68,7 @@
             </div>
             
             <h1>Your History</h1>
-            <p>Your average score on this quiz is<%=userAverageScore %></p>
+            <p>Your average score on this quiz is TDB<%-- userAverageScore --%></p>
             <p>On average, this quiz takes you <%--=userAverageTime --%> seconds to complete </p>
             <p>You've taken this quiz <%--=userNumTries --%> times </p>
             <p>You last took this quiz on <%--=userLastTry --%></p>
@@ -70,12 +79,13 @@
             <p>This quiz has been taken <%--=numTries --%> times.</p>
             <p>This quiz has been taken <%--=numTriesToday --%> times today.</p>
          </form>
-         
+        <%--
          <%
          for(int i = 0; i < responses.size(); i++) {
          %>
          <p><%=responses %></p>
          <%} %>
+          --%> 
       </div>
       <script src="../js/hexaflip.js"></script>
       <script src="../js/results.js"></script>

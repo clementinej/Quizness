@@ -12,9 +12,9 @@
       </div>
       <div class="sep"></div>
       <div class="inputs">
-      	 <div>
-                  <input type="name" name="question_text" style="width:500px;height:50px" placeholder="Question Text">
-               </div>
+             <div id="img_url" class="terms">
+                  <input type="name" name="question_text" placeholder="Image url" autofocus/>
+         </div>
          <h3>Solutions</h3>
                <table id="contents" class="inputs">
                   <th width="500">Solution Text</th>
@@ -32,7 +32,7 @@
                   </tfoot>
                </table>
                <input name="intent" type="hidden" value="add question"/>
-               <input name="question type" type="hidden" value="1"/>
+               <input name="question type" type="hidden" value="4"/>
          <br><input id="submit" type="submit" value="Add Question!"><!-- Store new quiz in database -->
       </div>	
    </form>

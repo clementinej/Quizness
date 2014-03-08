@@ -31,15 +31,7 @@ public class CreateServlet extends HttpServlet {
 	public static final int MULTIANSWER = 5;
 	public static final int MULTIPLE_CHOICE_MULTIPLE_ANSWERS = 6;
 	public static final int MATCHING = 7;
-	public static final int AUTO_GENERATED = 8;
-	public static final int HUMAN_GRADED = 9;
-	public static final int TIMED = 10;
 	
-
-    public CreateServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//ignore
@@ -81,8 +73,6 @@ public class CreateServlet extends HttpServlet {
 //--------Helper Functions---------//
 	/*
 	 * Takes in a current user and reads the ID from the database
-	 * @param currUser
-	 * @return id of user
 	 */
 	private int getUserID(User currUser) {
 		int creatorID = -1;
@@ -106,7 +96,9 @@ public class CreateServlet extends HttpServlet {
 	}
 	
 
-
+	/*
+	 * makes a quiz and adds it to the database.
+	 */
 	private void makeQuizAndAddToDB(ArrayList<Question> questionList, HttpServletRequest request, User currUser) {
 		int creatorID = getUserID(currUser);	
 		double maxScore = getMaxScore(questionList);
@@ -128,6 +120,11 @@ public class CreateServlet extends HttpServlet {
 		}		
 	}
 
+	/*
+	 * After a quiz is created, the temporary question list is destroyed in preparation for another quiz to be made.
+	 * TODO: discard changes button
+	 * TODO: remove from list button
+	 */
 	private void clearQuestionList(ArrayList<Question> questionList) {
 		for(int i = 0; i < questionList.size(); i++) //restart question list
 			questionList.remove(i);	//may want to store questionLists in a map depending on potential quizID
@@ -135,7 +132,9 @@ public class CreateServlet extends HttpServlet {
 	}
 
 
-
+	/*
+	 * Gets the maximum possible score that can be achieved from the quiz.
+	 */
 	private double getMaxScore(ArrayList<Question> questionList) {
 		double pointCount = 0;
 		for(Question question: questionList) {
@@ -154,7 +153,7 @@ public class CreateServlet extends HttpServlet {
 		String question = request.getParameter("question_text");
 		System.out.println("Question:" + question);
 		ArrayList<Set<String>> allAnswers = new ArrayList<Set<String>>();
-		addAnswerToAnswersList(request, allAnswers);
+		makeAnswersList(request, allAnswers);
 		double pointValue = 1;//default point value for each question depending on difficulty
 		String pointValueStr = request.getParameter("correct_answer_score");
 		if(pointValueStr.length() != 0)
@@ -162,8 +161,10 @@ public class CreateServlet extends HttpServlet {
 		return makeQuestion(questionType, question, allAnswers, pointValue, request);
 	}
 	
-	
-	private void addAnswerToAnswersList(HttpServletRequest request, ArrayList<Set<String>> allAnswers) {
+	/*
+	 * Moves all answers to the allAnswers ArrayList.
+	 */
+	private void makeAnswersList(HttpServletRequest request, ArrayList<Set<String>> allAnswers) {
 		Map<String, String[]> answersMap = request.getParameterMap();
 		java.util.Iterator<String> iter = answersMap.keySet().iterator();
 		int solNum = 0;
@@ -187,13 +188,15 @@ public class CreateServlet extends HttpServlet {
 		}	
 	}
 	
-	
+	/*
+	 * Constructs and returns a Question object.
+	 */
 	private Question makeQuestion(int questionType, String question, ArrayList<Set<String>> allAnswers, 
 									double pointValue, HttpServletRequest request) {
-		switch(questionType) {//correspond to the question subclass .java filenames
+		switch(questionType) {//correspond to the question subclass
 		case QUESTION_RESPONSE: 
 			Question newQuestion;
-			System.out.println("QuestionResponse made.");
+			System.out.println("QuestionResponse Question made.");
 			newQuestion = new QuestionResponse(question, allAnswers, pointValue);		
 			return newQuestion;
 		case FILL_IN_THE_BLANK:
@@ -201,29 +204,25 @@ public class CreateServlet extends HttpServlet {
 			return new FillInTheBlank(question, allAnswers, pointValue);
 		case MULTIPLE_CHOICE:
 			String choices[] = getWrongChoices(request);	
-			System.out.println("Multiple Choice Question made.");
+			System.out.println("MultipleChoice Question made.");
 			return new MultipleChoice(question, choices, allAnswers, pointValue);
 		case PICTURE_RESPONSE:
-			String url = "";//implement
-			return new PictureResponse(question, url, allAnswers, pointValue);
+			System.out.println("PictureResponse Question made.");
+			return new PictureResponse(question, allAnswers, pointValue);
 		case MULTIANSWER:
-		//	newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
+			//extension
 		case MULTIPLE_CHOICE_MULTIPLE_ANSWERS:
-		//	newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
+			//extension
 		case MATCHING:
-		//	newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
-		case AUTO_GENERATED:
-		//	newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
-		case HUMAN_GRADED:
-		//	newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
-		case TIMED:
-		//	newQuestion = new FillInTheBlank(question, allAnswers, pointValue);
+			//extension
 		}	
 		return null;
 	}
 	
 	
-	
+	/*
+	 * For multiple choice.  Get's wrong answer options and returns them in a string array.
+	 */
 	private String[] getWrongChoices(HttpServletRequest request) {
 		Map<String, String[]> answersMap = request.getParameterMap();
 		String choices[] = answersMap.get("incorrect_answer");

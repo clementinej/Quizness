@@ -9,13 +9,14 @@ public class MultipleChoice extends Question {
 	private String[] choices;
 	private double pointValue;
 	private Answers answer; 
-	private String questionType = "MultipleChoice"; 
+	//private String questionType = "MultipleChoice"; 
 	
 	//Multiple choice questions support one question and one correct answer among a string of choices
 	public MultipleChoice(String question, String[] choices, ArrayList<Set<String>> answer, double pointValue){
 		this.question = question; 
 		this.answer = new Answers(answer);
 		this.pointValue = pointValue;
+		this.choices = choices;
 	}
 	
 	//grabs the values of the answers. can be used to print all possible answers
@@ -48,4 +49,9 @@ public class MultipleChoice extends Question {
 		return choices;
 	}
 
+	@Override
+	public int getQuestionType() {
+		return 3;
+	}
+	
 }

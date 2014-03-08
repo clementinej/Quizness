@@ -59,10 +59,10 @@
                   <select name="question-type" id="question-type">
                      <option value="0" selected></option>
                      <option value="question-answer">Question-Answer</option>
+                     <option value="fill-in-blanks">Fill-in-the-Blank</option>
+                      <option value="multiple-choice">Multiple Choice</option>
                      <option value="picture-response">Picture-Response</option>
                      <option value="multiple-answer">Multiple Answer</option>
-                     <option value="fill-in-blanks">Fill-in-the-Blank</option>
-                     <option value="multiple-choice">Multiple Choice</option>
                      <option value="multiple-choice-multiple-answer">Multi-Choice-Multi-Answer</option>
                      <option value="matching">Matching</option>
                      <option value="auto-generated">Auto-Generated</option>
@@ -91,7 +91,7 @@
 	   	} else if(value =="question-answer") {
 	   		window.location = "/Quizness/quiz/questionCreation/question-answer.jsp?question-type=1";
 	   	} else if(value == "picture-response")  {
-	   		window.location = "/Quizness/quiz/questionCreation/question-answer.jsp?question-type=4";
+	   		window.location = "/Quizness/quiz/questionCreation/picture-response.jsp?question-type=4";
 	   	} else if(value == "multiple-answer"){
 	   		window.location = "/Quizness/quiz/questionCreation/question-answer.jsp?question-type=5";
 	   	} else if (value == "multiple-choice") {

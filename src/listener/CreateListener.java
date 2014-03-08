@@ -52,14 +52,15 @@ public class CreateListener implements HttpSessionListener {
 	
     private void setAutomaticAccount() {
     	try {
-			currUser = User.getUser(User.getUserID("a@a.com"));
-			System.out.println("Automatic user \"a\" in use.");
+			currUser = User.getUser(User.getUserID("c@c.com"));
+			System.out.println("Automatic user \"c\" in use.");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("Automatic user debug failed.");
+			e.printStackTrace();	
 		} catch (Exception e) {
+			System.out.println("Automatic user debug failed.");
 			e.printStackTrace();
 		}
-    	System.out.println("Automatic user debug failed.");
     }
     
     private void addOneToQuestionList(List<Question> questionList) {

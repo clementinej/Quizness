@@ -4,10 +4,17 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class QuizTry implements Serializable {
+	public static final String MYSQL_USERNAME = "ccs108wang8";
+	public static final String MYSQL_PASSWORD = "vohpaifa";
+	public static final String MYSQL_DATABASE_SERVER = "mysql-user.stanford.edu";
+	public static final String MYSQL_DATABASE_NAME = "c_cs108_wang8";
 	
 	private int tryID;
 	private int userID;
@@ -25,7 +32,7 @@ public class QuizTry implements Serializable {
 	private int index;
 	private ArrayList<Question> questions;
 	
-	public QuizTry(String tryID, int userID, int quizID, boolean mode, boolean random) throws Exception{
+	public QuizTry(int userID, int quizID, boolean practice, boolean random) throws Exception{
 		this.user = ServerConnection.getUser(userID);
 		this.quiz = ServerConnection.getQuiz(quizID);
 		this.tryID = -1;
@@ -46,7 +53,7 @@ public class QuizTry implements Serializable {
 		
 		//if there is no practice mode available, then isPractice will also be false
 		if (quiz.hasPracticeMode())
-			this.isPractice = mode;
+			this.isPractice = practice;
 		else{
 			this.isPractice = false;
 		}
@@ -114,6 +121,15 @@ public class QuizTry implements Serializable {
 		return inProgress;
 	}
 	
+	public void setToDone() throws SQLException {
+		inProgress = false;
+		ServerConnection.open();
+//		Connection con = ServerConnection.getConnection();
+//		Statement stmt = con.createStatement();
+//		stmt.executeQuery("USE " + MYSQL_DATABASE_NAME);
+//		ResultSet rs = stmt.executeUpdate("SELECT * FROM users WHERE username = \""+ userName + "\"");
+	}
+	
 	public ArrayList<String[]> getResponses(){
 		return responses;
 	}
@@ -135,6 +151,16 @@ public class QuizTry implements Serializable {
 	
 	public int getQuizID(){
 		return quizID;
+	}
+	
+	public int getQuestionNum() {
+		return index;
+	}
+	
+	public int advanceQuestionNum() {
+		index++;
+		//ServerConnection.updateQuizTry(quizTry);
+		return index;
 	}
 	
 	public void setID(int tryID){
