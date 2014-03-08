@@ -8,7 +8,7 @@
 <title>View Questions</title>
 </head>
 <body>
-
+<h1>Questions</h1>
 <%
 ArrayList<Question> questionList = (ArrayList<Question>) session.getAttribute("question list");	
 session.setAttribute("question list", questionList);
