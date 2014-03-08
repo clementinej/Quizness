@@ -1,21 +1,20 @@
 package model;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class FriendRequest extends Message {
+public class FriendRequest extends Message implements Serializable {
 	
 	private boolean accepted;
 	private String fromUserName;
 	private String toUserName;
 	
-	public FriendRequest(String fromUserName, String toUserName, String subject, String body){
-		//this.fromID = fromID;
-		//this.toID = toID;
-		this.fromUserName = fromUserName;
-		this.toUserName = toUserName;
+	public FriendRequest(int fromID, int  toID, String subject, String body){
+		this.fromID = fromID;
+		this.toID = toID;
 		this.unread = true;
 		this.subject = subject;
 		this.body = body; 
@@ -25,12 +24,12 @@ public class FriendRequest extends Message {
 		this.messageType = "friendRequest";
 	}
 
-	public String getFrom() {
-		return fromUserName;
+	public String getFrom() throws Exception {
+		return User.getUser(fromID).getUserName();
 	}
 	
-	public String getTo() {
-		return toUserName;
+	public String getTo() throws Exception {
+		return User.getUser(toID).getUserName();
 	}
 	
 	// Accept the friend request and update the database
@@ -42,9 +41,10 @@ public class FriendRequest extends Message {
 		addFriends();
 	}
 	
+	// Update the user's internal friend list
 	private void addFriends() throws Exception{
-		User fromUser = ServerConnection.getUser(fromUserName);
-		User toUser = ServerConnection.getUser(toUserName);
+		User fromUser = User.getUser(fromID);
+		User toUser = User.getUser(toID);
 		fromUser.addFriend(toUser);
 		toUser.addFriend(fromUser);
 	}

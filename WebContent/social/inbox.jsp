@@ -1,66 +1,49 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="model.*, java.util.*" %>
-<%
-// GET USER INFO
-User u = (User) session.getAttribute("current user");
-Inbox inbox = Inbox.getInbox(u.getUserID());
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+   pageEncoding="ISO-8859-1"%>
+<%@ page import="model.*" %>
+<%@ page import="java.util.*" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <title>Profile Page</title>
+   </head>
+   <body>
+	<%
+	// Get the current user
+	User u = (User) session.getAttribute("current user");
+	Inbox inbox = Inbox.getInbox(u.getUserID());
+	
+	// Get the number of messages by type
+	int numRequests = inbox.getNumFriendReqs();
+	int numMessages = inbox.getNumNewMessages();
+	int numChallenges = inbox.getNumChallenges();
+	
+	// Get the messages
+	ArrayList<FriendRequest> requests = inbox.getRequests();
+	ArrayList<Note> notes = inbox.getNotes();
+	ArrayList<Challenge> challenges = inbox.getChallenges();
+	FriendRequest currRequest;
+	Note currNote;
+	Challenge currChallenge; 
+	%>
 
-// GET MESSAGE INFO
-int messageID = Integer.parseInt(request.getParameter("messageID"));
-Message m = inbox.getMessage(messageID);
-m.markAsRead();
-String subject = m.getSubject();
-String body = m.getBody();
-Date timeSent = m.getSentAt();
-User from = ServerConnection.getUser(m.getFromID());
-
-// GET INBOX INFO
-int numRequests = inbox.getNumFriendReqs();
-int numMessages = inbox.getNumNewMessages();
-int numChallenges = inbox.getNumChallenges();
-
-// GET CHALLENGE INFO
-Challenge challenge = null;
-Quiz challengeQuiz = null;
-int challengeQuizID = -1;
-if(numChallenges != 0) {
-	challengeQuizID = m.getId();
-	challengeQuiz = Quiz.getQuiz(challengeQuizID);
-}
- %>
-
-<body>
-	<a href="messaging/messages.jsp">Messages (<%=numMessages%>) </a>
-	<a href="messaging/friendRequests.jsp"">Friend Requests (<%=numRequests%>) </a> 
-	<div>
-		<form method="post" action="compose-mail.jsp">
-			<input type="submit" value="Compose" />
-		</form>
-	</div>	
-	<%if (challengeQuizID != -1) { %>
-		<h3><%=from%> has challenged you to take <a href="quiz/show-quiz.jsp?quiz_id=<%=challengeQuizID%>"><%=challengeQuiz.getTitle()%></a>!</h3>
-	<%} else { %>
-		<h3><%=subject%></h3>
-	<%} %>
-	<div>
-		<table>
+	<table border="1" style="width:300px">
+	<% 
+		for (int i = 0; i < numRequests; i++){
+			currRequest = requests.get(i);
+			%>
 			<tr>
-				<th>From </th>
-				<td><%=from%></td>
+			  <td><%= currRequest.getSubject() %></td>		
+			  <td><%= currRequest.getBody() %></td>
+			  <td><%= currRequest.unread %></td>
 			</tr>
-			<tr>
-				<th>Sent </th>
-				<td><%=timeSent%></td>
-			</tr>
-		</table>
-	</div>
-	<div>
-		<textarea readonly><%=body%></textarea>
-	</div>
-	<%if (challengeQuizID != -1) { %>
-		<form method="post" action="quiz/show-quiz.jsp?quiz_id=<%=challengeQuizID%>">
-		<input type="submit" name ="compose" value="LET'S DO THIS THING!"/>
-		</form>
-	<%} %>	
-	<br>
-</body>
+			<%
+		}
+	%>
+	</table>
+   </body>
+</html>
+   
+
+

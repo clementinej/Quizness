@@ -5,16 +5,20 @@ import java.util.ArrayList;
 
 public class Inbox implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8390975011058743111L;
 	private int userID;
 	private int inboxID;
 	private ArrayList<Integer> requests; 
-	private ArrayList<Integer> messages; 
+	private ArrayList<Integer> notes; 
 	private ArrayList<Integer> challenges; 
 	
 	public Inbox(int userID){
 		this.userID = userID;
 		this.requests = new ArrayList<Integer>();
-		this.messages = new ArrayList<Integer>();
+		this.notes = new ArrayList<Integer>();
 		this.challenges = new ArrayList<Integer>(); 
 	}
 	
@@ -29,37 +33,36 @@ public class Inbox implements Serializable {
 	public int getUserID(){
 		return this.userID;
 	}
-	// Add an existing Message to this Inbox, using its ID
-	public void addMessage(int messageID) throws Exception{
-		Message message = getMessage(messageID);
-		if(message instanceof Note){
-			messages.add(messageID);
-		}
-		if(message instanceof Challenge){
-			challenges.add(messageID);
-		}
-		if(message instanceof FriendRequest){
-			requests.add(messageID);
-		}
+	
+	public ArrayList<Integer> getRequests(){
+		return requests;
 	}
 	
-	// Add an existing Message to this Inbox, using the object
-	public void addMessage(Message message) throws Exception{
-		int messageID = message.getId();
-		if(message instanceof Note){
-			messages.add(messageID);
-		}
-		if(message instanceof Challenge){
-			challenges.add(messageID);
-		}
-		if(message instanceof FriendRequest){
-			requests.add(messageID);
-		}
+	public ArrayList<Integer> getNotes(){
+		return notes; 
+	}
+	
+	public ArrayList<Integer> getChallenges(){
+		return challenges; 
+	}
+	
+	// Add an existing Message to this Inbox
+	public void addNote(int messageID) throws Exception {
+		
+		notes.add(messageID);
+	}
+	
+	public void addChallenge(int messageID) throws Exception {
+		challenges.add(messageID);
+	}
+	
+	public void addFriendRequest(int messageID) throws Exception {
+		requests.add(messageID);
 	}
 		
 	// Return a message object given the ID
 	public Message getMessage(int messageID) throws Exception{
-		if(challenges.contains(messageID) || requests.contains(messageID) || messages.contains(messageID)){
+		if(challenges.contains(messageID) || requests.contains(messageID) || notes.contains(messageID)){
 			return ServerConnection.getMessage(messageID);
 		} else return null; 
 	}
@@ -71,7 +74,7 @@ public class Inbox implements Serializable {
 	
 	// Return the number of new messages
 	public int getNumNewMessages(){
-		return messages.size(); 
+		return notes.size(); 
 	}
 	
 	// Return the number of challenges

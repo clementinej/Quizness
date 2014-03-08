@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Challenge extends Message {
+public class Challenge extends Message implements Serializable {
 	
 	private boolean accepted; 
 	private int quizID;
