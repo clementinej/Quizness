@@ -19,13 +19,13 @@ import model.User;
  * Servlet implementation class SearchServlet
  */
 @WebServlet("/SearchServlet")
-public class SearchServlet extends HttpServlet {
+public class UserSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearchServlet() {
+    public UserSearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,11 +42,12 @@ public class SearchServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletContext context = request.getServletContext();
-		int numElem = (Integer) context.getAttribute("number of elements");
-		int searchFor = (Integer) context.getAttribute("search for");
-		String searchElem = (String) context.getAttribute("query string");
+		String searchElem = (String) context.getAttribute("search");
 		int searchType = (Integer) context.getAttribute("search type");
 		
+		String user = (String) request.getAttribute("user_search");
+		String quiz = (String) request.getAttribute("quiz_search");
+				
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.println("<!DOCTYPE html>");
