@@ -42,7 +42,7 @@
 			for(int qIndex = 0; qIndex < questions.size(); qIndex++) {	
 				//get question materials
 				%><br><%
-				Question q = questions.get(qIndex);
+				Question q = qTry.getNextQuestion();
 				int nextQuestionType = q.getQuestionType();
 				String questionText = q.getQuestion(); 
 				ArrayList<Set<String>> answers = q.getAnswer();
@@ -94,7 +94,7 @@
 						for(String option : options) {
 						%>
 					<div class="checkboxy">
-		            <input name="checky" type="checkbox" name="multiple_pages" value="1"> <%=option %></div>
+		            <input type="checkbox" name="answer<%=qIndex%>" value="<%=option %>"> <%=option %></div>
 	       				<%
 						}
 						%>
@@ -116,7 +116,7 @@
 		  
 		  
 		  
-		  //--------------multipage-------------
+		  //----------------------MULTPAGE BELOW---------------------------//
 		  
 		  
 		  
@@ -124,6 +124,15 @@
    	 	  } else {
    	 		int quizTryID = Integer.parseInt(request.getParameter("quiz try id"));
    	 		QuizTry qTry = ServerConnection.getQuizTry(quizTryID);
+   	 		
+   	 		//if quiz is done, go to results
+   	 		if(!qTry.hasNext()) {
+   	 			RequestDispatcher dispatch = request.getRequestDispatcher("results.jsp"); 
+   				dispatch.forward(request, response);
+   				return;
+   	 		}
+   	 		
+   	 		
    	 		ArrayList<Question> questions = currQuiz.getQuestions();
    	 		
    	 		int qIndex = qTry.getQuestionNum();
@@ -136,7 +145,7 @@
 			case 1: 
 				%>
 				<%=questionText%></p>
-				<p><input type="text" name="answer" /></p>
+				<p><input type="text" name="answer<%=qIndex%>" /></p>
 				<input type="submit" name="submit" value="next"/>
 				<%--<jsp:include page="questionGeneration/show-question-answer.jsp" />--%><%
 				break;
@@ -146,7 +155,7 @@
 				String beforeBlank = questionText.substring(0, blankIndex);
 				String afterBlank = questionText.substring(lastBlankIndex + 1);
 				%>
-				<%=beforeBlank%><input type="text" name="answer"/><%=afterBlank%></p>
+				<%=beforeBlank%><input type="text" name="answer<%=qIndex%>"/><%=afterBlank%></p>
 				<input type="submit" name="submit" value="next"/>
 				<%--<jsp:include page="questionGeneration/show-fill-in-blanks.jsp" />--%><%
 				break;
@@ -175,7 +184,7 @@
 				for(String option : options) {
 					%>
 				<div class="checkboxy">
-	            <input name="checky" type="checkbox" name="multiple_pages" value="1"> <%=option %></div>
+	            <input type="checkbox" name="answer<%=qIndex%>" value="<%=option %>"> <%=option %></div>
        				<%
 					}
 					%>
@@ -185,7 +194,7 @@
 			case 4:
 				%>
 				<img src="<%=questionText%>" height="300" width="300">
-				<p><input type="text" name="answer" /></p>
+				<p><input type="text" name="answer<%=qIndex%>" /></p>
 				<input type="submit" name="submit" value="next"/>
 				<%--<jsp:include page="questionGeneration/show-picture-response.jsp" />--%><%
 				break;

@@ -44,6 +44,25 @@
          </div>
          <form method="post" action="/SaveResults">
             <%
+            //get answers and stick them in solutions
+            ArrayList<String[]> quizResponses = new ArrayList<String[]>();
+            Map<String, String[]> map = request.getParameterMap();
+            Iterator<String> iter = map.keySet().iterator();
+            while(iter.hasNext()) {
+            	String currentQuestion = iter.next();
+            	if(!currentQuestion.contains("answer")) {}
+            	else {
+            		String [] responseForOneQuestion = map.get(currentQuestion);
+            		System.out.println("Responses:" + responseForOneQuestion[0]);
+					quizResponses.add(responseForOneQuestion);
+            	}	
+            }
+          //  quizTry.saveProgress(quizResponses);
+            quizTry.gradeQuiz(quizResponses);
+            
+            
+            
+            
               double score = quizTry.getScore();
               double time = quizTry.getTime()/1000;
               ArrayList<String[]> responses = quizTry.getResponses();
@@ -63,7 +82,7 @@
            	%>
              
             <div id="score">
-               <p>Your score is<%=score %></p>
+               <p>Your score is <%=score %></p>
                <p>It took you <%=time %> seconds to complete this quiz</p>
             </div>
             

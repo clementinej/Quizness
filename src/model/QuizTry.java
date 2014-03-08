@@ -82,8 +82,13 @@ public class QuizTry implements Serializable {
 		return questions;
 	}
 	
-	public Question getNextQuestion(){
+	public boolean hasNext() {
+		return index != questions.size() - 1;
+	}
+	
+	public Question getNextQuestion() throws Exception{
 		index ++;
+		ServerConnection.updateQuizTry(this);
 		return questions.get(index - 1);
 	}
 	
@@ -95,8 +100,9 @@ public class QuizTry implements Serializable {
 	public void saveProgress(ArrayList<String[]> responses) throws Exception{
 		elapsedTime = System.currentTimeMillis() - startTime;
 		this.responses = responses;
-		User user = ServerConnection.getUser(userName);
+		User user = ServerConnection.getUser(userID);
 		user.addTry(this);
+		ServerConnection.updateQuizTry(this);
 	}
 	
 	public void gradeQuiz(ArrayList<String[]>responses){
@@ -154,12 +160,6 @@ public class QuizTry implements Serializable {
 	}
 	
 	public int getQuestionNum() {
-		return index;
-	}
-	
-	public int advanceQuestionNum() {
-		index++;
-		//ServerConnection.updateQuizTry(quizTry);
 		return index;
 	}
 	

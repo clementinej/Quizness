@@ -37,9 +37,12 @@ public class Answers implements Serializable{
 	//receives the user's responses and compares it to the correct answers.
 	//returns the number 
 	public int getNumCorrect(String[] responses){
+		System.out.println("Answers: In getNumCorrect");
 		int correct = 0;
 		for (int i = 0; i < responses.length; i++){
 			Set<String> thisAnswer = answers.get(i);
+			
+			System.out.println("Checking if \"" + thisAnswer +"\" equals \"" + responses[i]+"\"");
 			if (thisAnswer.contains(responses[i]))
 				correct++;
 		}

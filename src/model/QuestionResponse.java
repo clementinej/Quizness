@@ -29,8 +29,7 @@ public class QuestionResponse extends Question {
 
 	//divides the number of correct answers by the number of total answers to grab the total score
 	@Override
-	public
-	double getPoints(String[] responses) {
+	public double getPoints(String[] responses) {
 		double fractionCorrect = (double)answers.getNumCorrect(responses) / (double)answers.numEntries();
 		return fractionCorrect * pointValue;
 	}
