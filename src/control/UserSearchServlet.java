@@ -2,6 +2,7 @@ package control;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Quiz;
+import model.Search;
 import model.ServerConnection;
 import model.User;
 
@@ -42,11 +44,7 @@ public class UserSearchServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletContext context = request.getServletContext();
-		String searchElem = (String) context.getAttribute("search");
-		int searchType = (Integer) context.getAttribute("search type");
-		
-		String user = (String) request.getAttribute("user_search");
-		String quiz = (String) request.getAttribute("quiz_search");
+		String userName = (String) context.getAttribute("search");
 				
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -60,43 +58,26 @@ public class UserSearchServlet extends HttpServlet {
 		out.println("<p>Items available:</p>");
 		out.println("<ul>");
 		
-		switch(searchFor){
-		case SEARCH_QUIZZES:
-			ArrayList<Quiz> quizList;
-			if (searchType == SEARCH_RECENT){
-				quizList = HomePageServlet.getRecentlyTakenQuizzesSearch(searchElem);
-			} else {
-				quizList = ServerConnection.getPopularQuizzesSearch(searchElem);
-			}
-			if (quizList.size() < numElem)
-				numElem = quizList.size();
-			for (int i = 0; i < numElem; i++){
-				Quiz quiz = quizList.get(i);
-				out.println("<li>");
-				out.println("<a href=\"show-quiz.jsp?id=" + quiz.getQuizID() + "\">" + quiz.getTitle() + "</a>");
-				out.println("</li>");
-			}
-			
-		//should we have a way of ordering users when we search them?
-		case SEARCH_USERS:
-			ArrayList<User> userList = ServerConnection.getUserList(searchElem);
-			if (userList.size() < numElem)
-				numElem = userList.size();
-			for (int i = 0; i < numElem; i++){
-				User user = userList.get(i);
-				out.println("<li>");
+
+		ArrayList<User> userList = null;
+		try {
+			userList = Search.searchUsers(userName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		for (int i = 0; i < userList.size(); i++){
+			User user = userList.get(i);
+			out.println("<li>");
+			try {
 				out.println("<a href=\"user-profile.jsp?id=" + user.getUserID() + "\">" + user.getUserName() + "</a>");
-				out.println("</li>");
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-			
+			out.println("</li>");
 		}
 		out.println("</ul>");
 		out.println("</body>");
 		out.println("</html>");		
 	}
-	
-	private static final int SEARCH_QUIZZES = 1;
-	private static final int SEARCH_USERS = 2;
-	private static final int SEARCH_RECENT = 3;
-	private static final int SEARCH_POPULAR = 4;
+
 }

@@ -32,7 +32,7 @@
       </div>
       <br>
       <div>
-      <form action="/UserSearchServlet" method="post" id="signup">
+      <form action="../UserSearchServlet" method="post" id="signup">
          <div class="header">
             <h3>User Search</h3>
          </div>
