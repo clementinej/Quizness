@@ -19,7 +19,7 @@
                 <span class="right">
                 <a href="../site/profile.jsp">Profile</a>
 				<a href="../site/admin.jsp">Admin</a>
-				<a href="../social/inbox.jsp">Inbox</a>
+				<a href="../social/inbox_temp.jsp">Inbox</a>
                 </span>
                 <div class="clr"></div>
             </div><!--/ Codrops top bar -->

@@ -12,7 +12,7 @@
       <div class="container">
       
       <div>
-      <form action="/SearchServlet" method="post" id="signup">
+      <form action="/QuizSearchServlet" method="post" id="signup">
          <div class="header">
             <h3>Quiz Search</h3>
          </div>
@@ -20,13 +20,19 @@
          <div class="inputs">
             <div>
                <input type="name" name="search" placeholder="Search for quizzes, friends, etc."></input>
+              <div>
+                  <p>Order by:</p>
+                  <br>
+                  <label><input type="radio" name="popular" id="popular"/> Popular</label>
+                  <label><input type="radio" name="recent" id="recent"/> Recent</label>
+               </div>
                <input id="submit" type="submit" value="Search!">
             </div>
       </form>
       </div>
       <br>
       <div>
-      <form action="/SearchServlet" method="post" id="signup">
+      <form action="../UserSearchServlet" method="post" id="signup">
          <div class="header">
             <h3>User Search</h3>
          </div>
@@ -34,12 +40,6 @@
          <div class="inputs">
             <div>
                <input type="name" name="search" placeholder="Search for quizzes, friends, etc."></input>
-               <div>
-                  <p>Order by:</p>
-                  <br>
-                  <label><input type="radio" name="order" id="popular"/> Popular</label>
-                  <label><input type="radio" name="order" id="recent"/> Recent</label>
-               </div>
                <input id="submit" type="submit" value="Search!">
             </div>
       </form>

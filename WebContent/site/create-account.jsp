@@ -30,7 +30,7 @@
             <div class="checkboxy">
                 <input name="cecky" id="checky" value="1" type="checkbox" /><label class="terms">I understand what I'm getting myself into</label>
             </div>
-            <a id="submit" href="home.html" value="Create Account">LET'S DO THIS THING!</a>
+            <a id="submit" href="home.jsp" value="Create Account">LET'S DO THIS THING!</a>
         </div>
 	</form>
 	</div>
