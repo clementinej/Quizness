@@ -31,7 +31,7 @@
       //Only let users see completed quizes
       if(quizTry.isInProgress()) {
     	  System.out.println("Only let users see completed quizes");
-   	  //	return;
+   	  	return;
       }
       System.out.println("User Checking is good");
       %>

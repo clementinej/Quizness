@@ -109,7 +109,7 @@
 				}
 			}	
 			qTry.setToDone();
-		  //ServerConnection.addQuizTry(qTry);
+		  	ServerConnection.updateQuizTry(qTry);
 		  
 		  
 		  
@@ -137,7 +137,7 @@
 				%>
 				<%=questionText%></p>
 				<p><input type="text" name="answer" /></p>
-				<input type="submit" name="submit" value="Grade Me!"/>
+				<input type="submit" name="submit" value="next"/>
 				<%--<jsp:include page="questionGeneration/show-question-answer.jsp" />--%><%
 				return;
 			case 2:
@@ -147,7 +147,7 @@
 				String afterBlank = questionText.substring(lastBlankIndex + 1);
 				%>
 				<%=beforeBlank%><input type="text" name="answer"/><%=afterBlank%></p>
-				<input type="submit" name="submit" value="Grade Me!"/>
+				<input type="submit" name="submit" value="next"/>
 				<%--<jsp:include page="questionGeneration/show-fill-in-blanks.jsp" />--%><%
 				break;
 			case 3:
@@ -179,14 +179,14 @@
        				<%
 					}
 					%>
-					<input type="submit" name="submit" value="Grade Me!"/>
+					<input type="submit" name="submit" value="next"/>
 				<%--<jsp:include page="questionGeneration/show-multiple-choice.jsp" />--%><%
 				break;
 			case 4:
 				%>
 				<img src="<%=questionText%>" height="300" width="300">
 				<p><input type="text" name="answer" /></p>
-				<input type="submit" name="submit" value="Grade Me!"/>
+				<input type="submit" name="submit" value="next"/>
 				<%--<jsp:include page="questionGeneration/show-picture-response.jsp" />--%><%
 				break;
 			}

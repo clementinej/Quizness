@@ -205,6 +205,33 @@ public class ServerConnection {
 		return quizTryID;
 	}
 	
+	// Updates a quizTry from the db.  Super cool Lloyd wrote this one.
+	public static void updateQuizTry(QuizTry quizTry) throws Exception {
+		int quizTryID = quizTry.getTryID();	
+		String query = "UPDATE quizTries SET quizTry = ? WHERE id = " + quizTryID; 
+		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+		ps.setBytes(1, convertToByteArray(quizTry));
+		ps.executeUpdate();
+	}
+	
+	// Updates a quizTry from the db.  Super cool Lloyd wrote this one.
+	public static void updateQuiz(Quiz quiz) throws Exception {
+		int quizID = quiz.getQuizID();	
+		String query = "UPDATE quizTries SET quizTry = ? WHERE id = " + quizID; 
+		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+		ps.setBytes(1, convertToByteArray(quiz));
+		ps.executeUpdate();
+	}
+	
+	// Updates a quizTry from the db.  Super cool Lloyd wrote this one.
+	public static void updateUser(User user) throws Exception {
+		int userID = user.getUserID();	
+		String query = "UPDATE quizTries SET quizTry = ? WHERE id = " + userID; 
+		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+		ps.setBytes(1, convertToByteArray(user));
+		ps.executeUpdate();
+	}
+	
 	// Add a message to the database and return the auto generated key 
 	public static int addMessage(Message message) throws Exception {
 		String query = "INSERT INTO messages (fromID, toID, messageType) VALUE (?, ?, ?)";
