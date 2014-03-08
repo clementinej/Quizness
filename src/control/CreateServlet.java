@@ -87,7 +87,7 @@ public class CreateServlet extends HttpServlet {
 	private int getUserID(User currUser) {
 		int creatorID = -1;
 		try {
-			creatorID = User.getUserID(currUser.getUserName());
+			creatorID = User.getUserID(currUser.getEmail());
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}

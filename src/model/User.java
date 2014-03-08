@@ -257,15 +257,17 @@ public class User implements Serializable {
 	}
 	
 	//static method.  you must have this otherwise how will you get an id from db?
-	public static int getUserID(int userID) throws SQLException{
+	public static int getUserID(String email) throws SQLException{
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps;
 		int id = -1;	
-		ps = con.prepareStatement("SELECT id FROM users WHERE username = ?");	
-		ps.setInt(1, userID);
+		ps = con.prepareStatement("SELECT id FROM users WHERE email = ?");
+		System.out.println("SELECT id FROM users WHERE email = " + email);
+		ps.setString(1, email);
 		ResultSet rs = ps.executeQuery();
 		rs.first();
 		id = rs.getInt("id");
+		System.out.println(id);
 		return id;
 	}
 	

@@ -22,6 +22,6 @@ for(int i = 0; i < questionList.size(); i++) {
 	<p>Question Text: <%=text%></p>
 	<p>Solution: <%=solution%></p>
 <%} %>
-<input type="submit" id="submit">Back</input>
+<input type="submit" id="submit" value="Back" href="create-quiz.jsp">Back</input>
 </body>
 </html>
