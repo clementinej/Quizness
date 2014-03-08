@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@page import="model.*"%>
+<%@page import="java.util.*"%>
 <html lang="en">
    <head>
       <meta charset="UTF-8" />
@@ -9,8 +10,7 @@
       <link href="../css/hexaflip.css" rel="stylesheet" type="text/css">
       <link href="../css/results.css" rel="stylesheet" type="text/css">
    </head>
-   <%@page import="model.*"%>
-   <%@page import="java.util.*"%>
+
    <%
       //Get the user
       User user = (User)session.getAttribute("currrent user");
@@ -39,15 +39,18 @@
               double time = quizTry.getTime()/1000;
               ArrayList<String[]> responses = quizTry.getResponses();
               
-              double userAverageScore = History.getAverageScoreByUser(user.getUserID(), quizID);
-              double userAverageTime = History.getAverageTimeByUser(user.getUserID(), quizID);
-              int userNumTries = History.getNumTriesByUser(user.getUserID(), quizID);
-              Date userLastTry = History.getLastTryByUser(user.getUserID(), quizID);
+              double userAverageScore = QuizResult.getUserAverageScore(user.getUserID(), quizID);
+              //double userAverageTime = QuizResult.getAverageTimeByUser(user.getUserID(), quizID);
+              //int userNumTries = QuizResult.getNumTriesByUser(user.getUserID(), quizID);
+              //Date userLastTry = QuizResult.getLastTryByUser(user.getUserID(), quizID);
               
-              double averageScore = History.getAverageScore(quizID);
-              double averageTime = History.getAverageTime(quizID);
-              int numTries = History.getNumTries(quizID);
-              int numTriesToday = History.getNumTriesToday(quizID);
+              double averageScore = QuizResult.getAllAverageScore(quizID);
+              //double averageTime = QuizResult.getAverageTime(quizID);
+              //int numTries = History.getNumTries(quizID);
+              //int numTriesToday = History.getNumTriesToday(quizID);
+              
+              double friendsAverageScore = QuizResult.getFriendsAverageScore(user.getUserID(), quizID);
+              //double friendsAverageTime = getFriendsAverageTime();
            	%>
              
             <div id="score">
@@ -56,16 +59,16 @@
             </div>
             
             <h1>Your History</h1>
-            <p>Your average score on this quiz is<%userAverageScore %></p>
-            <p>On average, this quiz takes you <%=userAverageTime %> seconds to complete </p>
-            <p>You've taken this quiz <%=userNumTries %> times </p>
-            <p>You last took this quiz on <%=userLastTry %></p>
+            <p>Your average score on this quiz is<%=userAverageScore %></p>
+            <p>On average, this quiz takes you <%--=userAverageTime --%> seconds to complete </p>
+            <p>You've taken this quiz <%--=userNumTries --%> times </p>
+            <p>You last took this quiz on <%--=userLastTry --%></p>
             
             <h1>Quiz History</h1>
-            <p>On average, users score <%averageScore %> on this quiz.</p>
-            <p>On average, this quiz takes users <%=averageTime %> seconds to complete.</p>
-            <p>This quiz has been taken <%=numTries %> times.</p>
-            <p>This quiz has been taken <%=numTriesToday %> times today.</p>
+            <p>On average, users score <%=averageScore %> on this quiz.</p>
+            <p>On average, this quiz takes users <%--=averageTime --%> seconds to complete.</p>
+            <p>This quiz has been taken <%--=numTries --%> times.</p>
+            <p>This quiz has been taken <%--=numTriesToday --%> times today.</p>
          </form>
          
          <%
