@@ -112,7 +112,7 @@ public class QuizTry implements Serializable {
 		if (score > quiz.getMaxScore()){
 			user.addAchievement(new TheGreatest());
 		}
-		inProgress = false;
+		inProgress = false;//TODO:what about automatic grading?
 		user.addTry(this);
 		checkTryAchievements();
 		dateTaken = new Date();
