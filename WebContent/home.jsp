@@ -7,8 +7,8 @@
       <meta charset="UTF-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" type="text/css" href="../css/style.css" />
-      <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
+      <link rel="stylesheet" type="text/css" href="css/style.css" />
+      <link rel="stylesheet" type="text/css" href="css/style_login.css" />
       <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300|Montserrat' rel='stylesheet' type='text/css' />
       <style>
          .link {
@@ -88,15 +88,15 @@
     	int numQuizzesTakenByFriends = 0;
     	ArrayList<Integer> recentlyTakenByFriends = UserHome.getRecentlyTakenByFriends(5, userID);
     	numQuizzesTakenByFriends = recentlyTakenByFriends.size();
-
-         %>
+		%>
+         
         <!--top bar -->
       <div class="top">
-         <span class="header-link"><a href="../quiz/create-quiz.jsp">Create Quiz</a></span>
-         <span class="header-link"><a href="../social/compose-mail.html">Compose </a></span>
-         <span class="header-link"><a href="../social/profile.jsp">Profile</a></span>
-         <span class="header-link"><a href="../site/admin.jsp">Admin</a></span>
-         <span class="header-link"><a href="../social/inbox.jsp">Inbox</a></span>
+         <span class="header-link"><a href="quiz/create-quiz.jsp">Create Quiz</a></span>
+         <span class="header-link"><a href="social/compose-mail.html">Compose </a></span>
+         <span class="header-link"><a href="social/profile.jsp">Profile</a></span>
+         <span class="header-link"><a href="site/admin.jsp">Admin</a></span>
+         <span class="header-link"><a href="social/inbox.jsp">Inbox</a></span>
          <span class="right">Welcome to Quizness, <%=name %></span>
       </div>
 
@@ -108,7 +108,7 @@
 <div style="float:right">
             
             <h1>Popular Quizzes</h1>
-			<% 
+			<%
   			 if(numPopularQuizzes != 0) {
    				for(int i = 0; i < 5; i++) {
    					Quiz topQuiz = Quiz.getQuiz(topQuizzes.get(i));
