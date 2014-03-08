@@ -285,6 +285,7 @@ public class ServerConnection {
 		return (QuizTry) convertToObject(rs, "quizTry");
 	}
 	
+	//Tony: TODO add title and description column in the database
 	
 	// Updates a quizTry from the db.  Super cool Lloyd wrote this one.
 	public static void updateQuizTry(QuizTry quizTry) throws Exception {

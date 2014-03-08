@@ -19,13 +19,24 @@
          .links {
          padding-left:40px;
          }
+         .header-link {
+		padding-left:50px;
+		font-weight:bold;	
+		}
+		.right {
+		float:right;
+		margin-right:25px;
+		font-weight:bold;
+		font-size:200%;
+		}
       </style>
    </head>
    <body>
       <%
          User u = (User) session.getAttribute("current user");
          int userID = u.getUserID();
-         
+         String name = u.getUserName();
+         /*
          // ARE THERE ANY POPULAR QUIZZES?
          int numPopularQuizzes = 0;
          ArrayList<Integer> topQuizzes = UserHome.getTopQuizzes(5);
@@ -75,19 +86,17 @@
     	// HAVE FRIENDS TAKEN QUIZZES RECENTLY?
     	int numQuizzesTakenByFriends = 0;
     	ArrayList<Integer> recentlyTakenByFriends = UserHome.getRecentlyTakenByFriends(5, userID);
-    	numQuizzesTakenByFriends = recentlyTakenByFriends.size();
+    	numQuizzesTakenByFriends = recentlyTakenByFriends.size();*/
 
          %>
       <!--top bar -->
-      <div class="codrops-top">
-         <a href="../quiz/create-quiz.jsp">Create Quiz</a>
-         <a href="../social/compose-mail.html">Compose </a>
-         <span class="right">
-         <a href="../social/profile.jsp">Profile</a>
-         <a href="../site/admin.jsp">Admin</a>
-         <a href="../social/inbox.jsp">Inbox</a>
-         </span>
-         <div class="clr"></div>
+      <div class="top">
+         <span class="header-link"><a href="../quiz/create-quiz.jsp">Create Quiz</a></span>
+         <span class="header-link"><a href="../social/compose-mail.html">Compose </a></span>
+         <span class="header-link"><a href="../social/profile.jsp">Profile</a></span>
+         <span class="header-link"><a href="../site/admin.jsp">Admin</a></span>
+         <span class="header-link"><a href="../social/inbox.jsp">Inbox</a></span>
+         <span class="right">Welcome to Quizness, <%=name %></span>
       </div>
       <!--/ Codrops top bar -->
 
@@ -96,140 +105,7 @@
             <h2 class="cs-text" id="cs-text">Quizness</h2>
          </section>
          <div style="float:left">
-            <!-- Start Nav Structure -->	
-            <form action="/SearchServlet" method="post">
-               <input type="name" name="search" placeholder="Search for quizzes, friends, etc."></input>
-            </form>
-            <div style="float:right">
-            
-            <h1>Popular Quizzes</h1>
-			<% 
-  			 if(numPopularQuizzes != 0) {
-   				for(int i = 0; i < 5; i++) {
-   					Quiz topQuiz = Quiz.getQuiz(topQuizzes.get(i));
-   					int topQuizID = topQuizzes.get(i);
-  			%>
-			<p><a href="../quiz/show-quiz.jsp?quiz-id=<%=topQuizID%>"><%=topQuiz.getTitle()%></a></p>
-			<%	
-   				} // end for loop
-   			} // end if statment
-   			%>
-   			
-   			<h1>New Quizzes</h1>
-			<% 
-   			if(numNewQuizzes != 0) {
-   				for(int i = 0; i < 5; i++) {
-   					Quiz newQuiz = Quiz.getQuiz(newQuizzes.get(i));
-   					int newQuizID = newQuizzes.get(i);
-  			 %>
-			<p><a href="../quiz/show-quiz.jsp?quiz-id=<%=newQuizID%>"><%=newQuiz.getTitle()%></a></p>
-			<%
-				} // end for loop
-   			} // end if statment
-   			%>
-   			
-   			<h1>Quizzes You've Taken Recently</h1>
-			<%
-   			if(numUserTakenQuizzes != 0) {
-   				for(int i = 0; i < 5; i++) {
-   					int quizID = userRecentQuizzesTaken.get(i);
-   					Quiz takenQuiz = Quiz.getQuiz(quizID);
-   			%>
-			<p><a href="../quiz/quiz-list.jsp?quiz-id=<%=quizID%>"><%=takenQuiz.getTitle()%></a></p>
-   			<%
-   				} // end for loop
-   			} // end if statment
-   			%>
-   					
-		<h1>Quizzes You've Created Recently</h1>
-		<%
-   		if(numRecentQuizzes !=0) {
-   			for(int i = 0; i < 5; i++) {
-   			int quizID = userRecentQuizzes.get(i);
-   			Quiz createdQuiz = Quiz.getQuiz(quizID);
-  		%>
-		<p><a href="../quiz/quiz-list.jsp?quiz-id=<%=quizID%>"><%=createdQuiz.getTitle()%></a></p>
-   		<%
-   			} // end for loop
-   		} // end if statment
-   		%>
-   		
-   		<h1>Recent Achievements</h1>
-		<%
-   		if(numAcheivements != 0) {
-   			for(int i = 0; i < 5; i++) {
-   				Achievement a = achievements.get(i);
-   		%>
-		<p>You earned <%=a.getDescription()%></p>
-		<%
-			} // end for loop
-   		} // end if statment
-   		%>
-   		
-   		<h1>Messages</h1>
-		<%
-   		if(numMessages !=0) {
-  		 %>
-		<p>You have <%=numMessages %> new messages! <a href="../inbox/user?id=<%=userID %>">Go to your inbox.</a></p>
-		<%}%>
-		
-		<h1>Challenges</h1>
-		<%
-   		if(numChallenges != 0) {
-   			for(int i = 0; i < numChallenges; i++) {
-   			String from = challenges.get(i).getChallenger().getUserName();
-   			int quizID = challenges.get(i).getQuizID();
-   			String challengeQuizTitle = Quiz.getQuiz(quizID).getTitle();
-   		%>
-		<p><%=from %> has challenged you to take <a href=../quiz-summary?quiz-id=<%=quizID%>"><%=challengeQuizTitle %></a></p>
-		<% 
-			} // end for loop
-		} // end if statment
-		%>
-		
-		<h1>Friend Requests</h1>
-		<%
-   		if(numReqs != 0) {
-   		for(int i = 0; i < numReqs; i++) {
-   			String from = reqs.get(i).getFrom();
-   		%>
-		<p><%=from %> has requested your friendship!</p>
-		<%
-			} // end for loop
-   		} // end if statment
-   		%>
-   		
-   		<h1>Friend Activity</h1>
-		<h6>Recently Created by Friends</h6>
-		<%
-		if(numFriendCreations != 0) {
-   		for(int i = 0; i < 5; i++) {
-   			Quiz q = Quiz.getQuiz(recentlyCreatedByFriends.get(i));
-   			String quizName = q.getTitle();
-   			int creatorID = q.getCreatorID();
-   			String creator = User.getUser(creatorID).getUserName();
-   		%>
-		<p><a href="../profile?user=<%=creatorID%>"><%=creator %></a> + " created " + <%=quizName %></p>
-		<%
-			} // end for loop
-		} // end if statment
-		%>
-		<h6>Recently Taken by Friends</h6>
-		<%
-		if(numQuizzesTakenByFriends != 0) {
-		for(int i = 0; i < 5; i++) {
-   			Quiz q = Quiz.getQuiz(recentlyTakenByFriends.get(i));
-   			String quizName = q.getTitle();
-   			int creatorID = q.getCreatorID();
-   			String creator = User.getUser(creatorID).getUserName(); 
-   		%>
-		<p><a href="../profile?user=<%=creatorID%>"><%=creator %></a> + " took " + <%=quizName %></p>
-		<%
-			} // end for loop
-		} // end if statment
-		%>
-   		
-            </div>
+            <!-- INSERT SHIT HERE -->
          </div>
       </div>
       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
