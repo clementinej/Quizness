@@ -37,8 +37,8 @@
                <div>
                   <p>Order by:</p>
                   <br>
-                  <label><input type="checkbox" name="popular"/> Popular</label>
-                  <label><input type="checkbox" name="recent"/> Recent</label>
+                  <label><input type="radio" name="order" id="popular"/> Popular</label>
+                  <label><input type="radio" name="order" id="recent"/> Recent</label>
                </div>
                <input id="submit" type="submit" value="Search!">
             </div>
