@@ -52,8 +52,8 @@ public class CreateListener implements HttpSessionListener {
 	
     private void setAutomaticAccount() {
     	try {
-			currUser = User.getUser(User.getUserID("c@c.com"));
-			System.out.println("Automatic user \"c\" in use.");
+			currUser = User.getUser(User.getUserID("t@t.com"));
+			System.out.println("Automatic user \""+currUser.getUserName() +"\" in use.");
 		} catch (SQLException e) {
 			System.out.println("Automatic user debug failed.");
 			e.printStackTrace();	

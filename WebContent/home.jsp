@@ -32,7 +32,7 @@
 		}
       </style>
    </head>
-   <body>
+   <body><
       <%
          User u = (User) session.getAttribute("current user");
          int userID = u.getUserID();
@@ -66,7 +66,7 @@
          // DOES THE USER HAVE ANY MESSAGES?
          int numMessages = 0;
          Inbox inbox = Inbox.getInbox(userID);
-         numMessages = inbox.getNumNotes();
+         //numMessages = inbox.getNumNotes();
                
          // DOES THE USER HAVE ANY CHALLENGES?
          int numChallenges = 0;
@@ -92,7 +92,7 @@
          
         <!--top bar -->
       <div class="top">
-         <span class="header-link"><a href="quiz/create-quiz.jsp">Create Quiz</a></span>
+         <span class="header-link"><a href="create-quiz.jsp">Create Quiz</a></span>
          <span class="header-link"><a href="social/compose-mail.html">Compose </a></span>
          <span class="header-link"><a href="social/profile.jsp">Profile</a></span>
          <span class="header-link"><a href="site/admin.jsp">Admin</a></span>

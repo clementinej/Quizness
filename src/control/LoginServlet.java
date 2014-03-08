@@ -102,7 +102,7 @@ public class LoginServlet extends HttpServlet {
 		out.println("<p>Email: <input type=\"text\" name=\"login\" /></p>");
 		out.println("<p>Password: <input type=\"password\" name=\"password\"/><input type=\"submit\" value=\"Login\"/ ></p>");
 		out.println("</form>");
-		out.println("<p><a href=\"site/create-account.jsp\">Create New Account</a></p>");
+		out.println("<p><a href=\"create-account.jsp\">Create New Account</a></p>");
 		out.println("</body>");
 		out.println("</html>");	
 	}
