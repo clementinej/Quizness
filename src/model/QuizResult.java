@@ -40,4 +40,6 @@ public class QuizResult {
 		}
 		return result; 
 	}
+	
+	// average performance specifications
 }

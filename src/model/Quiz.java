@@ -280,6 +280,7 @@ public class Quiz implements Serializable{
 		return result; 
 	}	
 	
+
 	/*
 	public static ArrayList<Integer> getTopPerformers(int num, int quizID) throws Exception{
 		String query = "SELECT quizTryID FROM quizTries WHERE quizID = " + quizID 
@@ -320,7 +321,7 @@ public class Quiz implements Serializable{
 		ps.executeUpdate();
 		return executeQuery(query);
 	}
-	
+
 	// Remove a quiz from the database
 	public static void removeQuiz(int quizID) throws Exception {
 		Connection con = ServerConnection.getConnection();

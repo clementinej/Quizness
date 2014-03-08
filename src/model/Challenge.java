@@ -25,7 +25,7 @@ public class Challenge extends Message {
 		return quizID; 
 	}
 	
-	public User getChallenger() {
+	public User getChallenger() throws Exception {
 		return User.getUser(fromID);
 	}
 	
