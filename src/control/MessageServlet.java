@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import model.Challenge;
 import model.Inbox;
 import model.Note;
+import model.ServerConnection;
 import model.User;
 
 /**
@@ -45,7 +46,7 @@ public class MessageServlet extends HttpServlet {
 
 		try {
 			// The challenger
-			User fromUser = (User) session.getAttribute("currUser"); 
+			User fromUser = (User) session.getAttribute("current user"); 
 			int fromID = fromUser.getUserID();
 			
 			// The challengee
@@ -60,10 +61,12 @@ public class MessageServlet extends HttpServlet {
 			if(challengeRequest != null){
 				int quizID = Integer.parseInt(request.getParameter("quiz_id"));
 				Challenge challenge = new Challenge(fromID, toID, quizID, subject, body); 
-				inbox.addMessage(challenge);
+				int messageID = ServerConnection.addMessage(challenge);
+				inbox.addChallenge(messageID);
 			} else {
 				Note note = new Note(toID, toID, subject, body);
-				inbox.addMessage(note);
+				int messageID = ServerConnection.addMessage(note);
+				inbox.addNote(messageID);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

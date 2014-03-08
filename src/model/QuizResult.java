@@ -64,7 +64,7 @@ public class QuizResult {
 	private static ArrayList<Integer> executeQuery(String query) throws Exception{
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps = con.prepareStatement(query);
-		ps.executeUpdate();
+		ps.executeQuery();
 		return resultSetToArray(ps.getResultSet()); 
 	}
 	
