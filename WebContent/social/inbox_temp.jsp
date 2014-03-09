@@ -2,6 +2,7 @@
    pageEncoding="ISO-8859-1"%>
 <%@ page import="model.*" %>
 <%@ page import="java.util.*" %>
+<%@ page import="java.util.Date" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
    <head>
@@ -43,16 +44,16 @@
             </nav>
          </section>
       </div>
-      <!-- /container -->
       <div id="compose">
-      <!--TODO CHANGE TO POST TO COMPOSE-MAIL.JSP-->
          <form method="post" action="compose-mail.jsp">
             <input type="submit" value="Compose" />
          </form>
       </div>
       <hr id="inbox"/>
       <div id="num-messages">
+      <%if(numRequests == 0 && numNotes == 0 && numChallenges == 0) { %>
          <h4> You've got no messages. Zero. None.</h4>
+      <%} %>
       </div>
       <form method="post" action="MessageServlet">
          <div id="table-container">
@@ -64,10 +65,8 @@
 					int messageID = notes.get(i); 
 					currNote = (Note) Message.getMessage(messageID);
 					int fromID = currNote.getFromID();
-					
-			
-					//int fromUserID = currNote.getFromID();
-						%>
+					Date sentAt = currNote.getSentAt();
+				%>
 		                  <tr>
 		                     <!-- DISPLAY UNREAD LINKS IN BOLD -->
 		                     <td align="left" width="7%">
@@ -77,7 +76,7 @@
 		                     <td align="left" width="25%"><a href="user/profile.jsp?user=<%=fromID%>"><font><b>From</b></font></a></td>
 		                     <!-- LINK TO MESSAGE -->
 		                     <td align="left" width="50%"><a href="../social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currNote.getSubject() %></b></font></a></td>
-		                     <td align="right" width="20%"><b>10:00AM</b></td>
+		                     <td align="right" width="20%"><b><%=sentAt %></b></td>
 		                  </tr>
                   		<%
 					}

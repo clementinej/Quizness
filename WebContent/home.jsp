@@ -129,7 +129,7 @@
         <!--top bar -->
       <div class="top">
          <span class="header-link"><a href="create-quiz.jsp">Create Quiz</a></span>
-         <span class="header-link"><a href="social/compose-mail.html">Compose </a></span>
+         <span class="header-link"><a href="social/compose-mail.jsp">Compose </a></span>
          <span class="header-link"><a href="social/profile.jsp">Profile</a></span>
          <span class="header-link"><a href="site/admin.jsp">Admin</a></span>
          <span class="header-link"><a href="social/inbox_temp.jsp">Inbox</a></span>
