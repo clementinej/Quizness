@@ -142,6 +142,10 @@ String quiz_search = request.getParameter("quiz_search");
 	<%
 	// get quizID from search query
 	Quiz quiz = Quiz.getQuiz(quizID);
+	int quizID = quiz.getQuizID();
+	int creatorID = quiz.getCreatorID();
+	String name = User.getUser(creatorID).getUserName();
+	Date date = quiz.getDateCreated();
 	%>
 		<div>
 			<div class="title-bar">Quick Quiz Edit</div>
@@ -170,9 +174,9 @@ String quiz_search = request.getParameter("quiz_search");
 					</div>
 					<div class="search_user_left">
 						<div align="left">
-						<span style="width:32%;display:inline-block"><a href="quiz/info.jsp?quiz_id=<%=quiz.getQuizID()%>"><%=quiz.getUserName()%></a></span>
-						<span style="width:27%;display:inline-block"><%=(User.getUser(quiz.getCreatorID())).getUserName()%></span>
-						<span style="width:22%;display:inline-block"><%=sdf.format(quiz.getDateCreated())%></span>
+						<span style="width:32%;display:inline-block"><a href="quiz/info.jsp?quiz_id=<%=quizID%>"><%=name%></a></span>
+						<span style="width:27%;display:inline-block"><%=name%></span>
+						<span style="width:22%;display:inline-block"><%=sdf.format(date)%></span>
 						</div>
 					</div>
 				</div>
