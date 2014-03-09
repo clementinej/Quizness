@@ -7,14 +7,16 @@
 
 </head>
 <%
-//User user = (User) session.getAttribute("current user");
-//int questionIndex = Integer.parseInt(request.getParameter("question index"));
-//Quiz quiz = (Quiz) session.getAttribute("current quiz");
-//if(!user.isAdmin() && quiz.getCreatorID() != user.getUserID()) return;
-//ArrayList<Question> questions = quiz.getQuestions();
+User user = (User) session.getAttribute("current user");
+int questionIndex = Integer.parseInt(request.getParameter("question index"));
+Quiz quiz = (Quiz) session.getAttribute("current quiz");
+if(!user.isAdmin() && quiz.getCreatorID() != user.getUserID()) return;
+ArrayList<Question> questions = quiz.getQuestions();
 %>
 
 <body>
+	<div><%=quiz.getTitle() %></div>
+	<div><%=quiz.getDescription() %></div>
 	<form action="" method="post" id="title-edit">
 		<a href="javascript: onclick=addTitle();"> Edit Title</a>
 	</form>
@@ -22,15 +24,15 @@
 		<a href="javascript: onclick=addDescription();"> Edit Description</a>
 	</form>
 	
-	<%--
+	<%
 	for(int i = 0; i < questions.size(); i++) {
 		Question q = questions.get(i);
 		int type = q.getQuestionType();
 		String text = q.getQuestion();
-	--%>
-		<p>Question description</p>
-		<a href="questionEdit/fill-in-blanks.jsp">Edit Question</a>
-		<%--}--%>
+	%>
+		<p><%=text %></p>
+		<a href="questionEdit/<%=type %>.jsp">Edit Question</a>
+		<%}%>
 
 	
 	 <form method="post" action="CreateServlet" id="signup">
