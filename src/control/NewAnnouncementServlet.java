@@ -22,7 +22,7 @@ import com.mysql.jdbc.Statement;
 /**
  * Servlet implementation class AnnouncementServlet
  */
-@WebServlet("/AnnouncementServlet")
+@WebServlet("/NewAnnouncementServlet")
 public class NewAnnouncementServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
