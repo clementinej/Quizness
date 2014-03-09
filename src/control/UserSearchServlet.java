@@ -66,11 +66,7 @@ public class UserSearchServlet extends HttpServlet {
 		for (int i = 0; i < userList.size(); i++){
 			User user = userList.get(i);
 			out.println("<li>");
-			try {
-				out.println("<a href=\"profile.jsp?id=" + user.getUserID() + "\">" + user.getUserName() + "</a>");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			out.println("<a href=\"profile.jsp?id=" + user.getUserID() + "\">" + user.getUserName() + "</a>");
 			out.println("</li>");
 		}
 		out.println("</ul>");
