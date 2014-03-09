@@ -132,7 +132,7 @@
          <span class="header-link"><a href="social/compose-mail.jsp">Compose </a></span>
          <span class="header-link"><a href="social/profile.jsp">Profile</a></span>
          <span class="header-link"><a href="site/admin.jsp">Admin</a></span>
-         <span class="header-link"><a href="social/inbox_temp.jsp">Inbox</a></span>
+         <span class="header-link"><a href="social/inbox.jsp">Inbox</a></span>
           <span class="header-link"><a href="social/search.jsp">Search</a></span>
          <span class="right">Welcome to Quizness, <%=name %></span>
       </div>
@@ -267,7 +267,7 @@
    			<h1>Friend Activity</h1>
    			<% if(numFriendCreations == 0 && numQuizzesTakenByFriends == 0) { 
    			%>
-   			<h4>You're friends aren't doing anything. <a href="social/inbox_temp.jsp">Tell them they're whack.</a></h4>
+   			<h4>You're friends aren't doing anything. <a href="social/inbox.jsp">Tell them they're whack.</a></h4>
    			<% } %>
 			<%
 			if(numFriendCreations != 0) {%>

@@ -34,7 +34,7 @@ String from = "Dummy user";
       <div class="sep"></div>
       <div class="inputs">
  		<p><%=body %></p><br>
-		<a href="inbox_temp.jsp">Back to Inbox</a>
+		<a href="inbox.jsp">Back to Inbox</a>
       </div>
       </form>
    </div>
