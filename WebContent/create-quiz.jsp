@@ -1,21 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.*" %>
 <head>
-   <link rel="stylesheet" type="text/css" href="style_login.css" />
+   <link rel="stylesheet" type="text/css" href="css/style_login.css" />
 </head>
-<%--
-	String forwardTo = "../CreateServlet";
-   	Integer comingFromServlet = (Integer) session.getAttribute("coming from servlet");
-	if(comingFromServlet > 0) {
-		forwardTo = "CreateServlet";
-		comingFromServlet--;
-	}
-	session.setAttribute("coming from servlet", comingFromServlet);
-	//User currUser = (User) session.getAttribute("current user");
-   //int currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
-   //Quiz currQuiz = Quiz.getQuiz(currQuizID);
-   //if(!currUser.isAdmin() && currQuiz.getUserID() != currUser.getUserID()) return;
-   --%>
 <body>
    <div class="container">
    <form method="post" action="CreateServlet" id="signup">
