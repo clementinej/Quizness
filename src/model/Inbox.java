@@ -46,7 +46,6 @@ public class Inbox implements Serializable {
 	
 	// Add an existing Message to this Inbox
 	public void addNote(int messageID) throws Exception {
-		
 		notes.add(messageID);
 	}
 	
