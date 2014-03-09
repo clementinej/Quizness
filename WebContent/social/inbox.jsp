@@ -73,7 +73,7 @@
 		                        <input type="checkbox" id="checkbox<%=i%>" name="check" value="<%=messageID%>">
 		                     </td>
 		                     <!-- LINK TO SENDER'S PROFILE -->
-		                     <td align="left" width="25%"><a href="user/profile.jsp?user=<%=fromID%>"><font><b>From</b></font></a></td>
+		                     <td align="left" width="25%"><a href="../social/profile.jsp?id=<%=fromID%>"><font><b>From</b></font></a></td>
 		                     <!-- LINK TO MESSAGE -->
 		                     <td align="left" width="50%"><a href="../social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currNote.getSubject() %></b></font></a></td>
 		                     <td align="right" width="20%"><b><%=sentAt %></b></td>

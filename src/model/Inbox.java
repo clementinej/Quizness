@@ -79,6 +79,15 @@ public class Inbox implements Serializable {
 		return challenges.size(); 
 	}
 	
+	public boolean hasPendingRequestFrom(int fromID) throws Exception{
+		int num = requests.size(); 
+		for(int i = 0; i < num; i++){
+			FriendRequest request = (FriendRequest) Message.getMessage(requests.get(i));
+			if(request.fromID == fromID) return true;
+		}
+		return false;
+	}
+	
 	// Return the inbox for this specific user
 	public static Inbox getInbox(int userID) throws Exception {
 		return ServerConnection.getInboxWithUserID(userID); 
