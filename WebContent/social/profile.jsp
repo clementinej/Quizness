@@ -143,7 +143,7 @@
                </div>
                <div class="boxy">
                   <p>People who wanna be your friends</p>
-                  <!-- TODO: Display a List of Friends -->
+                  <!-- TODO: Display a List of friend requests -->
                </div>
                <%
                   }} 
@@ -153,9 +153,10 @@
                		<div class="head">
                   		<h1>You're not friends. Wanna Be?</h1>
                		</div>
-               		<form method="post" action = "FriendRequestServlet">
+               		<form method="post" action = "../FriendRequestServlet">
                			<div class="boxy">
-                  			<input id="submit" type="submit" value="Let's Be Friends!" href="/servletName">
+               				<input type ="hidden" name="toID" value="<%=userID%>">
+                  			<input id="submit" type="submit" value="Let's Be Friends!">
                			</div>
                		</form>
                <%} else if(alreadyFriends == true) {%>
@@ -168,12 +169,12 @@
                 	<h1>You already sent an request to <%=name%>!</h1>
                 	</div>
                 <%} %>
-                <form method="post" action="ChallengeServlet">
+                <form method="post" action="../ChallengeServlet">
                     <div class ="boxy">
                		<input id="submit" type="submit" value="Send a Challenge!">
                		</div>
                	</form>
-               	<form method="post" action="NoteServlet">
+               	<form method="post" action="../NoteServlet">
                	<div class ="boxy">
      				<input id="submit" type="submit" value="Send a Note!">
      			</div>
