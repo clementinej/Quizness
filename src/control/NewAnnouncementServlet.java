@@ -3,6 +3,9 @@ package control;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,13 +23,13 @@ import com.mysql.jdbc.Statement;
  * Servlet implementation class AnnouncementServlet
  */
 @WebServlet("/AnnouncementServlet")
-public class AnnouncementServlet extends HttpServlet {
+public class NewAnnouncementServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AnnouncementServlet() {
+    public NewAnnouncementServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,32 +44,34 @@ public class AnnouncementServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		Connection con = ServerConnection.getConnection();
 		String subject = request.getParameter("subject");
 		String body = request.getParameter("body");
+		Date date = new Date();
+		Timestamp timestamp = new Timestamp(date.getTime());
 		
-		String query = "INSERT INTO announcements (subject, body) VALUES(?,?)";
+		try {
+			insertAnnouncement(con, subject, body, timestamp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void insertAnnouncement(Connection con, String subject, String body, Timestamp t) throws Exception{
+		String query = "INSERT INTO announcements (subject, body, date) VALUES(?,?,?)";
+
 		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		ps.setString(1, subject);
 		ps.setString(2, body);
+		ps.setTimestamp(3, t);
 		ps.executeUpdate();
-		
 		int id = ServerConnection.getGeneratedKey(ps);
-		user.setUserID(userID);
-		
-		query = "UPDATE users SET user = ? WHERE id = " + userID; 
+
+		query = "UPDATE announcements SET id = ? WHERE id = " + id; 
 		ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
-		ps.setBytes(1, convertToByteArray(user));
 		ps.executeUpdate();
-		System.out.println("User at "+ user.getEmail() +" added to database");
 		
-		Inbox inbox = new Inbox(userID); 
-		Note note = new Note(1, 2, "Hi", "Hello World"); 
-		int messageID = ServerConnection.addMessage(note);
-		inbox.addNote(messageID);
-		addInbox(inbox);
-		return userID;
 	}
 
 }
