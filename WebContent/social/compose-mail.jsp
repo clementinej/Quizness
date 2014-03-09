@@ -6,7 +6,7 @@
 <%
 
 // CHALLENGER INFO
-User user = (User)session.getAttribute("currUser");
+User user = (User) session.getAttribute("current user");
 ArrayList<User> friends = (ArrayList<User>)user.getFriends();
 String name = user.getUserName();
 
