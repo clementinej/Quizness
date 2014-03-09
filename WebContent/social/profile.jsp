@@ -169,13 +169,16 @@
                 	<h1>You already sent an request to <%=name%>!</h1>
                 	</div>
                 <%} %>
-                <form method="post" action="../ChallengeServlet">
+                <form method="post" action="../social/compose-mail.jsp">
                     <div class ="boxy">
+               		<input type ="hidden" name="messageType" value="challenge">
+               		<input type ="hidden" name="recipient" value=<%=userID%>>
                		<input id="submit" type="submit" value="Send a Challenge!">
                		</div>
                	</form>
-               	<form method="post" action="../NoteServlet">
+               	<form method="post" action="../social/compose-mail.jsp">
                	<div class ="boxy">
+               		<input type ="hidden" name="messageType" value="note">
      				<input id="submit" type="submit" value="Send a Note!">
      			</div>
      			</form>

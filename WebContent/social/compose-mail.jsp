@@ -9,10 +9,7 @@
 User user = (User) session.getAttribute("current user");
 ArrayList<User> friends = (ArrayList<User>)user.getFriends();
 String userName = user.getUserName();
-String messageType = null;
-if(session.getAttribute("message type") == null) {
-messageType = (String) session.getAttribute("message type");
-}
+String messageType = request.getParameter("messageType");
 
 // VARIABLE SET UP
 int toID = 0;
