@@ -96,7 +96,7 @@
          <span class="header-link"><a href="social/compose-mail.html">Compose </a></span>
          <span class="header-link"><a href="social/profile.jsp">Profile</a></span>
          <span class="header-link"><a href="site/admin.jsp">Admin</a></span>
-         <span class="header-link"><a href="social/inbox.jsp">Inbox</a></span>
+         <span class="header-link"><a href="social/inbox_temp.jsp">Inbox</a></span>
          <span class="right">Welcome to Quizness, <%=name %></span>
       </div>
       <div class="container_main">

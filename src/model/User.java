@@ -248,8 +248,13 @@ public class User implements Serializable {
 		return passwordHash;
 	}
 	
-	public int getUserID() throws SQLException{
-		return User.getUserID(email);
+	//
+	//public int getUserID() throws SQLException{
+	//	return User.getUserID(email);
+	//}
+	
+	public int getUserID(){
+		return this.userID;
 	}
 	
 	public void setUserID(int userID){

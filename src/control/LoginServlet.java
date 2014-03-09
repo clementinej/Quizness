@@ -82,8 +82,7 @@ public class LoginServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher dispatch = request.getRequestDispatcher(pageName); 
 		dispatch.forward(request, response); 
-	}
-	
+	}	
 	
 	/*
 	 * redirects to try again page
