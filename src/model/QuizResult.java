@@ -16,12 +16,13 @@ public class QuizResult {
 		return QuizSummary.getTopPerformers(quizID, num);
 	}
 	
+	//BUGGY 
+	
 	public static ArrayList<Integer> getFriendPerformance(int quizID, int userID, int num) throws Exception{
 		Connection con = ServerConnection.getConnection();
-		String query = "SELECT id FROM quizTries INNER JOIN friendships USING (toID) WHERE fromID = " + userID
-				+ " ORDER BY score DESC LIMIT" + num; 
-		PreparedStatement ps = con.prepareStatement(query);
-		ps.executeUpdate();
+		String query = "SELECT id FROM quizTries INNER JOIN friendships ON quizzes.creatorID = friendships.toID "
+				+ "WHERE friendships.fromID = " + userID
+				+ " ORDER BY score DESC LIMIT " + num; 
 		return executeQuery(query);
 	}
 	
@@ -29,7 +30,7 @@ public class QuizResult {
 	//TODO: Fix AND operator, it simply doesn't work.
 	public static double getUserAverageScore(int userID, int quizID) throws Exception{
 		String query = "SELECT AVG(score)  FROM quizTries WHERE userID = \"" + userID
-				+ "\" AND WHERE quizID = \"" + quizID+ "\"";
+				+ "\" AND quizID = \"" + quizID+ "\"";
 		System.out.println("getUserAverageScore: " + query);
 		PreparedStatement ps = ServerConnection.getConnection().prepareStatement(query);
 		ResultSet rs = ps.executeQuery();
@@ -46,10 +47,12 @@ public class QuizResult {
 		else return -1.0; 
 	}
 	
+	// BUGGY
+	
 	// Return the average score of this user's friends
 	public static double getFriendsAverageScore(int userID, int quizID) throws Exception {
 		String query = "SELECT AVG(score) FROM quizTries WHERE quizID = \"" + quizID
-				+ "\" INNER JOIN friendships USING (toID) WHERE fromID = \"" + userID +"\"";
+				+ "\" INNER JOIN friendships ON quizTries.userID = friendships.toID ";
 		System.out.println(query);
 		PreparedStatement ps = ServerConnection.getConnection().prepareStatement(query);
 		ResultSet rs = ps.executeQuery();
