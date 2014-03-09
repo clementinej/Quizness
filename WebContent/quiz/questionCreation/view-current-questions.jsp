@@ -5,18 +5,23 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="../../css/style_login.css" />
 <title>View Questions</title>
 </head>
 <body>
+<div class="container_main">
 <h1>Questions</h1>
 <%
 ArrayList<Question> questionList = (ArrayList<Question>) session.getAttribute("question list");	
-session.setAttribute("question list", questionList);
-
-for(int i = 0; i < questionList.size(); i++) {
-	Question q = questionList.get(i);
-	String text = q.getQuestion();
-	ArrayList<Set<String>> solution = q.getAnswer();
+if(questionList == null) {
+	%>
+	<h1>You haven't written any questions yet!</h1>
+	<%
+} else {
+	for(int i = 0; i < questionList.size(); i++) {
+		Question q = questionList.get(i);
+		String text = q.getQuestion();
+		ArrayList<Set<String>> solution = q.getAnswer();
 %>
 	<p><%=i + 1%>.</p>
 	<p>Question Text: "<%=text%>"</p>
@@ -37,13 +42,13 @@ for(int i = 0; i < questionList.size(); i++) {
 			<%
 		}
 	}
-	%>
-<%	
+}
 }
 %>
 	
 	</p>
 
-<input type="submit" id="submit" value="Back" href="create-quiz.jsp">Back</input>
+<input type="submit" id="submit" value="Back" href="../../create-quiz.jsp">
+</div>
 </body>
 </html>
