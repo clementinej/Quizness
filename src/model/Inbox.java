@@ -27,6 +27,10 @@ public class Inbox implements Serializable {
 		this.inboxID = inboxID;
 	}
 	
+	public int getID(){
+		return this.inboxID; 
+	}
+	
 	// Get the id of the user
 	public int getUserID(){
 		return this.userID;

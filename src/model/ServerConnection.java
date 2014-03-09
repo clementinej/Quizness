@@ -314,6 +314,18 @@ public class ServerConnection {
 		ps.executeUpdate();
 	}
 	
+	// Update a inbox
+	public static void updateInbox(Inbox inbox) throws Exception{
+		String query = "UPDATE inboxes SET inbox = ?, numRequests = ?, numMessages = ?, numChallenges = ?"
+				+ " WHERE id = " + inbox.getID(); 
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.setBytes(1, convertToByteArray(inbox));
+		ps.setInt(2, inbox.getNumFriendReqs());
+		ps.setInt(3,  inbox.getNumNotes());
+		ps.setInt(4, inbox.getNumChallenges());
+		ps.executeUpdate();
+	}
+	
 	//Close the connection
 	public static void close() throws SQLException{
 		if(!con.isClosed()){
