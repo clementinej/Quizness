@@ -68,7 +68,7 @@ public class QuizSearchServlet extends HttpServlet {
 		for (int i = 0; i < quizList.size(); i++){
 			Quiz quiz = quizList.get(i);
 			out.println("<li>");
-			out.println("<a href=\"user-profile.jsp?id=" + quiz.getQuizID() + "\">" + quiz.getTitle() + "</a>");
+			out.println("<a href=\"show-quiz.jsp?id=" + quiz.getQuizID() + "\">" + quiz.getTitle() + "</a>");
 			out.println("</li>");
 		}
 		out.println("</ul>");

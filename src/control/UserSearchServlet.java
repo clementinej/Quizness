@@ -20,7 +20,7 @@ import model.User;
 /**
  * Servlet implementation class SearchServlet
  */
-@WebServlet("/SearchServlet")
+@WebServlet("/UserSearchServlet")
 public class UserSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -43,19 +43,17 @@ public class UserSearchServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ServletContext context = request.getServletContext();
-		String userName = (String) context.getAttribute("search");
+		String userName = (String) request.getParameter("search");
 				
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.println("<!DOCTYPE html>");
 		out.println("<head>");
 		out.println("<meta charset=\"UTF-8\" />");
-		out.println("<title>Student Store</title>");
+		out.println("<title>Search Users</title>");
 		out.println("</head>");
 		out.println("<body>");
-		out.println("<h1>Student Store</h1>");
-		out.println("<p>Items available:</p>");
+		out.println("<h1>Users containing " + userName + "</h1>");
 		out.println("<ul>");
 		
 
@@ -69,7 +67,7 @@ public class UserSearchServlet extends HttpServlet {
 			User user = userList.get(i);
 			out.println("<li>");
 			try {
-				out.println("<a href=\"user-profile.jsp?id=" + user.getUserID() + "\">" + user.getUserName() + "</a>");
+				out.println("<a href=\"profile.jsp?id=" + user.getUserID() + "\">" + user.getUserName() + "</a>");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
