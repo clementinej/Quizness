@@ -46,7 +46,6 @@ public class LoginServlet extends HttpServlet {
 				User newUser = (User) session.getAttribute("current user");
 				newUser = setCurrentUser(newUser, email);
 				session.setAttribute("current user", newUser);
-				//redirectToPage("site/home.jsp", request, response);
 				System.out.println("redirected to home.jsp");
 				redirectToPage("home.jsp", request, response);
 			} else { 
@@ -76,7 +75,7 @@ public class LoginServlet extends HttpServlet {
 	
 	
 	/*
-	 * redirects to homepage
+	 * redirects to given page
 	 */
 	private void redirectToPage(String pageName, HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {

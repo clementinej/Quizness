@@ -12,7 +12,6 @@
    </head>
 
    <%
-   request.getParameter("nothing");
  	  System.out.println("About to user check");
       //Get the user
       User user = (User)session.getAttribute("current user");
@@ -67,10 +66,10 @@
               double time = quizTry.getTime()/1000;
               ArrayList<String[]> responses = quizTry.getResponses();
               int quizID = quizTry.getQuizID();
-             // double userAverageScore = QuizResult.getUserAverageScore(user.getUserID(), quizID);
+              double userAverageScore = QuizResult.getUserAverageScore(user.getUserID(), quizID);
               //double userAverageTime = QuizResult.getAverageTimeByUser(user.getUserID(), quizID);
-              //int userNumTries = QuizResult.getNumTriesByUser(user.getUserID(), quizID);
-              //Date userLastTry = QuizResult.getLastTryByUser(user.getUserID(), quizID);
+             // int userNumTries = QuizResult.getNumTriesByUser(user.getUserID(), quizID);
+             // Date userLastTry = QuizResult.getLastTryByUser(user.getUserID(), quizID);
               
               double averageScore = QuizResult.getAllAverageScore(quizID);
               //double averageTime = QuizResult.getAverageTime(quizID);
@@ -87,7 +86,7 @@
             </div>
             
             <h1>Your History</h1>
-            <p>Your average score on this quiz is TDB<%-- userAverageScore --%></p>
+            <p>Your average score on this quiz is <%=userAverageScore%></p>
             <p>On average, this quiz takes you <%--=userAverageTime --%> seconds to complete </p>
             <p>You've taken this quiz <%--=userNumTries --%> times </p>
             <p>You last took this quiz on <%--=userLastTry --%></p>

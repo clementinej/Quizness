@@ -25,43 +25,40 @@
          <div class="sep"></div>
          <div class="inputs">
             <div>
-               <input type="name" name="title" style="width:500px;height:50px" placeholder="<%=currQuestionTitle%>">
-            </div>
-            <div>
-               <input type="name" name="question_text" style="width:500px;height:50px" placeholder="<%=currQuestionText%>">
+               <input type="name" name="question_text" style="width:500px;height:50px" placeholder="Question Text">
             </div>
             <h3>Solutions</h3>
             <table id="contents" class="inputs">
-               <th style="width:400px">Solution Text</th>
-               <th>Score</th>
-               <tbody>
-                  <tr>
-                     <td><input type="name" name="correct_answer_text" style="width:100%" placeholder="<%=currSolution%>"></td>
-                     <td><input type="name" name="correct_answer_score" style="width:100%" placeholder="<%=currScore%>"/></td>
-                  </tr>
-               </tbody>
-               <tfoot>
-                  <tr>
-                     <td align="center" class="terms"><a href="#" id="new_synonym">Add A Synonym</a></td>
-                  </tr>
-               </tfoot>
-            </table>
-            <input name="intent" type="hidden" value="edit question"/>
-            <input name="question type" type="hidden" value="2"/>
-            <input id="submit" name="save" type="submit" value="Save Changes">
-            <input id="submit" name="delete" type="submit" value="Delete Question">			
+                  <th style="width:400px">Solution Text</th>
+                  <th>Score</th>
+                 
+                  <tbody>
+                     <tr>
+                        <td><input type="name" name="correct_answer_text" style="width:100%" placeholder="Solution"></td>
+                        <td><input type="name" name="correct_answer_score" style="width:100%" /></td>
+                     </tr>
+                    </tbody>
+                                      <tfoot>
+                     <tr>
+                        <td align="center" class="terms"><a href="#" id="new_synonym">Add A Synonym For Your Solution</a></td>
+                     </tr>
+                  </tfoot>
+             
+               </table>
+               <input name="intent" type="hidden" value="add question"/>
+			<input name="question type" type="hidden" value="2"/>
+<br><input id="submit" type="submit" value="Add Question!"><!-- Store new quiz in database -->
          </div>
       </form>
    </div>
-   <script type="text/javascript">
-      var syn_button = document.getElementById("new_synonym");
-      syn_button.addEventListener("click", function() {
-      	var body = document.getElementById("contents");
-      	body.insertAdjacentHTML('beforeend',	'<tr>' +
-      			'<td><input type="name" name="correct_syn_text" style="width:100%" placeholder="Synonym"></td>' +
-      			'<td><input type="name" name="correct_syn_score" style="width:100%" /></td>' +
-      			'</tr>');
-      	body.appendChild(newChild);
-      	});   
-   </script>
+<script type="text/javascript">
+         var syn_button = document.getElementById("new_synonym");
+         syn_button.addEventListener("click", function() {
+         	var body = document.getElementById("contents");
+         	body.insertAdjacentHTML('beforeend',	'<tr>' +
+         			'<td><input type="name" name="correct_answer_text" style="width:100%" placeholder="Synonym"></td>' +
+         			'</tr>');
+         	body.appendChild(newChild);
+         	});   
+      </script>
 </body>

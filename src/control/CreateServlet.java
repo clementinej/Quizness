@@ -58,13 +58,11 @@ public class CreateServlet extends HttpServlet {
 		if(getUserIntent(session, request).equals("add question")) {
 			Question newQuestion = constructQuestion(session, request);
 			questionList.add(newQuestion);			
-			//forwardToPage("quiz/create-quiz.jsp", request, response);
 			forwardToPage("create-quiz.jsp", request, response);
 
 		} else if(getUserIntent(session, request).equals("create quiz")) {
 			makeQuizAndAddToDB(questionList, request, currUser);	
 			clearQuestionList(questionList);
-			//forwardToPage("quiz/create-quiz.jsp", request, response);		
 			forwardToPage("create-quiz.jsp", request, response);		
 		}	
 	}

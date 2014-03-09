@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class Quiz implements Serializable{
-	
+	private static final long serialVersionUID = -1573586149365786232L;
 	// Basic quiz information
 	private int quizID;
 	private int creatorID;
@@ -59,7 +59,7 @@ public class Quiz implements Serializable{
 		this.title = title; 
 
 	}
-	
+		
 	// Return a question specified by the index
 	public Question getQuestion(int index){
 		return questions.get(index);
@@ -279,6 +279,12 @@ public class Quiz implements Serializable{
 		}
 		return result; 
 	}	
+	
+	
+	public void updateQuestion(int qIndex, Question question) throws Exception {
+		questions.set(qIndex, question);
+		ServerConnection.updateQuiz(this);
+	}
 	
 
 	/*

@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.*" %>
 <head>
-   <link rel="stylesheet" type="text/css" href="style_login.css" />
+   <link rel="stylesheet" type="text/css" href="css/style_login.css" />
 </head>
 <%--
 	String forwardTo = "../CreateServlet";

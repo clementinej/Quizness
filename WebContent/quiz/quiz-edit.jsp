@@ -7,9 +7,10 @@
 
 </head>
 <%
+boolean debug = true;
 User user = (User) session.getAttribute("current user");
-int questionIndex = 0;//Integer.parseInt(request.getParameter("question index"));
-Quiz quiz = Quiz.getQuiz(59);//(Quiz) session.getAttribute("current quiz");
+Quiz quiz = Quiz.getQuiz(79);
+
 //if(!user.isAdmin() && quiz.getCreatorID() != user.getUserID()) return;
 ArrayList<Question> questions = quiz.getQuestions();
 %>
@@ -17,29 +18,34 @@ ArrayList<Question> questions = quiz.getQuestions();
 <body>
 	<div class="container">
 	<form method="post" action="quiz/edit/EditQuestion" id="signup">
+			<input type="hidden" name="quiz_id" value="<%=quiz.getQuizID()%>"/>
 	<%
 	for(int i = 0; i < questions.size(); i++) {
 		Question q = questions.get(i);
 		int type = q.getQuestionType();
-		
+		System.out.println(i);
 		String redirectTo = "";
 		switch(type) {
 		case 1://question-response
-			redirectTo = "questionEditing/edit-question-answer.jsp";
+			redirectTo = "questionEditing/edit-question-answer.jsp?question_index="+i+"&quiz_id="+quiz.getQuizID();
+			break;
 		case 2://fill-in-the-blank
-			redirectTo = "questionEditing/edit-fill-in-the-blanks.jsp";
+			redirectTo = "questionEditing/edit-fill-in-the-blanks.jsp?question_index="+i+"&quiz_id="+quiz.getQuizID();
+			break;
 		case 3://multiple choice
-			redirectTo = "questionEditing/edit-multiple-choice.jsp";
+			redirectTo = "questionEditing/edit-multiple-choice.jsp?question_index="+i+"&quiz_id="+quiz.getQuizID();
+			break;
 		case 4://picture response
-			redirectTo = "questionEditing/edit-picture-response.jsp";
+			redirectTo = "questionEditing/edit-picture-response.jsp?question_index="+i+"&quiz_id="+quiz.getQuizID();
+			break;
 		}
 		
 		String text = q.getQuestion();
 	%>
 		<p><%=text %></p>
-		<input type="hidden" name="question_type" value="<%=type%>"/>
 		<a href="<%=redirectTo%>">Edit Question</a>
 		<%}%>
+
 	</form>
 	</div>
 </body>
