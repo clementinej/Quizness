@@ -65,7 +65,7 @@ public class CreateServlet extends HttpServlet {
 			makeQuizAndAddToDB(questionList, request, currUser);	
 			clearQuestionList(questionList);
 			//forwardToPage("quiz/create-quiz.jsp", request, response);		
-			forwardToPage("create-quiz.jsp", request, response);		
+			forwardToPage("success.html", request, response);		
 		}	
 	}
 	

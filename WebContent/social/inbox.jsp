@@ -33,7 +33,7 @@
 		FriendRequest currRequest;
 		Note currNote;
 		Challenge currChallenge; 
-	  %>
+	  %> 
 	
       <div class="container">
          <section class="color-1">

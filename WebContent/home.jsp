@@ -45,8 +45,8 @@
 		} 
 		
 		html>body #centercontent {
-		margin-left: 201px;
-		margin-right:201px;
+		margin-left: 20px;
+		margin-right:0px;
 		}
 		#rightcontent {
 		position: absolute;
@@ -56,7 +56,7 @@
 		}
 		#innerleft {
 		float:left;
-		left:10px;
+		left:20px;
 		top:50px;
 		width:400px;
 		}
@@ -263,11 +263,11 @@
    			%>
    			</div> 
    			
-   			<div id="innerright">
+   			<div id="innerleft">
    			<h1>Friend Activity</h1>
    			<% if(numFriendCreations == 0 && numQuizzesTakenByFriends == 0) { 
    			%>
-   			<h4>You're friends aren't doing anything. <a href="social/inbox.jsp">Tell them they're whack.</a></h4>
+   			<h4>You're friends aren't doing anything. <br><a href="social/inbox.jsp">Tell them they're whack.</a></h4>
    			<% } %>
 			<%
 			if(numFriendCreations != 0) {%>
@@ -386,6 +386,32 @@
 	   			} // end else 
 	   		} // end if
 	   		%>
+	        </div>
+	        
+	        <div class="innerright">
+	        <h1> Test Text</h1>
+	        <%--
+	        int numAnnouncements = 0;
+	        ArrayList<Announcement> announcements = Announcements.getAllAnnouncements();
+	        numAnnouncements = announcements.size();
+	        if(numAnnouncements != 0) {
+	        	if(numAnnouncements > 5) {
+	        		for(int i = 0; i < 5; i++) {
+	        			Announcement a = announcements.get(i);
+	        			--%>
+	        			<p><%--=a.getBody() --%></p>
+	        			<%--
+	        		}
+	        	} else {
+	        		for(int i = 0; i < numAnnouncements; i++) {
+	        			Announcement a = announcements.get(i);
+						--%>
+						<p><%--=a.getBody() --%></p>
+						<%-- 
+	        		}
+	        	}
+	        }
+	        --%>
 	        </div>
 	   </div>
       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
