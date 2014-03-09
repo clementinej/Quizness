@@ -110,7 +110,7 @@
             <h1>Popular Quizzes</h1>
 			<%
   			 if(numPopularQuizzes != 0) {
-   				for(int i = 0; i < 5; i++) {
+   				for(int i = 0; i < 5 && i < topQuizzes.size(); i++) {
    					Quiz topQuiz = Quiz.getQuiz(topQuizzes.get(i));
    					int topQuizID = topQuizzes.get(i);
   			%>

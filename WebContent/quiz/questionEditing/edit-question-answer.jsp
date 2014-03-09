@@ -1,16 +1,63 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.*" %>
+<%@page import="java.util.*" %>
 <head>
    <link rel="stylesheet" type="text/css" href="../../css/style_login.css" />
 </head>
+
 <%
-   //User user = (User) session.getAttribute("current user");
-   //int currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
-   //Quiz currQuiz = Quiz.getQuiz(currQuizID);
+	boolean debug = true;
+   User user = (User) session.getAttribute("current user");
+   int currQuizID = 59;//defualt to debugging quiz
+   if(!debug) {
+	   currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
+   }
+   Quiz currQuiz = Quiz.getQuiz(currQuizID);
    //if(!user.isAdmin() && currQuiz.getCreatorID() != user.getUserID()) return;
-   String currQuestionTitle = "curr title";
-   String currQuestionText = "curr text";
-   String currSolution = "curr solution";
+   String currQuestionTitle = "Current Title";
+   String currQuestionText = "Current Text";
+   String currSolution = "Current Solution";
+   
+   ArrayList<Question> questionList = currQuiz.getQuestions(); 
+   //loop through each question.  Display one at a time?
+	//Or display all questions at the same time with a final submit at the end?
+			
+	//if we display all, then will simply have the same format at quiz...
+
+	   //print displayQNum plus a period.
+	   //get the type of the question
+	   //based on that type of question (switch statement)
+	   	//display a certain kind of text
+	    //display the html question format of the specific question
+	    //integrate the questionText in the questionText text box
+	   
+	    
+	    //----------ANSWERS---------//
+	    //for loop for each answer//atm should only for loop once, because we only accept one solution
+	    //get iterator for Answers set.
+	 /*   int solutionIndex = 0;
+	   //while(there are synonyms) {//should only
+			
+		   //make a text box  
+		    //populate text box with current info
+		    if(solutionIndex == 0)
+		  	 //populate score with current info only once
+	   }
+	   
+	   
+	  // make a submit button that brings you... to the quiz edit page?
+			   //for now just go home
+	   
+	   
+	   
+	   
+   }
+	   
+   
+   */
+   
+   String question = "";
+   
    int currScore = 6;
    %>
 <body>

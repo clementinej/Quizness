@@ -8,9 +8,9 @@
 </head>
 <%
 User user = (User) session.getAttribute("current user");
-int questionIndex = Integer.parseInt(request.getParameter("question index"));
-Quiz quiz = (Quiz) session.getAttribute("current quiz");
-if(!user.isAdmin() && quiz.getCreatorID() != user.getUserID()) return;
+int questionIndex = 0;//Integer.parseInt(request.getParameter("question index"));
+Quiz quiz = Quiz.getQuiz(59);//(Quiz) session.getAttribute("current quiz");
+//if(!user.isAdmin() && quiz.getCreatorID() != user.getUserID()) return;
 ArrayList<Question> questions = quiz.getQuestions();
 %>
 
@@ -21,10 +21,24 @@ ArrayList<Question> questions = quiz.getQuestions();
 	for(int i = 0; i < questions.size(); i++) {
 		Question q = questions.get(i);
 		int type = q.getQuestionType();
+		
+		String redirectTo = "";
+		switch(type) {
+		case 1://question-response
+			redirectTo = "questionEditing/edit-question-answer.jsp";
+		case 2://fill-in-the-blank
+			redirectTo = "questionEditing/edit-fill-in-the-blanks.jsp";
+		case 3://multiple choice
+			redirectTo = "questionEditing/edit-multiple-choice.jsp";
+		case 4://picture response
+			redirectTo = "questionEditing/edit-picture-response.jsp";
+		}
+		
 		String text = q.getQuestion();
 	%>
 		<p><%=text %></p>
-		<a href="questionEdit/<%=type %>.jsp">Edit Question</a>
+		<input type="hidden" name="question_type" value="<%=type%>"/>
+		<a href="<%=redirectTo%>">Edit Question</a>
 		<%}%>
 	</form>
 	</div>
