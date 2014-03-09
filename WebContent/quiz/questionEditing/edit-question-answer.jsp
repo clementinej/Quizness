@@ -21,7 +21,6 @@
    if(!user.isAdmin() && currQuiz.getCreatorID() != user.getUserID()) return;//should redirect
    
    //place holders
-   String currQuestionTitle = "Current Title";
    String currQuestionText = "Current Text";
    String currSolution = "Current Solution";
    int currScore = 6;

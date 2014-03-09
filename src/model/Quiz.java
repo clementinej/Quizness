@@ -76,10 +76,11 @@ public class Quiz implements Serializable{
 	}
 	
 	// Add question to the quiz
-	public void addQuestion(int userID, Question question){
+	public void addQuestion(int userID, Question question) throws Exception{
 		if(userID == creatorID){
 			questions.add(question);
 		}
+		ServerConnection.updateQuiz(this);
 	}
 	
 	// Remove a question from the quiz
@@ -208,10 +209,10 @@ public class Quiz implements Serializable{
 	}
 	
 	// Set the description of the quiz
-	public void setDescription(int userID, String description){
-		if(userID == creatorID){
-			this.description = description;
-		}
+	public void setDescription(String description) throws Exception{
+		this.description = description;
+		ServerConnection.updateQuiz(this);
+		
 	}
 	
 	// Increment the number of times that this quiz was played
@@ -225,10 +226,9 @@ public class Quiz implements Serializable{
 	}
 	
 	// Set the title of the quiz
-	public void setTitle(int userID, String title){
-		if(userID == creatorID){ 
-			this.title = title;
-		}	
+	public void setTitle(String title) throws Exception{
+		this.title = title;
+		ServerConnection.updateQuiz(this);
 	}
 	
 	// Return the total score for this question
@@ -283,6 +283,11 @@ public class Quiz implements Serializable{
 	
 	public void updateQuestion(int qIndex, Question question) throws Exception {
 		questions.set(qIndex, question);
+		ServerConnection.updateQuiz(this);
+	}
+
+	public void removeQuestionAt(int qIndex) throws Exception {
+		questions.remove(qIndex);
 		ServerConnection.updateQuiz(this);
 	}
 	

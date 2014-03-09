@@ -28,21 +28,21 @@ if(questionList == null) {
 	<p>
 	<% 
 	//for each solution
-	for(int solIndex = 0; solIndex < solution.size(); solIndex++) {
-	%>
-	Solution: 
-	<%
-		Set<String> oneSolution = solution.get(solIndex);
-		//for each synonym of each solution
-		Iterator<String> iter = oneSolution.iterator();
-		while(iter.hasNext()) {
-			String s = iter.next();
-			%>
-			"<%=s%>"<%if(iter.hasNext())%>,
-			<%
+		for(int solIndex = 0; solIndex < solution.size(); solIndex++) {
+		%>
+		Solution: 
+		<%
+			Set<String> oneSolution = solution.get(solIndex);
+			//for each synonym of each solution
+			Iterator<String> iter = oneSolution.iterator();
+			while(iter.hasNext()) {
+				String s = iter.next();
+				%>
+				"<%=s%>"<%if(iter.hasNext())%>,
+				<%
+			}
 		}
 	}
-}
 }
 %>
 	

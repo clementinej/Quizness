@@ -59,7 +59,14 @@ public class CreateServlet extends HttpServlet {
 			Question newQuestion = constructQuestion(session, request);
 			questionList.add(newQuestion);			
 			forwardToPage("create-quiz.jsp", request, response);
-
+		} else if(getUserIntent(session, request).equals("add to existing quiz")) {
+			Question newQuestion = constructQuestion(session, request);
+			Quiz quiz = getQuiz(request);
+			try {
+				quiz.addQuestion(currUser.getUserID(), newQuestion);
+			} catch (Exception e) { e.printStackTrace(); }	
+			
+			forwardToPage("quiz-edit.jsp", request, response);
 		} else if(getUserIntent(session, request).equals("create quiz")) {
 			makeQuizAndAddToDB(questionList, request, currUser);	
 			clearQuestionList(questionList);
@@ -68,7 +75,18 @@ public class CreateServlet extends HttpServlet {
 	}
 	
 	
-//--------Helper Functions---------//
+private Quiz getQuiz(HttpServletRequest request) {
+	int quizID = Integer.parseInt(request.getParameter("quiz_id"));
+	Quiz quiz = null;
+	try {
+		quiz = Quiz.getQuiz(quizID);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	return quiz;
+}
+
+	//--------Helper Functions---------//
 	/*
 	 * Takes in a current user and reads the ID from the database
 	 */

@@ -6,6 +6,10 @@
 <body>
    <div class="container">
       <form method="post" action="../../CreateServlet" id="signup">
+      
+      <%
+      String intent = request.getParameter("intent");
+      %>
          <div class="header">
             <h3>Create a Question - Multiple Choice</h3>
             <p>When you're done, click "Add Question" to return to creating your quiz.</p>
@@ -41,14 +45,22 @@
                   </tr>
                </tfoot>
             </table>
-            <input name="intent" type="hidden" value="add question"/>
+            
+    <%  if(intent.equals("add to existing quiz")) {
+    		int quizID = Integer.parseInt(request.getParameter("quizID"));
+    		System.out.println("In question-answer: Quiz = " + quizID);
+    %>
+    		<input type="hidden" name="quiz_id" value="<%=quizID%>"/>
+    <%
+      }
+      %>
+            <input name="intent" type="hidden" value="<%=intent%>"/>
             <input name="question type" type="hidden" value="3"/>
             <br><input id="submit" type="submit" value="Add Question!"><!-- Store new quiz in database -->
          </div>
    </form>
    </div>
    <script type="text/javascript">
-      
       var button = document.getElementById("new_wrong_answer");
       button.addEventListener("click", function() {
       	var wrong = document.getElementById("incorrect_contents");

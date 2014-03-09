@@ -24,7 +24,7 @@
       <%
       
    	  	User currUser = (User) session.getAttribute("current user");
-    	int currQuizID = 59;//debugging default
+    	int currQuizID = 79;//debugging default
  	    if(!debug) {
     	  currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
   	    }

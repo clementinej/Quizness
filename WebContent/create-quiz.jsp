@@ -95,7 +95,7 @@
          }
          }
          %>
-            %>
+            
    </form>
    </div>
 </body>
@@ -107,15 +107,15 @@
 	   	if(value == 0) {
 	   		alert("Please choose a question type");
 	   	} else if(value =="question-answer") {
-	   		window.location = "/Quizness/quiz/questionCreation/question-answer.jsp?question-type=1";
+	   		window.location = "/Quizness/quiz/questionCreation/question-answer.jsp?question-type=1&intent=add question";
 	   	} else if(value == "picture-response")  {
-	   		window.location = "/Quizness/quiz/questionCreation/picture-response.jsp?question-type=4";
+	   		window.location = "/Quizness/quiz/questionCreation/picture-response.jsp?question-type=4&intent=add question";
 	   	} else if(value == "multiple-answer"){
-	   		window.location = "/Quizness/quiz/questionCreation/question-answer.jsp?question-type=5";
+	   		window.location = "/Quizness/quiz/questionCreation/question-answer.jsp?question-type=5&intent=add question";
 	   	} else if (value == "multiple-choice") {
-	   		window.location = "/Quizness/quiz/questionCreation/multiple-choice.jsp?question-type=3";
+	   		window.location = "/Quizness/quiz/questionCreation/multiple-choice.jsp?question-type=3&intent=add question";
 	   	} else if(value == "multiple-choice-multiple-answer") {
-	   		window.location = "/Quizness/quiz/questionCreation/multiple-choice.jsp?question-type=6";
+	   		window.location = "/Quizness/quiz/questionCreation/multiple-choice.jsp?question-type=6&intent=add question";
 	   	} else {
 	   		window.location = "/Quizness/quiz/questionCreation/" + value + ".jsp";
 	   	}

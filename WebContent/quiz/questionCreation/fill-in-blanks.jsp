@@ -13,6 +13,9 @@
    <div class="container">
       <form method="post" action="../../CreateServlet" id="signup">
          <div class="header">
+      <%
+      String intent = request.getParameter("intent");
+      %>
             <h3>Create a Question</h3>
             <p>Click "Add Question!" to return to creating your quiz.</p>
          </div>
@@ -39,7 +42,17 @@
                   </tfoot>
              
                </table>
-               <input name="intent" type="hidden" value="add question"/>
+   <%  if(intent.equals("add to existing quiz")) {
+    	int quizID = Integer.parseInt(request.getParameter("quizID"));
+    	System.out.println("In question-answer: Quiz = " + quizID);
+    %>
+    		<input type="hidden" name="quiz_id" value="<%=quizID%>"/>
+    <%
+      }
+      %>   
+               
+               
+            <input name="intent" type="hidden" value="<%=intent%>"/>
 			<input name="question type" type="hidden" value="2"/>
 <br><input id="submit" type="submit" value="Add Question!"><!-- Store new quiz in database -->
          </div>
