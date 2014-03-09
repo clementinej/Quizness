@@ -1,21 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="model.*" %>
+<%@page import="model.*, java.util.*" %>
 <head>
    <link rel="stylesheet" type="text/css" href="css/style_login.css" />
 </head>
-<%--
-	String forwardTo = "../CreateServlet";
-   	Integer comingFromServlet = (Integer) session.getAttribute("coming from servlet");
-	if(comingFromServlet > 0) {
-		forwardTo = "CreateServlet";
-		comingFromServlet--;
-	}
-	session.setAttribute("coming from servlet", comingFromServlet);
-	//User currUser = (User) session.getAttribute("current user");
-   //int currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
-   //Quiz currQuiz = Quiz.getQuiz(currQuizID);
-   //if(!currUser.isAdmin() && currQuiz.getUserID() != currUser.getUserID()) return;
-   --%>
 <body>
    <div class="container">
    <form method="post" action="CreateServlet" id="signup">
@@ -51,7 +38,7 @@
             <input type="checkbox" name="immediate_correction" value="1"><label class="terms">Display answers immediately?</label>
          </div>
          <br>
-         <table name="hidden-question-types">
+         <table>
             <tr>
                <th>
                   <input type="hidden" name="quiz_id" value=""/>
@@ -73,10 +60,41 @@
          <br><input type="button" id="add-question" value="Add A Question"></input> <!-- Forward to type-specific creation template -->
          <br><input id="submit" type="submit" value="Create Quiz!"><!-- Store new quiz in database -->
          <!-- Question section -->
+         <h1>Questions</h1>
          <%
-            //get List<Questions>
-            // for q: list
-            //print question text
+         ArrayList<Question> questionList = (ArrayList<Question>) session.getAttribute("question list");	
+         if(questionList == null) {
+         	%>
+         	<h1>You haven't written any questions yet!</h1>
+         	<%
+         } else {
+         	for(int i = 0; i < questionList.size(); i++) {
+         		Question q = questionList.get(i);
+         		String text = q.getQuestion();
+         		ArrayList<Set<String>> solution = q.getAnswer();
+         %>
+         	<p><%=i + 1%>.</p>
+         	<p>Question Text: "<%=text%>"</p>
+         	<p>
+         	<% 
+         	//for each solution
+         	for(int solIndex = 0; solIndex < solution.size(); solIndex++) {
+         	%>
+         	Solution: 
+         	<%
+         		Set<String> oneSolution = solution.get(solIndex);
+         		//for each synonym of each solution
+         		Iterator<String> iter = oneSolution.iterator();
+         		while(iter.hasNext()) {
+         			String s = iter.next();
+         			%>
+         			"<%=s%>"<%if(iter.hasNext())%>,
+         			<%
+         		}
+         	}
+         }
+         }
+         %>
             %>
    </form>
    </div>

@@ -30,9 +30,45 @@
 		font-weight:bold;
 		font-size:100%;
 		}
+		
+		#leftcontent {
+		position: absolute;
+		left:10px;
+		top:50px;
+		width:200px;
+		}
+		#centercontent {
+		margin-left: 199px;
+		margin-right:199px;
+		margin-left: 201px;
+		margin-right:201px;
+		} 
+		
+		html>body #centercontent {
+		margin-left: 20px;
+		margin-right:0px;
+		}
+		#rightcontent {
+		position: absolute;
+		right:10px;
+		top:50px;
+		width:200px;
+		}
+		#innerleft {
+		float:left;
+		left:20px;
+		top:50px;
+		width:400px;
+		}
+		#innerright {
+		float:right;
+		right:10px;
+		top:50px;
+		width:400px;
+		}
       </style>
    </head>
-   <body><
+   <body>
       <%
          User u = (User) session.getAttribute("current user");
          int userID = u.getUserID();
@@ -93,22 +129,22 @@
         <!--top bar -->
       <div class="top">
          <span class="header-link"><a href="create-quiz.jsp">Create Quiz</a></span>
-         <span class="header-link"><a href="social/compose-mail.html">Compose </a></span>
+         <span class="header-link"><a href="social/compose-mail.jsp">Compose </a></span>
          <span class="header-link"><a href="social/profile.jsp">Profile</a></span>
          <span class="header-link"><a href="site/admin.jsp">Admin</a></span>
          <span class="header-link"><a href="social/inbox.jsp">Inbox</a></span>
+          <span class="header-link"><a href="social/search.jsp">Search</a></span>
          <span class="right">Welcome to Quizness, <%=name %></span>
       </div>
       <div class="container_main">
          <section class="main">
-            <h2 class="cs-text" id="cs-text">Quizness</h2>
+            <h4 class="cs-text" id="cs-text">Quizness</h4>
          </section>
-         <div style="float:left">
-		<div style="float:right">
-            
-            <h1>Popular Quizzes</h1>
+         	<div id="leftcontent">
+         	
 			<%
-  			 if(numPopularQuizzes != 0) {
+  			 if(numPopularQuizzes != 0) {%>
+  				<h2>Popular Quizzes</h2><% 
   				if(numPopularQuizzes > 5) {
    					for(int i = 0; i < 5; i++) {
    						Quiz topQuiz = Quiz.getQuiz(topQuizzes.get(i));
@@ -128,9 +164,10 @@
    				} // end else
   			 } // end if
    				%>
-   			<h1>New Quizzes</h1>
+   			
    			<%
-   			if(numNewQuizzes != 0) {
+   			if(numNewQuizzes != 0) {%>
+   				<h2>New Quizzes</h2><%
    				if(numNewQuizzes > 5) {
    					for(int i = 0; i < 5; i++) {
    						Quiz newQuiz = Quiz.getQuiz(newQuizzes.get(i));
@@ -150,15 +187,24 @@
    				} // end else 
    			}  // end if
    			%>
-   			 			   			
-   			<h1>Quizzes You've Taken Recently</h1>
+   			</div>
+   				
+   			<div id="centercontent">
+   			<div id="innerleft"> 
+   			<h1>Your Activity</h1>			
+	   		<% if(numUserTakenQuizzes == 0 && numRecentQuizzes == 0) {
+	   			%>	
+	   		<h4>You've had no activity lately. <a href="social/compose-mail.html">Get in the game!</a></h4>
+	   		<%} %>
 			<%
-   			if(numUserTakenQuizzes != 0) {
+   			if(numUserTakenQuizzes != 0) {%>
+   				<h2>Quizzes You've Taken</h2><%
    				if(numUserTakenQuizzes > 5) {
    					for(int i = 0; i < 5; i++) {
    						int quizID = userRecentQuizzesTaken.get(i);
    						Quiz takenQuiz = Quiz.getQuiz(quizID);
    			%>
+   			<h2><%=takenQuiz.getTitle()%></h2>
 			<p><a href="../quiz/quiz-list.jsp?quiz-id=<%=quizID%>"><%=takenQuiz.getTitle()%></a></p>
    			<%
    					} // end for loop
@@ -173,11 +219,9 @@
    				}
    			}
    			%>
-   			
-   					
-			<h1>Quizzes You've Created Recently</h1>
 			<%
-   			if(numRecentQuizzes !=0) {
+   			if(numRecentQuizzes !=0) {%>
+   				<h2>Your Quiz Creations</h2><% 
    				if(numRecentQuizzes > 5) {
    					for(int i = 0; i < 5; i++) {
    						int quizID = userRecentQuizzes.get(i);
@@ -197,9 +241,9 @@
    				}
    			}
    			%>
-   				<h1>Recent Achievements</h1>
 			<%
-   			if(numAcheivements != 0) {
+   			if(numAcheivements != 0) {%>
+   	   			<h2>Recent Achievements</h2><% 
    				if(numAcheivements > 5) {
    					for(int i = 0; i < 5; i++) {
    						Achievement a = achievements.get(i);
@@ -217,71 +261,17 @@
    				}
    			}
    			%>
+   			</div> 
    			
-   			<h1>Messages</h1>
+   			<div id="innerleft">
+   			<h1>Friend Activity</h1>
+   			<% if(numFriendCreations == 0 && numQuizzesTakenByFriends == 0) { 
+   			%>
+   			<h4>You're friends aren't doing anything. <br><a href="social/inbox.jsp">Tell them they're whack.</a></h4>
+   			<% } %>
 			<%
-	   		if(numMessages !=0) {
-	   			if(numMessages > 1) {
-	  		 %>
-			<p>You have <%=numMessages %> new messages! <a href="../inbox/user?id=<%=userID %>">Go to your inbox.</a></p>
-			<%
-				} else {
-			%>
-			<p>You have a new message! <a href="../inbox/user?id=<%=userID %>">Go to your inbox.</a></p>	
-			<% 	
-				}
-	   		}
-			%>
-			
-			<h1>Challenges</h1>
-			<%
-	   		if(numChallenges != 0) {
-	   			if(numChallenges < 5) {
-	   				for(int i = 0; i < numChallenges; i++) {
-	   				String from = challenges.get(i).getChallenger().getUserName();
-	   				int quizID = challenges.get(i).getQuizID();
-	   				String challengeQuizTitle = Quiz.getQuiz(quizID).getTitle();
-	   		%>
-			<p><%=from %> has challenged you to take <a href=../quiz-summary?quiz-id=<%=quizID%>"><%=challengeQuizTitle %></a></p>
-			<% 
-					} // end for loop
-				} else {
-					for(int i = 0; i < 5; i++) {
-						String from = challenges.get(i).getChallenger().getUserName();
-						int quizID = challenges.get(i).getQuizID();
-						String challengeQuizTitle = Quiz.getQuiz(quizID).getTitle();
-			%>
-			<p><%=from %> has challenged you to take <a href=../quiz-summary?quiz-id=<%=quizID%>"><%=challengeQuizTitle %></a></p>
-					<% 
-					}
-				}
-			}
-			%>
-					<h1>Friend Requests</h1>
-			<%
-	   		if(numReqs != 0) {
-	   			if(numReqs < 5) {
-	   				for(int i = 0; i < numReqs; i++) {
-	   					String from = reqs.get(i).getFrom();
-	   		%>
-			<p><%=from %> has requested your friendship!</p>
-			<%
-					} // end for loop
-	   			} else {
-	   				for(int i = 0; i < 5; i++) {
-	   					String from = reqs.get(i).getFrom();
-	   		%>
-	   		<p><%=from %> has requested your friendship!</p>
-	   		<% 
-	   				} // end for loop
-	   			} // end else 
-	   		} // end if
-	   		%>
-			
-			<h1>Friend Activity</h1>
-			<h6>Recently Created by Friends</h6>
-			<%
-			if(numFriendCreations != 0) {
+			if(numFriendCreations != 0) {%>
+				<h2>Recently Created by Friends</h2><% 
 				if(numFriendCreations > 5) {
 	   				for(int i = 0; i < 5; i++) {
 	   					Quiz q = Quiz.getQuiz(recentlyCreatedByFriends.get(i));
@@ -306,9 +296,9 @@
 			} // end if
 			%>
   	
-  				<h6>Recently Taken by Friends</h6>
 			<%
-			if(numQuizzesTakenByFriends != 0) {
+			if(numQuizzesTakenByFriends != 0) {%>
+				<h2>Recently Taken by Friends</h2><% 
 				if(numQuizzesTakenByFriends > 5) {
 					for(int i = 0; i < 5; i++) {
 	   					Quiz q = Quiz.getQuiz(recentlyTakenByFriends.get(i));
@@ -332,11 +322,100 @@
 				} // end else 
 			} // end if 
 			%>
+			</div>
+   			</div>
+   			 
+   			<div id="rightcontent">
+			<%
+	   		if(numMessages !=0) {%>
+	   			<h2>Messages</h2><% 
+	   			if(numMessages > 1) {
+	  		 %>
+			<p>You have <%=numMessages %> new messages! <a href="../inbox/user?id=<%=userID %>">Go to your inbox.</a></p>
+			<%
+				} else {
+			%>
+			<p>You have a new message! <a href="../inbox/user?id=<%=userID %>">Go to your inbox.</a></p>	
+			<% 	
+				}
+	   		}
+			%>
+			
+			
+			<%
+	   		if(numChallenges != 0) {%>
+	   		<h2>Challenges</h2><%
+	   			if(numChallenges < 5) {
+	   				for(int i = 0; i < numChallenges; i++) {
+	   				String from = challenges.get(i).getChallenger().getUserName();
+	   				int quizID = challenges.get(i).getQuizID();
+	   				String challengeQuizTitle = Quiz.getQuiz(quizID).getTitle();
+	   		%>
+			<p><%=from %> has challenged you to take <a href=../quiz-summary?quiz-id=<%=quizID%>"><%=challengeQuizTitle %></a></p>
+			<% 
+					} // end for loop
+				} else {
+					for(int i = 0; i < 5; i++) {
+						String from = challenges.get(i).getChallenger().getUserName();
+						int quizID = challenges.get(i).getQuizID();
+						String challengeQuizTitle = Quiz.getQuiz(quizID).getTitle();
+			%>
+			<p><%=from %> has challenged you to take <a href=../quiz-summary?quiz-id=<%=quizID%>"><%=challengeQuizTitle %></a></p>
+					<% 
+					}
+				}
+			}
+			%>
+			<%
+	   		if(numReqs != 0) {%>
+	   			<h2>Friend Requests</h2><%	
+	   			if(numReqs < 5) {
+	   				for(int i = 0; i < numReqs; i++) {
+	   					String from = reqs.get(i).getFrom();
+	   		%>
+			<p><%=from %> has requested your friendship!</p>
+			<%
+					} // end for loop
+	   			} else {
+	   				for(int i = 0; i < 5; i++) {
+	   					String from = reqs.get(i).getFrom();
+	   		%>
+	   		<p><%=from %> has requested your friendship!</p>
+	   		<% 
+	   				} // end for loop
+	   			} // end else 
+	   		} // end if
+	   		%>
 	        </div>
-         </div>
-      </div>
+	        
+	        <div class="innerright">
+	        <h1> Test Text</h1>
+	        <%--
+	        int numAnnouncements = 0;
+	        ArrayList<Announcement> announcements = Announcements.getAllAnnouncements();
+	        numAnnouncements = announcements.size();
+	        if(numAnnouncements != 0) {
+	        	if(numAnnouncements > 5) {
+	        		for(int i = 0; i < 5; i++) {
+	        			Announcement a = announcements.get(i);
+	        			--%>
+	        			<p><%--=a.getBody() --%></p>
+	        			<%--
+	        		}
+	        	} else {
+	        		for(int i = 0; i < numAnnouncements; i++) {
+	        			Announcement a = announcements.get(i);
+						--%>
+						<p><%--=a.getBody() --%></p>
+						<%-- 
+	        		}
+	        	}
+	        }
+	        --%>
+	        </div>
+	   </div>
       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-      <script type="text/javascript" src="../js/jquery.lettering.js"></script>
+      <script type="text/javascript" src="js/jquery.lettering.js"></script>
       <script>
          $(document).ready(function() {
          	$("#cs-text").lettering().children('span').wrap('<span />');

@@ -43,12 +43,13 @@ public class Search {
 
 		Connection con = ServerConnection.getConnection();
 		ArrayList<User> searchedUsers = new ArrayList<User>();
-		PreparedStatement ps = con.prepareStatement("SELECT id FROM user WHERE userName LIKE ?");
+		PreparedStatement ps = con.prepareStatement("SELECT id FROM users WHERE username LIKE ?");
 		ps.setString(1, "%" + queryString + "%");
 		ResultSet rs = ps.executeQuery();
 		rs.beforeFirst();
 		while(rs.next()){
-			User user = ServerConnection.getUser(rs.getInt(1));
+			int id = rs.getInt(1);
+			User user = ServerConnection.getUser(id);
 			searchedUsers.add(user);
 		}
 		return searchedUsers;

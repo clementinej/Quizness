@@ -315,6 +315,18 @@ public class ServerConnection {
 		ps.executeUpdate();
 	}
 	
+	// Update a inbox
+	public static void updateInbox(Inbox inbox) throws Exception{
+		String query = "UPDATE inboxes SET inbox = ?, numRequests = ?, numMessages = ?, numChallenges = ?"
+				+ " WHERE id = " + inbox.getID(); 
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.setBytes(1, convertToByteArray(inbox));
+		ps.setInt(2, inbox.getNumFriendReqs());
+		ps.setInt(3,  inbox.getNumNotes());
+		ps.setInt(4, inbox.getNumChallenges());
+		ps.executeUpdate();
+	}
+	
 	//Close the connection
 	public static void close() throws SQLException{
 		if(!con.isClosed()){
@@ -323,7 +335,7 @@ public class ServerConnection {
 	}
 	
 	// Return the auto generated key
-	private static int getGeneratedKey(PreparedStatement ps) throws Exception{
+	public static int getGeneratedKey(PreparedStatement ps) throws Exception{
 		ResultSet keySet  = ps.getGeneratedKeys();		
 		if(keySet.next()) {
 			return keySet.getInt(1); 

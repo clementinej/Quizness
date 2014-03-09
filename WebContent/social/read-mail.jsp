@@ -11,27 +11,25 @@
 
 </head>
 <body>
-<%--
-int messageID = session.getAttribute("message id");
+<%
+int messageID = Integer.parseInt(request.getParameter("msg_id"));
 Message m = Message.getMessage(messageID);
-String from = m.getFromID();
+int fromID = m.getFromID();
 String subject = m.getSubject();
 String body = m.getBody();
 Date sent = m.getSentAt();
 java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat();
---%>
+%>
 
 <%
-String from = "Taylor";
-String subject = "Party";
-String body = "Come party";
+String from = "Dummy user";
 %>
 <div class="container">
    <form id="signup">
       <div class="header">
          <h2><%=subject%></h2>
          <h4>From <%=from %></h4>
-         <p>Sent at <%--=formatter.format(sent) --%></p>
+         <p>Sent at <%=formatter.format(sent) %></p>
       </div>
       <div class="sep"></div>
       <div class="inputs">

@@ -15,16 +15,22 @@
    // MODEL IMPORT AT THE TOP OF THE PAGE. THAT'S THE BIT THAT I CAN'T COMPILE
    
 
-//   User u = (User)session.getAttribute("current user");
-   model.User u = new model.User(false, "Gene Oetomo", "gene", "goetomo@stanford.edu", "my name is gene", "stanford");
-   String name = u.getUserName();
-   int numQuizzesTaken = u.numQuizzesTaken();
-   int numFriends = u.getFriends().size();
-   String aboutMe = u.getAboutMe(); // Allow user to add this as easy extension?
-   String location = u.getLocation();
-	ArrayList<Achievement> achievements = u.getAchievements();
-   ArrayList<User> friends = u.getFriends();
-   String highScore = u.getHighScore();
+   User currUser = (User) session.getAttribute("current user");
+   int currUserID = currUser.getUserID();
+   
+   int userID = Integer.parseInt(request.getParameter("id"));
+   User user = (User) User.getUser(userID);
+   
+   //model.User u = new model.User(false, "Gene Oetomo", "gene", "goetomo@stanford.edu", "my name is gene", "stanford");
+   String name = user.getUserName();
+   Inbox inbox = Inbox.getInbox(userID);
+   int numQuizzesTaken = user.numQuizzesTaken();
+   int numFriends = user.getFriends().size();
+   String aboutMe = user.getAboutMe(); // Allow user to add this as easy extension?
+   String location = user.getLocation();
+   ArrayList<Achievement> achievements = user.getAchievements();
+   ArrayList<User> friends = user.getFriends();
+   String highScore = user.getHighScore();
    
    // COMMENT OUT THESE PLACEHOLDERS. ALL THE FIELDS SHOULD BY DYNAMICALLY 
    // POPULATED BY THE DATA ABOVE
@@ -91,7 +97,7 @@
                   <div class="inputs"></div>
                </div>
                <div class="boxy">
-                  <p>Your friends - 106 total</p>
+                  <p>Your friends - <%=numFriends%> total</p>
                   <div class="friendslist clearfix">
                   <% for(User f: friends) { %>
                      <div class="friend">
@@ -107,37 +113,75 @@
             If friend requests, display them.
             If not your profile, display friend request button. -->
          <%
-            boolean myProfile = true;
-            boolean pendingRequests = true;
-            boolean alreadyFriends = true;
+         	// Check if the current user is session user
+            boolean myProfile = false;
+         
+         	// Check if the user has any pending requests
+            boolean pendingRequests = false;
+            
+         	// Check if the session is already friends with the current user
+            boolean alreadyFriends = false;
+         	
+         	// Check if there is a pending request from the session to the the current user
+            boolean requestSent = false; 
+            
+            if(userID == currUserID) myProfile = true; 
+            if(inbox.getNumFriendReqs() > 0) pendingRequests = true; 
+            
+            // Could be buggy
+            if(myProfile == false && currUser.getFriends().contains(user)) alreadyFriends = true; 
+            
+            if(myProfile == false && inbox.hasPendingRequestFrom(currUserID)) requestSent = true;  
             %>
          <section id="left">
             <div class="gcontent">
-               <% if(myProfile==false) {
-                  if(pendingRequests==false) {
-                  %>
+               <% if(myProfile == true) {
+                  	if(pendingRequests == true) {
+                %>
                <div class="head">
                   <h1>Friend Requests</h1>
                </div>
                <div class="boxy">
                   <p>People who wanna be your friends</p>
+                  <!-- TODO: Display a List of friend requests -->
                </div>
                <%
                   }} 
-               		if(myProfile==false){
-                  	if(alreadyFriends==false) {%>
-               <div class="head">
-                  <h1>You're not friends. Wanna Be?</h1>
-               </div>
-               <div class="boxy">
-                  <input id="submit" type="submit" value="Let's Be Friends!">
-               </div>
-               <%}else if(alreadyFriends==true) {%>
+               
+               	if(myProfile == false){
+                  	if(alreadyFriends == false && requestSent == false) {%>
+               		<div class="head">
+                  		<h1>You're not friends. Wanna Be?</h1>
+               		</div>
+               		<form method="post" action = "../FriendRequestServlet">
+               			<div class="boxy">
+               				<input type ="hidden" name="toID" value="<%=userID%>">
+                  			<input id="submit" type="submit" value="Let's Be Friends!">
+               			</div>
+               		</form>
+               <%} else if(alreadyFriends == true) {%>
             	     <div class="head">
-                  <h1>You and <%=name%> are friends!</h1>
-               </div>
- 
-                  <%}} %>
+                  		<h1>You and <%=name%> are friends!</h1>
+               		</div>
+               <%}} %>
+               <% if(myProfile == false && requestSent == true){ %>
+                	<div class = "head">
+                	<h1>You already sent an request to <%=name%>!</h1>
+                	</div>
+                <%} %>
+                <form method="post" action="../social/compose-mail.jsp">
+                    <div class ="boxy">
+               		<input type ="hidden" name="messageType" value="challenge">
+               		<input type ="hidden" name="recipient" value=<%=userID%>>
+               		<input id="submit" type="submit" value="Send a Challenge!">
+               		</div>
+               	</form>
+               	<form method="post" action="../social/compose-mail.jsp">
+               	<div class ="boxy">
+               		<input type ="hidden" name="messageType" value="note">
+     				<input id="submit" type="submit" value="Send a Note!">
+     			</div>
+     			</form>
             </div>
          </section>
       </div>

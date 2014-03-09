@@ -27,6 +27,10 @@ public class Inbox implements Serializable {
 		this.inboxID = inboxID;
 	}
 	
+	public int getID(){
+		return this.inboxID; 
+	}
+	
 	// Get the id of the user
 	public int getUserID(){
 		return this.userID;
@@ -77,6 +81,15 @@ public class Inbox implements Serializable {
 	// Return the number of challenges
 	public int getNumChallenges(){
 		return challenges.size(); 
+	}
+	
+	public boolean hasPendingRequestFrom(int fromID) throws Exception{
+		int num = requests.size(); 
+		for(int i = 0; i < num; i++){
+			FriendRequest request = (FriendRequest) Message.getMessage(requests.get(i));
+			if(request.fromID == fromID) return true;
+		}
+		return false;
 	}
 	
 	// Return the inbox for this specific user
