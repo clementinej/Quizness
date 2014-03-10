@@ -118,7 +118,7 @@
 	   	} else if(value == "multiple-choice-multiple-answer") {
 	   		window.location = "/Quizness/quiz/questionCreation/multiple-choice.jsp?question-type=6&intent=add question";
 	   	} else {
-	   		window.location = "/Quizness/quiz/questionCreation/" + value + ".jsp";
+	   		window.location = "/Quizness/quiz/questionCreation/" + value + ".jsp?question-type=2&intent=add question";
 	   	}
 	   	});
 </script>

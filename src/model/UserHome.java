@@ -61,7 +61,6 @@ public class UserHome {
 	
 	// Execute the given query, throws exception=
 	private static ArrayList<Integer> executeQuery(String query) throws Exception{
-		//ServerConnection.open(); 
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps = con.prepareStatement(query);
 		ps.executeQuery();

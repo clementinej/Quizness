@@ -25,7 +25,7 @@ public class CreateListener implements HttpSessionListener {
 	 * When a browser is opened, a questionList is created, and
 	 */
     public void sessionCreated(HttpSessionEvent event) {
-     	System.out.println("Session Created");
+    	System.out.println("Session Created");
     	HttpSession session = event.getSession(); 
       	List<Question> questionList = new ArrayList<Question>();
       	        
@@ -48,10 +48,6 @@ public class CreateListener implements HttpSessionListener {
      */
     public void sessionDestroyed(HttpSessionEvent arg0) {
         currUser = null;
-        try {
-			ServerConnection.close();
-			System.out.println("Connection closed");
-		} catch (SQLException e) {e.printStackTrace();}
     }
 	
     private void setAutomaticAccount() {

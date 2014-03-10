@@ -235,6 +235,7 @@ public class Quiz implements Serializable{
 	public double calculateScore(ArrayList<String[]> responses){
 		double score = 0;
 		for (int i = 0; i < questions.size(); i++){
+			System.out.println(i +"< questions.size():"+questions.size() + "and <" +responses.size());
 			score += questions.get(i).getPoints(responses.get(i));
 		}
 		return score;
