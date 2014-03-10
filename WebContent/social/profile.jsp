@@ -107,7 +107,7 @@
                   <div class="inputs"></div>
                </div>
                <div class="boxy">
-                  <p>Your friends - <%=numFriends%> total</p>
+                  <p>Friends - <%=numFriends%> total</p>
                   <div class="friendslist clearfix">
                   <% for(User f: friends) { %>
                      <div class="friend">
