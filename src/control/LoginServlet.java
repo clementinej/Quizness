@@ -62,7 +62,6 @@ public class LoginServlet extends HttpServlet {
 	 */
 	private User setCurrentUser(User newUser, String email) {
 		System.out.println("In setCurrentUser");
-		ServerConnection.open();
 		try {
 			newUser = ServerConnection.getUser(email);
 			System.out.println("username = " + newUser.getUserName());

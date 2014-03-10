@@ -39,7 +39,6 @@ public class Search {
 	}
 	
 	public static ArrayList<User> searchUsers(String queryString) throws Exception{
-		ServerConnection.open();
 
 		Connection con = ServerConnection.getConnection();
 		ArrayList<User> searchedUsers = new ArrayList<User>();

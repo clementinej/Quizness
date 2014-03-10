@@ -2,7 +2,7 @@
 <%@page import="model.*" %>
 <%@page import="java.util.*" %>
 <%@page import="java.io.*" %>
-<%@ page errorPage="../site/404.jsp" %>
+<%--<%@ page errorPage="../site/404.jsp" --%>
 <head>
    <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
 </head>
@@ -12,26 +12,15 @@
 
 <% boolean debug = false;%>
 
-<body>
-   <div class="container">
-   <form method="post" action="results.jsp" id="signup">
-      <div class="header">
-         <h3>Let's Get Started!</h3>
-         <p>Best of luck</p>
-      </div>
-      <div class="sep"></div>
-      <div class="inputs">
 
 <%
-      
     User currUser = (User) session.getAttribute("current user");
   	int currQuizID = 79;//debugging default
     if(!debug) {
    	  currQuizID = Integer.parseInt(request.getParameter("quiz-id"));
     }
 	Quiz currQuiz = getCurrQuiz(currQuizID);
-  	boolean multiPage = currQuiz.hasMultiplePages();
- 	 	
+  	boolean multiPage = currQuiz.hasMultiplePages(); 	
  	 	
  	//--------------SINGLE PAGE DISPLAY SECTION----------------//
  	 	
@@ -44,6 +33,15 @@
  		QuizTry qTry = new QuizTry(currUser.getUserID(), currQuizID, currQuiz.hasPracticeMode(), currQuiz.hasRandomMode());
   		int tryID = ServerConnection.addQuizTry(qTry);
 		%>
+	<body>
+  	  <div class="container">
+  		 <form method="post" action="results.jsp" id="signup">
+         <div class="header">
+         	<h3>Let's Get Started!</h3>
+        	<p>Best of luck</p>
+         </div>
+    	 <div class="sep"></div>
+     	 <div class="inputs">
 		<h4><%=currQuiz.getTitle()%> </h4>
 		<p><%=currQuiz.getDescription()%></p>
    	    <input type="hidden" name="quiz try id" value="<%=qTry.getTryID()%>"/>
@@ -95,43 +93,61 @@
 				<%break;
 			}
 		}	
-		qTry.setToDone();
-	  	ServerConnection.updateQuizTry(qTry);%> 
-	 <input type="submit" name="submit" value="Grade Me!"/><%
-	  
-		
+		qTry.setToDone();%> 
+	 <input type="submit" name="submit" value="Grade Me!"/>
+	 </div>
+	 </form>
+	  <%
 	  	
 	  	
 		  //----------------------MULTPAGE SECTION---------------------------//
-      } else {
-    	System.out.println("Multipage");
-    	QuizTry qTry = null;
+      } else {%>
+      <div class="container">
+  	     <form method="post" action="show-quiz.jsp" id="signup">
+         <div class="header">
+         	<h3>Let's Get Started!</h3>
+        	<p>Best of luck</p>
+          </div>
+    	 <div class="sep"></div>
+     	 <div class="inputs">
+	    <h4><%=currQuiz.getTitle()%> </h4>
+		<p><%=currQuiz.getDescription()%></p><%
+		System.out.println("Multipage");
+		
+		QuizTry qTry = null;
     	int quizTryID = -1;
     	if(request.getParameter("quiz try id") != null) {
   			quizTryID = Integer.parseInt(request.getParameter("quiz try id"));
 		 	qTry = ServerConnection.getQuizTry(quizTryID);
     	} else {
      		qTry = new QuizTry(currUser.getUserID(), currQuizID, currQuiz.hasPracticeMode(), currQuiz.hasRandomMode());
-      		int tryID = ServerConnection.addQuizTry(qTry);
+      		quizTryID = ServerConnection.addQuizTry(qTry);
+    	}
+    	
+    	if(request.getParameter("answer") != null) {
+  			String previousAnswer = request.getParameter("answer");
+		 	qTry.addOneAnwerResponse(previousAnswer);
     	}
     	
   		//if quiz is done, go to results
    		if(!qTry.hasNext()) {
-   			qTry.setToDone();
-   			RequestDispatcher dispatch = request.getRequestDispatcher("results.jsp"); 
+   			System.out.println("done");
+   			qTry.setToDone();%>
+   			<input type="hidden" name="multi-page" value="signal"/>
+   			<%RequestDispatcher dispatch = request.getRequestDispatcher("results.jsp"); 
    			dispatch.forward(request, response);
    			return;
    		}
-    	 		
-  		ArrayList<Question> questions = currQuiz.getQuestions();   	 		
-		int qIndex = qTry.getQuestionNum();
-   	 	Question q = questions.get(qIndex);
-   	 				
+    	
+  	
+		int qIndex = qTry.getQuestionNum();   	 	
+   	 	Question q = qTry.getNextQuestion();
+   	 	
 		int nextQuestionType = q.getQuestionType();
 		switch(q.getQuestionType()) {
 		case 1: %>
 			<%=q.getQuestion()%></p>
-			<p><input type="text" name="answer<%=qIndex%>" /></p>
+			<p><input type="text" name="answer" /></p>
 			<input type="submit" name="submit" value="next"/>
 			<%--<jsp:include page="questionGeneration/show-question-answer.jsp" />--%><%
 			break;
@@ -140,7 +156,7 @@
 			int lastBlankIndex = q.getQuestion().lastIndexOf('_');
 			String beforeBlank = q.getQuestion().substring(0, blankIndex);
 			String afterBlank = q.getQuestion().substring(lastBlankIndex + 1);%>
-			<%=beforeBlank%><input type="text" name="answer<%=qIndex%>"/><%=afterBlank%></p>
+			<%=beforeBlank%><input type="text" name="answer"/><%=afterBlank%></p>
 			<input type="submit" name="submit" value="next"/>
 			<%--<jsp:include page="questionGeneration/show-fill-in-blanks.jsp" />--%><%
 			break;
@@ -150,32 +166,30 @@
 			ArrayList<String> options = new ArrayList<String>();
 			options = getOptions(q);			
 			%>
-			<%=q.getQuestion()%></p>
-				<%
-			for(String option : options) {
-				%>
+			<%=q.getQuestion()%></p><%
+			for(String option : options) {%>
 				<div class="checkboxy">
-	        	<input type="checkbox" name="answer<%=qIndex%>" value="<%=option %>"> <%=option %></div>
-       			<%
-			}
-			%>
+	        	<input type="checkbox" name="answer" value="<%=option %>"> <%=option %></div>
+       		<%}%>
 			<input type="submit" name="submit" value="next"/>
 			<%--<jsp:include page="questionGeneration/show-multiple-choice.jsp" />--%><%
 			break;
 		case 4:
 			%>
 			<img src="<%=q.getQuestion()%>" height="300" width="300">
-			<p><input type="text" name="answer<%=qIndex%>" /></p>
+			<p><input type="text" name="answer" /></p>
 			<input type="submit" name="submit" value="next"/>
 			<%--<jsp:include page="questionGeneration/show-picture-response.jsp" />--%><%
 			break;
 		}%>
-	   	<input type="hidden" name="quiz try id" value=<%=quizTryID%>/>	
-     <%}  	 	
- 	%>
+	   	<input type="hidden" name="quiz try id" value="<%=quizTryID%>"/>
+	   	<input type="hidden" name="quiz-id" value="<%=currQuizID%>"/>	
+     <%}%>
+ 	
+ 	</div>
+    </form>
       </div>
-      </form>
-   </div>
+    
 </body>
 
 

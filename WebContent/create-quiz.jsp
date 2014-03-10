@@ -61,12 +61,13 @@
          <br><input type="button" id="add-question" value="Add A Question"></input> <!-- Forward to type-specific creation template -->
          <br><input id="submit" type="submit" value="Create Quiz!"><!-- Store new quiz in database -->
          <!-- Question section -->
-         <h1>Questions</h1>
+         <div style="margin-top:20px;">
+         <h3>Questions</h3>
          <%
          ArrayList<Question> questionList = (ArrayList<Question>) session.getAttribute("question list");	
-         if(questionList == null) {
+         if(questionList.size() == 0) {
          	%>
-         	<h1>You haven't written any questions yet!</h1>
+         	<label class="terms">You haven't written any questions yet!</label>
          	<%
          } else {
          	for(int i = 0; i < questionList.size(); i++) {
@@ -74,9 +75,7 @@
          		String text = q.getQuestion();
          		ArrayList<Set<String>> solution = q.getAnswer();
          %>
-         	<p><%=i + 1%>.</p>
-         	<p>Question Text: "<%=text%>"</p>
-         	<p>
+         	<label class="terms"><%=i + 1%>. <%=text%>"</label>
          	<% 
          	//for each solution
          	for(int solIndex = 0; solIndex < solution.size(); solIndex++) {
@@ -94,9 +93,9 @@
          		}
          	}
          }
-         }
-         %>
-            
+      }
+     %>
+    </div>
    </form>
    </div>
 </body>
@@ -118,7 +117,7 @@
 	   	} else if(value == "multiple-choice-multiple-answer") {
 	   		window.location = "/Quizness/quiz/questionCreation/multiple-choice.jsp?question-type=6&intent=add question";
 	   	} else {
-	   		window.location = "/Quizness/quiz/questionCreation/" + value + ".jsp";
+	   		window.location = "/Quizness/quiz/questionCreation/" + value + ".jsp?question-type=2&intent=add question";
 	   	}
 	   	});
 </script>

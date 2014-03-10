@@ -206,6 +206,18 @@ public class ServerConnection {
 		return quizTryID;
 	}
 	
+	// Updates a quizTry from the db.  Super cool Lloyd wrote this one.
+	public static void updateQuizTry(QuizTry quizTry) throws Exception {
+		int quizTryID = quizTry.getTryID();	
+		String query = "UPDATE quizTries SET quizTry = ? WHERE id = " + quizTryID; 
+		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+		ps.setBytes(1, convertToByteArray(quizTry));
+//		ps.setDouble(2, quizTry.getScore());
+//		ps.setDouble(3, quizTry.getTime());
+		//score, timeSpent, dateCreated
+		ps.executeUpdate();
+	}
+	
 	
 	// Add a message to the database and return the auto generated key 
 	public static int addMessage(Message message) throws Exception {
@@ -288,21 +300,16 @@ public class ServerConnection {
 	
 	//Tony: TODO add title and description column in the database
 	
-	// Updates a quizTry from the db.  Super cool Lloyd wrote this one.
-	public static void updateQuizTry(QuizTry quizTry) throws Exception {
-		int quizTryID = quizTry.getTryID();	
-		String query = "UPDATE quizTries SET quizTry = ? WHERE id = " + quizTryID; 
-		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-		ps.setBytes(1, convertToByteArray(quizTry));
-		ps.executeUpdate();
-	}
+
 	
 	// Updates a quizTry from the db.  Super cool Lloyd wrote this one.
 	public static void updateQuiz(Quiz quiz) throws Exception {
 		int quizID = quiz.getQuizID();	
-		String query = "UPDATE quizzes SET quiz = ? WHERE id = " + quizID; 
+		String query = "UPDATE quizzes SET quiz = ? title = ? description = ? WHERE id = " + quizID; 
 		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		ps.setBytes(1, convertToByteArray(quiz));
+		ps.setString(2, quiz.getTitle());
+		ps.setString(3, quiz.getDescription());
 		ps.executeUpdate();
 	}
 	

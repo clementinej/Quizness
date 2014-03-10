@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.*"%>
 <%@page import="java.util.*"%>
-<%@ page errorPage="../site/404.jsp" %>
+<%-- <%@ page errorPage="../site/404.jsp" %>--%>
 <html lang="en">
    <head>
       <meta charset="UTF-8" />
@@ -25,7 +25,8 @@
     		  
       //Only let users see their own quiz results
       if(quizTry.getUserID() != user.getUserID() && !user.isAdmin()) {
-    	  System.out.println("Only let users see their own quiz results");
+    	  System.out.println(quizTry.getUserID() + " != "+ user.getUserID());
+    	  System.out.println("results.jsp: Only let users see their own quiz results");
      	return;
       }
       //Only let users see completed quizes
@@ -44,22 +45,24 @@
          </div>
          <form method="post" action="/SaveResults">
             <%
-            //get answers and stick them in solutions
-            ArrayList<String[]> quizResponses = new ArrayList<String[]>();
-            Map<String, String[]> map = request.getParameterMap();
-            Iterator<String> iter = map.keySet().iterator();
-            while(iter.hasNext()) {
-            	String currentQuestion = iter.next();
-            	if(!currentQuestion.contains("answer")) {}
-            	else {
-            		String [] responseForOneQuestion = map.get(currentQuestion);
-            		System.out.println("Responses:" + responseForOneQuestion[0]);
-					quizResponses.add(responseForOneQuestion);
-            	}	
+            if(request.getParameter("multi-page") == null) {
+	            //get answers and stick them in solutions
+	            ArrayList<String[]> quizResponses = new ArrayList<String[]>();
+	            Map<String, String[]> map = request.getParameterMap();
+	            Iterator<String> iter = map.keySet().iterator();
+	            while(iter.hasNext()) {
+	            	String currentQuestion = iter.next();
+	            	if(!currentQuestion.contains("answer")) {}
+	            	else {
+	            		String [] responseForOneQuestion = map.get(currentQuestion);
+	            		System.out.println("Responses:" + responseForOneQuestion[0]);
+						quizResponses.add(responseForOneQuestion);
+	            	}	
+	            }
+	            quizTry.gradeQuiz(quizResponses);
+            } else {
+            	quizTry.gradeQuiz();
             }
-          //  quizTry.saveProgress(quizResponses);
-            quizTry.gradeQuiz(quizResponses);
-            
             
             
             

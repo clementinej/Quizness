@@ -41,7 +41,7 @@ public class QuizTry implements Serializable {
 		this.quizID = quizID;
 		this.index = 0;
 		this.questions = quiz.getQuestions();
-		
+		this.responses = new ArrayList<String[]>();
 		if (quiz.hasRandomMode()){
 			if (random)
 				shuffleQuestions();
@@ -99,7 +99,7 @@ public class QuizTry implements Serializable {
 	
 	public void saveProgress(ArrayList<String[]> responses) throws Exception{
 		elapsedTime = System.currentTimeMillis() - startTime;
-		this.responses = responses;
+		this.responses = responses;//TODO: maybe store the responses internally
 		User user = ServerConnection.getUser(userID);
 		user.addTry(this);
 		ServerConnection.updateQuizTry(this);
@@ -108,6 +108,19 @@ public class QuizTry implements Serializable {
 	public void gradeQuiz(ArrayList<String[]>responses){
 		elapsedTime = System.currentTimeMillis() - startTime;
 		this.responses = responses;
+		score = quiz.calculateScore(responses);
+		if (score > quiz.getMaxScore()){
+			user.addAchievement(new TheGreatest());
+		}
+		inProgress = false;//TODO:what about automatic grading?
+		user.addTry(this);
+		checkTryAchievements();
+		dateTaken = new Date();
+	}
+
+	//for multipage where responses are stored in this object
+	public void gradeQuiz() {
+		elapsedTime = System.currentTimeMillis() - startTime;
 		score = quiz.calculateScore(responses);
 		if (score > quiz.getMaxScore()){
 			user.addAchievement(new TheGreatest());
@@ -127,9 +140,9 @@ public class QuizTry implements Serializable {
 		return inProgress;
 	}
 	
-	public void setToDone() throws SQLException {
+	public void setToDone() throws Exception {
 		inProgress = false;
-		ServerConnection.open();
+	  	ServerConnection.updateQuizTry(this);
 //		Connection con = ServerConnection.getConnection();
 //		Statement stmt = con.createStatement();
 //		stmt.executeQuery("USE " + MYSQL_DATABASE_NAME);
@@ -165,5 +178,20 @@ public class QuizTry implements Serializable {
 	
 	public void setID(int tryID){
 		this.tryID = tryID;
+	}
+	
+	public void addOneAnwerResponse(String response) {
+		this.addResponse(stringToStringArray(response));
+	}
+	
+	public void addResponse(String response[]) {
+		for(int i = 0; i < response.length; i++)
+			System.out.println(response[i]);
+		responses.add(response);
+	}
+	
+	private String[] stringToStringArray(String response) {
+		String oneAnswerInArray[] = { response };
+		return oneAnswerInArray;
 	}
 }
