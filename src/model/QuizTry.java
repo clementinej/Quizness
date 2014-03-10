@@ -11,6 +11,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class QuizTry implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7112426021380951797L;
 	public static final String MYSQL_USERNAME = "ccs108wang8";
 	public static final String MYSQL_PASSWORD = "vohpaifa";
 	public static final String MYSQL_DATABASE_SERVER = "mysql-user.stanford.edu";
