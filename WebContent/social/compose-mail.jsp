@@ -10,7 +10,7 @@
 User user = (User) session.getAttribute("current user");
 ArrayList<User> friends = (ArrayList<User>)user.getFriends();
 String userName = user.getUserName();
-String messageType = request.getParameter("messageType");
+//String messageType = request.getParameter("messageType");
 String quizID = request.getParameter("quiz_id"); 
 String toString = request.getParameter("recipient");
 System.out.print("Sending a Message to: " + toString);
@@ -32,26 +32,20 @@ if(toString != null){
 	recipientInfo = to.getUserName() + "<" + to.getEmail() + ">";
 }
 
-if(messageType != null) {
-if(messageType.equals("challenge")) {
-
+if(quizID != null) {
 	// CHALLENGE INFO
-	if(quizID != null){
-		topScore = -1.0;
-		topScore = Double.parseDouble(request.getParameter("top_score"));
-		challengeID = Integer.parseInt(request.getParameter("quiz_id"));
-		Quiz ch = Quiz.getQuiz(challengeID);
-		String title = ch.getTitle();
-		challengeSubject = user.getUserName() + " has challenged you to take " + title + "!";
-		challenge = user.getUserName() + "'s highest score was: " + topScore + ". But we're sure you can do better." + 
-			"Show " + userName + " that you mean Quizness by beating their score.";
-	}
+	topScore = -1.0;
+	topScore = Double.parseDouble(request.getParameter("top_score"));
+	challengeID = Integer.parseInt(request.getParameter("quiz_id"));
+	Quiz ch = Quiz.getQuiz(challengeID);
+	String title = ch.getTitle();
+	challengeSubject = user.getUserName() + " has challenged you to take " + title + "!";
+	challenge = user.getUserName() + "'s highest score was: " + topScore + ". But we're sure you can do better." + 
+		"Show " + userName + " that you mean Quizness by beating their score.";
 }
-}
+
 %>
-
 <body>
-
 	<div class="container">
 	<form id="signup" method="post" action="../MessageServlet">
 	<% if (challengeID != -1) { %>
@@ -65,7 +59,7 @@ if(messageType.equals("challenge")) {
 			<tr>
 				<th align="left" width="10%">To </th>
 				<td align="left">
-				<% if (toID == -1) { %>	
+				<% if(toID == -1) { %>	
 
 					<input id="email" name="email" type="name" style="width:300px" readonly/>
 					<input id="id" name = "id" type="hidden" value=""/>

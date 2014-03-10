@@ -84,17 +84,19 @@ public class Quiz implements Serializable{
 	}
 	
 	// Remove a question from the quiz
-	public void removeQuestion(int userID, Question question){
+	public void removeQuestion(int userID, Question question) throws Exception{
 		if(userID == creatorID){
 			questions.remove(question);
 		}
+		ServerConnection.updateQuiz(this);
 	}
 	
 	// Remove all of the questions from the quiz
-	public void clearQuestions(int userID){
+	public void clearQuestions(int userID) throws Exception{
 		if(userID == creatorID){
 			questions.clear();
 		}
+		ServerConnection.updateQuiz(this);
 	}
 	
 	// Return the ID of the quiz
@@ -152,7 +154,7 @@ public class Quiz implements Serializable{
 		return numOfTimesPlayed; 
 	}
 	
-	// Set the quizID
+	// This is only called with the quiz is inserted into the database for the first time
 	public void setID(int quizID){
 		this.quizID = quizID; 
 	}
@@ -169,50 +171,55 @@ public class Quiz implements Serializable{
 	}
 	
 	// Set the maximum score achievable on this quiz
-	public void setMaxScore(int maxScore){
+	public void setMaxScore(int maxScore) throws Exception{
 		this.maxScore = maxScore; 
+		ServerConnection.updateQuiz(this);
 	}
 	
 	// Set if the practice mode is available
-	public void setPracticeMode(int userID, boolean hasPracticeMode){
+	public void setPracticeMode(int userID, boolean hasPracticeMode) throws Exception{
 		if(userID == creatorID){	
 			this.hasPracticeMode = hasPracticeMode;
 		}
+		ServerConnection.updateQuiz(this);
 	}
 	
 	// Set if the timed mode is available	
-	public void setTimedMode(int userID, boolean hasTimedMode){
+	public void setTimedMode(int userID, boolean hasTimedMode) throws Exception{
 		if(userID == creatorID){	
 			this.hasTimedMode = hasTimedMode;
 		}
+		ServerConnection.updateQuiz(this);
 	}
 	
 	// Set if the random mode is available
-	public void setRandom(int userID, boolean hasRandomMode){
+	public void setRandom(int userID, boolean hasRandomMode) throws Exception{
 		if(userID == creatorID){
 			this.hasRandomMode = hasRandomMode;
 		}
+		ServerConnection.updateQuiz(this);
 	}
 	
 	// Set if the multiple page mode is available
-	public void setMultiplePages(int userID, boolean multiplePages){
+	public void setMultiplePages(int userID, boolean multiplePages) throws Exception{
 		if(userID == creatorID){
 			this.multiplePages = multiplePages;
 		}
+		ServerConnection.updateQuiz(this);
 	}
 	
 	// Set if the immediate correction mode is available
-	public void setImmediateCorrection(int userID, boolean immediateCorrection){
+	public void setImmediateCorrection(int userID, boolean immediateCorrection) throws Exception{
 		if(userID == creatorID){
 			this.immediateCorrection = immediateCorrection;
 		}
+		ServerConnection.updateQuiz(this);
 	}
 	
 	// Set the description of the quiz
 	public void setDescription(String description) throws Exception{
 		this.description = description;
 		ServerConnection.updateQuiz(this);
-		
 	}
 	
 	// Increment the number of times that this quiz was played

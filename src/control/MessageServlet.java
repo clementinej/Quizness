@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import model.Challenge;
 import model.Inbox;
+import model.Message;
 import model.Note;
 import model.ServerConnection;
 import model.User;
@@ -61,7 +62,7 @@ public class MessageServlet extends HttpServlet {
 			if(challengeRequest != null){
 				int quizID = Integer.parseInt(request.getParameter("quiz_id"));
 				Challenge challenge = new Challenge(fromID, toID, quizID, subject, body); 
-				int messageID = ServerConnection.addMessage(challenge);
+				int messageID = Message.addMessage(challenge);
 				inbox.addChallenge(messageID);
 			} else {
 				Note note = new Note(fromID, toID, subject, body);
