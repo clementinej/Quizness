@@ -3,6 +3,7 @@
 
 <%
 User currentUser = (User) session.getAttribute("current user");
+System.out.println(currentUser.getUserName());
 java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat();
 int numQuizzes = Site.getTotalNumberOfQuizzes();
 int numUsers = Site.getTotalNumberOfUsers();
