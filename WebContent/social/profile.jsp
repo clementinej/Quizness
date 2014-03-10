@@ -191,7 +191,7 @@
      			<%} %>
      			
      			<% if(myProfile == false && currUser.isAdmin()){ %>
-               	<form method="post" action="delete user servlet">
+               	<form method="post" action="../DeleteUserServlet">
                	<div class ="boxy">
                		<input type ="hidden" name="userID" value=<%=userID%>>
      				<input id="submit" type="submit" value="Delete this user">
