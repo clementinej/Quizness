@@ -168,7 +168,6 @@ public class User implements Serializable {
  */
 	
 	public static User getUser(int userID) throws Exception{
-		ServerConnection.open();
 		return ServerConnection.getUser(userID);
 	}
 
@@ -212,7 +211,6 @@ public class User implements Serializable {
 	
 	
 	public static boolean nameIsAvailable(String userName) throws SQLException{
-		ServerConnection.open();
 		Connection con = ServerConnection.getConnection();
 		Statement stmt = con.createStatement();
 		stmt.executeQuery("USE " + MYSQL_DATABASE_NAME);
@@ -227,7 +225,6 @@ public class User implements Serializable {
 	
 	//opens the database to grab the password hash from email
 	public static boolean emailIsAvailable(String email) throws SQLException{
-		ServerConnection.open();
 		Connection con = ServerConnection.getConnection();
 		Statement stmt = con.createStatement();
 		stmt.executeQuery("USE " + MYSQL_DATABASE_NAME);

@@ -126,14 +126,16 @@ private Quiz getQuiz(HttpServletRequest request) {
 		boolean multiplePages = false;
 		boolean hasRandomMode = false;
 		boolean immediateCorrection = false;
-		String [] selected = request.getParameterValues("selected");
-		for(int i = 0; i < selected.length; i++) {
-			if(selected[i].equals("multiple_pages"))
-				multiplePages = true;
-			if(selected[i].equals("random_questions"))
-				hasRandomMode= true;
-			if(selected[i].equals("immediate_correction"))
-				immediateCorrection = true;
+		if(request.getParameterValues("selected") != null) {
+			String [] selected = request.getParameterValues("selected");
+			for(int i = 0; i < selected.length; i++) {
+				if(selected[i].equals("multiple_pages"))
+					multiplePages = true;
+				if(selected[i].equals("random_questions"))
+					hasRandomMode= true;
+				if(selected[i].equals("immediate_correction"))
+					immediateCorrection = true;
+			}
 		}
 
 		
