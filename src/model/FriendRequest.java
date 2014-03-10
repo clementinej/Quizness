@@ -8,6 +8,10 @@ import java.util.Date;
 
 public class FriendRequest extends Message implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1714232237086050805L;
 	private boolean accepted;
 	private String fromUserName;
 	private String toUserName;
@@ -33,11 +37,9 @@ public class FriendRequest extends Message implements Serializable {
 	}
 	
 	// Accept the friend request and update the database
-	public void accept(int userID) throws Exception{
-		if(userID == toID){
-			accepted = true; 
-		}
+	public void accept() throws Exception{
 		updateFriendGraph(fromID, toID);
+		updateFriendGraph(toID, fromID);
 		addFriends();
 	}
 	

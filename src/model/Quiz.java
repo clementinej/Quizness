@@ -256,7 +256,7 @@ public class Quiz implements Serializable{
 	public Date getDateCreated() throws Exception{
 		Date date = null; 
 		Connection con = ServerConnection.getConnection();
-		String query = "SELECT dateCreated FROM quizzes WHERE quizID = " + this.quizID; 
+		String query = "SELECT dateCreated FROM quizzes WHERE id = " + this.quizID; 
 		PreparedStatement ps = con.prepareStatement(query);
 		ResultSet rs = ps.executeQuery(); 
 		while(rs.next()){

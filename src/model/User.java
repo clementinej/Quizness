@@ -122,8 +122,10 @@ public class User implements Serializable {
 		return friendsList.size();
 	}
 	
-	public void addFriend(User friend){
+	// Update the user model in the database when a new friend is added
+	public void addFriend(User friend) throws Exception{
 		friendsList.add(friend);
+		ServerConnection.updateUser(this);
 	}
 	
 	public void deleteFriend(User friend){
@@ -168,6 +170,9 @@ public class User implements Serializable {
  */
 	
 	public static User getUser(int userID) throws Exception{
+
+		//ServerConnection.open();
+
 		return ServerConnection.getUser(userID);
 	}
 
@@ -300,6 +305,9 @@ public class User implements Serializable {
 	public String getEmail(){
 		return email;
 	}
-	
 
+	public void resetFriends() throws Exception{
+		this.friendsList.clear();
+		ServerConnection.updateUser(this);
+	}
 }

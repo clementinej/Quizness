@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
    pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*, model.*" %>
-<%@ page errorPage="../site/404.jsp" %>
+<%--@ page errorPage="../site/404.jsp" --%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
    <head>
@@ -132,7 +132,7 @@
          <span class="header-link"><a href="social/profile.jsp">Profile</a></span>
          <span class="header-link"><a href="site/admin.jsp">Admin</a></span>
          <span class="header-link"><a href="social/inbox.jsp">Inbox</a></span>
-          <span class="header-link"><a href="social/search.jsp">Search</a></span>
+          <span class="header-link"><a href="site/search.jsp">Search</a></span>
          <span class="right">Welcome to Quizness, <%=name %></span>
       </div>
       <div class="container_main">

@@ -29,15 +29,15 @@ public class QuizSummary {
 	}
 	
 	// Return x number of top performers on this specific quiz (USER)
-	public static ArrayList<Integer> getTopPerformers(int quizID, int num) throws Exception{
-		String query = "SELECT DISTINCT userID FROM quizTries WHERE quizID = " + quizID 
+	public static ArrayList<Integer> getAllPerformance(int quizID, int num) throws Exception{
+		String query = "SELECT id FROM quizTries WHERE quizID = " + quizID 
 				+ " ORDER BY score DESC LIMIT " + num;
 		return executeQuery(query);
 	}
 	
 	// Return x number of top performers within y number of days (USER)
-	public static ArrayList<Integer> getTopPerformers(int quizID, int num, int numOfDays) throws Exception{
-		String query = "SELECT DISTINCT userID FROM quizTries WHERE quizID = " + quizID
+	public static ArrayList<Integer> getAllPerformanceWithDays(int quizID, int num, int numOfDays) throws Exception{
+		String query = "SELECT id FROM quizTries WHERE quizID = " + quizID
 				+ " AND dateCreated >= NOW() - INTERVAL " + numOfDays + " DAY "
 				+ " ORDER BY score DESC LIMIT " + num;
 		return executeQuery(query);

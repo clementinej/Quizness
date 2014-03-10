@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,9 +43,12 @@ public class NewAnnouncementServlet extends HttpServlet {
 	}
 
 	/**
+	 * @throws IOException 
+	 * @throws ServletException 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ServerConnection.open();
 		Connection con = ServerConnection.getConnection();
 		String subject = request.getParameter("subject");
 		String body = request.getParameter("body");
@@ -56,6 +60,7 @@ public class NewAnnouncementServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		redirectToPage("home.jsp", request, response);
 	}
 	
 	private void insertAnnouncement(Connection con, String subject, String body, Timestamp t) throws Exception{
@@ -72,6 +77,12 @@ public class NewAnnouncementServlet extends HttpServlet {
 		ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
 		ps.executeUpdate();
 		
+	}
+	
+	private void redirectToPage(String pageName, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher dispatch = request.getRequestDispatcher(pageName); 
+		dispatch.forward(request, response); 
 	}
 
 }
