@@ -48,6 +48,7 @@ public class CreateListener implements HttpSessionListener {
      */
     public void sessionDestroyed(HttpSessionEvent arg0) {
         currUser = null;
+        ServerConnection.close();
     }
 	
     private void setAutomaticAccount() {
