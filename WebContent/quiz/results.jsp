@@ -44,53 +44,40 @@
             <div id="cubes" class="demo"></div>
          </div>
          <form method="post" action="/SaveResults">
-            <%
-            if(request.getParameter("multi-page") == null) {
-	            //get answers and stick them in solutions
-	            ArrayList<String[]> quizResponses = new ArrayList<String[]>();
-	            Map<String, String[]> map = request.getParameterMap();
-	            Iterator<String> iter = map.keySet().iterator();
-	            while(iter.hasNext()) {
-	            	String currentQuestion = iter.next();
-	            	if(!currentQuestion.contains("answer")) {}
-	            	else {
-	            		String [] responseForOneQuestion = map.get(currentQuestion);
-	            		System.out.println("Responses:" + responseForOneQuestion[0]);
-						quizResponses.add(responseForOneQuestion);
-	            	}	
-	            }
-	            quizTry.gradeQuiz(quizResponses);
-            } else {
-            	ArrayList<String[]> readyResponses = (ArrayList<String[]>)session.getAttribute("ready responses");
-            	System.out.println("Nresponses:" + readyResponses.size());
-            	String responsesArrayFormat[] = new String[readyResponses.size()];
-            	for(int i = 0; i < readyResponses.size(); i++) {
-            		responsesArrayFormat[i] = readyResponses.get(i)[0];
-            	}
-            	quizTry.gradeQuiz(readyResponses);
-            	readyResponses = new ArrayList<String[]>();
-            	session.setAttribute("ready responses", readyResponses);
-            }
             
-            
-            
-              double score = quizTry.getScore();
-              double time = quizTry.getTime()/1000;
-              ArrayList<String[]> responses = quizTry.getResponses();
-              int quizID = quizTry.getQuizID();
-              double userAverageScore = QuizResult.getUserAverageScore(user.getUserID(), quizID);
-              //double userAverageTime = QuizResult.getAverageTimeByUser(user.getUserID(), quizID);
-             // int userNumTries = QuizResult.getNumTriesByUser(user.getUserID(), quizID);
-             // Date userLastTry = QuizResult.getLastTryByUser(user.getUserID(), quizID);
+      <%/* GRADING
+         * --------------
+         * First chunk of code represents multi-page quiz grading. We get the quizResponses by grabbing
+         * from request parameters and store them in the quizResponses ArrayList.  And then pass that in
+         * to the quizTry to grade.
+         */
+         if(request.getParameter("multi-page") == null) {//single-page display
+	          ArrayList<String[]> quizResponses = getQuizResponses(request);
+              quizTry.gradeQuiz(quizResponses);
+          } else {//multi-page-grading
+          	ArrayList<String[]> readyResponses = (ArrayList<String[]>)session.getAttribute("ready responses");
+           	//debugMultiplePageGrading(readyResponses);
+           	quizTry.gradeQuiz(readyResponses);
+           	readyResponses = new ArrayList<String[]>();
+           	session.setAttribute("ready responses", readyResponses);
+          }              
+           
+      	double score = quizTry.getScore();
+        double time = quizTry.getTime()/1000;
+        ArrayList<String[]> responses = quizTry.getResponses();
+        int quizID = quizTry.getQuizID();
+        double userAverageScore = QuizResult.getUserAverageScore(user.getUserID(), quizID);
+        //double userAverageTime = QuizResult.getAverageTimeByUser(user.getUserID(), quizID);
+        // int userNumTries = QuizResult.getNumTriesByUser(user.getUserID(), quizID);
+        // Date userLastTry = QuizResult.getLastTryByUser(user.getUserID(), quizID);
               
-              double averageScore = QuizResult.getAllAverageScore(quizID);
-              //double averageTime = QuizResult.getAverageTime(quizID);
-              //int numTries = History.getNumTries(quizID);
-              //int numTriesToday = History.getNumTriesToday(quizID);
+        double averageScore = QuizResult.getAllAverageScore(quizID);
+        //double averageTime = QuizResult.getAverageTime(quizID);
+        //int numTries = History.getNumTries(quizID);
+        //int numTriesToday = History.getNumTriesToday(quizID);
               
-             // double friendsAverageScore = QuizResult.getFriendsAverageScore(user.getUserID(), quizID);
-              //double friendsAverageTime = getFriendsAverageTime();
-           	%>
+        // double friendsAverageScore = QuizResult.getFriendsAverageScore(user.getUserID(), quizID);
+        //double friendsAverageTime = getFriendsAverageTime();%>
              
             <div id="score">
                <p>Your score is <%=score %></p>
@@ -121,3 +108,33 @@
       <script src="../js/results.js"></script>
    </body>
 </html>
+
+<%!/*
+    * gets quiz responses from request
+    */
+private ArrayList<String[]> getQuizResponses(HttpServletRequest request) {
+    ArrayList<String[]> quizResponses = new ArrayList<String[]>();
+	Map<String, String[]> map = request.getParameterMap();
+    Iterator<String> iter = map.keySet().iterator();
+    while(iter.hasNext()) {
+    	String currentQuestion = iter.next();
+    	if(!currentQuestion.contains("answer")) {}
+    	else {
+    		String [] responseForOneQuestion = map.get(currentQuestion);
+    		//---debugging----//
+    		System.out.println("Responses:" + responseForOneQuestion[0]);
+			//---------------//
+    		quizResponses.add(responseForOneQuestion);
+    	}	
+    }
+    return quizResponses;
+}%>
+
+<%!//for debugging
+private void debugMultiplePageGrading(ArrayList<String[]> readyResponses) {
+	System.out.println("Nresponses:" + readyResponses.size());
+	String responsesArrayFormat[] = new String[readyResponses.size()];
+	for(int i = 0; i < readyResponses.size(); i++) {
+		responsesArrayFormat[i] = readyResponses.get(i)[0];
+	}
+}%>
