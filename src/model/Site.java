@@ -48,10 +48,9 @@ public class Site {
 	
 	private static int getCount(String tablename, String type) throws Exception{
 		int count = 0;
-		String query = "SELECT COUNT(*) FROM ? WHERE messageType = ?";
+		String query = "SELECT COUNT(*) FROM " + tablename + " WHERE messageType = ?";
 		PreparedStatement ps = ServerConnection.getConnection().prepareStatement(query);
-		ps.setString(1, tablename);
-		ps.setString(2,  type);
+		ps.setString(1,  type);
 		ResultSet rs = ps.executeQuery();
 		while(rs.next()) rs.getInt(1);
 		return count; 
