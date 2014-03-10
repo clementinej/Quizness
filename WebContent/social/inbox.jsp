@@ -34,14 +34,25 @@
 		FriendRequest currRequest;
 		Note currNote;
 		Challenge currChallenge; 
+		
+		// Get the type of the message to display
+		String displayType = request.getParameter("displayType"); 
+		boolean dispNotes = true; 
+		boolean dispChallenges = true; 
+		boolean dispRequests = true; 
+		if(displayType != null){
+			if(!displayType.equals("note")) dispNotes = false; 
+			if(!displayType.equals("challenge")) dispChallenges = false;
+			if(!displayType.equals("request")) dispRequests = false; 
+		}
 	  %> 
 	
       <div class="container">
          <section class="color-1">
             <nav class="cl-effect-14">
-               <a href="challenges.jsp">Challenges</a>
-               <a href="messages.html">Messages</a>
-               <a href="friend-requests.jsp">Friend Requests</a>
+               <a href="inbox.jsp?displayType=challenge">Challenges</a>
+               <a href="inbox.jsp?displayType=note">Notes</a>
+               <a href="inbox.jsp?displayType=request">Friend Requests</a>
             </nav>
          </section>
       </div>
@@ -62,7 +73,8 @@
                <tbody>
                
                <% 
-				for (int i = 0; i < numNotes; i++){
+               // DISPLAY NOTES
+				for (int i = 0; i < numNotes && dispNotes; i++){
 					int messageID = notes.get(i); 
 					currNote = (Note) Message.getMessage(messageID); 
 					int fromID = currNote.getFromID();
@@ -80,6 +92,60 @@
 		                     <td align="left" width="25%"><a href="../social/profile.jsp?id=<%=fromID%>"><font><b><%=user.getUserName()%></b></font></a></td>
 		                     <!-- LINK TO MESSAGE -->
 		                     <td align="left" width="50%"><a href="../social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currNote.getSubject() %></b></font></a></td>
+		                     <td align="right" width="30%"><b><%=sentAt%></b></td>
+		                  </tr>
+                  		<%
+					}
+				}
+               	%>
+               	
+               	<%
+               	// DISPLAY REQUESTS
+				for (int i = 0; i < numRequests && dispRequests; i++){
+					int messageID = requests.get(i); 
+					currRequest = (FriendRequest) Message.getMessage(messageID); 
+					int fromID = currRequest.getFromID();
+					Date sentAt = currRequest.getSentAt();
+					User user = User.getUser(fromID); 
+					boolean viewed = currRequest.getViewed();
+					if(user != null){
+				%>
+		                  <tr>
+		                     <!-- DISPLAY UNREAD LINKS IN BOLD -->
+		                     <td align="left" width="7%">
+		                        <input type="checkbox" id="checkbox<%=i%>" name="check" value="<%=messageID%>">
+		                     </td>
+		                     <!-- LINK TO SENDER'S PROFILE -->
+		                     <td align="left" width="25%"><a href="../social/profile.jsp?id=<%=fromID%>"><font><b><%=user.getUserName()%></b></font></a></td>
+		                     <!-- LINK TO MESSAGE -->
+		                     <td align="left" width="50%"><a href="../social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currRequest.getSubject() %></b></font></a></td>
+		                     <td align="right" width="30%"><b><%=sentAt%></b></td>
+		                  </tr>
+                  		<%
+					}
+				}
+               	%>
+               	
+               	<%
+               	// DISPLAY CHALLENGES
+				for (int i = 0; i < numChallenges && dispChallenges; i++){
+					int messageID = challenges.get(i); 
+					currChallenge = (Challenge) Message.getMessage(messageID); 
+					int fromID = currChallenge.getFromID();
+					Date sentAt = currChallenge.getSentAt();
+					User user = User.getUser(fromID); 
+					boolean viewed = currChallenge.getViewed();
+					if(user != null){
+				%>
+		                  <tr>
+		                     <!-- DISPLAY UNREAD LINKS IN BOLD -->
+		                     <td align="left" width="7%">
+		                        <input type="checkbox" id="checkbox<%=i%>" name="check" value="<%=messageID%>">
+		                     </td>
+		                     <!-- LINK TO SENDER'S PROFILE -->
+		                     <td align="left" width="25%"><a href="../social/profile.jsp?id=<%=fromID%>"><font><b><%=user.getUserName()%></b></font></a></td>
+		                     <!-- LINK TO MESSAGE -->
+		                     <td align="left" width="50%"><a href="../social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currChallenge.getSubject() %></b></font></a></td>
 		                     <td align="right" width="30%"><b><%=sentAt%></b></td>
 		                  </tr>
                   		<%

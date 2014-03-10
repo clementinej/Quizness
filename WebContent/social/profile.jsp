@@ -171,7 +171,7 @@
                 	</div>
                 <%} %>
                 
-                <% if(MyProfile == false) %>
+                <% if(myProfile == false){ %>
                	<form method="post" action="../social/compose-mail.jsp">
                	<div class ="boxy">
                		<input type ="hidden" name="messageType" value="note">

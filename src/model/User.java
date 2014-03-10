@@ -168,6 +168,10 @@ public class User implements Serializable {
  */
 	
 	public static User getUser(int userID) throws Exception{
+<<<<<<< HEAD
+=======
+		//ServerConnection.open();
+>>>>>>> Functional message system
 		return ServerConnection.getUser(userID);
 	}
 
