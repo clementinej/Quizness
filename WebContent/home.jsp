@@ -193,7 +193,7 @@
    			<h1>Your Activity</h1>			
 	   		<% if(numUserTakenQuizzes == 0 && numRecentQuizzes == 0) {
 	   			%>	
-	   		<h4>You've had no activity lately. <a href="social/compose-mail.html">Get in the game!</a></h4>
+	   		<h4>You've had no activity lately. <a href="social/compose-mail.jsp">Get in the game!</a></h4>
 	   		<%} %>
 			<%
    			if(numUserTakenQuizzes != 0) {%>
@@ -330,11 +330,11 @@
 	   			<h2>Messages</h2><% 
 	   			if(numMessages > 1) {
 	  		 %>
-			<p>You have <%=numMessages %> new messages! <a href="inbox/user?id=<%=userID %>">Go to your inbox.</a></p>
+			<p>You have <%=numMessages %> new messages! <a href="social/inbox.jsp">Go to your inbox.</a></p>
 			<%
 				} else {
 			%>
-			<p>You have a new message! <a href="inbox/user?id=<%=userID %>">Go to your inbox.</a></p>	
+			<p>You have a new message! <a href="social/inbox.jsp">Go to your inbox.</a></p>	
 			<% 	
 				}
 	   		}
@@ -345,10 +345,10 @@
 	   		<h2>Challenges</h2><%
 	   			if(numChallenges > 1) {%>
 	   			
-	   		<p>You have <%=numChallenges %> new challenges! <a href="../inbox/user?id=<%=userID %>">Go to your inbox.</a></p>
+	   		<p>You have <%=numChallenges %> new challenges! <a href="social/inbox.jsp">Go to your inbox.</a></p>
 			<% } else { %>
 				
-			<p>You have a new challenge! <a href="../inbox/user?id=<%=userID %>">Go to your inbox.</a></p>	
+			<p>You have a new challenge! <a href="social/inbox.jsp">Go to your inbox.</a></p>	
 			<% 	
 				}
 	   		}
