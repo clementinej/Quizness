@@ -39,8 +39,7 @@ public class CreateListener implements HttpSessionListener {
         	setAutomaticAccount();
         }
         
-        ArrayList<String> responses = new ArrayList<String>();
-        session.setAttribute("quiz responses", responses);
+
         session.setAttribute("current user", currUser);
         
         ArrayList<String[]> readyResponses = new ArrayList<String[]>();

@@ -69,7 +69,7 @@ public class CreateServlet extends HttpServlet {
 			forwardToPage("quiz-edit.jsp", request, response);
 		} else if(getUserIntent(session, request).equals("create quiz")) {
 			makeQuizAndAddToDB(questionList, request, currUser);	
-			clearQuestionList(questionList);
+			clearQuestionList(session);
 			forwardToPage("success.html", request, response);		
 		}	
 	}
@@ -149,13 +149,17 @@ private Quiz getQuiz(HttpServletRequest request) {
 	}
 
 	/*
-	 * After a quiz is created, the temporary question list is destroyed in preparation for another quiz to be made.
+	 * After a quiz is created, the temporary question list is replaced with an empty list
+	 * in preparation for another quiz to be made.
 	 * TODO: discard changes button
 	 * TODO: remove from list button
 	 */
-	private void clearQuestionList(ArrayList<Question> questionList) {
-		for(int i = 0; i < questionList.size(); i++) //restart question list
-			questionList.remove(i);	//may want to store questionLists in a map depending on potential quizID
+	private void clearQuestionList(HttpSession session) {
+		ArrayList<Question> questionList = (ArrayList<Question>) session.getAttribute("question list");	
+		questionList = new ArrayList<Question>();
+		session.setAttribute("question list", questionList);
+		//for(int i = 0; i < questionList.size(); i++) //restart question list
+		//	questionList.remove(i);	//may want to store questionLists in a map depending on potential quizID
 		System.out.println("Question List has been reset.");
 	}
 

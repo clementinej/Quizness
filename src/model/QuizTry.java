@@ -84,7 +84,7 @@ public class QuizTry implements Serializable {
 	}
 	
 	public boolean hasNext() {
-		return index != questions.size() - 1;
+		return index != questions.size();
 	}
 	
 	public Question getNextQuestion() throws Exception{

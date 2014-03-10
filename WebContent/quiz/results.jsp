@@ -62,12 +62,14 @@
 	            quizTry.gradeQuiz(quizResponses);
             } else {
             	ArrayList<String[]> readyResponses = (ArrayList<String[]>)session.getAttribute("ready responses");
+            	System.out.println("Nresponses:" + readyResponses.size());
             	String responsesArrayFormat[] = new String[readyResponses.size()];
             	for(int i = 0; i < readyResponses.size(); i++) {
             		responsesArrayFormat[i] = readyResponses.get(i)[0];
             	}
             	quizTry.gradeQuiz(readyResponses);
-            	readyResponses.remove(readyResponses);
+            	readyResponses = new ArrayList<String[]>();
+            	session.setAttribute("ready responses", readyResponses);
             }
             
             

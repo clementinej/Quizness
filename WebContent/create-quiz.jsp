@@ -75,11 +75,13 @@
          		String text = q.getQuestion();
          		ArrayList<Set<String>> solution = q.getAnswer();
          %>
-         	<label class="terms"><%=i + 1%>. <%=text%>"</label>
+         <br>
+         	<label class="terms"><%=i + 1%>. "<%=text%>"</label>
          	<% 
          	//for each solution
          	for(int solIndex = 0; solIndex < solution.size(); solIndex++) {
          	%>
+         	<br>
          	Solution: 
          	<%
          		Set<String> oneSolution = solution.get(solIndex);

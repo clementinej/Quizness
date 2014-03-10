@@ -131,7 +131,7 @@
   			//for questions which only require one answer from the user only
   			String [] array = new String[1];
   			array[0] = previousAnswer;
-		 	ArrayList<String[]> responses = (ArrayList<String[]>) session.getAttribute("quiz responses");
+		 	ArrayList<String[]> responses = (ArrayList<String[]>) session.getAttribute("ready responses");
 		 	responses.add(array);
 		 	
 		 	//checkCurrentResponses
@@ -140,17 +140,17 @@
 		 	}
 		 	
 		 	
-		 	session.setAttribute("quiz responses", responses);
+		 	session.setAttribute("ready responses", responses);
   			//qTry.addOneAnwerResponse(previousAnswer);
     	}
     	
   		//if quiz is done, go to results
    		if(!qTry.hasNext()) {
    			System.out.println("done");
-		 	ArrayList<String> responses = (ArrayList<String>) session.getAttribute("quiz responses");
+		 	//ArrayList<String> responses = (ArrayList<String>) session.getAttribute("quiz responses");
 		 	//String[] arrayResponses = responses.toArray();
-		 	responses.removeAll(responses);
-		 	session.setAttribute("quiz responses", responses);
+		 	//responses.removeAll(responses);
+		 	//session.setAttribute("quiz responses", responses);
 		 	//session.setAttribute("ready responses", arrayResponses);
    			qTry.setToDone();%>
    			<input type="hidden" name="multi-page" value="signal"/>
