@@ -45,6 +45,7 @@ public class NewAnnouncementServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+		ServerConnection.open();
 		Connection con = ServerConnection.getConnection();
 		String subject = request.getParameter("subject");
 		String body = request.getParameter("body");
