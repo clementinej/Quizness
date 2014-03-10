@@ -78,7 +78,7 @@
          	<label class="terms"><%=i + 1%>. "<%=text%>"</label>
          	<% 
          	//for each solution
-         	for(int solIndex = 0; solIndex < solution.size(); solIndex++) {
+         	for(int solIndex = 0; solIndex < questionList.size(); solIndex++) {
          	%>
          	<br><%
          	}
