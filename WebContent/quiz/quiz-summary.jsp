@@ -170,7 +170,16 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          <br><a href="../quiz-edit.jsp?quiz_id=<%=quiz.getQuizID() %>">Edit Quiz</a>
          <%} %>
          <br><a href="../social/compose-mail.jsp?quiz_id=<%=quiz.getQuizID() %>?top_score=<%=userHighScore %>">Challenge a friend!</a>
-
+         
+          </form>
+          
+          <% if(user.isAdmin()){ %>
+          <form method="post" action="../DeleteQuizServlet">
+            <input type ="hidden" name="quiz_id" value=<%=quizID%>>
+     		<input id="submit" type="submit" value="Delete Quiz">
+     		<% } %>
+     		
+     	</form>
       </div>	
    </div>
 </body>
