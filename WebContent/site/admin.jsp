@@ -26,26 +26,88 @@ int numFriendReqs = Site.getNumReqs();
 
 <head>
    <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
+    <link rel="stylesheet" type="text/css" href="../css/admin.css" />
+    <style>
+         .link {
+         color:#fffff;
+         font-weight:bold;
+         text-align:center;
+         }
+         .links {
+         padding-left:40px;
+         }
+         .header-link {
+		padding-left:50px;
+		font-weight:bold;	
+		}
+		.right {
+		color:#fffff;
+		float:right;
+		margin-right:25px;
+		font-weight:bold;
+		font-size:100%;
+		}
+		
+		#leftcontent {
+		position: absolute;
+		left:10px;
+		top:50px;
+		width:200px;
+		}
+		#centercontent {
+		margin-left: 199px;
+		margin-right:199px;
+		margin-left: 201px;
+		margin-right:201px;
+		} 
+		
+		html>body #centercontent {
+		margin-left: 20px;
+		margin-right:0px;
+		}
+		#rightcontent {
+		position: absolute;
+		right:10px;
+		top:50px;
+		width:200px;
+		}
+		#innerleft {
+		float:left;
+		left:20px;
+		top:50px;
+		width:400px;
+		}
+		#innerright {
+		float:right;
+		right:10px;
+		top:50px;
+		width:400px;
+		}
+      </style>
 </head>
 <body>
+  <!--top bar -->
+      <div class="top">
+         <span class="header-link"><a href="create-quiz.jsp">Create Quiz</a></span>
+         <span class="header-link"><a href="social/compose-mail.jsp">Compose </a></span>
+         <span class="header-link"><a href="social/profile.jsp">Profile</a></span>
+         <span class="header-link"><a href="site/admin.jsp">Admin</a></span>
+         <span class="header-link"><a href="social/inbox.jsp">Inbox</a></span>
+          <span class="header-link"><a href="site/search.jsp">Search</a></span>
+      </div>
 
   <div class="container_main">
          <section class="main">
-            <h2 class="cs-text" id="cs-text">Bosspage</h2>
+            <h2 class="cs-text" id="cs-text">Admin Page</h2>
          </section>
       </div>
-      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-      <script type="text/javascript" src="../js/jquery.lettering.js"></script>
       <script>
          $(document).ready(function() {
          	$("#cs-text").lettering().children('span').wrap('<span />');
          });
       </script>
-
-		<a class="manage" href="admin.jsp#edit_user" id="top">Manage Users</a><a class="manage" href="admin.jsp#edit_quiz">Manage Quizzes</a><br><br>
-
 		<div class ="inline">
-			<div class="title-bar">Activity Summary</div>
+			<div class="title-bar"  style="margin-top:20px">Activity Summary</div>
 				<table style="width:435px;margin-top:4px">
 					<tr>
 						<td align="left" width="47%" class="content">Quizzes</td>
