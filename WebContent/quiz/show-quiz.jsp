@@ -17,7 +17,7 @@
     User currUser = (User) session.getAttribute("current user");
   	int currQuizID = 79;//debugging default
     if(!debug) {
-   	  currQuizID = Integer.parseInt(request.getParameter("quiz-id"));
+   	  currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
     }
 	Quiz currQuiz = getCurrQuiz(currQuizID);
   	boolean multiPage = currQuiz.hasMultiplePages(); 	

@@ -23,6 +23,7 @@ String description = quiz.getDescription();
 
 //The creator of the quiz (hot linked to the creator's profile). 
 User creator = User.getUser(quiz.getCreatorID());
+String creatorName = creator.getUserName();
 
 //A list of the user's past performance on this specific quiz. 
 
@@ -100,8 +101,8 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
       <div class="sep"></div>
       <div class="inputs">
          <h3>Quiz Title</h3>
-         <p>Description</p><br>
-         <p><b>Created by </b><a href="#"><%=creator.getUserName() %></a></p>
+         <p><%=quiz.getDescription() %></p><br> <!-- TODO -->
+         <p><b>Created by </b><a href="#"><%=creatorName %></a></p>
          
          <!-- Print info on the user's last five tries -->
          <br><h3>Your History</h3>
@@ -130,6 +131,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
    
     <!-- Print info on the top scores on this quiz-->
    <div class="container" style="float:left;padding-left:200px;">
+      <form method="post" action="" id="signup">
       <div class="header">
          <h3>Top Scores</h3>
       </div>
@@ -152,10 +154,10 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          <%
          }
          %>
+         </form>
          
          <!-- We also need to display summary statistics, i.e. the average score on the quiz, 
          average amount of time it took, number of people who've taken it. -->
-   		<form method="post" action="" id="signup">      
          <br><a href="show-quiz.jsp?quiz_id=<%=quiz.getQuizID() %>"">Take Quiz!</a>
          
          <% if(quiz.hasPracticeMode()) {%>
@@ -165,11 +167,19 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          
          <% if(user.getUserID() == quiz.getCreatorID()) { %>
          <!--A way to start editing the quiz, if the user is the quiz owner. -->
-         <br><a href="quiz-edit.jsp?quiz_id=<%=quiz.getQuizID() %>">Edit Quiz</a>
+         <br><a href="../quiz-edit.jsp?quiz_id=<%=quiz.getQuizID() %>">Edit Quiz</a>
          <%} %>
          <br><a href="../social/compose-mail.jsp?quiz_id=<%=quiz.getQuizID() %>?top_score=<%=userHighScore %>">Challenge a friend!</a>
          
           </form>
+          
+          <% if(user.isAdmin()){ %>
+          <form method="post" action="../DeleteQuizServlet">
+            <input type ="hidden" name="quiz_id" value=<%=quizID%>>
+     		<input id="submit" type="submit" value="Delete Quiz">
+     		<% } %>
+     		
+     	</form>
       </div>	
    </div>
 </body>
