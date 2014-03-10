@@ -154,12 +154,6 @@ body{
 .cs-text span span {
 	display: block;
 	background: #00b7ea;
-	background: url(../images/scratch-texture.png), -moz-linear-gradient(left, #00b7ea 0%, #009ec3 100%);
-	background: url(../images/scratch-texture.png), -webkit-gradient(linear, left top, right top, color-stop(0%,#00b7ea), color-stop(100%,#009ec3));
-	background: url(../images/scratch-texture.png), -webkit-linear-gradient(left, #00b7ea 0%,#009ec3 100%);
-	background: url(../images/scratch-texture.png), -o-linear-gradient(left, #00b7ea 0%,#009ec3 100%);
-	background: url(../images/scratch-texture.png), -ms-linear-gradient(left, #00b7ea 0%,#009ec3 100%);
-	background: url(../images/scratch-texture.png), linear-gradient(to right, #00b7ea 0%,#009ec3 100%);
 	box-shadow: 
 		-1px 0 2px rgba(255,255,255,0.4),
 		-2px 0 0 #00adda, 
@@ -177,12 +171,6 @@ body{
 
 .cs-text > span:nth-child(n+5) span {
 	background: #009ec3;
-	background: url(../images/scratch-texture.png), -moz-linear-gradient(left, #009ec3 0%, #00b7ea 100%);
-	background: url(../images/scratch-texture.png), -webkit-gradient(linear, left top, right top, color-stop(0%,#009ec3), color-stop(100%,#00b7ea));
-	background: url(../images/scratch-texture.png), -webkit-linear-gradient(left, #009ec3 0%,#00b7ea 100%);
-	background: url(../images/scratch-texture.png), -o-linear-gradient(left, #009ec3 0%,#00b7ea 100%);
-	background: url(../images/scratch-texture.png), -ms-linear-gradient(left, #009ec3 0%,#00b7ea 100%);
-	background: url(../images/scratch-texture.png), linear-gradient(to right, #009ec3 0%,#00b7ea 100%);
 	box-shadow: 
 		1px 0 2px rgba(255,255,255,0.4),
 		2px 0 0 #00adda, 
@@ -326,12 +314,6 @@ body{
 .cs-text span span {
 	display: block;
 	background: #00b7ea;
-	background: url(../images/scratch-texture.png), -moz-linear-gradient(left, #00b7ea 0%, #009ec3 100%);
-	background: url(../images/scratch-texture.png), -webkit-gradient(linear, left top, right top, color-stop(0%,#00b7ea), color-stop(100%,#009ec3));
-	background: url(../images/scratch-texture.png), -webkit-linear-gradient(left, #00b7ea 0%,#009ec3 100%);
-	background: url(../images/scratch-texture.png), -o-linear-gradient(left, #00b7ea 0%,#009ec3 100%);
-	background: url(../images/scratch-texture.png), -ms-linear-gradient(left, #00b7ea 0%,#009ec3 100%);
-	background: url(../images/scratch-texture.png), linear-gradient(to right, #00b7ea 0%,#009ec3 100%);
 	box-shadow: 
 		-1px 0 2px rgba(255,255,255,0.4),
 		-2px 0 0 #00adda, 
@@ -349,12 +331,6 @@ body{
 
 .cs-text > span:nth-child(n+5) span {
 	background: #009ec3;
-	background: url(../images/scratch-texture.png), -moz-linear-gradient(left, #009ec3 0%, #00b7ea 100%);
-	background: url(../images/scratch-texture.png), -webkit-gradient(linear, left top, right top, color-stop(0%,#009ec3), color-stop(100%,#00b7ea));
-	background: url(../images/scratch-texture.png), -webkit-linear-gradient(left, #009ec3 0%,#00b7ea 100%);
-	background: url(../images/scratch-texture.png), -o-linear-gradient(left, #009ec3 0%,#00b7ea 100%);
-	background: url(../images/scratch-texture.png), -ms-linear-gradient(left, #009ec3 0%,#00b7ea 100%);
-	background: url(../images/scratch-texture.png), linear-gradient(to right, #009ec3 0%,#00b7ea 100%);
 	box-shadow: 
 		1px 0 2px rgba(255,255,255,0.4),
 		2px 0 0 #00adda, 
