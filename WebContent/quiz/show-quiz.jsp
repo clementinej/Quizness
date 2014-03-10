@@ -106,8 +106,9 @@
       } else {
     	System.out.println("Multipage");
     	QuizTry qTry = null;
+    	int quizTryID = -1;
     	if(request.getParameter("quiz try id") != null) {
-  			int quizTryID = Integer.parseInt(request.getParameter("quiz try id"));
+  			quizTryID = Integer.parseInt(request.getParameter("quiz try id"));
 		 	qTry = ServerConnection.getQuizTry(quizTryID);
     	} else {
      		qTry = new QuizTry(currUser.getUserID(), currQuizID, currQuiz.hasPracticeMode(), currQuiz.hasRandomMode());
@@ -168,8 +169,9 @@
 			<input type="submit" name="submit" value="next"/>
 			<%--<jsp:include page="questionGeneration/show-picture-response.jsp" />--%><%
 			break;
-		}
-      }  	 	
+		}%>
+	   	<input type="hidden" name="quiz try id" value=<%=quizTryID%>/>	
+     <%}  	 	
  	%>
       </div>
       </form>
