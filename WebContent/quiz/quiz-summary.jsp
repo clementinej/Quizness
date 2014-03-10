@@ -156,17 +156,19 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          <!-- We also need to display summary statistics, i.e. the average score on the quiz, 
          average amount of time it took, number of people who've taken it. -->
    		<form method="post" action="" id="signup">      
-         <br><a href="show-quiz.jsp?quiz_id=<%=quiz.getQuizID() %>""><input id="submit" type="submit" value="Take Quiz!"></a>
+         <br><a href="show-quiz.jsp?quiz_id=<%=quiz.getQuizID() %>"">Take Quiz!</a>
          
          <% if(quiz.hasPracticeMode()) {%>
          <!--A way to start the quiz in practice mode, if available. -->
-         <br><a href="show-quiz.jsp?quiz_id=<%=quiz.getQuizID() %>""><input id="submit" type="submit" value="Practice Quiz"></a>
+         <br><a href="show-quiz.jsp?quiz_id=<%=quiz.getQuizID() %>"">Practice Quiz</a>
          <%} %>
          
          <% if(user.getUserID() == quiz.getCreatorID()) { %>
          <!--A way to start editing the quiz, if the user is the quiz owner. -->
-         <br><a href="quiz-edit.jsp?quiz_id=<%=quiz.getQuizID() %>"><input id="submit" type="submit" value="Edit Quiz"></a>
+         <br><a href="quiz-edit.jsp?quiz_id=<%=quiz.getQuizID() %>">Edit Quiz</a>
          <%} %>
+         <br><a href="../social/compose-mail.jsp?quiz_id=<%=quiz.getQuizID() %>">Challenge a friend!</a>
+         
           </form>
       </div>	
    </div>
