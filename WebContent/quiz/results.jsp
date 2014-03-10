@@ -61,7 +61,13 @@
 	            }
 	            quizTry.gradeQuiz(quizResponses);
             } else {
-            	quizTry.gradeQuiz();
+            	ArrayList<String[]> readyResponses = (ArrayList<String[]>)session.getAttribute("ready responses");
+            	String responsesArrayFormat[] = new String[readyResponses.size()];
+            	for(int i = 0; i < readyResponses.size(); i++) {
+            		responsesArrayFormat[i] = readyResponses.get(i)[0];
+            	}
+            	quizTry.gradeQuiz(readyResponses);
+            	readyResponses.remove(readyResponses);
             }
             
             

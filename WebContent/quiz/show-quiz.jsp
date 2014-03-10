@@ -32,6 +32,7 @@
     	System.out.println("single-page");
  		QuizTry qTry = new QuizTry(currUser.getUserID(), currQuizID, currQuiz.hasPracticeMode(), currQuiz.hasRandomMode());
   		int tryID = ServerConnection.addQuizTry(qTry);
+  		
 		%>
 	<body>
   	  <div class="container">
@@ -105,6 +106,7 @@
       <div class="container">
   	     <form method="post" action="show-quiz.jsp" id="signup">
          <div class="header">
+         <input type="hidden" name="quiz_id" value="<%=currQuizID %>"/>
          	<h3>Let's Get Started!</h3>
         	<p>Best of luck</p>
           </div>
@@ -126,20 +128,37 @@
     	
     	if(request.getParameter("answer") != null) {
   			String previousAnswer = request.getParameter("answer");
-		 	qTry.addOneAnwerResponse(previousAnswer);
+  			//for questions which only require one answer from the user only
+  			String [] array = new String[1];
+  			array[0] = previousAnswer;
+		 	ArrayList<String[]> responses = (ArrayList<String[]>) session.getAttribute("quiz responses");
+		 	responses.add(array);
+		 	
+		 	//checkCurrentResponses
+		 	for(String[] one : responses) {
+		 		System.out.println("Current Answers: " + one[0]);
+		 	}
+		 	
+		 	
+		 	session.setAttribute("quiz responses", responses);
+  			//qTry.addOneAnwerResponse(previousAnswer);
     	}
     	
   		//if quiz is done, go to results
    		if(!qTry.hasNext()) {
    			System.out.println("done");
+		 	ArrayList<String> responses = (ArrayList<String>) session.getAttribute("quiz responses");
+		 	//String[] arrayResponses = responses.toArray();
+		 	responses.removeAll(responses);
+		 	session.setAttribute("quiz responses", responses);
+		 	//session.setAttribute("ready responses", arrayResponses);
    			qTry.setToDone();%>
    			<input type="hidden" name="multi-page" value="signal"/>
-   			<%RequestDispatcher dispatch = request.getRequestDispatcher("results.jsp"); 
+   			<%RequestDispatcher dispatch = request.getRequestDispatcher("results.jsp?multi-page=signal"); 
    			dispatch.forward(request, response);
    			return;
    		}
     	
-  	
 		int qIndex = qTry.getQuestionNum();   	 	
    	 	Question q = qTry.getNextQuestion();
    	 	

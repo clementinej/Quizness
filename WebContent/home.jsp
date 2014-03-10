@@ -149,7 +149,7 @@
    						Quiz topQuiz = Quiz.getQuiz(topQuizzes.get(i));
    						int topQuizID = topQuizzes.get(i);
   			%>
-			<p><a href="quiz/show-quiz.jsp?quiz-id=<%=topQuizID%>"><%=topQuiz.getTitle()%></a></p>
+			<p><a href="quiz/show-quiz.jsp?quiz_id=<%=topQuizID%>"><%=topQuiz.getTitle()%></a></p>
 			<%	
    					} // end for loop
    				} else {
@@ -157,7 +157,7 @@
    						Quiz topQuiz = Quiz.getQuiz(topQuizzes.get(i));
    						int topQuizID = topQuizzes.get(i);
    			%>
-   			<p><a href="quiz/show-quiz.jsp?quiz-id=<%=topQuizID%>"><%=topQuiz.getTitle()%></a></p>
+   			<p><a href="quiz/show-quiz.jsp?quiz_id=<%=topQuizID%>"><%=topQuiz.getTitle()%></a></p>
    					<% 
    					} // end for loop
    				} // end else
@@ -172,7 +172,7 @@
    						Quiz newQuiz = Quiz.getQuiz(newQuizzes.get(i));
    						int newQuizID = newQuizzes.get(i);
   			%>
-			<p><a href="quiz/show-quiz.jsp?quiz-id=<%=newQuizID%>"><%=newQuiz.getTitle()%></a></p>
+			<p><a href="quiz/show-quiz.jsp?quiz_id=<%=newQuizID%>"><%=newQuiz.getTitle()%></a></p>
 			<%
 					} // end for loop
    				} else {
@@ -180,7 +180,7 @@
    						Quiz newQuiz = Quiz.getQuiz(newQuizzes.get(i));
    						int newQuizID = newQuizzes.get(i);
    			%>
-   			<p><a href="quiz/show-quiz.jsp?quiz-id=<%=newQuizID%>"><%=newQuiz.getTitle()%></a></p>
+   			<p><a href="quiz/show-quiz.jsp?quiz_id=<%=newQuizID%>"><%=newQuiz.getTitle()%></a></p>
    			<%
    					}
    				} // end else 
@@ -203,8 +203,8 @@
    						int quizID = userRecentQuizzesTaken.get(i);
    						Quiz takenQuiz = Quiz.getQuiz(quizID);
    			%>
-   			<h2><%=takenQuiz.getTitle()%></h2>
-			<p><a href="quiz/quiz-list.jsp?quiz-id=<%=quizID%>"><%=takenQuiz.getTitle()%></a></p>
+   			  <h2><%=takenQuiz.getTitle()%></h2>
+		<p><a href="quiz/quiz-summary.jsp?quiz_id=<%=quizID%>"><%=takenQuiz.getTitle()%></a></p>
    			<%
    					} // end for loop
    				} else {
@@ -212,7 +212,7 @@
    						int quizID = userRecentQuizzesTaken.get(i);
    						Quiz takenQuiz = Quiz.getQuiz(quizID); 
    			%>
-   			<p><a href="quiz/quiz-list.jsp?quiz-id=<%=quizID%>"><%=takenQuiz.getTitle()%></a></p>
+   			<p><a href="quiz/quiz-summary.jsp?quiz_id=<%=quizID%>"><%=takenQuiz.getTitle()%></a></p> 
    			<% 
    					}
    				}
@@ -226,7 +226,7 @@
    						int quizID = userRecentQuizzes.get(i);
    						Quiz createdQuiz = Quiz.getQuiz(quizID);
   			%>
-			<p><a href="quiz/quiz-list.jsp?quiz-id=<%=quizID%>"><%=createdQuiz.getTitle()%></a></p>
+			<p><a href="quiz/quiz-summary.jsp?quiz_id=<%=quizID%>"><%=createdQuiz.getTitle()%></a></p>
    			<%
    					} // end for loop
    				} else {
@@ -234,7 +234,7 @@
    						int quizID = userRecentQuizzes.get(i);
    						Quiz createdQuiz = Quiz.getQuiz(quizID);
    			%>
-   			<p><a href="quiz/quiz-list.jsp?quiz-id=<%=quizID%>"><%=createdQuiz.getTitle()%></a></p>
+   			<p><a href="quiz/quiz-summary.jsp?quiz_id=<%=quizID%>"><%=createdQuiz.getTitle()%></a></p>
    			<% 
    					}
    				}

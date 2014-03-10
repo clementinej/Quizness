@@ -21,6 +21,7 @@ public class AccountListener implements ServletContextListener {
 	 * Creates a new account manager when ServletConetEvent initialized
 	 */
     public void contextInitialized(ServletContextEvent arg0) {
+    	System.out.println("Context Initialized");
     	ServerConnection.open();
     	QuiznessAccountManager manager = null;
 		try {

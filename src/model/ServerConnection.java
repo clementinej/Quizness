@@ -209,12 +209,11 @@ public class ServerConnection {
 	// Updates a quizTry from the db.  Super cool Lloyd wrote this one.
 	public static void updateQuizTry(QuizTry quizTry) throws Exception {
 		int quizTryID = quizTry.getTryID();	
-		String query = "UPDATE quizTries SET quizTry = ? WHERE id = " + quizTryID; 
+		String query = "UPDATE quizTries SET quizTry = ?, score = ?, timeSpent = ? WHERE id = " + quizTryID; 
 		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		ps.setBytes(1, convertToByteArray(quizTry));
-//		ps.setDouble(2, quizTry.getScore());
-//		ps.setDouble(3, quizTry.getTime());
-		//score, timeSpent, dateCreated
+		ps.setDouble(2, quizTry.getScore());
+		ps.setDouble(3, quizTry.getTime());
 		ps.executeUpdate();
 	}
 	

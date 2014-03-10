@@ -8,10 +8,12 @@
 </head>
 <%
 //Login.notLoggedIn(request,response);
-boolean debug = true;
+boolean debug = false;
 User user = (User) session.getAttribute("current user");
 Quiz quiz = Quiz.getQuiz(79);
-
+if(!debug) {
+	quiz = Quiz.getQuiz(Integer.parseInt(request.getParameter("quiz_id")));
+}
 if(!user.isAdmin() && quiz.getCreatorID() != user.getUserID()) return;
 ArrayList<Question> questions = quiz.getQuestions();
 %>

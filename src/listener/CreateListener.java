@@ -28,7 +28,7 @@ public class CreateListener implements HttpSessionListener {
     	System.out.println("Session Created");
     	HttpSession session = event.getSession(); 
       	List<Question> questionList = new ArrayList<Question>();
-      	        
+      	   
 		//addOneToQuestionList(questionList);//testing
 		//System.out.println(questionList.get(0));//testing
         session.setAttribute("question list", questionList);
@@ -39,7 +39,12 @@ public class CreateListener implements HttpSessionListener {
         	setAutomaticAccount();
         }
         
+        ArrayList<String> responses = new ArrayList<String>();
+        session.setAttribute("quiz responses", responses);
         session.setAttribute("current user", currUser);
+        
+        ArrayList<String[]> readyResponses = new ArrayList<String[]>();
+        session.setAttribute("ready responses", readyResponses);
     }
 
 
@@ -52,7 +57,7 @@ public class CreateListener implements HttpSessionListener {
 	
     private void setAutomaticAccount() {
     	try {
-			currUser = User.getUser(User.getUserID("t@t.com"));
+			currUser = User.getUser(User.getUserID("y@y.com"));
 			System.out.println("Automatic user \""+currUser.getUserName() +"\" in use.");
 		} catch (SQLException e) {
 			System.out.println("Automatic user debug failed.");

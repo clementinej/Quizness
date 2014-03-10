@@ -17,7 +17,6 @@ public class QuizResult {
 	}
 	
 	// BUGGY
-	
 	public static ArrayList<Integer> getFriendPerformance(int quizID, int userID, int num) throws Exception{
 		Connection con = ServerConnection.getConnection();
 		String query = "SELECT id FROM quizTries INNER JOIN friendships ON quizTries.userID = friendships.toID "
