@@ -9,7 +9,7 @@
 	checkIfUserIsLoggedIn(request, response);
 %>
 
-<% boolean debug = true;%>
+<% boolean debug = false;%>
 
 <body>
    <div class="container">
@@ -26,7 +26,7 @@
     User currUser = (User) session.getAttribute("current user");
   	int currQuizID = 79;//debugging default
     if(!debug) {
-   	  currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
+   	  currQuizID = Integer.parseInt(request.getParameter("quiz-id"));
     }
 	Quiz currQuiz = getCurrQuiz(currQuizID);
   	boolean multiPage = currQuiz.hasMultiplePages();
@@ -38,7 +38,8 @@
  	 * The single-page implementation creates a new QuizTry, and sets it in the database.  It then goes on
  	 * to print out the title, description, and all questions.
  	 */
-    if(!multiPage) { 		 	
+    if(!multiPage) { 
+    	System.out.println("single-page");
  		QuizTry qTry = new QuizTry(currUser.getUserID(), currQuizID, currQuiz.hasPracticeMode(), currQuiz.hasRandomMode());
   		int tryID = ServerConnection.addQuizTry(qTry);
 		%>
@@ -101,11 +102,8 @@
 	  	
 	  	
 		  //----------------------MULTPAGE SECTION---------------------------//
-		  
-		  
-		  
-  
       } else {
+    	System.out.println("Multipage");
   		int quizTryID = Integer.parseInt(request.getParameter("quiz try id"));
 	 	QuizTry qTry = ServerConnection.getQuizTry(quizTryID);
    	 		
