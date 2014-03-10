@@ -168,6 +168,9 @@ public class User implements Serializable {
  */
 	
 	public static User getUser(int userID) throws Exception{
+
+		//ServerConnection.open();
+
 		return ServerConnection.getUser(userID);
 	}
 
@@ -300,6 +303,5 @@ public class User implements Serializable {
 	public String getEmail(){
 		return email;
 	}
-	
 
 }

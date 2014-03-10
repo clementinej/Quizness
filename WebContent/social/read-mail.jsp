@@ -16,17 +16,24 @@
 int messageID = Integer.parseInt(request.getParameter("msg_id"));
 Message m = Message.getMessage(messageID);
 int fromID = m.getFromID();
+int toID = m.getToID();
+User user = User.getUser(fromID);
+String from = user.getUserName(); 
 String subject = m.getSubject();
 String body = m.getBody();
 Date sent = m.getSentAt();
 java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat();
+String messageType = m.getMessageType();
+boolean acceptable = false;
+if(messageType.equals("challenge") || messageType.equals("friendRequest")) acceptable = true; 
+
+//Mark this message as read
+m.markAsRead(); 
+
 %>
 
-<%
-String from = "Dummy user";
-%>
 <div class="container">
-   <form id="signup">
+   <form id="signup" method="post" action="../AcceptMessageServlet">
       <div class="header">
          <h2><%=subject%></h2>
          <h4>From <%=from %></h4>
@@ -35,9 +42,21 @@ String from = "Dummy user";
       <div class="sep"></div>
       <div class="inputs">
  		<p><%=body %></p><br>
+ 
+ 		<% if(acceptable){ %>
+       	
+       		<input type ="hidden" name="msg_id" value=<%=messageID%>>
+       		<input type ="hidden" name="messageType" value=<%=messageType%>>
+     		<input id="submit" type="submit" name="send_accept" value="Accept">
+     		<input id="submit" type="submit" name="send_reject" value="Reject">
+     
+     	<% } %>
+
 		<a href="inbox.jsp">Back to Inbox</a>
       </div>
       </form>
+       
+       
    </div>
 </body>
 </html>

@@ -15,12 +15,21 @@
    // COMMENT THIS IN. EVERYTHING SHOULD WORK. ALSO REMEMBER TO COMMENT IN THE 
    // MODEL IMPORT AT THE TOP OF THE PAGE. THAT'S THE BIT THAT I CAN'T COMPILE
    
-
+	
    User currUser = (User) session.getAttribute("current user");
    int currUserID = currUser.getUserID();
+ 
+   String userIDString = request.getParameter("id");   
+   int userID; 
+   User user; 
    
-   int userID = Integer.parseInt(request.getParameter("id"));
-   User user = (User) User.getUser(userID);
+   if(userIDString != null){
+	   userID = Integer.parseInt(request.getParameter("id"));
+	   user = (User) User.getUser(userID);
+   } else {
+	   userID = currUserID;
+	   user = currUser; 
+   }
    
    //model.User u = new model.User(false, "Gene Oetomo", "gene", "goetomo@stanford.edu", "my name is gene", "stanford");
    String name = user.getUserName();
@@ -171,12 +180,21 @@
                 	</div>
                 <%} %>
                 
-                <% if(MyProfile == false) %>
+                <% if(myProfile == false){ %>
                	<form method="post" action="../social/compose-mail.jsp">
                	<div class ="boxy">
                		<input type ="hidden" name="messageType" value="note">
                		<input type ="hidden" name="recipient" value=<%=userID%>>
      				<input id="submit" type="submit" value="Send a Note!">
+     			</div>
+     			</form>
+     			<%} %>
+     			
+     			<% if(myProfile == false && currUser.isAdmin()){ %>
+               	<form method="post" action="../DeleteUserServlet">
+               	<div class ="boxy">
+               		<input type ="hidden" name="userID" value=<%=userID%>>
+     				<input id="submit" type="submit" value="Delete this user">
      			</div>
      			</form>
      			<%} %>
