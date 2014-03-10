@@ -52,7 +52,7 @@ public class AcceptMessageServlet extends HttpServlet {
 			if(messageType.equals("friendRequest")){
 				FriendRequest friendRequest = (FriendRequest) Message.getMessage(messageID);
 				friendRequest.accept();
-				target = "social/inbox.jsp";
+				target = "social/success-friend.html";
 			} else if (messageType.equals("challenge")){
 				Challenge challenge = (Challenge) Message.getMessage(messageID);
 				challenge.accept();
