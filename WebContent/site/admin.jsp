@@ -141,7 +141,7 @@ String quiz_search = request.getParameter("quiz_search");
 
 	<%
 	// get quizID from search query
-	Quiz quiz = Quiz.getQuiz(quizID);
+	Quiz quiz = Quiz.getQuiz(71);
 	int quizID = quiz.getQuizID();
 	int creatorID = quiz.getCreatorID();
 	String name = User.getUser(creatorID).getUserName();

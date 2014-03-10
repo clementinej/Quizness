@@ -49,7 +49,7 @@
       <div class="container">
       
       <div>
-      <form action="/QuizSearchServlet" method="post" id="signup">
+      <form action="../QuizSearchServlet" method="post" id="signup">
          <div class="header">
             <h3>Quiz Search</h3>
          </div>

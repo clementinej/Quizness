@@ -16,6 +16,7 @@ public class User implements Serializable {
 	public static final String MYSQL_DATABASE_NAME = "c_cs108_wang8";
 
 	private boolean isAdmin;
+	private boolean isBanned;
 	private int userID;
 	private String userName;
 	private String pw;
@@ -34,6 +35,7 @@ public class User implements Serializable {
 	//constructor
 	public User(boolean isAdmin, String userName, String pw, String email, String aboutMe, String location){
 		this.isAdmin = isAdmin;
+		this.isBanned = false;
 		this.pw = pw;
 		this.userName = userName;
 		this.userID = -1;
@@ -82,6 +84,11 @@ public class User implements Serializable {
 		}
 	}
 	
+	public void deleteTry(QuizTry quizTry){
+		if (quizzesTried.contains(quizTry)){
+			quizzesTried.remove(quizTry);
+		}
+	}
 	public void makeQuiz(Quiz quiz){
 		quizzesMade.add(quiz);
 	}
@@ -167,6 +174,14 @@ public class User implements Serializable {
 
 	public boolean isAdmin(){
 		return isAdmin;
+	}
+	
+	public boolean isBanned(){
+		return this.isBanned;
+	}
+	
+	public void setBanned(){
+		isBanned = true;
 	}
 	
 	//returns a string of the high score. if there is no score stored, it returns a string
