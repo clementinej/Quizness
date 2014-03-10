@@ -26,12 +26,13 @@ ArrayList<Question> questions = quiz.getQuestions();
 	<form action="EditServlet" method="post" id="title-edit">
 	Title
 	<p><input name="title" type="name" value="<%=quiz.getTitle() %>"/></p>		
-	<input type="hidden" name="quiz_id" type="name" value="<%=quiz.getQuizID()%>"/>
+	
 	<br>
 
 	Description
 	<p><input type="name" name="description" value="<%=quiz.getDescription() %>"/></p>
-
+	<input id="save-button" type="submit" value="Save Quiz Info" name="quiz_info"/>
+	<input type="hidden" name="quiz_id" type="name" value="<%=quiz.getQuizID()%>"/>
 	</form>
 	</div>
 
@@ -98,9 +99,7 @@ ArrayList<Question> questions = quiz.getQuestions();
 	 <input type="button" id="add-question" value="Add A Question"></input>
 	 </div> 
 	</form>
-	<form>
-	<input id="save-button" type="submit" value="Save Quiz Info" name="quiz_info">
-	</form>
+
 	</div>
 	</div>
 	</div>
