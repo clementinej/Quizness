@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="model.*, java.util.*" %>
+    <%@ page import="model.*, control.*, java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head> 
    <link rel="stylesheet" type="text/css" href="css/style_login.css" />
 
 </head>
 <%
+//Login.notLoggedIn(request,response);
 boolean debug = true;
 User user = (User) session.getAttribute("current user");
 Quiz quiz = Quiz.getQuiz(79);
@@ -18,22 +19,25 @@ ArrayList<Question> questions = quiz.getQuestions();
 <body>
 
 <div class="container">
-<h1> Quiz Editing</h1>
+
+	<div id="quizedit">
+	<h1>Edit Quiz Info</h1>
 	
 	<form action="EditServlet" method="post" id="title-edit">
 	Title
-	<p><input type="text" name="title" value="<%=quiz.getTitle() %>"/></p>		
-	<input type="hidden" name="quiz_id" value="<%=quiz.getQuizID()%>"/>
+	<p><input name="title" type="name" value="<%=quiz.getTitle() %>"/></p>		
+	<input type="hidden" name="quiz_id" type="name" value="<%=quiz.getQuizID()%>"/>
 	<br>
 
 	Description
-	<p><input type="text" name="description" value="<%=quiz.getDescription() %>"/></p>
-	<input type="submit" value="Save Quiz Info" name="quiz_info">
+	<p><input type="name" name="description" value="<%=quiz.getDescription() %>"/></p>
 
 	</form>
+	</div>
 
-	<form method="post" action="quiz/edit/EditQuestion" id="signup">
-			<input type="hidden" name="quiz_id" value="<%=quiz.getQuizID()%>"/>
+	<form method="post" action="quiz/edit/EditQuestion" id="questionedit">
+	<input type="hidden" name="quiz_id" value="<%=quiz.getQuizID()%>"/>
+	<h2>Edit Questions</h2>
 	<%
 	for(int i = 0; i < questions.size(); i++) {
 		Question q = questions.get(i);
@@ -68,10 +72,12 @@ ArrayList<Question> questions = quiz.getQuestions();
 
 	</form>
 
-	<form method="post" action="CreateServlet" id="signup">
+	<div>
+	<form method="post" action="CreateServlet" id="addquestion">
 	  <table>
             <tr>
                <th>
+               		<h2>Add Questions</h2>
                   <input type="hidden" name="quiz_id" value="<%=quiz.getQuizID()%>"/>
                   <input type="hidden" name="intent" value="add to existing quiz"/>
                   <select name="question-type" id="question-type">
@@ -88,8 +94,15 @@ ArrayList<Question> questions = quiz.getQuestions();
                   </select>
             </tr>
          </table>
-	 <input type="button" id="add-question" value="Add A Question"></input> 
+         <div id="add-question-button">
+	 <input type="button" id="add-question" value="Add A Question"></input>
+	 </div> 
 	</form>
+	<form>
+	<input id="save-button" type="submit" value="Save Quiz Info" name="quiz_info">
+	</form>
+	</div>
+	</div>
 	</div>
 </body>
 <script>
