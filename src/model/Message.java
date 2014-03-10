@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Message implements Serializable {
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1157902140039424209L;
 		public int id;
 		public int fromID;
 		public int toID;
@@ -45,12 +49,6 @@ public class Message implements Serializable {
 		public void setToID(int toID) {
 			this.toID = toID;
 		}
-		public boolean isUnread() {
-			return unread;
-		}
-		public void setUnread(boolean unread) {
-			this.unread = unread;
-		}
 		public String getSubject() {
 			return subject;
 		}
@@ -72,6 +70,9 @@ public class Message implements Serializable {
 		}
 		public void markAsRead() {
 			viewed = true;
+		}
+		public void markAsUnread(){
+			viewed = false; 
 		}
 		public boolean getViewed() {
 			return viewed;
