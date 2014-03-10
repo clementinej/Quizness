@@ -47,7 +47,6 @@ m.markAsRead();
        	
        		<input type ="hidden" name="msg_id" value=<%=messageID%>>
        		<input type ="hidden" name="messageType" value=<%=messageType%>>
-            <input type ="hidden" name="recipient" value=<%=toID%>>
      		<input id="submit" type="submit" name="send_accept" value="Accept">
      		<input id="submit" type="submit" name="send_reject" value="Reject">
      

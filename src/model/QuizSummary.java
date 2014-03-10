@@ -50,6 +50,13 @@ public class QuizSummary {
 		return executeQuery(query);
 	}
 	
+	// Return the all time top performance 
+	public static ArrayList<Integer> getRecentPerformance(int quizID) throws Exception{
+		String query = "SELECT id FROM quizTries WHERE quizID = " + quizID
+				+ " ORDER BY score DESC";
+		return executeQuery(query);
+	}
+	
 	// Return a set of IDs from a ResultSet
 	private static ArrayList<Integer> resultSetToArray(ResultSet rs) throws Exception{
 		ArrayList<Integer> result = new ArrayList<Integer>();
