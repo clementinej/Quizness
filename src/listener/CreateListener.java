@@ -48,7 +48,12 @@ public class CreateListener implements HttpSessionListener {
      */
     public void sessionDestroyed(HttpSessionEvent arg0) {
         currUser = null;
-        ServerConnection.close();
+        try {
+			ServerConnection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 	
     private void setAutomaticAccount() {
