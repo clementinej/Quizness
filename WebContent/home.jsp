@@ -133,7 +133,7 @@
          <span class="header-link"><a href="site/admin.jsp">Admin</a></span>
          <span class="header-link"><a href="social/inbox.jsp">Inbox</a></span>
           <span class="header-link"><a href="site/search.jsp">Search</a></span>
-         <span class="right">Welcome to Quizness, <%=name %></span>
+         <span class="right">Welcome, <%=name %></span>
       </div>
       <div class="container_main">
          <section class="main">
@@ -340,7 +340,6 @@
 	   		}
 			%>
 			
-			
 			<%
 	   		if(numChallenges != 0) {%>
 	   		<h2>Challenges</h2><%
@@ -379,29 +378,29 @@
 	        </div>
 	        
 	        <div class="innerright">
-	        <h1> Test Text</h1>
-	        <%--
+	        <h1>Announcements</h1>
+	        <%
 	        int numAnnouncements = 0;
-	        ArrayList<Announcement> announcements = Announcements.getAllAnnouncements();
+	        ArrayList<String> announcements = Announcements.getBody();
 	        numAnnouncements = announcements.size();
 	        if(numAnnouncements != 0) {
 	        	if(numAnnouncements > 5) {
 	        		for(int i = 0; i < 5; i++) {
-	        			Announcement a = announcements.get(i);
-	        			--%>
-	        			<p><%--=a.getBody() --%></p>
-	        			<%--
+	        			String a = announcements.get(i);
+	        			%>
+	        			<p><%=a%></p>
+	        			<%
 	        		}
 	        	} else {
 	        		for(int i = 0; i < numAnnouncements; i++) {
-	        			Announcement a = announcements.get(i);
-						--%>
-						<p><%--=a.getBody() --%></p>
-						<%-- 
+	        			String a = announcements.get(i);
+						%>
+						<p><%=a %></p>
+						<% 
 	        		}
 	        	}
 	        }
-	        --%>
+	        %>
 	        </div>
 	   </div>
       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
