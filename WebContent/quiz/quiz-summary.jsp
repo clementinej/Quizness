@@ -8,8 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Quiz Summary</title>
-      <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
-
+     <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
 </head>
 <body>
 <%
@@ -131,7 +130,6 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
    
     <!-- Print info on the top scores on this quiz-->
    <div class="container" style="float:left;padding-left:200px;">
-   <form method="post" action="../../InitQuizServlet??" id="signup">
       <div class="header">
          <h3>Top Scores</h3>
       </div>
@@ -157,14 +155,20 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          
          <!-- We also need to display summary statistics, i.e. the average score on the quiz, 
          average amount of time it took, number of people who've taken it. -->
+   		<form method="post" action="" id="signup">      
+         <br><a href="show-quiz.jsp?quiz_id=<%=quiz.getQuizID() %>""><input id="submit" type="submit" value="Take Quiz!"></a>
          
-         <br><input id="submit" type="submit" value="Take Quiz!">
+         <% if(quiz.hasPracticeMode()) {%>
          <!--A way to start the quiz in practice mode, if available. -->
-         <br><input id="submit" type="submit" value="Practice Quiz">
+         <br><a href="show-quiz.jsp?quiz_id=<%=quiz.getQuizID() %>""><input id="submit" type="submit" value="Practice Quiz"></a>
+         <%} %>
+         
+         <% if(user.getUserID() == quiz.getCreatorID()) { %>
          <!--A way to start editing the quiz, if the user is the quiz owner. -->
-         <br><input id="submit" type="submit" value="Edit Quiz">
+         <br><a href="quiz-edit.jsp?quiz_id=<%=quiz.getQuizID() %>"><input id="submit" type="submit" value="Edit Quiz"></a>
+         <%} %>
+          </form>
       </div>	
-   </form>
    </div>
 </body>
 </html>
