@@ -39,11 +39,11 @@ public class Site {
 	};
 	
 	public static int getNumChallenges() throws Exception {
-		return getCount("message", "challenge"); 
+		return getCount("messages", "challenge"); 
 	}
 	
 	public static int getNumReqs() throws Exception {
-		return getCount("message", "friendRequest"); 
+		return getCount("messages", "friendRequest"); 
 	}
 	
 	private static int getCount(String tablename, String type) throws Exception{

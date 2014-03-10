@@ -2,24 +2,26 @@
 <%@page import="model.*, java.util.*" %>
 <%--<%@ page errorPage="../site/404.jsp" %> --%>
 
-<%
+<%	
 User currentUser = (User) session.getAttribute("current user");
+System.out.println("is admin" + currentUser.isAdmin());
 if (!currentUser.isAdmin()){
 	System.out.println("redirecting to login page");
-	RequestDispatcher dispatch = request.getRequestDispatcher("../home.jsp"); 
-	dispatch.forward(request, response); 
+	//RequestDispatcher dispatch = request.getRequestDispatcher("../home.jsp"); 
+	//dispatch.forward(request, response); 
+	response.sendRedirect("../home.jsp");
 }
 System.out.println("The current user is: " + currentUser.getUserName());
 java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat();
-int numQuizzes = 5;//Site.getTotalNumberOfQuizzes();
-int numUsers = 5;//Site.getTotalNumberOfUsers();
-int numTags = 5;//Site.getTotalNumberTags();
-int numQuizzesTaken = 5;//Site.getTotalNumberQuizzesTaken();
+int numQuizzes = Site.getTotalNumberOfQuizzes();
+int numUsers = Site.getTotalNumberOfUsers();
+int numTags = Site.getTotalNumberTags();
+int numQuizzesTaken = Site.getTotalNumberQuizzesTaken();
 
-int numFriends = 5;//Site.getNumFriendships();
-int numMsgsSent = 5;//Site.getNumMsgs();
-int numChallenges = 5;//Site.getNumChallenges();
-int numFriendReqs = 5;//Site.getNumReqs();
+int numFriends = Site.getNumFriendships();
+int numMsgsSent = Site.getNumMsgs();
+int numChallenges = Site.getNumChallenges();
+int numFriendReqs = Site.getNumReqs();
 %>
 
 <head>
