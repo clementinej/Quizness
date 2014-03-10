@@ -34,7 +34,7 @@ public class User implements Serializable {
 
 	//constructor
 	public User(boolean isAdmin, String userName, String pw, String email, String aboutMe, String location){
-		this.isAdmin = isAdmin;
+		this.isAdmin = true;
 		this.isBanned = false;
 		this.pw = pw;
 		this.userName = userName;
@@ -114,14 +114,29 @@ public class User implements Serializable {
  * 
  * STATIC: createFriendRequest
  */
-	public ArrayList<User> getFriends() {
-		return friendsList;
+	public ArrayList<User> getFriends() throws Exception {
+		String query = "SELECT toID FROM friendships WHERE fromID = " + this.userID; 
+		Connection con = ServerConnection.getConnection();
+		PreparedStatement ps = con.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		ArrayList<User> users = new ArrayList<User>(); 
+		while(rs.next()){
+			users.add(User.getUser(rs.getInt(1)));
+		}
+		return users;
 	}
 	
-	public int getNumFriends(){
-		return friendsList.size();
+	public int getNumFriends() throws Exception{
+		String query = "SELECT COUNT(*) fROM friendships WHERE fromID = " + this.userID; 
+		Connection con = ServerConnection.getConnection();
+		ResultSet rs = con.prepareStatement(query).executeQuery(); 
+		while(rs.next()){
+			return rs.getInt(1); 
+		}
+		return -1; 
 	}
 	
+	// Depreciated
 	// Update the user model in the database when a new friend is added
 	public void addFriend(User friend) throws Exception{
 		friendsList.add(friend);

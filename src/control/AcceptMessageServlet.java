@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import model.Challenge;
 import model.FriendRequest;
+import model.Inbox;
 import model.Message;
 
 /**
@@ -45,17 +46,28 @@ public class AcceptMessageServlet extends HttpServlet {
 		String msg_id = request.getParameter("msg_id");
 		int messageID = Integer.parseInt(msg_id); 
 		String messageType = request.getParameter("messageType");
-		String send_accept = request.getParameter("send_accept"); 
+		String isAccepted = request.getParameter("send_accept"); 
+		String toIDString = request.getParameter("to_id"); 
+		int toID = Integer.parseInt(toIDString);
 		String target = null; 
 				
 		try {
+			Inbox inbox = Inbox.getInbox(toID);
+					
 			if(messageType.equals("friendRequest")){
 				FriendRequest friendRequest = (FriendRequest) Message.getMessage(messageID);
-				friendRequest.accept();
-				target = "social/inbox.jsp";
+				if(isAccepted != null) friendRequest.accept();
+				
+				// If not accepted simply remove the request
+				if(inbox.removeFriendRequest(messageID) == false) throw new Exception();
+				target = "social/success-friend.html";
+
 			} else if (messageType.equals("challenge")){
 				Challenge challenge = (Challenge) Message.getMessage(messageID);
-				challenge.accept();
+				if(isAccepted != null) challenge.accept();
+				
+				// If not accepted simply remove the challenge
+				if(inbox.removeFriendRequest(messageID) == false) throw new Exception(); 
 				target = "../quiz/quiz-summary?quiz_id=" + challenge.getQuizID(); 
 			}
 		} catch (Exception e) { }

@@ -40,7 +40,7 @@ public class FriendRequest extends Message implements Serializable {
 	public void accept() throws Exception{
 		updateFriendGraph(fromID, toID);
 		updateFriendGraph(toID, fromID);
-		addFriends();
+		//addFriends();
 	}
 	
 	// Update the user's internal friend list

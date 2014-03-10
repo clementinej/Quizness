@@ -44,7 +44,7 @@ m.markAsRead();
  		<p><%=body %></p><br>
  
  		<% if(acceptable){ %>
-       	
+       		<input type ="hidden" name="to_id" value=<%=toID%>>
        		<input type ="hidden" name="msg_id" value=<%=messageID%>>
        		<input type ="hidden" name="messageType" value=<%=messageType%>>
      		<input id="submit" type="submit" name="send_accept" value="Accept">
