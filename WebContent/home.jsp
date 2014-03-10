@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
    pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*, model.*" %>
+<%@ page errorPage="../site/404.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
    <head>
@@ -102,13 +103,11 @@
          // DOES THE USER HAVE ANY MESSAGES?
          int numMessages = 0;
          Inbox inbox = Inbox.getInbox(userID);
-         //numMessages = inbox.getNumNotes();
+         numMessages = inbox.getNumNotes();
                
          // DOES THE USER HAVE ANY CHALLENGES?
          int numChallenges = 0;
          numChallenges = inbox.getNumChallenges();
-         ArrayList<Challenge> challenges = new ArrayList<Challenge>();
-         // TODO replace above line with call to getChallenges()
          
          // DOES THE USER HAVE ANY FRIEND REQUESTS?
          int numReqs = 0;
@@ -345,27 +344,18 @@
 			<%
 	   		if(numChallenges != 0) {%>
 	   		<h2>Challenges</h2><%
-	   			if(numChallenges < 5) {
-	   				for(int i = 0; i < numChallenges; i++) {
-	   				String from = challenges.get(i).getChallenger().getUserName();
-	   				int quizID = challenges.get(i).getQuizID();
-	   				String challengeQuizTitle = Quiz.getQuiz(quizID).getTitle();
-	   		%>
-			<p><%=from %> has challenged you to take <a href=quiz-summary?quiz-id=<%=quizID%>"><%=challengeQuizTitle %></a></p>
-			<% 
-					} // end for loop
-				} else {
-					for(int i = 0; i < 5; i++) {
-						String from = challenges.get(i).getChallenger().getUserName();
-						int quizID = challenges.get(i).getQuizID();
-						String challengeQuizTitle = Quiz.getQuiz(quizID).getTitle();
-			%>
-			<p><%=from %> has challenged you to take <a href=quiz-summary?quiz-id=<%=quizID%>"><%=challengeQuizTitle %></a></p>
-					<% 
-					}
+	   			if(numChallenges > 1) {%>
+	   			
+	   		<p>You have <%=numChallenges %> new challenges! <a href="../inbox/user?id=<%=userID %>">Go to your inbox.</a></p>
+			<% } else { %>
+				
+			<p>You have a new challenge! <a href="../inbox/user?id=<%=userID %>">Go to your inbox.</a></p>	
+			<% 	
 				}
-			}
+	   		}
 			%>
+			
+			
 			<%
 	   		if(numReqs != 0) {%>
 	   			<h2>Friend Requests</h2><%	

@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.*, java.util.*" %>
+<%@ page errorPage="../site/404.jsp" %>
 
 <%
 User currentUser = (User) session.getAttribute("current user");
