@@ -17,7 +17,7 @@ public class Debugger {
 	
 	//RUN ONLY IN DEBUGGING MODE
 
-	public static void main(String[] args) throws Exception {
+	//public static void main(String[] args) throws Exception {
 		ServerConnection.open(); 
 		User user27 = User.getUser(27); 
 		User user31 = User.getUser(31); 
