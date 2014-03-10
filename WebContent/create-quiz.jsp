@@ -29,13 +29,13 @@
             <input type="name" name="description" style="width:500px;height:50px" placeholder="Description of your quiz"></input>
          </div>
          <div class="checkboxy">
-            <input name="checky" type="checkbox" name="multiple_pages" value="1"><label class="terms">Show quiz on multiple pages?</label>
+            <input type="checkbox" name="selected" value="multiple_pages"><label class="terms">Show quiz on multiple pages?</label>
          </div>
          <div class="checkboxy">
-            <input type="checkbox" name="random_questions" value="1"><label class="terms">Display questions in random order?</label>
+            <input type="checkbox" name="selected" value="random_questions"><label class="terms">Display questions in random order?</label>
          </div>
          <div class="checkboxy">
-            <input type="checkbox" name="immediate_correction" value="1"><label class="terms">Display answers immediately?</label>
+            <input type="checkbox" name="selected" value="immediate_correction"><label class="terms">Display answers immediately?</label>
          </div>
          <br>
          <table>

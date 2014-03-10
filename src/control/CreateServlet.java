@@ -48,7 +48,7 @@ public class CreateServlet extends HttpServlet {
 		
 		ArrayList<Question> questionList = (ArrayList<Question>) session.getAttribute("question list");	
 		session.setAttribute("question list", questionList);
-			
+		
 		User currUser = (User) session.getAttribute("current user");
 		System.out.println("In CreateServlet, user = " + currUser.getUserName());
 		int creatorID = getUserID(currUser);	
@@ -123,9 +123,19 @@ private Quiz getQuiz(HttpServletRequest request) {
 		System.out.println("Description: "+ description);
 		System.out.println("Max Score: "+ maxScore);
 		boolean isPracticeMode = false, hasTimedMode = false; //extensions add later
-		boolean multiplePages = Boolean.parseBoolean(request.getParameter("multiple_pages"));
-		boolean hasRandomMode = Boolean.parseBoolean(request.getParameter("random_questions"));
-		boolean immediateCorrection = Boolean.parseBoolean(request.getParameter("immediate_correction"));
+		boolean multiplePages = false;
+		boolean hasRandomMode = false;
+		boolean immediateCorrection = false;
+		String [] selected = request.getParameterValues("selected");
+		for(int i = 0; i < selected.length; i++) {
+			if(selected[i].equals("multiple_pages"))
+				multiplePages = true;
+			if(selected[i].equals("random_questions"))
+				hasRandomMode= true;
+			if(selected[i].equals("immediate_correction"))
+				immediateCorrection = true;
+		}
+
 		
 		Quiz quiz = new Quiz(creatorID, maxScore, description, title, 
 				questionList, isPracticeMode, hasRandomMode, hasTimedMode, immediateCorrection, multiplePages);
