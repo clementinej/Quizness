@@ -70,7 +70,7 @@ public class QuizSearchServlet extends HttpServlet {
 		}
 		session.setAttribute("quizResults", quizList);
 		session.setAttribute("resultType", "quiz");
-		RequestDispatcher dispatch = request.getRequestDispatcher("site/search-results.jsp"); 
+		RequestDispatcher dispatch = request.getRequestDispatcher("search-results.jsp"); 
 		dispatch.forward(request, response);
 //		for (int i = 0; i < quizList.size(); i++){
 //			Quiz quiz = quizList.get(i);
