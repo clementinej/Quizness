@@ -32,10 +32,10 @@ ArrayList<Integer> triesByScore = QuizSummary.getPerformanceByScore(user.getUser
 ArrayList<Integer> triesByTime = QuizSummary.getPerformancyByTime(user.getUserID(), quizID, 10);
 	
 //A list of the highest performers of all time. 
-//ArrayList<Integer> topPerformerIds = QuizSummary.getTopPerformers(quizID, 5);
+ArrayList<Integer> topQuizTriesTodayIds = QuizSummary.getAllPerformanceWithDays(quizID, 5, 1);
 
-//A list of quiz ids for the top 5 performances on the quiz
-ArrayList<Integer> topQuizTriesTodayIds = QuizSummary.getTopPerformers(quizID, 5, 1); //TODO
+//A list of quizTry ids for the top 5 performances on the quiz
+ArrayList<Integer> topPerformerIds = QuizSummary.getAllPerformance((quizID), 10);
 
 //A list showing the performance of recent test takers (both good and bad). 
 ArrayList<Integer> recentTryIds = QuizSummary.getRecentPerformance(quizID, 5);
@@ -76,11 +76,11 @@ for(int i = 0; i < triesByDate.size(); i++) {
 }
 
 //should return the BEST five tries on this quiz
-/*ArrayList<QuizTry> bestTries = new ArrayList<QuizTry>(); 
+ArrayList<QuizTry> bestTries = new ArrayList<QuizTry>(); 
 for(int i = 0; i < topPerformerIds.size(); i++) {
 	QuizTry t = QuizTry.getTry(topPerformerIds.get(i));
 	recentTries.add(t);
-}*/
+}
 
 //should return the last five tries on this quiz
 ArrayList<QuizTry> bestTriesToday = new ArrayList<QuizTry>(); 
@@ -107,7 +107,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          <br><h3>Your History</h3>
          <p>Your high score on this quiz is <%=userHighScore %></p>
          <%
-         for(int i = 0; i < 5; i++) {
+         for(int i = 0; i < lastTriesUser.size() && i < 5; i++) {
          %>
          <p>On <%=lastTriesUser.get(i).getDate() %> you scored <%=lastTriesUser.get(i).getScore() %> </p>
          <%
@@ -117,7 +117,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          <!-- Print info on the last five tries of this quiz-->
          <br><h3>Recent Activity</h3>
          <%
-         for(int i = 0; i < 5; i++) {
+         for(int i = 0; i < recentTries.size() && i < 5; i++) {
          %>
          <p>At <%=recentTries.get(i).getTime() %> <%=User.getUser(recentTries.get(i).getUserID()).getUserName()%> scored <%=recentTries.get(i).getScore() %> </p>
          <%
@@ -137,7 +137,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
       <div class="inputs">
       	<br><h3>Top Scores Of All Time</h3>
 		 <%
-         for(int i = 0; i < 5; i++) {
+         for(int i = 0; i < bestTries.size() && i < 5; i++) {
          %>
          <p>On <%=bestTries.get(i).getDate() %> <%=User.getUser(bestTries.get(i).getUserID()).getUserName()%> scored <%=bestTries.get(i).getScore() %> </p>
          <%
@@ -146,7 +146,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          
          <br><h3>Top Scores Today</h3>
 		 <%
-         for(int i = 0; i < 5; i++) {
+         for(int i = 0; i < bestTriesToday.size() && i < 5; i++) {
          %>
          <p>At <%=bestTriesToday.get(i).getTime() %> <%=User.getUser(bestTriesToday.get(i).getUserID()).getUserName()%> scored <%=bestTriesToday.get(i).getScore() %> </p>
          <%
