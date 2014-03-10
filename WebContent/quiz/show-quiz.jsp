@@ -2,6 +2,7 @@
 <%@page import="model.*" %>
 <%@page import="java.util.*" %>
 <%@page import="java.io.*" %>
+<%@ page errorPage="../site/404.jsp" %>
 <head>
    <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
 </head>
@@ -104,9 +105,16 @@
 		  //----------------------MULTPAGE SECTION---------------------------//
       } else {
     	System.out.println("Multipage");
-  		int quizTryID = Integer.parseInt(request.getParameter("quiz try id"));
-	 	QuizTry qTry = ServerConnection.getQuizTry(quizTryID);
-   	 		
+    	QuizTry qTry = null;
+    	int quizTryID = -1;
+    	if(request.getParameter("quiz try id") != null) {
+  			quizTryID = Integer.parseInt(request.getParameter("quiz try id"));
+		 	qTry = ServerConnection.getQuizTry(quizTryID);
+    	} else {
+     		qTry = new QuizTry(currUser.getUserID(), currQuizID, currQuiz.hasPracticeMode(), currQuiz.hasRandomMode());
+      		int tryID = ServerConnection.addQuizTry(qTry);
+    	}
+    	
   		//if quiz is done, go to results
    		if(!qTry.hasNext()) {
    			qTry.setToDone();
@@ -120,22 +128,18 @@
    	 	Question q = questions.get(qIndex);
    	 				
 		int nextQuestionType = q.getQuestionType();
-		String questionText = q.getQuestion(); 
-		ArrayList<Set<String>> answers = q.getAnswer();
-		switch(nextQuestionType) {
-		case 1: 
-			%>
-			<%=questionText%></p>
+		switch(q.getQuestionType()) {
+		case 1: %>
+			<%=q.getQuestion()%></p>
 			<p><input type="text" name="answer<%=qIndex%>" /></p>
 			<input type="submit" name="submit" value="next"/>
 			<%--<jsp:include page="questionGeneration/show-question-answer.jsp" />--%><%
 			break;
 		case 2:
-			int blankIndex = questionText.indexOf('_');
-			int lastBlankIndex = questionText.lastIndexOf('_');
-			String beforeBlank = questionText.substring(0, blankIndex);
-			String afterBlank = questionText.substring(lastBlankIndex + 1);
-			%>
+			int blankIndex = q.getQuestion().indexOf('_');
+			int lastBlankIndex = q.getQuestion().lastIndexOf('_');
+			String beforeBlank = q.getQuestion().substring(0, blankIndex);
+			String afterBlank = q.getQuestion().substring(lastBlankIndex + 1);%>
 			<%=beforeBlank%><input type="text" name="answer<%=qIndex%>"/><%=afterBlank%></p>
 			<input type="submit" name="submit" value="next"/>
 			<%--<jsp:include page="questionGeneration/show-fill-in-blanks.jsp" />--%><%
@@ -146,7 +150,7 @@
 			ArrayList<String> options = new ArrayList<String>();
 			options = getOptions(q);			
 			%>
-			<%=questionText%></p>
+			<%=q.getQuestion()%></p>
 				<%
 			for(String option : options) {
 				%>
@@ -160,13 +164,14 @@
 			break;
 		case 4:
 			%>
-			<img src="<%=questionText%>" height="300" width="300">
+			<img src="<%=q.getQuestion()%>" height="300" width="300">
 			<p><input type="text" name="answer<%=qIndex%>" /></p>
 			<input type="submit" name="submit" value="next"/>
 			<%--<jsp:include page="questionGeneration/show-picture-response.jsp" />--%><%
 			break;
-		}
-      }  	 	
+		}%>
+	   	<input type="hidden" name="quiz try id" value=<%=quizTryID%>/>	
+     <%}  	 	
  	%>
       </div>
       </form>

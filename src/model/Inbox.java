@@ -36,6 +36,8 @@ public class Inbox implements Serializable {
 		return this.userID;
 	}
 	
+	// change int to actual object
+	
 	public ArrayList<Integer> getRequests(){
 		return requests;
 	}
@@ -51,14 +53,17 @@ public class Inbox implements Serializable {
 	// Add an existing Message to this Inbox
 	public void addNote(int messageID) throws Exception {
 		notes.add(messageID);
+		ServerConnection.updateInbox(this);
 	}
 	
 	public void addChallenge(int messageID) throws Exception {
 		challenges.add(messageID);
+		ServerConnection.updateInbox(this);
 	}
 	
 	public void addFriendRequest(int messageID) throws Exception {
 		requests.add(messageID);
+		ServerConnection.updateInbox(this);
 	}
 		
 	// Return a message object given the ID

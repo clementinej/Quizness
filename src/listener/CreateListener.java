@@ -48,6 +48,10 @@ public class CreateListener implements HttpSessionListener {
      */
     public void sessionDestroyed(HttpSessionEvent arg0) {
         currUser = null;
+        try {
+			ServerConnection.close();
+			System.out.println("Connection closed");
+		} catch (SQLException e) {e.printStackTrace();}
     }
 	
     private void setAutomaticAccount() {

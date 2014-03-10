@@ -2,6 +2,7 @@
 <%@page import="model.*" %>
 <%@page import="java.util.*" %>
 <%@page import="java.lang.*" %>
+<%@ page errorPage="../site/404.jsp" %>
 <head>
    <link rel="stylesheet" type="text/css" href="../../css/style_login.css" />
 </head>

@@ -205,7 +205,7 @@ body {
 
 .container {
     width: 406px;
-    height:760px;
+    height:900px;
     max-width: 406px;
     margin: 0 auto;
 }
@@ -217,6 +217,114 @@ body {
 }
 
 #signup {
+	margin-top:25px;
+    padding: 0px 25px 25px;
+    background: #fff;
+    box-shadow: 
+        0px 0px 0px 5px rgba( 255,255,255,0.4 ), 
+        0px 4px 20px rgba( 0,0,0,0.33 );
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    display: table;
+    position: static;
+}
+
+#quizedit {
+	font-family: 'Lato', Calibri, Arial, sans-serif;
+	width:500px;
+	margin-top:25px;
+    padding: 0px 25px 25px;
+    background: #fff;
+    box-shadow: 
+        0px 0px 0px 5px rgba( 255,255,255,0.4 ), 
+        0px 4px 20px rgba( 0,0,0,0.33 );
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    display: table;
+    position: static;
+}
+
+#question-type {
+	margin-top:20px;
+}
+	
+#questionedit {
+	font-family: 'Lato', Calibri, Arial, sans-serif;
+	width:500px;
+	margin-top:25px;
+    padding: 0px 25px 25px;
+    background: #fff;
+    box-shadow: 
+        0px 0px 0px 5px rgba( 255,255,255,0.4 ), 
+        0px 4px 20px rgba( 0,0,0,0.33 );
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    display: table;
+    position: static;
+}
+
+#save-info {
+	font-family: 'Lato', Calibri, Arial, sans-serif;
+	width:500px;
+	margin-top:25px;
+    padding: 0px 25px 25px;
+    background: #fff;
+    box-shadow: 
+        0px 0px 0px 5px rgba( 255,255,255,0.4 ), 
+        0px 4px 20px rgba( 0,0,0,0.33 );
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    display: table;
+    position: static;
+}
+
+#save-button {
+	
+    /* Size and position */
+    width: 100%;
+    height: 100%;
+    margin-top: 15px;
+    margin-left:45px;
+
+    /* Icon styles */
+    font-size: 1.4em;
+    line-height: 1.75;
+    color: white;
+
+    /* Styles */
+    border: none; /* Remove the default border */
+    border-radius: inherit;
+    background: #52cfeb; /* Fallback */
+    background: -moz-linear-gradient(#52cfeb, #42A2BC);
+    background: -ms-linear-gradient(#52cfeb, #42A2BC);
+    background: -o-linear-gradient(#52cfeb, #42A2BC);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#52cfeb), to(#42A2BC));
+    background: -webkit-linear-gradient(#52cfeb, #42A2BC);
+    background: linear-gradient(#52cfeb, #42A2BC);
+    box-shadow: 
+        inset 0 1px 0 rgba(255,255,255,0.3),
+        0 1px 2px rgba(0,0,0,0.35),
+        inset 0 3px 2px rgba(255,255,255,0.2),
+        inset 0 -3px 2px rgba(0,0,0,0.1);
+
+    cursor: pointer;	
+}
+#add-question-button {
+	
+    /* Size and position */
+    width: 50%;
+    height: 100%;
+    margin-top: 15px;
+    margin-left:45px;	
+}
+
+#addquestion {
+	font-family: 'Lato', Calibri, Arial, sans-serif;
+	width:500px;
 	margin-top:25px;
     padding: 0px 25px 25px;
     background: #fff;

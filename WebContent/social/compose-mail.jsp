@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, model.*" %>
+<%@ page errorPage="../site/404.jsp" %>
 <head>
    <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
 </head>
@@ -10,38 +11,40 @@ User user = (User) session.getAttribute("current user");
 ArrayList<User> friends = (ArrayList<User>)user.getFriends();
 String userName = user.getUserName();
 String messageType = request.getParameter("messageType");
+String quizID = request.getParameter("quiz_id"); 
+String toString = request.getParameter("recipient");
+System.out.print("Sending a Message to: " + toString);
 
 // VARIABLE SET UP
 int toID = 0;
 double topScore = 0.0;
 int challengeID = -1;
-String challengeeInfo ="";
+String recipientInfo ="";
 String challengeSubject="";
 String challengeName="";
 String challenge="";
 
-// CHALLENGEE INFO
+
+// RECIPIENT INFO
+if(toString != null){
+	toID = Integer.parseInt(toString);
+	User to = User.getUser(toID);
+	recipientInfo = to.getUserName() + "<" + to.getEmail() + ">";
+}
+
 if(messageType != null) {
 if(messageType.equals("challenge")) {
-	String toString = request.getParameter("recipient");
-	toID = -1;
-	challengeeInfo = "";
-	if (toString != null) {
-		toID = Integer.parseInt(toString);
-		User to = User.getUser(toID);
-		challengeeInfo = to.getUserName() + "<" + to.getEmail() + ">";
-	}
 
-// CHALLENGE INFO
-	topScore = -1.0;
-	if (messageType.equals("challenge")) {
+	// CHALLENGE INFO
+	if(quizID != null){
+		topScore = -1.0;
 		topScore = Double.parseDouble(request.getParameter("top_score"));
 		challengeID = Integer.parseInt(request.getParameter("quiz_id"));
 		Quiz ch = Quiz.getQuiz(challengeID);
 		String title = ch.getTitle();
 		challengeSubject = user.getUserName() + " has challenged you to take " + title + "!";
 		challenge = user.getUserName() + "'s highest score was: " + topScore + ". But we're sure you can do better." + 
-					"Show " + userName + " that you mean Quizness by beating their score.";
+			"Show " + userName + " that you mean Quizness by beating their score.";
 	}
 }
 }
@@ -50,7 +53,7 @@ if(messageType.equals("challenge")) {
 <body>
 
 	<div class="container">
-	<form id="signup" method="post" action="MessageServlet">
+	<form id="signup" method="post" action="../MessageServlet">
 	<% if (challengeID != -1) { %>
 	<div class="header">
 	<h3>Send a Challenge</h3>
@@ -85,7 +88,8 @@ if(messageType.equals("challenge")) {
 						};
 					</script>
 				<% } else { %>
-					<input id="email" name= "email" type="name" style="width:300px" value="<%=challengeeInfo%>"/>
+				<%System.out.print("recipientInfo"); %>
+					<input id="email" name= "email" type="name" style="width:300px" value="<%=recipientInfo%>"/>
 					<input id="id" name = "id" type="hidden" value="<%=toID%>"/>
 				<% } %>
 				</td>

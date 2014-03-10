@@ -50,7 +50,7 @@ public class MessageServlet extends HttpServlet {
 			int fromID = fromUser.getUserID();
 			
 			// The challengee
-			int toID = Integer.parseInt(request.getParameter("id_field"));
+			int toID = Integer.parseInt(request.getParameter("id"));
 			Inbox inbox = Inbox.getInbox(toID);
 			
 			//String email = request.getParameter("email_field");
@@ -64,7 +64,7 @@ public class MessageServlet extends HttpServlet {
 				int messageID = ServerConnection.addMessage(challenge);
 				inbox.addChallenge(messageID);
 			} else {
-				Note note = new Note(toID, toID, subject, body);
+				Note note = new Note(fromID, toID, subject, body);
 				int messageID = ServerConnection.addMessage(note);
 				inbox.addNote(messageID);
 			}
@@ -74,7 +74,7 @@ public class MessageServlet extends HttpServlet {
 		} 
 		
 		// Need to know which page to forward to
-		RequestDispatcher dispatch = request.getRequestDispatcher("TODO: ADD url"); 
+		RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp"); 
 		dispatch.forward(request, response); 
 	}
 
