@@ -22,7 +22,7 @@ public class Inbox implements Serializable {
 		this.challenges = new ArrayList<Integer>(); 
 	}
 	
-	// Set the ID of the inbox
+	// This is only called when the inbox is added to the database
 	public void setID(int inboxID){
 		this.inboxID = inboxID;
 	}

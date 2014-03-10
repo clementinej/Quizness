@@ -169,10 +169,11 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          <!--A way to start editing the quiz, if the user is the quiz owner. -->
          <br><a href="../quiz-edit.jsp?quiz_id=<%=quiz.getQuizID() %>">Edit Quiz</a>
          <%} %>
+         
+         <!-- A way to challenge another user to this quiz -->
          <br><a href="../social/compose-mail.jsp?quiz_id=<%=quiz.getQuizID() %>?top_score=<%=userHighScore %>">Challenge a friend!</a>
          
           </form>
-          
           <% if(user.isAdmin()){ %>
           <form method="post" action="../DeleteQuizServlet">
             <input type ="hidden" name="quiz_id" value=<%=quizID%>>

@@ -13,21 +13,42 @@
 </head>
 <body>
 <%
+// Message information
 int messageID = Integer.parseInt(request.getParameter("msg_id"));
 Message m = Message.getMessage(messageID);
-int fromID = m.getFromID();
-int toID = m.getToID();
-User user = User.getUser(fromID);
-String from = user.getUserName(); 
+Challenge challenge; 
+Quiz quiz; 
+double highScore;
+
 String subject = m.getSubject();
 String body = m.getBody();
 Date sent = m.getSentAt();
 java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat();
+
+// User information
+int fromID = m.getFromID();
+int toID = m.getToID();
+User user = User.getUser(fromID);
+String from = user.getUserName(); 
+
+// Determine if this message is acceptable and display an accept/reject button
 String messageType = m.getMessageType();
 boolean acceptable = false;
-if(messageType.equals("challenge") || messageType.equals("friendRequest")) acceptable = true; 
 
-//Mark this message as read
+
+if(messageType.equals("challenge")){
+	challenge = (Challenge) m;
+	Quiz quiz = challenge.getQuizID(); 
+	acceptable = true;
+	highScore = challenge.getChallengerHighScore();
+}
+if(messageType.equals("friendRequest")){
+	m = (FriendRequest) m; 
+	acceptable = true; 
+}
+
+
+// Mark this message as read
 m.markAsRead(); 
 
 %>
@@ -38,11 +59,16 @@ m.markAsRead();
          <h2><%=subject%></h2>
          <h4>From <%=from %></h4>
          <p>Sent at <%=formatter.format(sent) %></p>
+         
+         <% if(messageType.equals("challenge")){ %>
+         <p>Quiz: <%=quiz.getTitle()%>>
+         <!-- REDIRECT TO QUIZ SUMMARY -->
+         <p>Your Opponent's High Score: <%=highScore%>>
+         <% } %>
       </div>
       <div class="sep"></div>
       <div class="inputs">
  		<p><%=body %></p><br>
- 
  		<% if(acceptable){ %>
        		<input type ="hidden" name="to_id" value=<%=toID%>>
        		<input type ="hidden" name="msg_id" value=<%=messageID%>>

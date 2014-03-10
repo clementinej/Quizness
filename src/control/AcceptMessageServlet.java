@@ -66,9 +66,10 @@ public class AcceptMessageServlet extends HttpServlet {
 				Challenge challenge = (Challenge) Message.getMessage(messageID);
 				if(isAccepted != null) challenge.accept();
 				
-				// If not accepted simply remove the challenge
-				if(inbox.removeFriendRequest(messageID) == false) throw new Exception(); 
-				target = "../quiz/quiz-summary?quiz_id=" + challenge.getQuizID(); 
+				if(isAccepted == null){
+					if(inbox.removeFriendRequest(messageID) == false) throw new Exception();
+				}
+				target = "../quiz/quiz-summary?quiz_id=" + challenge.getQuizID()+"?msg_id=" + msg_id; 
 			}
 		} catch (Exception e) { }
 		
