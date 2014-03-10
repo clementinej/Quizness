@@ -101,7 +101,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
       <div class="inputs">
          <h3>Quiz Title</h3>
          <p>Description</p><br>
-         <p><b>Created by </b><a href="#"><%=creator %></a></p>
+         <p><b>Created by </b><a href="#"><%=creator.getUserName() %></a></p>
          
          <!-- Print info on the user's last five tries -->
          <br><h3>Your History</h3>
