@@ -37,7 +37,7 @@ public class DeleteUserServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int deleteID = Integer.parseInt(request.getParameter("toID"));
+		int deleteID = Integer.parseInt(request.getParameter("userID"));
 		try {
 			Delete.deleteUser(deleteID);
 			System.out.println("redirected to home.jsp");

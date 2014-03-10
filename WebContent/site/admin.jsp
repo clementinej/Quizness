@@ -1,20 +1,20 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.*, java.util.*" %>
-<%@ page errorPage="../site/404.jsp" %>
+<%--<%@ page errorPage="../site/404.jsp" %> --%>
 
 <%
 User currentUser = (User) session.getAttribute("current user");
-System.out.println(currentUser.getUserName());
+System.out.println("The current user is: " + currentUser.getUserName());
 java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat();
-int numQuizzes = Site.getTotalNumberOfQuizzes();
-int numUsers = Site.getTotalNumberOfUsers();
-int numTags = Site.getTotalNumberTags();
-int numQuizzesTaken = Site.getTotalNumberQuizzesTaken();
+int numQuizzes = 5;//Site.getTotalNumberOfQuizzes();
+int numUsers = 5;//Site.getTotalNumberOfUsers();
+int numTags = 5;//Site.getTotalNumberTags();
+int numQuizzesTaken = 5;//Site.getTotalNumberQuizzesTaken();
 
-int numFriends = Site.getNumFriendships();
-int numMsgsSent = Site.getNumMsgs();
-int numChallenges = Site.getNumChallenges();
-int numFriendReqs = Site.getNumReqs();
+int numFriends = 5;//Site.getNumFriendships();
+int numMsgsSent = 5;//Site.getNumMsgs();
+int numChallenges = 5;//Site.getNumChallenges();
+int numFriendReqs = 5;//Site.getNumReqs();
 
 String user_search = request.getParameter("user_search");
 String quiz_search = request.getParameter("quiz_search");
@@ -91,11 +91,13 @@ String quiz_search = request.getParameter("quiz_search");
 			<div class="border">
 			<h3>Post a New Announcement</h3>
 			</div>
-			<form action="admin/NewAnnouncementServlet" method="post" class="form-1">
+			<form action="../NewAnnouncementServlet" method="post" class="form-1">
 				<div class="title"><input class="announce-title" type="text" name="subject" placeholder="Give your announcement a title" /></div>
 				<div class="title"><input id="announce-text" name="body"></input></div>
 				<!-- <div class="title"><input type="submit" value="Post Announcement!" /></div> -->
-				<a id="submit" href="home.html" value="Post Announcement">ANNOUNCE!</a>
+				<input id="submit" type="submit" value="Announce!"/>
+				
+				<!--  <a id="submit" href="home.html" value="Post Announcement">ANNOUNCE!</a> -->
 			</form>
 		</div>
 		<br class="clearBoth"/>
@@ -143,11 +145,11 @@ String quiz_search = request.getParameter("quiz_search");
 
 	<%
 	// get quizID from search query
-	Quiz quiz = Quiz.getQuiz(71);
+	Quiz quiz = Quiz.getQuiz(81);
 	int quizID = quiz.getQuizID();
 	int creatorID = quiz.getCreatorID();
 	String name = User.getUser(creatorID).getUserName();
-	Date date = quiz.getDateCreated();
+	Date dateD = quiz.getDateCreated();
 	%>
 		<div>
 			<div class="title-bar">Quick Quiz Edit</div>
@@ -178,7 +180,7 @@ String quiz_search = request.getParameter("quiz_search");
 						<div align="left">
 						<span style="width:32%;display:inline-block"><a href="quiz/info.jsp?quiz_id=<%=quizID%>"><%=name%></a></span>
 						<span style="width:27%;display:inline-block"><%=name%></span>
-						<span style="width:22%;display:inline-block"><%=sdf.format(date)%></span>
+						<span style="width:22%;display:inline-block"><%=sdf.format(dateD)%></span>
 						</div>
 					</div>
 				</div>

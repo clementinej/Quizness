@@ -26,6 +26,8 @@ public class Delete {
 	public static void deleteUser(int userID) throws Exception{
 		User user = ServerConnection.getUser(userID);
 		user.setBanned();
+		if (user.isBanned())
+			System.out.println( user.getUserName() + " is banned");
 		ServerConnection.updateUser(user);
 	}
 	
