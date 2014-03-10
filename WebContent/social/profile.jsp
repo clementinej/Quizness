@@ -19,7 +19,7 @@
    User currUser = (User) session.getAttribute("current user");
    int currUserID = currUser.getUserID();
  
-   String userIDString = request.getParameter("id");   
+   String userIDString = request.getParameter("user_id");   
    int userID; 
    User user; 
    

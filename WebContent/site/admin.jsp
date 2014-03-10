@@ -4,6 +4,10 @@
 
 <%
 User currentUser = (User) session.getAttribute("current user");
+if (!currentUser.isAdmin()){
+	RequestDispatcher dispatch = request.getRequestDispatcher("index.html"); 
+	dispatch.forward(request, response);
+}
 System.out.println("The current user is: " + currentUser.getUserName());
 java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat();
 int numQuizzes = 5;//Site.getTotalNumberOfQuizzes();
