@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
     <%@page import="model.*"%>
     <%@page import="java.util.*"%>
-    <%@ page errorPage="../site/404.jsp" %>
+    <%--<%@ page errorPage="../site/404.jsp" --%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,7 +16,7 @@
 User user = (User) session.getAttribute("current user");
 //The text description of the quiz. 
 
-int quizID = Integer.parseInt(request.getParameter("quiz id"));
+int quizID = Integer.parseInt(request.getParameter("quiz_id"));
 
 Quiz quiz = Quiz.getQuiz(quizID);
 
@@ -33,7 +33,7 @@ ArrayList<Integer> triesByScore = QuizSummary.getPerformanceByScore(user.getUser
 ArrayList<Integer> triesByTime = QuizSummary.getPerformancyByTime(user.getUserID(), quizID, 10);
 	
 //A list of the highest performers of all time. 
-ArrayList<Integer> topPerformerIds = QuizSummary.getTopPerformers(quizID, 5);
+//ArrayList<Integer> topPerformerIds = QuizSummary.getTopPerformers(quizID, 5);
 
 //A list of quiz ids for the top 5 performances on the quiz
 ArrayList<Integer> topQuizTriesTodayIds = QuizSummary.getTopPerformers(quizID, 5, 1); //TODO
@@ -46,9 +46,21 @@ ArrayList<Integer> recentTryIds = QuizSummary.getRecentPerformance(quizID, 5);
 %>
 
 <% 
-double userHighScore = QuizTry.getTry(triesByScore.get(0)).getScore();
-double highScore = QuizTry.getTry(topPerformerIds.get(0)).getScore();
-double lastScore = QuizTry.getTry(recentTryIds.get(0)).getScore();
+double userHighScore = 0.0;
+if(triesByScore.size() > 0) {
+	userHighScore = QuizTry.getTry(triesByScore.get(0)).getScore();
+}
+/*double highScore = 0.0;
+if(topPerformerIds.size() > 0) {
+	int topID = topPerformerIds.get(0);
+	System.out.println(topID);
+	QuizTry t = QuizTry.getTry(topID);
+	highScore = t.getScore();
+}*/
+double lastScore = 0.0;
+if(recentTryIds.size() > 0) {
+	lastScore = QuizTry.getTry(recentTryIds.get(0)).getScore();
+}
 
 //the LAST five quiz tries 
 ArrayList<QuizTry> recentTries = new ArrayList<QuizTry>();
@@ -65,11 +77,11 @@ for(int i = 0; i < triesByDate.size(); i++) {
 }
 
 //should return the BEST five tries on this quiz
-ArrayList<QuizTry> bestTries = new ArrayList<QuizTry>(); 
+/*ArrayList<QuizTry> bestTries = new ArrayList<QuizTry>(); 
 for(int i = 0; i < topPerformerIds.size(); i++) {
 	QuizTry t = QuizTry.getTry(topPerformerIds.get(i));
 	recentTries.add(t);
-}
+}*/
 
 //should return the last five tries on this quiz
 ArrayList<QuizTry> bestTriesToday = new ArrayList<QuizTry>(); 

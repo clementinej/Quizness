@@ -25,7 +25,7 @@ if(resultType.equals("user")) {
 	for(int i = 0; i < quizzes.size(); i++) {
 		Quiz q = quizzes.get(i);
 		%>
-		<p><%=q.getTitle() %></p>
+		<a href="../Quizness/quiz/quiz-summary.jsp?quiz_id=<%=q.getQuizID()%>"><p><%=q.getTitle() %></p></a>
 		<% 
 	}
 }
