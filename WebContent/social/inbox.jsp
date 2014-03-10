@@ -64,9 +64,12 @@
                <% 
 				for (int i = 0; i < numNotes; i++){
 					int messageID = notes.get(i); 
-					currNote = (Note) Message.getMessage(messageID);
+					currNote = (Note) Message.getMessage(messageID); 
 					int fromID = currNote.getFromID();
 					Date sentAt = currNote.getSentAt();
+					User user = User.getUser(fromID); 
+					boolean viewed = currNote.getViewed();
+					if(user != null){
 				%>
 		                  <tr>
 		                     <!-- DISPLAY UNREAD LINKS IN BOLD -->
@@ -74,13 +77,14 @@
 		                        <input type="checkbox" id="checkbox<%=i%>" name="check" value="<%=messageID%>">
 		                     </td>
 		                     <!-- LINK TO SENDER'S PROFILE -->
-		                     <td align="left" width="25%"><a href="../social/profile.jsp?id=<%=fromID%>"><font><b>From</b></font></a></td>
+		                     <td align="left" width="25%"><a href="../social/profile.jsp?id=<%=fromID%>"><font><b><%=user.getUserName()%></b></font></a></td>
 		                     <!-- LINK TO MESSAGE -->
 		                     <td align="left" width="50%"><a href="../social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currNote.getSubject() %></b></font></a></td>
-		                     <td align="right" width="20%"><b><%=sentAt %></b></td>
+		                     <td align="right" width="30%"><b><%=sentAt%></b></td>
 		                  </tr>
                   		<%
 					}
+				}
                	%>
                   
                   
