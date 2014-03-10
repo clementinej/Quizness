@@ -101,4 +101,11 @@ public class Inbox implements Serializable {
 	public static Inbox getInbox(int userID) throws Exception {
 		return ServerConnection.getInboxWithUserID(userID); 
 	}
+	
+	public void reset() throws Exception{
+		challenges.clear();
+		requests.clear();
+		notes.clear();
+		ServerConnection.updateInbox(this);
+	}
 }

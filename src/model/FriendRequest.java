@@ -39,6 +39,7 @@ public class FriendRequest extends Message implements Serializable {
 	// Accept the friend request and update the database
 	public void accept() throws Exception{
 		updateFriendGraph(fromID, toID);
+		updateFriendGraph(toID, fromID);
 		addFriends();
 	}
 	

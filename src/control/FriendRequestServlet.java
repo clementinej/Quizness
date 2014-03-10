@@ -46,11 +46,12 @@ public class FriendRequestServlet extends HttpServlet {
 		User fromUser = (User)session.getAttribute("current user");
 		int fromID = fromUser.getUserID(); 
 		int toID = Integer.parseInt(request.getParameter("toID"));
-		User toUser;
+		String subject = fromID + " would like to be friends with you"; 
+		String body = "Hi " + toID +", I hope we can be friends on Quizness."; 
 		Inbox inbox;
 		try {
 			inbox = Inbox.getInbox(toID);
-			FriendRequest friendRequest = new FriendRequest(fromID, toID, null, null);
+			FriendRequest friendRequest = new FriendRequest(fromID, toID, subject, body);
 			int messageID = Message.addMessage(friendRequest); 
 			inbox.addFriendRequest(messageID);
 			ServerConnection.updateInbox(inbox);
