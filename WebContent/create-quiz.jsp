@@ -73,7 +73,6 @@
          	for(int i = 0; i < questionList.size(); i++) {
          		Question q = questionList.get(i);
          		String text = q.getQuestion();
-         		ArrayList<Set<String>> solution = q.getAnswer();
          %>
          <br>
          	<label class="terms"><%=i + 1%>. "<%=text%>"</label>
@@ -81,18 +80,7 @@
          	//for each solution
          	for(int solIndex = 0; solIndex < solution.size(); solIndex++) {
          	%>
-         	<br>
-         	Solution: 
-         	<%
-         		Set<String> oneSolution = solution.get(solIndex);
-         		//for each synonym of each solution
-         		Iterator<String> iter = oneSolution.iterator();
-         		while(iter.hasNext()) {
-         			String s = iter.next();
-         			%>
-         			"<%=s%>"<%if(iter.hasNext())%>,
-         			<%
-         		}
+         	<br><%
          	}
          }
       }
