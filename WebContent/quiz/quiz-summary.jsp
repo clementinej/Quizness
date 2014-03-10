@@ -167,7 +167,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          
          <% if(user.getUserID() == quiz.getCreatorID()) { %>
          <!--A way to start editing the quiz, if the user is the quiz owner. -->
-         <br><a href="quiz-edit.jsp?quiz_id=<%=quiz.getQuizID() %>">Edit Quiz</a>
+         <br><a href="../quiz-edit.jsp?quiz_id=<%=quiz.getQuizID() %>">Edit Quiz</a>
          <%} %>
          <br><a href="../social/compose-mail.jsp?quiz_id=<%=quiz.getQuizID() %>?top_score=<%=userHighScore %>">Challenge a friend!</a>
 
