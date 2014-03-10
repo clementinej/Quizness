@@ -17,10 +17,10 @@ public class Delete {
 		Connection con = ServerConnection.getConnection();
 		
 		clearQuizTryHistory(quiz);
-				
-		PreparedStatement ps = con.prepareStatement("DELETE FROM quiz WHERE id = ?");
+		
+		PreparedStatement ps = con.prepareStatement("DELETE FROM quizzes WHERE id = ?");
 		ps.setInt(1, quizID);
-		ps.executeQuery();
+		ps.executeUpdate();
 	}
 	
 	public static void deleteUser(int userID) throws Exception{
@@ -35,9 +35,10 @@ public class Delete {
 //		ServerConnection.open();
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps;
+		int quizID = quiz.getQuizID();
 		
 		ps = con.prepareStatement("SELECT id FROM quizTries WHERE quizID = ?");
-		ps.setInt(1, quiz.getQuizID());
+		ps.setInt(1, quizID);
 		ResultSet rs = ps.executeQuery();
 		rs.beforeFirst();
 		while (rs.next()){
@@ -47,5 +48,9 @@ public class Delete {
 			user.deleteTry(quizTry);
 			ServerConnection.updateUser(user);
 		}
+		ps = con.prepareStatement("DELETE FROM quizTries WHERE quizID = ?");
+		ps.setInt(1, quizID);
+		ps.executeUpdate();
+		
 	}
 }
