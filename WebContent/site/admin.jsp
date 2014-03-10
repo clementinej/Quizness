@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.*, java.util.*" %>
+<%@ page errorPage="../site/404.jsp" %>
 
 <%
 User currentUser = (User) session.getAttribute("current user");
@@ -141,7 +142,7 @@ String quiz_search = request.getParameter("quiz_search");
 
 	<%
 	// get quizID from search query
-	Quiz quiz = Quiz.getQuiz(quizID);
+	Quiz quiz = Quiz.getQuiz(71);
 	int quizID = quiz.getQuizID();
 	int creatorID = quiz.getCreatorID();
 	String name = User.getUser(creatorID).getUserName();

@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.*"%>
 <%@page import="java.util.*"%>
+<%@ page errorPage="../site/404.jsp" %>
 <html lang="en">
    <head>
       <meta charset="UTF-8" />

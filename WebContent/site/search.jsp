@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
    pageEncoding="ISO-8859-1"%>
    <%@ page import="java.util.*, model.*" %>
+   <%@ page errorPage="../site/404.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
      <head>
@@ -49,7 +50,7 @@
       <div class="container">
       
       <div>
-      <form action="/QuizSearchServlet" method="post" id="signup">
+      <form action="../QuizSearchServlet" method="post" id="signup">
          <div class="header">
             <h3>Quiz Search</h3>
          </div>

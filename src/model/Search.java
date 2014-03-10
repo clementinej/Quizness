@@ -18,7 +18,7 @@ public class Search {
 	
 		if (popular){
 			PreparedStatement ps = con.prepareStatement("SELECT id FROM quizzes WHERE title LIKE ? ORDER BY numOfTimesPlayed");
-			ps.setString(1, "\"%" + queryString + "\"%");
+			ps.setString(1, "%" + queryString + "%");
 			ResultSet rs = ps.executeQuery();
 			rs.beforeFirst();
 			while(rs.next()){
@@ -27,7 +27,7 @@ public class Search {
 			}
 		} else {
 			PreparedStatement ps = con.prepareStatement("SELECT id FROM quizzes WHERE title LIKE ? ORDER BY dateLastPlayed");
-			ps.setString(1, "\"%" + queryString + "\"%");
+			ps.setString(1, "%" + queryString + "%");
 			ResultSet rs = ps.executeQuery();
 			rs.beforeFirst();
 			while(rs.next()){

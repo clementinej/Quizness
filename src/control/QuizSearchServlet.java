@@ -45,8 +45,9 @@ public class QuizSearchServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String quizName = (String) request.getAttribute("search");
+		String quizName = (String) request.getParameter("search");
 		boolean popular = Boolean.parseBoolean(request.getParameter("popular"));
+		System.out.println("Seaching for: " + quizName);
 				
 //		response.setContentType("text/html; charset=UTF-8");
 //		PrintWriter out = response.getWriter();
