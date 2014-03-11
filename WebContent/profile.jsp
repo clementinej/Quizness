@@ -192,7 +192,7 @@
      			<%} %>
      			
      			<% if(myProfile == false && currUser.isAdmin()){ %>
-               	<form method="post" action="../DeleteUserServlet">
+               	<form method="post" action="DeleteUserServlet">
                	<div class ="boxy">
                		<input type ="hidden" name="userID" value=<%=userID%>>
      				<input id="submit" type="submit" value="Delete this user">
@@ -200,7 +200,7 @@
      			</form>
      			
      			<% if(currUser.isAdmin() && !user.isAdmin()) { %>
-     			<form method="post" action="../MakeAdminServlet">
+     			<form method="post" action="MakeAdminServlet">
                	<div class ="boxy">
                		<input type ="hidden" name="user_id" value=<%=userID%>>
      				<input id="submit" type="submit" value="Make this user an admin">
