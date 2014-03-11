@@ -34,6 +34,7 @@ ArrayList<Integer> triesByTime = QuizSummary.getPerformancyByTime(user.getUserID
 	
 //A list of the highest performers of all time. 
 ArrayList<Integer> topQuizTriesTodayIds = QuizSummary.getAllPerformanceWithDays(quizID, 5, 1);
+System.out.println("Number of topQuizTries: "+topQuizTriesTodayIds.size());
 
 //A list of quizTry ids for the top 5 performances on the quiz
 ArrayList<Integer> topPerformerIds = QuizSummary.getAllPerformance((quizID), 10);
@@ -73,21 +74,21 @@ for(int i = 0; i < recentTryIds.size(); i++) {
 ArrayList<QuizTry> lastTriesUser = new ArrayList<QuizTry>(); 
 for(int i = 0; i < triesByDate.size(); i++) {
 	QuizTry t = QuizTry.getTry(triesByDate.get(i));
-	recentTries.add(t);
+	lastTriesUser.add(t);
 }
 
 //should return the BEST five tries on this quiz
 ArrayList<QuizTry> bestTries = new ArrayList<QuizTry>(); 
 for(int i = 0; i < topPerformerIds.size(); i++) {
 	QuizTry t = QuizTry.getTry(topPerformerIds.get(i));
-	recentTries.add(t);
+	bestTries.add(t);
 }
 
 //should return the last five tries on this quiz
 ArrayList<QuizTry> bestTriesToday = new ArrayList<QuizTry>(); 
 for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
 	QuizTry t = QuizTry.getTry(topQuizTriesTodayIds.get(i));
-	recentTries.add(t);
+	bestTriesToday.add(t);
 }
 
 %>

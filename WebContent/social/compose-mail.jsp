@@ -18,7 +18,6 @@
    }
     .message-subject{
     padding-top:20px;
-    padding-left:50px;
    	font-family: 'Lato', Calibri, Arial, sans-serif;
     font-size: 18px;
    }
@@ -90,7 +89,7 @@ if(quizID != null) {
       	<span class="header-link"><a href="../home.jsp">Home</a></span>
          <span class="header-link"><a href="../create-quiz.jsp">Create Quiz</a></span>
          <span class="header-link"><a href="../social/compose-mail.jsp">Compose </a></span>
-         <span class="header-link"><a href="../social/profile.jsp">Profile</a></span>
+         <span class="header-link"><a href="../profile.jsp">Profile</a></span>
          <span class="header-link"><a href="../site/admin.jsp">Admin</a></span>
          <span class="header-link"><a href="../inbox.jsp">Inbox</a></span>
           <span class="header-link"><a href="../site/search.jsp">Search</a></span>
@@ -143,7 +142,7 @@ if(quizID != null) {
 			<tr>
 				<th align="left" width="10%">Subject </th>
 				<% if (challengeID != -1) { %>
-					<td align="left" class="message-subject"><%=challengeSubject%><input name="subject" type="hidden" value="<%=challengeSubject%>"></td>
+					<td align="left" class="message-subject"><%=challengeSubject%><input placeholder="subject" name="subject" type="hidden" value="<%=challengeSubject%>"></td>
 				<% } else { %>
 					<td align="left" class="message-subject"><input name="subject" type="name" style="width:500px" value=""/></td>
 				<% } %>

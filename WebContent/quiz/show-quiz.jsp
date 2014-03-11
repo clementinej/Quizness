@@ -114,17 +114,17 @@
       		quizTryID = ServerConnection.addQuizTry(qTry);
     	}
       if(quiz.hasImmediateCorrection()) {
-
+	//figure out if the last one was wrong
   	  } else {
   		  
   	  }%>
-         <div class="header">
-         <input type="hidden" name="quiz_id" value="<%=quizID %>"/>
+        <div class="header">
+        <input type="hidden" name="quiz_id" value="<%=quizID %>"/>
          	<h3>Let's Get Started!</h3>
         	<p>Best of luck</p>
-          </div>
-    	 <div class="sep"></div>
-     	 <div class="inputs">
+        </div>
+    	<div class="sep"></div>
+     	<div class="inputs">
 	    <h4><%=quiz.getTitle()%> </h4>
 		<p><%=quiz.getDescription()%></p><%
 		System.out.println("Multipage");

@@ -12,7 +12,7 @@
       <%
       String intent = request.getParameter("intent");
       %>
-         <h3>Create a Question</h3>
+         <h3>Create a Question - Question Answer</h3>
          <p>When you're done, click "Add Question" to return to creating your quiz.</p>
       </div>
       <div class="sep"></div>
