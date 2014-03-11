@@ -319,12 +319,13 @@ public class User implements Serializable {
 	}
 	
 	public boolean isFriendsWith(int userID) throws Exception {
-		String query = "SELECT " + userID + " FROM friendships WHERE fromID = " + this.userID; 
+		String query = "SELECT toID FROM friendships WHERE fromID = " + this.userID; 
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps = con.prepareStatement(query);
 		ResultSet rs = ps.executeQuery();
-		while(rs.next()){
-			return true; 
+		if(rs.next()){
+			int toID = rs.getInt(1);
+			if(toID == userID) return true;
 		}
 		return false;
 	}
