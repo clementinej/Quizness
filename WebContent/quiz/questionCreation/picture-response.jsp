@@ -2,11 +2,11 @@
 <%@page import="model.*" %>
 <%@ page errorPage="../site/404.jsp" %>
 <head>
-   <link rel="stylesheet" type="text/css" href="../../css/style_login.css" />
+   <link rel="stylesheet" type="text/css" href="/Quizness/css/style_login.css" />
 </head>
 <body>
    <div class="container">
-   <form method="post" action="../../CreateServlet" id="signup">
+   <form method="post" action="/Quizness/CreateServlet" id="signup">
          <%
       String intent = request.getParameter("intent");
       %>
@@ -16,6 +16,9 @@
       </div>
       <div class="sep"></div>
       <div class="inputs">
+      
+      <%if(request.getParameter("error") != null) %> <h3> Question Format Error.  Please Try Again.</h3>
+      
              <div id="img_url" class="terms">
                   <input type="name" name="question_text" placeholder="Image url" autofocus/>
          </div>

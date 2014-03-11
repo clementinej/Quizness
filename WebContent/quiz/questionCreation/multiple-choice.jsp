@@ -2,21 +2,26 @@
 <%@page import="model.*" %>
 <%@ page errorPage="../site/404.jsp" %>
 <head>
-   <link rel="stylesheet" type="text/css" href="../../css/style_login.css" />
+   <link rel="stylesheet" type="text/css" href="/Quizness/css/style_login.css" />
 </head>
 <body>
    <div class="container">
-      <form method="post" action="../../CreateServlet" id="signup">
-      
+   <form method="post" action="/Quizness/CreateServlet" id="signup">
       <%
       String intent = request.getParameter("intent");
+
       %>
+      
          <div class="header">
             <h3>Create a Question - Multiple Choice</h3>
             <p>When you're done, click "Add Question" to return to creating your quiz.</p>
          </div>
          <div class="sep"></div>
          <div class="inputs">
+         
+               <%if(request.getParameter("error") != null) %> <h3> Question Format Error.  Please Try Again.</h3>
+         
+         
             <div>
                <input type="name" name="question_text" style="width:500px;height:50px" placeholder="Question Text">
             </div>
@@ -54,8 +59,7 @@
     		<input type="hidden" name="quiz_id" value="<%=quizID%>"/>
     <%
       }
-      %>
-            <input name="intent" type="hidden" value="<%=intent%>"/>
+      %><input name="intent" type="hidden" value="<%=intent%>"/>
             <input name="question type" type="hidden" value="3"/>
             <br><input id="submit" type="submit" value="Add Question!"><!-- Store new quiz in database -->
          </div>
