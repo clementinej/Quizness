@@ -7,14 +7,14 @@ import java.util.ArrayList;
 
 public class QuizSummary {
 	
-	// Return x number of performances on this specific quiz, order by date 
+	// Return x number of performances on this specific quiz, order by date (QUIZTRY)
 	public static ArrayList<Integer> getPerformanceByDate(int userID, int quizID, int num) throws Exception{
 		String query = "SELECT id FROM quizTries WHERE userID = " + userID
 				+ " AND quizID = " + quizID + " ORDER BY dateCreated DESC LIMIT " + num;
 		return executeQuery(query);
 	}
 	
-	// Return x number of performances on this specific quiz, order by score 
+	// Return x number of performances on this specific quiz, order by score (QUIZTRY)
 	public static ArrayList<Integer> getPerformanceByScore(int userID, int quizID, int num) throws Exception{
 		String query = "SELECT id FROM quizTries WHERE userID = " + userID 
 				+ " AND quizID = " + quizID + " ORDER BY score DESC LIMIT " + num;
@@ -28,14 +28,14 @@ public class QuizSummary {
 		return executeQuery(query);
 	}
 	
-	// Return x number of top performers on this specific quiz (USER)
+	// Return x number of top performers on this specific quiz (QUIZTRY)
 	public static ArrayList<Integer> getAllPerformance(int quizID, int num) throws Exception{
 		String query = "SELECT id FROM quizTries WHERE quizID = " + quizID 
 				+ " ORDER BY score DESC LIMIT " + num;
 		return executeQuery(query);
 	}
 	
-	// Return x number of top performers within y number of days (USER)
+	// Return x number of top performers within y number of days (QUIZTRY)
 	public static ArrayList<Integer> getAllPerformanceWithDays(int quizID, int num, int numOfDays) throws Exception{
 		String query = "SELECT id FROM quizTries WHERE quizID = " + quizID
 				+ " AND dateCreated >= NOW() - INTERVAL " + numOfDays + " DAY "

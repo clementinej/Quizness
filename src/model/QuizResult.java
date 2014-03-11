@@ -8,17 +8,19 @@ import java.util.ArrayList;
 
 public class QuizResult {
 	
+	// Return x number of performances on this specific quiz, order by score (QUIZTRY)
 	public static ArrayList<Integer> getUserPerformance(int userID, int quizID, int num) throws Exception{
 		return QuizSummary.getPerformanceByScore(userID, quizID, num);
 	}
 	
+	// Return x number of top performers on this specific quiz (QUIZTRY)
 	public static ArrayList<Integer> getAllPerformance(int quizID, int num) throws Exception{
-		return QuizSummary.getTopPerformers(quizID, num);
+		return QuizSummary.getAllPerformance(quizID, num);
 	}
 	
 	// BUGGY
 	public static ArrayList<Integer> getFriendPerformance(int quizID, int userID, int num) throws Exception{
-		Connection con = ServerConnection.getConnection();
+		//Connection con = ServerConnection.getConnection();
 		String query = "SELECT id FROM quizTries INNER JOIN friendships ON quizTries.userID = friendships.toID "
 				+ "WHERE friendships.fromID = " + userID
 				+ " ORDER BY score DESC LIMIT " + num; 

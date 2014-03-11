@@ -81,7 +81,7 @@
                   <ul class="numbers clearfix">
                      <li>Quizzes Taken<strong><%=numQuizzesTaken%></strong></li>
                      <li>Highest Score<strong><%=highScore%></strong></li>
-                     <li class="nobrdr">Last Quiz Taken<strong><%=numFriends%></strong></li>
+                     <li class="nobrdr">Number of Friends<strong><%=numFriends%></strong></li>
                   </ul>
                </div>
             </div>
@@ -109,7 +109,7 @@
                   <div class="inputs"></div>
                </div>
                <div class="boxy">
-                  <p>Friends - <%=numFriends%> total</p>
+                  <p>Friends List</p>
                   <div class="friendslist clearfix">
                   <% for(User f: friends) { %>
                      <div class="friend">
@@ -190,6 +190,15 @@
      			</div>
      			</form>
      			<%} %>
+     			
+     			<% if(alreadyFriends == true) {%>
+            	<form method="post" action="UnfriendServlet">
+               	<div class ="boxy">
+               		<input type ="hidden" name="userID" value=<%=userID%>>
+     				<input id="submit" type="submit" value="Unfriend this user">
+     			</div>
+     			</form>
+               <% } %>
      			
      			<% if(myProfile == false && currUser.isAdmin()){ %>
                	<form method="post" action="DeleteUserServlet">
