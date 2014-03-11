@@ -17,8 +17,8 @@ public class QuiznessAccountManager {
 	 */
 	public QuiznessAccountManager() throws Exception {//initialize with two accounts
 		salt = "@#$%@#FERYS^%#$YSEAH#$E73452WE@#%3#$";
-		createNewAccount("Patrick", "patrick@stanford.edu" ,"1234", true);//add emails
-		createNewAccount("Molly", "molly@dog.com","FloPup", true);
+		createNewAccount("Patrick", "patrick@stanford.edu" ,"1234", "", "", true);//add emails
+		createNewAccount("Molly", "molly@dog.com","FloPup", "", "", true);
 	}
 
 	/*
@@ -26,15 +26,15 @@ public class QuiznessAccountManager {
 	 *  Returns false if the username is already taken.
 	 *  Adds a grain of salt to the password for extra security before hashing.
 	 */
-	public boolean createNewAccount(String userName, String email, String pw, boolean isAdmin) throws Exception {
+	public boolean createNewAccount(String userName, String email, String pw, String newLocation, String newAboutMe, boolean isAdmin) throws Exception {
 		boolean accountFree = false;	
 		System.out.println("In account manager, createNewAccount.");
 		if(User.emailIsAvailable(email)) { //read from database			
 			System.out.println("createNewAccount: db read successful");
 			String unencryptedPlusSalt = pw + salt;
 			String hashedPW = generateHash(unencryptedPlusSalt);
-			String aboutMe = "";
-			String location = "";
+			String aboutMe = newAboutMe;
+			String location = newLocation;
 			User newUser = new User(isAdmin, userName, hashedPW, email, aboutMe, location);
 			model.ServerConnection.addUser(newUser);
 			accountFree = true;
@@ -106,7 +106,7 @@ public class QuiznessAccountManager {
 	public static void main(String[] args) throws Exception {
 		QuiznessAccountManager manager = new QuiznessAccountManager();
 		System.out.println("Start");
-		if(manager.createNewAccount("Lloyd2", "lglucin@stanford.edu","ILikeCats29", true));
+		if(manager.createNewAccount("Lloyd2", "lglucin@stanford.edu","ILikeCats29", "","", true));
 			System.out.println("Successfully Created New Account");
 		if(manager.validLogin("Lloyd2", "ILikeCats29"))
 			System.out.println("Successful Login");

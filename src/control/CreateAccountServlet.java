@@ -38,9 +38,14 @@ public class CreateAccountServlet extends HttpServlet {
 		String userName = request.getParameter("name");		
 		String pw = request.getParameter("password");		
 		String email = request.getParameter("email");
+		
+		String location = request.getParameter("location");
+		String aboutMe = request.getParameter("aboutMe"); 
+		
 		System.out.println("In Create Servlet");
 		try {
-			if(manager.createNewAccount(userName, email, pw, false)) {//go to "user welcome" page
+			if(manager.createNewAccount(userName, email, pw, location, aboutMe, false)) {
+			//if(manager.createNewAccount(userName, email, pw, false)) {//go to "user welcome" page
 				//redirectToPage("site/home.html", request, response);	
 				System.out.println("CreateAccountServlet: setting current user");
 				User newUser = (User) session.getAttribute("current user");
