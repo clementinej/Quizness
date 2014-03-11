@@ -11,7 +11,7 @@
       String intent = request.getParameter("intent");
       %>
       <div class="header">
-         <h3>Create a Question</h3>
+         <h3>Create a Question - Picture Response</h3>
          <p>When you're done, click "Add Question" to return to creating your quiz.</p>
       </div>
       <div class="sep"></div>
