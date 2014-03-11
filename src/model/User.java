@@ -195,6 +195,10 @@ public class User implements Serializable {
 		isBanned = true;
 	}
 	
+	public void setAdmin(){
+		isAdmin = true;
+	}
+	
 	//returns a string of the high score. if there is no score stored, it returns a string
 	//saying that the user has not taken any quizzes
 	public String getHighScore(){
