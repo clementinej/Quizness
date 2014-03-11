@@ -323,7 +323,7 @@ public class User implements Serializable {
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps = con.prepareStatement(query);
 		ResultSet rs = ps.executeQuery();
-		if(rs.next()){
+		while(rs.next()){
 			int toID = rs.getInt(1);
 			if(toID == userID) return true;
 		}

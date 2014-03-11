@@ -140,7 +140,7 @@
             if(inbox.getNumFriendReqs() > 0) pendingRequests = true; 
             
             // Could be buggy
-            if(myProfile == false && currUser.isFriendsWith(currUserID)) alreadyFriends = true; 
+            if(myProfile == false && currUser.isFriendsWith(userID)) alreadyFriends = true; 
             
             if(myProfile == false && inbox.hasPendingRequestFrom(currUserID)) requestSent = true;  
             %>
@@ -164,7 +164,7 @@
                		<div class="head">
                   		<h1>You're not friends. Wanna Be?</h1>
                		</div>
-               		<form method="post" action = "../FriendRequestServlet">
+               		<form method="post" action = "FriendRequestServlet">
                			<div class="boxy">
                				<input type ="hidden" name="toID" value="<%=userID%>">
                   			<input id="submit" type="submit" value="Let's Be Friends!">
@@ -198,6 +198,15 @@
      				<input id="submit" type="submit" value="Delete this user">
      			</div>
      			</form>
+     			
+     			<% if(currUser.isAdmin() && !user.isAdmin()) { %>
+     			<form method="post" action="../MakeAdminServlet">
+               	<div class ="boxy">
+               		<input type ="hidden" name="user_id" value=<%=userID%>>
+     				<input id="submit" type="submit" value="Make this user an admin">
+     			</div>
+     			</form>
+     			<% } %>
      			<%} %>
             </div>
          </section>
