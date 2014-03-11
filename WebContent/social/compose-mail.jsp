@@ -18,7 +18,6 @@
    }
     .message-subject{
     padding-top:20px;
-    padding-left:50px;
    	font-family: 'Lato', Calibri, Arial, sans-serif;
     font-size: 18px;
    }
@@ -143,7 +142,7 @@ if(quizID != null) {
 			<tr>
 				<th align="left" width="10%">Subject </th>
 				<% if (challengeID != -1) { %>
-					<td align="left" class="message-subject"><%=challengeSubject%><input name="subject" type="hidden" value="<%=challengeSubject%>"></td>
+					<td align="left" class="message-subject"><%=challengeSubject%><input placeholder="subject" name="subject" type="hidden" value="<%=challengeSubject%>"></td>
 				<% } else { %>
 					<td align="left" class="message-subject"><input name="subject" type="name" style="width:500px" value=""/></td>
 				<% } %>
