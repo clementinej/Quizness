@@ -35,7 +35,7 @@
    %>
 <body>
    <div class="container">
-      <form method="post" action="../../EditServlet" id="signup">
+      <form method="post" action="../../EditServlet id="signup">
          <div class="header">
             <h3>Edit Question</h3>
             <p>Click "Save" to keep your edits or "Back" to cancel.</p>

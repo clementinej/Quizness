@@ -12,7 +12,7 @@
    --%>
 <body>
    <div class="container">
-      <form method="post" action="../../CreateServlet" id="signup">
+   <form method="post" action="../../CreateServlet?title=<%=request.getParameter("title")%>&description=<%=request.getParameter("description")%> id="signup">
          <div class="header">
       <%
       String intent = request.getParameter("intent");

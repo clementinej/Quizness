@@ -55,10 +55,20 @@ public class CreateServlet extends HttpServlet {
 
 		if(creatorID == -1) return; //should redirect to a "You are not logged in" page
 		
+		if(request.getParameter("save_title_and_description") != null) {
+			String title = request.getParameter("title");
+			String description = request.getParameter("description");
+			session.setAttribute("title", title);
+			session.setAttribute("description", description);
+			forwardToPage("create-quiz.jsp", request, response);
+			return;
+		}
+		
 		if(getUserIntent(session, request).equals("add question")) {
 			Question newQuestion = constructQuestion(session, request);
 			questionList.add(newQuestion);			
 			forwardToPage("create-quiz.jsp", request, response);
+			return;
 		} else if(getUserIntent(session, request).equals("add to existing quiz")) {
 			Question newQuestion = constructQuestion(session, request);
 			Quiz quiz = getQuiz(request);
@@ -72,6 +82,10 @@ public class CreateServlet extends HttpServlet {
 			clearQuestionList(session);
 			forwardToPage("success.html", request, response);		
 		}	
+		
+
+		
+		
 	}
 	
 	

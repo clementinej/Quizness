@@ -52,7 +52,8 @@ public class EditServlet extends HttpServlet {
 			} catch (Exception e) {	e.printStackTrace();}
 			System.out.println("editing title");	
 			System.out.println("editing description");
-			
+			redirectToPage("success.html", request, response);
+			return;
 		} else if(delete != null) {
 			int qIndex = Integer.parseInt(request.getParameter("question_index"));
 			try {
@@ -65,6 +66,7 @@ public class EditServlet extends HttpServlet {
 				quiz.updateQuestion(qIndex, newQuestion);} 
 			catch (Exception e) { e.printStackTrace();}
 		}
+		
 		redirectToPage("quiz-edit.jsp", request, response);
 	}
 

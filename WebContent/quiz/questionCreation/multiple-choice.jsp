@@ -7,10 +7,18 @@
 <body>
    <div class="container">
       <form method="post" action="../../CreateServlet" id="signup">
-      
       <%
       String intent = request.getParameter("intent");
+      if(request.getParameter("title") != null) {
+    	  System.out.println("In Question: title saved");
       %>
+      	<input type="hidden" name="title" value=<%=request.getParameter("title")%>/><%
+      }
+      if(request.getParameter("description") != null) {
+          System.out.println("In Question: description saved");%>
+      	<input type="hidden" name="description" value=<%=request.getParameter("value")%>/><%
+      }%>
+      
          <div class="header">
             <h3>Create a Question - Multiple Choice</h3>
             <p>When you're done, click "Add Question" to return to creating your quiz.</p>
@@ -55,6 +63,22 @@
     <%
       }
       %>
+      
+      
+     <%
+      if(request.getParameter("title") != null) {
+    	  System.out.println("In Question: title saved");
+      %>
+      	<input type="hidden" name="title" value=<%=request.getParameter("title")%>/><%
+      }
+      if(request.getParameter("description") != null) {
+          System.out.println("In Question: description saved");%>
+      	<input type="hidden" name="description" value=<%=request.getParameter("value")%>/><%
+      }%>
+      
+      
+      
+      
             <input name="intent" type="hidden" value="<%=intent%>"/>
             <input name="question type" type="hidden" value="3"/>
             <br><input id="submit" type="submit" value="Add Question!"><!-- Store new quiz in database -->

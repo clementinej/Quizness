@@ -13,8 +13,10 @@
       </div>
       <div class="sep"></div>
       <div class="inputs">
-         <div id="quiz_title" class="terms">
-            <input type="name" name="title" placeholder="Title" autofocus/>
+      <div id="quiz_title" class="terms">
+    <form method="post" id="signup">
+      <%String title = (String)session.getAttribute("title");%>
+          <input type="name" name="title" value="<%=title%>" placeholder="Title" autofocus/>
          </div>
          <div>
             <label class="terms" style="padding:0px 25px;">Category</label>
@@ -27,8 +29,10 @@
             </select>
          </div>
          <div><br>
-            <input type="name" name="description" style="width:500px;height:50px" placeholder="Description of your quiz"></input>
+      <%String description = (String)session.getAttribute("description");%>
+          <input type="name" name="description" value="<%=description%>" placeholder="Title" autofocus/>
          </div>
+         <input type="submit" name="save_title_and_description" value="Save Title And Description"/>
          <div class="checkboxy">
             <input type="checkbox" name="selected" value="multiple_pages"><label class="terms">Show quiz on multiple pages?</label>
          </div>
@@ -59,6 +63,7 @@
             </tr>
          </table>
          <br><input type="button" id="add-question" value="Add A Question"></input> <!-- Forward to type-specific creation template -->
+         </form>
          <br><input id="submit" type="submit" value="Create Quiz!"><!-- Store new quiz in database -->
          <!-- Question section -->
          <div style="margin-top:20px;">
