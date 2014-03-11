@@ -52,7 +52,7 @@ public class UserHome {
 	// Return x num of quizzes recently taken by friends
 	public static ArrayList<Integer> getRecentlyTakenByFriends(int num, int userID) throws Exception{
 		Connection con = ServerConnection.getConnection();
-		String query = "SELECT id FROM quizTries INNER JOIN friendships ON quizTries.userID = friendships.toID "
+		String query = "SELECT quizID FROM quizTries INNER JOIN friendships ON quizTries.userID = friendships.toID "
 				+ "WHERE fromID = " + userID
 				+ " ORDER BY dateCreated DESC LIMIT " + num; 
 		PreparedStatement ps = con.prepareStatement(query);
