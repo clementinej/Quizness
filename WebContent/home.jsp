@@ -72,6 +72,7 @@
    <body>
       <%
          User u = (User) session.getAttribute("current user");
+
          int userID = u.getUserID();
          String name = u.getUserName();
          

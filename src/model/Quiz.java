@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 public class Quiz implements Serializable{
@@ -25,6 +26,7 @@ public class Quiz implements Serializable{
 	private boolean multiplePages;
 	private String description; 
 	private String title; 
+	private ArrayList<Integer> originalToRandomMap; //index = original, value = random
 	
 	private ArrayList<Question> questions; 
 	
@@ -57,17 +59,51 @@ public class Quiz implements Serializable{
 		//this.topScorers = new ArrayList<User>();
 		this.description = description; 
 		this.title = title; 
-
 	}
-		
+	
+	/*
+	 * If random, indexes of the original map to questions of the  
+	 * If not random, makes indexes line up with the values.
+	 * 
+	 * e.g.
+	 * og|rand
+	 * ------ 
+	 * 1 | 2
+	 * 2 | 3
+	 * 3 | 1
+	 */
+	private ArrayList<Question> makeIndexMap() {
+		ArrayList<Question> questionsInOrder = new ArrayList<Question>();
+		originalToRandomMap = new ArrayList<Integer>();
+		if(hasRandomMode) {
+			while(questionsInOrder.size() < questions.size()) {
+				Random rand = new Random();
+				int randomIndex = rand.nextInt(questions.size());
+				if(!originalToRandomMap.contains(randomIndex)) {//TODO:MIGHT NOT BE CLEAN AT ALL!!
+					originalToRandomMap.add(randomIndex);
+					questionsInOrder.add(questions.get(randomIndex));
+				}
+			}
+		} else {
+			for(int i= 0; i < questions.size(); i++) {
+				originalToRandomMap.add(i);
+				questionsInOrder.add(questions.get(i));
+			}
+		}
+		return questionsInOrder;
+	}
+
 	// Return a question specified by the index
 	public Question getQuestion(int index){
 		return questions.get(index);
 	}
 	
-	// Return all of the questions as an array
+	/*
+	 * Returns a list of questions.  The order in which they are returned differs
+	 * every if the quiz is set to be random.
+	 */
 	public ArrayList<Question> getQuestions(){
-		return questions;
+		return makeIndexMap();
 	}
 	
 	// Return the number of questions
@@ -239,11 +275,16 @@ public class Quiz implements Serializable{
 	}
 	
 	// Return the total score for this question
+	//TODO: This code assumes that the index of "questions" corresponds to the index of "responses"
+	/*TODO:
+	 * Maybe have a map of responses that when responses gets passed in, the index of the response 
+	 * goes to a map of random indecies to normal indecies.
+	 */
 	public double calculateScore(ArrayList<String[]> responses){
 		double score = 0;
 		for (int i = 0; i < questions.size(); i++){
 			System.out.println(i +"< questions.size():"+questions.size() + "and <" +responses.size());
-			score += questions.get(i).getPoints(responses.get(i));
+			score += questions.get(originalToRandomMap.get(i)).getPoints(responses.get(i));
 		}
 		return score;
 	}

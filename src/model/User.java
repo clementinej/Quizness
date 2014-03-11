@@ -34,7 +34,7 @@ public class User implements Serializable {
 
 	//constructor
 	public User(boolean isAdmin, String userName, String pw, String email, String aboutMe, String location){
-		this.isAdmin = true;
+		this.isAdmin = isAdmin;
 		this.isBanned = false;
 		this.pw = pw;
 		this.userName = userName;
@@ -147,14 +147,14 @@ public class User implements Serializable {
 		friendsList.remove(friend);
 	}
 	
-	//adds the same friend request to both users
+/*	//adds the same friend request to both users
 	public static void createFriendRequest(String fromUser, String toUser, String subject, String body) throws Exception{
 		FriendRequest request = new FriendRequest(fromUser, toUser, subject, body);
 		User userA = ServerConnection.getUser(fromUser);
 		User userB = ServerConnection.getUser(toUser);
 		userA.addFriendRequest(request);
 		userB.addFriendRequest(request);	
-	}
+	}*/
 	
 	public void deleteFriendRequest(FriendRequest request){
 		friendRequests.remove(request);

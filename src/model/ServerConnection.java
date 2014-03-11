@@ -184,15 +184,14 @@ public class ServerConnection {
 	
 	// Add a quizTry to the database and return the auto generated key
 	public static int addQuizTry(QuizTry quizTry) throws Exception {
-		String query = "INSERT INTO quizTries (userID, quizID, score, timeSpent, dateCreated) VALUES(?, ?, ?, ?, ?)";
+		String query = "INSERT INTO quizTries (userID, quizID, timeSpent, dateCreated) VALUES(?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		
 		Date date = new Date();
 		ps.setInt(1, quizTry.getUserID());
 		ps.setInt(2, quizTry.getQuizID());
-		ps.setDouble(3, quizTry.getScore());
-		ps.setDouble(4, quizTry.getTime());
-		ps.setTimestamp(5, new Timestamp(date.getTime()));
+		ps.setDouble(3, quizTry.getTime());
+		ps.setTimestamp(4, new Timestamp(date.getTime()));
 		ps.executeUpdate();
 		
 		int quizTryID =  getGeneratedKey(ps);
@@ -212,6 +211,7 @@ public class ServerConnection {
 		String query = "UPDATE quizTries SET quizTry = ?, score = ?, timeSpent = ? WHERE id = " + quizTryID; 
 		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		ps.setBytes(1, convertToByteArray(quizTry));
+		System.out.println(quizTry.getScore());
 		ps.setDouble(2, quizTry.getScore());
 		ps.setDouble(3, quizTry.getTime());
 		ps.executeUpdate();

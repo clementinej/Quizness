@@ -19,6 +19,6 @@ public class MyDBInfo {
 mysql -h mysql-user.stanford.edu -u ccs108wang8 -p
 vohpaifa
 USE c_cs108_wang8
- */
+*/
 	
 }

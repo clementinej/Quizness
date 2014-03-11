@@ -14,13 +14,13 @@
 
 
 <%
-    User currUser = (User) session.getAttribute("current user");
-  	int currQuizID = 79;//debugging default
+    User user = (User) session.getAttribute("current user");
+  	int quizID = 79;//debugging default
     if(!debug) {
-   	  currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
+   	  quizID = Integer.parseInt(request.getParameter("quiz_id"));
     }
-	Quiz currQuiz = getCurrQuiz(currQuizID);
-  	boolean multiPage = currQuiz.hasMultiplePages(); 	
+	Quiz quiz = getCurrQuiz(quizID);
+  	boolean multiPage = quiz.hasMultiplePages(); 	
  	 	
  	//--------------SINGLE PAGE DISPLAY SECTION----------------//
  	 	
@@ -30,9 +30,8 @@
  	 */
     if(!multiPage) { 
     	System.out.println("single-page");
- 		QuizTry qTry = new QuizTry(currUser.getUserID(), currQuizID, currQuiz.hasPracticeMode(), currQuiz.hasRandomMode());
+ 		QuizTry qTry = new QuizTry(user.getUserID(), quizID, quiz.hasPracticeMode(), quiz.hasRandomMode());
   		int tryID = ServerConnection.addQuizTry(qTry);
-  		
 		%>
 	<body>
   	  <div class="container">
@@ -43,11 +42,11 @@
          </div>
     	 <div class="sep"></div>
      	 <div class="inputs">
-		<h4><%=currQuiz.getTitle()%> </h4>
-		<p><%=currQuiz.getDescription()%></p>
+		<h4><%=quiz.getTitle()%> </h4>
+		<p><%=quiz.getDescription()%></p>
    	    <input type="hidden" name="quiz try id" value="<%=qTry.getTryID()%>"/>
 		<%
-		ArrayList<Question> questions = currQuiz.getQuestions();
+		ArrayList<Question> questions = quiz.getQuestions();
    	    		
    	    /*
    	     * Print out all questions
@@ -106,14 +105,14 @@
       <div class="container">
   	     <form method="post" action="show-quiz.jsp" id="signup">
          <div class="header">
-         <input type="hidden" name="quiz_id" value="<%=currQuizID %>"/>
+         <input type="hidden" name="quiz_id" value="<%=quizID %>"/>
          	<h3>Let's Get Started!</h3>
         	<p>Best of luck</p>
           </div>
     	 <div class="sep"></div>
      	 <div class="inputs">
-	    <h4><%=currQuiz.getTitle()%> </h4>
-		<p><%=currQuiz.getDescription()%></p><%
+	    <h4><%=quiz.getTitle()%> </h4>
+		<p><%=quiz.getDescription()%></p><%
 		System.out.println("Multipage");
 		
 		QuizTry qTry = null;
@@ -122,7 +121,7 @@
   			quizTryID = Integer.parseInt(request.getParameter("quiz try id"));
 		 	qTry = ServerConnection.getQuizTry(quizTryID);
     	} else {
-     		qTry = new QuizTry(currUser.getUserID(), currQuizID, currQuiz.hasPracticeMode(), currQuiz.hasRandomMode());
+     		qTry = new QuizTry(user.getUserID(), quizID, quiz.hasPracticeMode(), quiz.hasRandomMode());
       		quizTryID = ServerConnection.addQuizTry(qTry);
     	}
     	
@@ -202,7 +201,7 @@
 			break;
 		}%>
 	   	<input type="hidden" name="quiz try id" value="<%=quizTryID%>"/>
-	   	<input type="hidden" name="quiz-id" value="<%=currQuizID%>"/>	
+	   	<input type="hidden" name="quiz-id" value="<%=quizID%>"/>	
      <%}%>
  	
  	</div>
@@ -225,19 +224,26 @@ private void checkIfUserIsLoggedIn(HttpServletRequest request,
 }
 %>
 <%!
-Quiz getCurrQuiz(int currQuizID) throws IOException {
-	Quiz currQuiz = null;
+/* 
+ * Grabs the current quiz given a quizID
+ */
+Quiz getCurrQuiz(int quizID) throws IOException {
+	Quiz quiz = null;
 	try {
-		currQuiz = Quiz.getQuiz(currQuizID); 
+		quiz = Quiz.getQuiz(quizID); 
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
-	return currQuiz;
+	return quiz;
 }	
 %>
 
 
 <%! 
+/*
+ * For multiple choice questions.  Gets all options that will appear next to the check boxes and puts them
+ * in an ArrayList<String>.
+ */
 private ArrayList<String> getOptions(Question q) {
 	ArrayList<String> options = new ArrayList<String>();
 	MultipleChoice mc = (MultipleChoice) q;

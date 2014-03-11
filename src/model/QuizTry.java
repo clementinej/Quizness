@@ -50,7 +50,7 @@ public class QuizTry implements Serializable {
 		this.startTime = System.currentTimeMillis();
 		this.elapsedTime = 0;
 		this.inProgress = true;
-		this.score = -1;
+		this.score = 0;
 		
 		//if there is no practice mode available, then isPractice will also be false
 		if (quiz.hasPracticeMode())
@@ -106,7 +106,7 @@ public class QuizTry implements Serializable {
 		ServerConnection.updateQuizTry(this);
 	}
 	
-	public void gradeQuiz(ArrayList<String[]>responses){
+	public void gradeQuiz(ArrayList<String[]>responses) throws Exception{
 		elapsedTime = System.currentTimeMillis() - startTime;
 		this.responses = responses;
 		score = quiz.calculateScore(responses);
@@ -117,10 +117,11 @@ public class QuizTry implements Serializable {
 		user.addTry(this);
 		checkTryAchievements();
 		dateTaken = new Date();
+		ServerConnection.updateQuizTry(this);
 	}
 
 	//for multipage where responses are stored in this object
-	public void gradeQuiz() {
+	public void gradeQuiz() throws Exception {
 		elapsedTime = System.currentTimeMillis() - startTime;
 		score = quiz.calculateScore(responses);
 		if (score > quiz.getMaxScore()){
@@ -130,6 +131,7 @@ public class QuizTry implements Serializable {
 		user.addTry(this);
 		checkTryAchievements();
 		dateTaken = new Date();
+		ServerConnection.updateQuizTry(this);
 	}
 	
 	private void checkTryAchievements(){
