@@ -14,8 +14,24 @@
       <link rel="stylesheet" type="text/css" href="css/normalize.css" />
       <link rel="stylesheet" type="text/css" href="css/inbox.css" />
       <script src="js/modernizr-2.6.2.min.js"></script>
+      <style>
+         .header-link {
+	padding-left:50px;
+	font-weight:bold;	
+	}
+      </style>
    </head>
       <body>
+            <!--top bar -->
+      <div class="top">
+      	<span class="header-link"><a href="home.jsp">Home</a></span>
+         <span class="header-link"><a href="create-quiz.jsp">Create Quiz</a></span>
+         <span class="header-link"><a href="social/compose-mail.jsp">Compose </a></span>
+         <span class="header-link"><a href="profile.jsp">Profile</a></span>
+         <span class="header-link"><a href="site/admin.jsp">Admin</a></span>
+         <span class="header-link"><a href="inbox.jsp">Inbox</a></span>
+          <span class="header-link"><a href="site/search.jsp">Search</a></span>
+      </div>
       
       <%
 		// Get the current user
