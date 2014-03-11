@@ -349,4 +349,25 @@ public class User implements Serializable {
 		}
 		return false;
 	}
+	
+	public double getAverageScore() throws Exception{
+		String query = "SELECT AVG(score)  FROM quizTries WHERE userID = " + this.userID;
+		System.out.println("getUserAverageScore: " + query);
+		PreparedStatement ps = ServerConnection.getConnection().prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()) return rs.getDouble(1);
+		else return -1.0; 
+	}
+	
+	public void removeFriend(int userID) throws Exception {
+		String queryA = "DELETE FROM friendships WHERE fromID = " + this.userID
+				+ " AND toID = " + userID; 
+		String queryB = "DELETE FROM friendships WHERE fromID = " + userID
+				+ " AND toID = " + this.userID; 
+		Connection con = ServerConnection.getConnection();
+		PreparedStatement ps = con.prepareStatement(queryA);
+		ps.executeUpdate();
+		ps.executeUpdate(queryB);
+		ps.executeUpdate();
+	}
 }
