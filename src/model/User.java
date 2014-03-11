@@ -92,16 +92,6 @@ public class User implements Serializable {
 	}
 	public void makeQuiz(Quiz quiz) throws Exception{
 		quizzesMade.add(quiz);
-		int numQuizzes = quizzesMade.size();
-		System.out.println(numQuizzes);
-		System.out.println("my balls hurt");
-		if (numQuizzes == 1)
-			addAchievement(new AmateurAuthor());
-		if (numQuizzes == 3)
-			addAchievement(new ProlificAuthor());
-		if (numQuizzes == 5)
-			addAchievement(new ProdigiousAuthor());
-		ServerConnection.updateUser(this);
 	}
 	
 	public void deleteQuiz(Quiz quiz){

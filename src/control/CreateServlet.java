@@ -1,6 +1,9 @@
 package control;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -143,11 +146,39 @@ private Quiz getQuiz(HttpServletRequest request) {
 				questionList, isPracticeMode, hasRandomMode, hasTimedMode, immediateCorrection, multiplePages);
 		try {
 			ServerConnection.addQuiz(quiz);
+			checkAchievements(creatorID);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		
 	}
 
+	private void checkAchievements(int creatorID) throws Exception{
+		System.out.println("Checking achievements");
+		Connection con = ServerConnection.getConnection();
+		User user = ServerConnection.getUser(creatorID);
+		PreparedStatement ps = con.prepareStatement("SELECT id FROM quizzes WHERE creatorID = ?");
+		ps.setInt(1, creatorID);
+		ResultSet rs = ps.executeQuery();
+		int numQuizzes = 0;
+		while (rs.next()){
+			numQuizzes++;
+		}
+		System.out.println(numQuizzes);
+		System.out.println("my balls hurt");
+		if (numQuizzes == 1){
+			System.out.println("Adding amateur author");
+			user.addAchievement(new AmateurAuthor());
+		}
+		if (numQuizzes == 3){
+			System.out.println("Adding prolific author");
+			user.addAchievement(new ProlificAuthor());
+		}
+		if (numQuizzes == 5){
+			System.out.println("Adding prodigious author");
+			user.addAchievement(new ProdigiousAuthor());
+		}
+		ServerConnection.updateUser(user);
+	}
 	/*
 	 * After a quiz is created, the temporary question list is replaced with an empty list
 	 * in preparation for another quiz to be made.
