@@ -139,7 +139,7 @@
             if(inbox.getNumFriendReqs() > 0) pendingRequests = true; 
             
             // Could be buggy
-            if(myProfile == false && currUser.getFriends().contains(user)) alreadyFriends = true; 
+            if(myProfile == false && currUser.isFriendsWith(currUserID)) alreadyFriends = true; 
             
             if(myProfile == false && inbox.hasPendingRequestFrom(currUserID)) requestSent = true;  
             %>

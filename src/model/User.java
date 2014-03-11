@@ -325,4 +325,15 @@ public class User implements Serializable {
 		this.friendsList.clear();
 		ServerConnection.updateUser(this);
 	}
+	
+	public boolean isFriendsWith(int userID) throws Exception {
+		String query = "SELECT " + userID + " FROM friendships WHERE fromID = " + this.userID; 
+		Connection con = ServerConnection.getConnection();
+		PreparedStatement ps = con.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			return true; 
+		}
+		return false;
+	}
 }
