@@ -57,12 +57,13 @@ public class User implements Serializable {
 /*
  * Achievements section. Adds the achievement if it doesn't already exist
  */
-	public void addAchievement(Achievement achievement){
+	public void addAchievement(Achievement achievement) throws Exception{
 		int key = achievement.getKey();
 		if (!achievementKeys.contains(key)){
 			achievementKeys.add(key);
 			achievements.add(achievement);
 		}
+		ServerConnection.updateUser(this);
 	}
 	
 	public ArrayList<Achievement> getAchievements(){
@@ -89,8 +90,18 @@ public class User implements Serializable {
 			quizzesTried.remove(quizTry);
 		}
 	}
-	public void makeQuiz(Quiz quiz){
+	public void makeQuiz(Quiz quiz) throws Exception{
 		quizzesMade.add(quiz);
+		int numQuizzes = quizzesMade.size();
+		System.out.println(numQuizzes);
+		System.out.println("my balls hurt");
+		if (numQuizzes == 1)
+			addAchievement(new AmateurAuthor());
+		if (numQuizzes == 3)
+			addAchievement(new ProlificAuthor());
+		if (numQuizzes == 5)
+			addAchievement(new ProdigiousAuthor());
+		ServerConnection.updateUser(this);
 	}
 	
 	public void deleteQuiz(Quiz quiz){
@@ -197,6 +208,11 @@ public class User implements Serializable {
 	
 	public void setAdmin(){
 		isAdmin = true;
+	}
+	
+	public void incrementQuizzesTaken(){
+		numQuizzesTaken++;
+		System.out.println("Number of quizzes taken: " + numQuizzesTaken);
 	}
 	
 	//returns a string of the high score. if there is no score stored, it returns a string
