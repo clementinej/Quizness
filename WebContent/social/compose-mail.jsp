@@ -33,7 +33,7 @@
 // CHALLENGER INFO
 User user = (User) session.getAttribute("current user");
 ArrayList<User> friends = (ArrayList<User>)user.getFriends();
-System.out.print("friends" + friends.get(0).getUserName());
+//System.out.print("friends" + friends.get(0).getUserName());
 String userName = user.getUserName();
 String quizID = request.getParameter("quiz_id"); 
 String toString = request.getParameter("recipient");

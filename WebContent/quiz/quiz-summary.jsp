@@ -181,6 +181,12 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
      		<% } %>
      		
      	</form>
+     	<% if (user.isAdmin()){ %>
+     	<form method = "post" action = "../ClearQuizHistoryServlet">
+     		<input type = "hidden" name = "quiz_id" value="<%=quizID%>"/>
+     		<input id = "submit" type = "submit" value = "Clear Quiz History">
+     		<% } %>
+     	</form>
       </div>	
    </div>
 </body>

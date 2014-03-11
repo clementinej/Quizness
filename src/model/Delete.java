@@ -13,7 +13,6 @@ public class Delete {
 	public static void deleteQuiz(int quizID) throws Exception{
 		Quiz quiz = ServerConnection.getQuiz(quizID);
 		
-//		ServerConnection.open();
 		Connection con = ServerConnection.getConnection();
 		
 		clearQuizTryHistory(quiz);
@@ -32,7 +31,6 @@ public class Delete {
 	}
 	
 	public static void clearQuizTryHistory(Quiz quiz) throws Exception{
-//		ServerConnection.open();
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps;
 		int quizID = quiz.getQuizID();

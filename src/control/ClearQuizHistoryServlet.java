@@ -2,6 +2,7 @@ package control;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,13 +39,20 @@ public class ClearQuizHistoryServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int quizID = Integer.parseInt(request.getParameter("quiz id"));
+		int quizID = Integer.parseInt(request.getParameter("quiz_id"));
 		try {
 			Quiz quiz = ServerConnection.getQuiz(quizID);
 			Delete.clearQuizTryHistory(quiz);
-			System.out.println("Deleted quiz history");
+			System.out.println("Cleared quiz history");
+			redirectToPage("home.jsp", request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void redirectToPage(String pageName, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher dispatch = request.getRequestDispatcher(pageName); 
+		dispatch.forward(request, response); 
 	}
 }
