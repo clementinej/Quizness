@@ -352,5 +352,6 @@ public class User implements Serializable {
 		PreparedStatement ps = con.prepareStatement(queryA);
 		ps.executeUpdate();
 		ps.executeUpdate(queryB);
+		ps.executeUpdate();
 	}
 }

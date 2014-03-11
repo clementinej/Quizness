@@ -38,6 +38,7 @@
    int numFriends = user.getFriends().size();
    String aboutMe = user.getAboutMe(); // Allow user to add this as easy extension?
    String location = user.getLocation();
+   int averageScore = (int) user.getAverageScore();
    ArrayList<Achievement> achievements = user.getAchievements();
    ArrayList<User> friends = user.getFriends();
    int highScore = 0;
@@ -81,7 +82,7 @@
                   <ul class="numbers clearfix">
                      <li>Quizzes Taken<strong><%=numQuizzesTaken%></strong></li>
                      <li>Highest Score<strong><%=highScore%></strong></li>
-                     <li class="nobrdr">Number of Friends<strong><%=numFriends%></strong></li>
+                     <li class="nobrdr">Average Score<strong><%=averageScore%></strong></li>
                   </ul>
                </div>
             </div>
