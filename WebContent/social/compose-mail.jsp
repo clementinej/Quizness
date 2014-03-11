@@ -3,20 +3,44 @@
 <%--@ page errorPage="../site/404.jsp" --%>
 <head>
    <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
+   <style>
+   .message-body{
+   	margin-top:20px;
+   	width:500px;
+   	height:150px;
+   	font-family: 'Lato', Calibri, Arial, sans-serif;
+    font-size: 18px;
+   }
+    .message-subject{
+    padding-top:20px;
+    padding-left:50px;
+   	font-family: 'Lato', Calibri, Arial, sans-serif;
+    font-size: 18px;
+   }
+   .styled-select select {
+   width: 268px;
+   padding: 5px;
+   font-size: 16px;
+   line-height: 1;
+   border: 1;
+   border-radius: 1;
+   height: 34px;
+   }
+   </style>
 </head>
 <%
 
 // CHALLENGER INFO
 User user = (User) session.getAttribute("current user");
 ArrayList<User> friends = (ArrayList<User>)user.getFriends();
+System.out.print("friends" + friends.get(0).getUserName());
 String userName = user.getUserName();
-//String messageType = request.getParameter("messageType");
 String quizID = request.getParameter("quiz_id"); 
 String toString = request.getParameter("recipient");
 System.out.print("Sending a Message to: " + toString);
 
 // VARIABLE SET UP
-int toID = 0;
+int toID = -1;
 double topScore = 0.0;
 int challengeID = -1;
 String recipientInfo ="";
@@ -32,8 +56,8 @@ if(toString != null){
 	recipientInfo = to.getUserName() + "<" + to.getEmail() + ">";
 }
 
+// CHALLENGE INFO
 if(quizID != null) {
-	// CHALLENGE INFO
 	topScore = -1.0;
 	try {
 		topScore = Double.parseDouble(request.getParameter("top_score"));
@@ -47,7 +71,7 @@ if(quizID != null) {
 	String title = ch.getTitle();
 	challengeSubject = user.getUserName() + " has challenged you to take " + title + "!";
 	challenge = user.getUserName() + "'s highest score was: " + topScore + ". But we're sure you can do better." + 
-		"Show " + userName + " that you mean Quizness by beating their score.";
+		" Show " + userName + " that you mean Quizness by beating their score.";
 }
 
 %>
@@ -65,18 +89,21 @@ if(quizID != null) {
 			<tr>
 				<th align="left" width="10%">To </th>
 				<td align="left">
-				<% if(toID == -1) { %>	
-
-					<input id="email" name="email" type="name" style="width:300px" readonly/>
-					<input id="id" name = "id" type="hidden" value=""/>
+				<%
+				System.out.print("to id" + toID); 
+				if(toID == -1) { %>	
+					<div class="styled-select">
 					<select name="type" id="friends">
 						<option>Select a friend</option>
 					<% for (int i = 0; i < friends.size(); i++) { 
 						User f = friends.get(i);
+						String to = f.getUserName();
 					%>
-						 <option value="<%=userName%> "><%=userName%></option>
+						 <option value="<%=to%> "><%=to%></option>
+						 <input id="id" name = "id" type="hidden" value="<%=f.getUserID()%>"/>
 					<% } %>
 					</select>
+					</div>
 					<script>
 						var textBox = document.getElementById('email_field');
 						var dropDown = document.getElementById('friend_dropdown');
@@ -97,17 +124,17 @@ if(quizID != null) {
 			<tr>
 				<th align="left" width="10%">Subject </th>
 				<% if (challengeID != -1) { %>
-					<td align="left"><%=challengeSubject%><input name="subject" type="hidden" value="<%=challengeSubject%>"></td>
+					<td align="left" class="message-subject"><%=challengeSubject%><input name="subject" type="hidden" value="<%=challengeSubject%>"></td>
 				<% } else { %>
-					<td align="left"><input name="subject" type="name" style="width:500px" value=""/></td>
+					<td align="left" class="message-subject"><input name="subject" type="name" style="width:500px" value=""/></td>
 				<% } %>
 			</tr>
 			<tr>
 				<th align="left" width="10%">Body </th>
 				<% if (challengeID != -1) { %>
-					<td><textarea name="body"><%=challenge%></textarea></td>
+					<td><textarea name="body" class="message-body"><%=challenge%></textarea></td>
 				<% } else { %>
-					<td><textarea name="body" style="width:500px;height:150px">Enter your message here.</textarea></td>
+					<td><textarea name="body" class="message-body">Enter your message here.</textarea></td>
 				<% } %>
 			</tr>
 			<tr>
@@ -125,6 +152,6 @@ if(quizID != null) {
 				<% } %>
 			</tr>
 		</table>
-	</form></div><br>
-
+	</form>
+	</div><br>
 </body>

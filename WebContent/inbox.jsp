@@ -50,6 +50,7 @@
       <div class="container">
          <section class="color-1">
             <nav class="cl-effect-14">
+             	<a href="inbox.jsp">All Mail</a>
                <a href="inbox.jsp?displayType=challenge">Challenges</a>
                <a href="inbox.jsp?displayType=note">Notes</a>
                <a href="inbox.jsp?displayType=request">Friend Requests</a>
