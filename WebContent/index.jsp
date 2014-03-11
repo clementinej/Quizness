@@ -9,6 +9,10 @@
       <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300|Montserrat' rel='stylesheet' type='text/css' />
    </head>
    <body>
+        <%if(request.getParameter("invalid_login") != null) {
+        	System.out.println("Invalid Login");%>
+        <h1>Invalid Login.  Please Try Again.</h1>
+        <%}%>
       <div class="container_main">
          <section class="main">
             <h2 class="cs-text" id="cs-text">Quizness</h2>
