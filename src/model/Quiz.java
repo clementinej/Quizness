@@ -4,14 +4,10 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 
 public class Quiz implements Serializable{
 	private static final long serialVersionUID = -1573586149365786232L;
@@ -318,11 +314,9 @@ public class Quiz implements Serializable{
 		double result = 0; 
 		String query = "SELECT MAX(score) FROM quizTries "
 				+ "WHERE userID = " + userID
-				+ "AND WHERE quizID = " + quizID;
+				+ " AND quizID = " + quizID;
 		Connection con = ServerConnection.getConnection();
-		PreparedStatement ps = con.prepareStatement(query);
-		ps.executeUpdate();
-		ResultSet rs = ps.getResultSet();
+		ResultSet rs = con.prepareStatement(query).executeQuery();
 		while(rs.next()){
 			result = rs.getDouble(1);
 		}
