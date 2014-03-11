@@ -35,7 +35,11 @@ if(toString != null){
 if(quizID != null) {
 	// CHALLENGE INFO
 	topScore = -1.0;
-	topScore = Double.parseDouble(request.getParameter("top_score"));
+	try {
+		topScore = Double.parseDouble(request.getParameter("top_score"));
+	} catch (NullPointerException e) {
+		topScore = 0.0;
+	}
 	challengeID = Integer.parseInt(request.getParameter("quiz_id"));
 	Quiz ch = Quiz.getQuiz(challengeID);
 	String title = ch.getTitle();
