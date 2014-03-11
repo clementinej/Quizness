@@ -53,7 +53,7 @@ public class CreateAccountServlet extends HttpServlet {
 				session.setAttribute("current user", newUser);
 				redirectToPage("home.jsp", request, response);	
 			} else {		
-				redirectToAccountIsInUse(response, userName);
+				redirectToPage("try-again.jsp", request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
