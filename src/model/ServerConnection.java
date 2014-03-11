@@ -110,9 +110,9 @@ public class ServerConnection {
 		System.out.println("User at "+ user.getEmail() +" added to database");
 		
 		Inbox inbox = new Inbox(userID); 
-		Note note = new Note(1, 2, "Hi", "Hello World"); 
-		int messageID = ServerConnection.addMessage(note);
-		inbox.addNote(messageID);
+		//Note note = new Note(1, 2, "Hi", "Hello World"); 
+		//int messageID = ServerConnection.addMessage(note);
+		//inbox.addNote(messageID);
 		addInbox(inbox);
 		return userID;
 	}
