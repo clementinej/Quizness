@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
 				redirectToPage("home.jsp", request, response);
 				return;
 			} else { 
-				redirectToTryAgain(response);
+				redirectToPage("index.jsp?invalid_login=signal", request, response);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
