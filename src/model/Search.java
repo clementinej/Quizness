@@ -17,7 +17,8 @@ public class Search {
 		ArrayList<Quiz> searchedQuizzes = new ArrayList<Quiz>();
 	
 		if (popular){
-			PreparedStatement ps = con.prepareStatement("SELECT id FROM quizzes WHERE title LIKE ? ORDER BY numOfTimesPlayed");
+			System.out.println("Searching for popular");
+			PreparedStatement ps = con.prepareStatement("SELECT id FROM quizzes WHERE title LIKE ? ORDER BY numTimesTaken");
 			ps.setString(1, "%" + queryString + "%");
 			ResultSet rs = ps.executeQuery();
 			rs.beforeFirst();
@@ -26,6 +27,7 @@ public class Search {
 				searchedQuizzes.add(quiz);
 			}
 		} else {
+			System.out.println("Searching for recent");
 			PreparedStatement ps = con.prepareStatement("SELECT id FROM quizzes WHERE title LIKE ? ORDER BY dateLastPlayed");
 			ps.setString(1, "%" + queryString + "%");
 			ResultSet rs = ps.executeQuery();

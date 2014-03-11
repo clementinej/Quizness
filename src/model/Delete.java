@@ -50,5 +50,8 @@ public class Delete {
 		ps.setInt(1, quizID);
 		ps.executeUpdate();
 		
+		ps = con.prepareStatement("UPDATE quizzes SET numTimesTaken = 0 WHERE id = " + quizID);
+		ps.executeUpdate();
+		
 	}
 }

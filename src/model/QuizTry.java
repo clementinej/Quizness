@@ -118,6 +118,7 @@ public class QuizTry implements Serializable {
 		checkTryAchievements();
 		dateTaken = new Date();
 		ServerConnection.updateQuizTry(this);
+		quiz.incrementNumOfTimesPlayed();
 	}
 
 	//for multipage where responses are stored in this object
@@ -132,6 +133,7 @@ public class QuizTry implements Serializable {
 		checkTryAchievements();
 		dateTaken = new Date();
 		ServerConnection.updateQuizTry(this);
+		quiz.incrementNumOfTimesPlayed();
 	}
 	
 	private void checkTryAchievements(){

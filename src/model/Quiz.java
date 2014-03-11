@@ -261,7 +261,9 @@ public class Quiz implements Serializable{
 		String query = "UPDATE quizzes SET numTimesTaken = ? WHERE id = " + this.quizID;
 		PreparedStatement ps = con.prepareStatement(query);
 		ps.setInt(1, numOfTimesPlayed);
-		ps.executeQuery();
+		ps.executeUpdate();
+		ServerConnection.updateQuiz(this);
+		System.out.println("This quiz has been played " + numOfTimesPlayed + " times.");
 	}
 	
 	// Set the title of the quiz
