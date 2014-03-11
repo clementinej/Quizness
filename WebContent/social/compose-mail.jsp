@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, model.*" %>
-<%@ page errorPage="../site/404.jsp" %>
+<%--@ page errorPage="../site/404.jsp" --%>
 <head>
    <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
 </head>
@@ -38,6 +38,8 @@ if(quizID != null) {
 	try {
 		topScore = Double.parseDouble(request.getParameter("top_score"));
 	} catch (NullPointerException e) {
+		topScore = 0.0;
+	} catch (NumberFormatException e) {
 		topScore = 0.0;
 	}
 	challengeID = Integer.parseInt(request.getParameter("quiz_id"));
