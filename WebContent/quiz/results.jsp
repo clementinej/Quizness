@@ -37,6 +37,16 @@
       System.out.println("User Checking is good");
       %>
    <body>
+      <!--top bar -->
+      <div class="top">
+      	<span class="header-link"><a href="../home.jsp">Home</a></span>
+         <span class="header-link"><a href="../create-quiz.jsp">Create Quiz</a></span>
+         <span class="header-link"><a href="../social/compose-mail.jsp">Compose </a></span>
+         <span class="header-link"><a href="../social/profile.jsp">Profile</a></span>
+         <span class="header-link"><a href="../site/admin.jsp">Admin</a></span>
+         <span class="header-link"><a href="../inbox.jsp">Inbox</a></span>
+          <span class="header-link"><a href="../site/search.jsp">Search</a></span>
+      </div>
       <div class="container">
          <header class="clearfix">
          </header>
@@ -80,10 +90,9 @@
         //double friendsAverageTime = getFriendsAverageTime();%>
              
             <div id="score">
-               <p>Your score is <%=score %></p>
-               <p>It took you <%=time %> seconds to complete this quiz</p>
-            </div>
-            
+             <h2>You scored <%=score %></h2>
+             <p>It took you <%=time %> seconds to complete this quiz</p><br>
+               
             <h1>Your History</h1>
             <p>Your average score on this quiz is <%=userAverageScore%></p>
             <p>On average, this quiz takes you <%--=userAverageTime --%> seconds to complete </p>
@@ -95,6 +104,7 @@
             <p>On average, this quiz takes users <%--=averageTime --%> seconds to complete.</p>
             <p>This quiz has been taken <%--=numTries --%> times.</p>
             <p>This quiz has been taken <%--=numTriesToday --%> times today.</p>
+            </div>
          </form>
         <%--
          <%

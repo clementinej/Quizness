@@ -2,7 +2,12 @@
 <%@ page import="java.util.*, model.*" %>
 <%--@ page errorPage="../site/404.jsp" --%>
 <head>
-   <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
+  <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" type="text/css" href="../css/style.css" />
+      <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
+      <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300|Montserrat' rel='stylesheet' type='text/css' />
    <style>
    .message-body{
    	margin-top:20px;
@@ -26,6 +31,10 @@
    border-radius: 1;
    height: 34px;
    }
+   .header-link {
+	padding-left:50px;
+	font-weight:bold;	
+	}
    </style>
 </head>
 <%
@@ -33,7 +42,6 @@
 // CHALLENGER INFO
 User user = (User) session.getAttribute("current user");
 ArrayList<User> friends = (ArrayList<User>)user.getFriends();
-System.out.print("friends" + friends.get(0).getUserName());
 String userName = user.getUserName();
 String quizID = request.getParameter("quiz_id"); 
 String toString = request.getParameter("recipient");
@@ -76,6 +84,16 @@ if(quizID != null) {
 
 %>
 <body>
+      <!--top bar -->
+      <div class="top">
+      	<span class="header-link"><a href="../home.jsp">Home</a></span>
+         <span class="header-link"><a href="../create-quiz.jsp">Create Quiz</a></span>
+         <span class="header-link"><a href="../social/compose-mail.jsp">Compose </a></span>
+         <span class="header-link"><a href="../social/profile.jsp">Profile</a></span>
+         <span class="header-link"><a href="../site/admin.jsp">Admin</a></span>
+         <span class="header-link"><a href="../inbox.jsp">Inbox</a></span>
+          <span class="header-link"><a href="../site/search.jsp">Search</a></span>
+      </div>
 	<div class="container">
 	<form id="signup" method="post" action="../MessageServlet">
 	<% if (challengeID != -1) { %>
@@ -155,3 +173,13 @@ if(quizID != null) {
 	</form>
 	</div><br>
 </body>
+<script>
+   var button = document.getElementById("send-button");
+   button.addEventListener("click", function() {
+	   	var type = document.getElementById("friends");
+	   	var value = type.options[type.selectedIndex].value;
+	   	if(value == 0) {
+	   		alert("Please choose a question type");
+	   	}
+	   	});
+</script>
