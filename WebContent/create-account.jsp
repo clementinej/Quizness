@@ -33,11 +33,7 @@
             <div class="checkboxy">
                 <input name="cecky" id="checky" value="1" type="checkbox" /><label class="terms">I understand what I'm getting myself into</label>
             </div>
-            <%--Option 1: Have a less pretty button that logs in automatically--%>
-            <input type="submit" value="LET'S DO THIS THING" />
-            <%--Option 2: Find a way for this line below to be sent to the CreateAccountServlet 
-            <a id="submit" href="index.html" value="Create Account">LET'S DO THIS THING!</a>
-            --%>
+            <input id="submit" type="submit" value="LET'S DO THIS THING" />
         </div>
 	</form>
 	</div>
