@@ -40,7 +40,10 @@
    String location = user.getLocation();
    ArrayList<Achievement> achievements = user.getAchievements();
    ArrayList<User> friends = user.getFriends();
-   String highScore = user.getHighScore();
+   int highScore = 0;
+   if(!user.getHighScore().equals("This user hasn't taken any quizzes yet!")) {
+	   highScore = Integer.parseInt(user.getHighScore());
+   }
    
    // COMMENT OUT THESE PLACEHOLDERS. ALL THE FIELDS SHOULD BY DYNAMICALLY 
    // POPULATED BY THE DATA ABOVE
@@ -98,7 +101,6 @@
                      <%} %>
 
                   </div>
-                  <span><a href="#">See all...</a></span>
                </div>
             </div>
             <div class="gcontent">
@@ -111,11 +113,10 @@
                   <div class="friendslist clearfix">
                   <% for(User f: friends) { %>
                      <div class="friend">
-                        <span class="friendly"><a href="#"><%=f.getUserName()%></a></span>
+                        <span class="friendly"><a href="profile.jsp?id=<%=f.getUserID() %>"><%=f.getUserName()%></a></span>
                      </div>
                      <%} %>
                   </div>
-                  <span><a href="#">See all...</a></span>
                </div>
             </div>
          </section>
@@ -139,7 +140,7 @@
             if(inbox.getNumFriendReqs() > 0) pendingRequests = true; 
             
             // Could be buggy
-            if(myProfile == false && currUser.getFriends().contains(user)) alreadyFriends = true; 
+            if(myProfile == false && currUser.isFriendsWith(currUserID)) alreadyFriends = true; 
             
             if(myProfile == false && inbox.hasPendingRequestFrom(currUserID)) requestSent = true;  
             %>

@@ -146,15 +146,7 @@ public class User implements Serializable {
 	public void deleteFriend(User friend){
 		friendsList.remove(friend);
 	}
-	
-/*	//adds the same friend request to both users
-	public static void createFriendRequest(String fromUser, String toUser, String subject, String body) throws Exception{
-		FriendRequest request = new FriendRequest(fromUser, toUser, subject, body);
-		User userA = ServerConnection.getUser(fromUser);
-		User userB = ServerConnection.getUser(toUser);
-		userA.addFriendRequest(request);
-		userB.addFriendRequest(request);	
-	}*/
+
 	
 	public void deleteFriendRequest(FriendRequest request){
 		friendRequests.remove(request);
@@ -324,5 +316,16 @@ public class User implements Serializable {
 	public void resetFriends() throws Exception{
 		this.friendsList.clear();
 		ServerConnection.updateUser(this);
+	}
+	
+	public boolean isFriendsWith(int userID) throws Exception {
+		String query = "SELECT " + userID + " FROM friendships WHERE fromID = " + this.userID; 
+		Connection con = ServerConnection.getConnection();
+		PreparedStatement ps = con.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			return true; 
+		}
+		return false;
 	}
 }

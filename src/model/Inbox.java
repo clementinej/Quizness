@@ -67,24 +67,21 @@ public class Inbox implements Serializable {
 	}
 	
 	public boolean removeNote(int messageID) throws Exception {
-		int removed = notes.remove(messageID);
+		boolean removed = notes.remove(Integer.valueOf(messageID));
 		ServerConnection.updateInbox(this);
-		if(removed == messageID) return true; 
-		return false; 
+		return removed;
 	}
 	
 	public boolean removeChallenge(int messageID) throws Exception {
-		int removed = challenges.remove(messageID);
+		boolean removed = challenges.remove(Integer.valueOf(messageID));
 		ServerConnection.updateInbox(this);
-		if(removed == messageID) return true; 
-		return false; 
+		return removed; 
 	}
 	
 	public boolean removeFriendRequest(int messageID) throws Exception {
-		int removed = requests.remove(messageID);
+		boolean removed = requests.remove(Integer.valueOf(messageID));
 		ServerConnection.updateInbox(this);
-		if(removed == messageID) return true; 
-		return false; 
+		return removed; 
 	}
 		
 	// Return a message object given the ID

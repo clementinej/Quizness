@@ -18,7 +18,8 @@ int messageID = Integer.parseInt(request.getParameter("msg_id"));
 Message m = Message.getMessage(messageID);
 Challenge challenge; 
 Quiz quiz; 
-double highScore;
+String quizTitle =""; 
+double highScore = -0.0;
 
 String subject = m.getSubject();
 String body = m.getBody();
@@ -38,7 +39,9 @@ boolean acceptable = false;
 
 if(messageType.equals("challenge")){
 	challenge = (Challenge) m;
-	Quiz quiz = challenge.getQuizID(); 
+	int quizID = challenge.getQuizID(); 
+	quiz = Quiz.getQuiz(quizID);
+	quizTitle = quiz.getTitle();
 	acceptable = true;
 	highScore = challenge.getChallengerHighScore();
 }
@@ -61,7 +64,7 @@ m.markAsRead();
          <p>Sent at <%=formatter.format(sent) %></p>
          
          <% if(messageType.equals("challenge")){ %>
-         <p>Quiz: <%=quiz.getTitle()%>>
+         <p>Quiz: <%=quizTitle%>>
          <!-- REDIRECT TO QUIZ SUMMARY -->
          <p>Your Opponent's High Score: <%=highScore%>>
          <% } %>

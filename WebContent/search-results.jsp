@@ -58,7 +58,9 @@ if(resultType.equals("user")) {
 	for(int i = 0; i < users.size(); i++) {
 		User u = users.get(i);
 		%>
-		<p><%=u.getUserName() %><p><br>
+		<a href="../Quizness/social/profile.jsp?id=<%=u.getUserID() %>"><p><%=u.getUserName() %><p></a>
+		
+		<br>
 		<% 
 	}
 } else {

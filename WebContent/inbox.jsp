@@ -11,9 +11,9 @@
       <title>Inbox</title>
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" type="text/css" href="../css/normalize.css" />
-      <link rel="stylesheet" type="text/css" href="../css/inbox.css" />
-      <script src="../js/modernizr-2.6.2.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+      <link rel="stylesheet" type="text/css" href="css/inbox.css" />
+      <script src="js/modernizr-2.6.2.min.js"></script>
    </head>
       <body>
       
@@ -89,9 +89,9 @@
 		                        <input type="checkbox" id="checkbox<%=i%>" name="check" value="<%=messageID%>">
 		                     </td>
 		                     <!-- LINK TO SENDER'S PROFILE -->
-		                     <td align="left" width="25%"><a href="../social/profile.jsp?id=<%=fromID%>"><font><b><%=user.getUserName()%></b></font></a></td>
+		                     <td align="left" width="25%"><a href="social/profile.jsp?id=<%=fromID%>"><font><b><%=user.getUserName()%></b></font></a></td>
 		                     <!-- LINK TO MESSAGE -->
-		                     <td align="left" width="50%"><a href="../social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currNote.getSubject() %></b></font></a></td>
+		                     <td align="left" width="50%"><a href="social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currNote.getSubject() %></b></font></a></td>
 		                     <td align="right" width="30%"><b><%=sentAt%></b></td>
 		                  </tr>
                   		<%
@@ -116,9 +116,9 @@
 		                        <input type="checkbox" id="checkbox<%=i%>" name="check" value="<%=messageID%>">
 		                     </td>
 		                     <!-- LINK TO SENDER'S PROFILE -->
-		                     <td align="left" width="25%"><a href="../social/profile.jsp?id=<%=fromID%>"><font><b><%=user.getUserName()%></b></font></a></td>
+		                     <td align="left" width="25%"><a href="social/profile.jsp?id=<%=fromID%>"><font><b><%=user.getUserName()%></b></font></a></td>
 		                     <!-- LINK TO MESSAGE -->
-		                     <td align="left" width="50%"><a href="../social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currRequest.getSubject() %></b></font></a></td>
+		                     <td align="left" width="50%"><a href="social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currRequest.getSubject() %></b></font></a></td>
 		                     <td align="right" width="30%"><b><%=sentAt%></b></td>
 		                  </tr>
                   		<%
@@ -143,9 +143,9 @@
 		                        <input type="checkbox" id="checkbox<%=i%>" name="check" value="<%=messageID%>">
 		                     </td>
 		                     <!-- LINK TO SENDER'S PROFILE -->
-		                     <td align="left" width="25%"><a href="../social/profile.jsp?id=<%=fromID%>"><font><b><%=user.getUserName()%></b></font></a></td>
+		                     <td align="left" width="25%"><a href="social/profile.jsp?id=<%=fromID%>"><font><b><%=user.getUserName()%></b></font></a></td>
 		                     <!-- LINK TO MESSAGE -->
-		                     <td align="left" width="50%"><a href="../social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currChallenge.getSubject() %></b></font></a></td>
+		                     <td align="left" width="50%"><a href="social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currChallenge.getSubject() %></b></font></a></td>
 		                     <td align="right" width="30%"><b><%=sentAt%></b></td>
 		                  </tr>
                   		<%

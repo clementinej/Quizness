@@ -132,9 +132,9 @@
          <span class="header-link"><a href="social/compose-mail.jsp">Compose </a></span>
          <span class="header-link"><a href="social/profile.jsp">Profile</a></span>
          <span class="header-link"><a href="site/admin.jsp">Admin</a></span>
-         <span class="header-link"><a href="social/inbox.jsp">Inbox</a></span>
+         <span class="header-link"><a href="inbox.jsp">Inbox</a></span>
           <span class="header-link"><a href="site/search.jsp">Search</a></span>
-         <span class="right">Welcome to Quizness, <%=name %></span>
+         <span class="right">Welcome, <%=name %></span>
       </div>
       <div class="container_main">
          <section class="main">
@@ -194,7 +194,7 @@
    			<h1>Your Activity</h1>			
 	   		<% if(numUserTakenQuizzes == 0 && numRecentQuizzes == 0) {
 	   			%>	
-	   		<h4>You've had no activity lately. <a href="social/compose-mail.html">Get in the game!</a></h4>
+	   		<h4>You've had no activity lately. <a href="social/compose-mail.jsp">Get in the game!</a></h4>
 	   		<%} %>
 			<%
    			if(numUserTakenQuizzes != 0) {%>
@@ -331,26 +331,25 @@
 	   			<h2>Messages</h2><% 
 	   			if(numMessages > 1) {
 	  		 %>
-			<p>You have <%=numMessages %> new messages! <a href="inbox/user?id=<%=userID %>">Go to your inbox.</a></p>
+			<p>You have <%=numMessages %> new messages! <a href="social/inbox.jsp">Go to your inbox.</a></p>
 			<%
 				} else {
 			%>
-			<p>You have a new message! <a href="inbox/user?id=<%=userID %>">Go to your inbox.</a></p>	
+			<p>You have a new message! <a href="social/inbox.jsp">Go to your inbox.</a></p>	
 			<% 	
 				}
 	   		}
 			%>
-			
 			
 			<%
 	   		if(numChallenges != 0) {%>
 	   		<h2>Challenges</h2><%
 	   			if(numChallenges > 1) {%>
 	   			
-	   		<p>You have <%=numChallenges %> new challenges! <a href="../inbox/user?id=<%=userID %>">Go to your inbox.</a></p>
+	   		<p>You have <%=numChallenges %> new challenges! <a href="social/inbox.jsp">Go to your inbox.</a></p>
 			<% } else { %>
 				
-			<p>You have a new challenge! <a href="../inbox/user?id=<%=userID %>">Go to your inbox.</a></p>	
+			<p>You have a new challenge! <a href="social/inbox.jsp">Go to your inbox.</a></p>	
 			<% 	
 				}
 	   		}
@@ -380,29 +379,29 @@
 	        </div>
 	        
 	        <div class="innerright">
-	        <h1> Test Text</h1>
-	        <%--
+	        <h1>Announcements</h1>
+	        <%
 	        int numAnnouncements = 0;
-	        ArrayList<Announcement> announcements = Announcements.getAllAnnouncements();
+	        ArrayList<String> announcements = Announcements.getBody();
 	        numAnnouncements = announcements.size();
 	        if(numAnnouncements != 0) {
 	        	if(numAnnouncements > 5) {
 	        		for(int i = 0; i < 5; i++) {
-	        			Announcement a = announcements.get(i);
-	        			--%>
-	        			<p><%--=a.getBody() --%></p>
-	        			<%--
+	        			String a = announcements.get(i);
+	        			%>
+	        			<p><%=a%></p>
+	        			<%
 	        		}
 	        	} else {
 	        		for(int i = 0; i < numAnnouncements; i++) {
-	        			Announcement a = announcements.get(i);
-						--%>
-						<p><%--=a.getBody() --%></p>
-						<%-- 
+	        			String a = announcements.get(i);
+						%>
+						<p><%=a %></p>
+						<% 
 	        		}
 	        	}
 	        }
-	        --%>
+	        %>
 	        </div>
 	   </div>
       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>

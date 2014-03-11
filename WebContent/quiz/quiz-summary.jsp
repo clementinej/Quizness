@@ -171,7 +171,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          <%} %>
          
          <!-- A way to challenge another user to this quiz -->
-         <br><a href="../social/compose-mail.jsp?quiz_id=<%=quiz.getQuizID() %>?top_score=<%=userHighScore %>">Challenge a friend!</a>
+         <br><a href="../social/compose-mail.jsp?quiz_id=<%=quiz.getQuizID() %>&top_score=<%=userHighScore %>">Challenge a friend!</a>
          
           </form>
           <% if(user.isAdmin()){ %>
