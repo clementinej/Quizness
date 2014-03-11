@@ -1,10 +1,8 @@
 package control;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,20 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.Delete;
+import model.FriendRequest;
+import model.Inbox;
+import model.Message;
 import model.ServerConnection;
+import model.User;
 
 /**
- * Servlet implementation class AdminEditServlet
+ * Servlet implementation class UnfriendServlet
  */
-@WebServlet("/AdminEditServlet")
-public class AdminEditServlet extends HttpServlet {
+@WebServlet("/UnfriendServlet")
+public class UnfriendServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminEditServlet() {
+    public UnfriendServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,25 +42,17 @@ public class AdminEditServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		String type = (String) request.getParameter("quiz_search");
-		int userID = (Integer) request.getAttribute("user_ID");
-		int quizID = (Integer) request.getAttribute("quiz_ID");
+		HttpSession session = request.getSession(); 
+		User fromUser = (User)session.getAttribute("current user");
+		int fromID = fromUser.getUserID(); 
+		int toID = Integer.parseInt(request.getParameter("userID"));
+		try {
+			User toUser = User.getUser(toID);
+			fromUser.removeFriend(toID);
+		} catch (Exception e) {} 
 		
-		if (type.equals("quiz")){
-			try {
-				Delete.deleteQuiz(quizID);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			try {
-				Delete.deleteUser(userID);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		String target = "/profile.jsp?id="+toID; 
+		RequestDispatcher dispatch = request.getRequestDispatcher(target); 
+		dispatch.forward(request, response); 
 	}
-	
-
 }

@@ -4,12 +4,6 @@
 <head>
    <link rel="stylesheet" type="text/css" href="../../css/style_login.css" />
 </head>
-<%--
-   User currUser = (User) session.getAttribute("current user");
-   int currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
-   Quiz currQuiz = Quiz.getQuiz(currQuizID);
-   if(!currUser.isAdmin() && currQuiz.getCreatorID() != currUser.getUserID()) return;
-   --%>
 <body>
    <div class="container">
    <form method="post" action="../../CreateServlet?title=<%=request.getParameter("title")%>&description=<%=request.getParameter("description")%> id="signup">
@@ -17,7 +11,7 @@
       <%
       String intent = request.getParameter("intent");
       %>
-            <h3>Create a Question</h3>
+            <h3>Create a Question - Fill in the Blank</h3>
             <p>Click "Add Question!" to return to creating your quiz.</p>
          </div>
          <div class="sep"></div>

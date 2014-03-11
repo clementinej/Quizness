@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -261,7 +262,9 @@ public class Quiz implements Serializable{
 		String query = "UPDATE quizzes SET numTimesTaken = ? WHERE id = " + this.quizID;
 		PreparedStatement ps = con.prepareStatement(query);
 		ps.setInt(1, numOfTimesPlayed);
-		ps.executeQuery();
+		ps.executeUpdate();
+		ServerConnection.updateQuiz(this);
+		System.out.println("This quiz has been played " + numOfTimesPlayed + " times.");
 	}
 	
 	// Set the title of the quiz
@@ -334,7 +337,17 @@ public class Quiz implements Serializable{
 		ServerConnection.updateQuiz(this);
 	}
 	
-
+	public double getTopScore() throws SQLException{
+		double result = 0;
+		String query = "SELECT MAX(score) FROM quizTries WHERE quizID = " + quizID;
+		Connection con = ServerConnection.getConnection();
+		ResultSet rs = con.prepareStatement(query).executeQuery();
+		while (rs.next()){
+			result = rs.getDouble(1);
+		}
+		System.out.println("The top score on this quiz is: ");
+		return result;
+	}
 	/*
 	public static ArrayList<Integer> getTopPerformers(int num, int quizID) throws Exception{
 		String query = "SELECT quizTryID FROM quizTries WHERE quizID = " + quizID 

@@ -57,12 +57,13 @@ public class User implements Serializable {
 /*
  * Achievements section. Adds the achievement if it doesn't already exist
  */
-	public void addAchievement(Achievement achievement){
+	public void addAchievement(Achievement achievement) throws Exception{
 		int key = achievement.getKey();
 		if (!achievementKeys.contains(key)){
 			achievementKeys.add(key);
 			achievements.add(achievement);
 		}
+		ServerConnection.updateUser(this);
 	}
 	
 	public ArrayList<Achievement> getAchievements(){
@@ -89,8 +90,18 @@ public class User implements Serializable {
 			quizzesTried.remove(quizTry);
 		}
 	}
-	public void makeQuiz(Quiz quiz){
+	public void makeQuiz(Quiz quiz) throws Exception{
 		quizzesMade.add(quiz);
+		int numQuizzes = quizzesMade.size();
+		System.out.println(numQuizzes);
+		System.out.println("my balls hurt");
+		if (numQuizzes == 1)
+			addAchievement(new AmateurAuthor());
+		if (numQuizzes == 3)
+			addAchievement(new ProlificAuthor());
+		if (numQuizzes == 5)
+			addAchievement(new ProdigiousAuthor());
+		ServerConnection.updateUser(this);
 	}
 	
 	public void deleteQuiz(Quiz quiz){
@@ -193,6 +204,15 @@ public class User implements Serializable {
 	
 	public void setBanned(){
 		isBanned = true;
+	}
+	
+	public void setAdmin(){
+		isAdmin = true;
+	}
+	
+	public void incrementQuizzesTaken(){
+		numQuizzesTaken++;
+		System.out.println("Number of quizzes taken: " + numQuizzesTaken);
 	}
 	
 	//returns a string of the high score. if there is no score stored, it returns a string
@@ -323,10 +343,31 @@ public class User implements Serializable {
 		Connection con = ServerConnection.getConnection();
 		PreparedStatement ps = con.prepareStatement(query);
 		ResultSet rs = ps.executeQuery();
-		if(rs.next()){
+		while(rs.next()){
 			int toID = rs.getInt(1);
 			if(toID == userID) return true;
 		}
 		return false;
+	}
+	
+	public double getAverageScore() throws Exception{
+		String query = "SELECT AVG(score)  FROM quizTries WHERE userID = " + this.userID;
+		System.out.println("getUserAverageScore: " + query);
+		PreparedStatement ps = ServerConnection.getConnection().prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()) return rs.getDouble(1);
+		else return -1.0; 
+	}
+	
+	public void removeFriend(int userID) throws Exception {
+		String queryA = "DELETE FROM friendships WHERE fromID = " + this.userID
+				+ " AND toID = " + userID; 
+		String queryB = "DELETE FROM friendships WHERE fromID = " + userID
+				+ " AND toID = " + this.userID; 
+		Connection con = ServerConnection.getConnection();
+		PreparedStatement ps = con.prepareStatement(queryA);
+		ps.executeUpdate();
+		ps.executeUpdate(queryB);
+		ps.executeUpdate();
 	}
 }

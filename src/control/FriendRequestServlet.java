@@ -58,7 +58,7 @@ public class FriendRequestServlet extends HttpServlet {
 			ServerConnection.updateInbox(inbox);
 		} catch (Exception e) {} 
 		
-		String target = "/social/profile.jsp?id="+toID; 
+		String target = "/profile.jsp?id="+toID; 
 		RequestDispatcher dispatch = request.getRequestDispatcher(target); 
 		dispatch.forward(request, response); 
 	}

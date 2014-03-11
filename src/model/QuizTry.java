@@ -110,7 +110,9 @@ public class QuizTry implements Serializable {
 		elapsedTime = System.currentTimeMillis() - startTime;
 		this.responses = responses;
 		score = quiz.calculateScore(responses);
-		if (score > quiz.getMaxScore()){
+		user.incrementQuizzesTaken();
+		if (score > quiz.getTopScore()){
+			System.out.println("Adding achievement: The Greatest");
 			user.addAchievement(new TheGreatest());
 		}
 		inProgress = false;//TODO:what about automatic grading?
@@ -118,13 +120,15 @@ public class QuizTry implements Serializable {
 		checkTryAchievements();
 		dateTaken = new Date();
 		ServerConnection.updateQuizTry(this);
+		quiz.incrementNumOfTimesPlayed();
+		ServerConnection.updateUser(user);
 	}
 
 	//for multipage where responses are stored in this object
 	public void gradeQuiz() throws Exception {
 		elapsedTime = System.currentTimeMillis() - startTime;
 		score = quiz.calculateScore(responses);
-		if (score > quiz.getMaxScore()){
+		if (score > quiz.getTopScore()){
 			user.addAchievement(new TheGreatest());
 		}
 		inProgress = false;//TODO:what about automatic grading?
@@ -132,10 +136,13 @@ public class QuizTry implements Serializable {
 		checkTryAchievements();
 		dateTaken = new Date();
 		ServerConnection.updateQuizTry(this);
+		quiz.incrementNumOfTimesPlayed();
+		ServerConnection.updateUser(user);
+
 	}
 	
-	private void checkTryAchievements(){
-		if (user.numQuizzesTaken() == 10)
+	private void checkTryAchievements() throws Exception{
+		if (user.numQuizzesTaken() == 3)
 			user.addAchievement(new QuizMachine());
 	}
 	

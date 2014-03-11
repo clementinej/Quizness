@@ -38,6 +38,7 @@
    int numFriends = user.getFriends().size();
    String aboutMe = user.getAboutMe(); // Allow user to add this as easy extension?
    String location = user.getLocation();
+   int averageScore = (int) user.getAverageScore();
    ArrayList<Achievement> achievements = user.getAchievements();
    ArrayList<User> friends = user.getFriends();
    int highScore = 0;
@@ -81,7 +82,7 @@
                   <ul class="numbers clearfix">
                      <li>Quizzes Taken<strong><%=numQuizzesTaken%></strong></li>
                      <li>Highest Score<strong><%=highScore%></strong></li>
-                     <li class="nobrdr">Last Quiz Taken<strong><%=numFriends%></strong></li>
+                     <li class="nobrdr">Average Score<strong><%=averageScore%></strong></li>
                   </ul>
                </div>
             </div>
@@ -109,7 +110,7 @@
                   <div class="inputs"></div>
                </div>
                <div class="boxy">
-                  <p>Friends - <%=numFriends%> total</p>
+                  <p>Friends List</p>
                   <div class="friendslist clearfix">
                   <% for(User f: friends) { %>
                      <div class="friend">
@@ -140,7 +141,7 @@
             if(inbox.getNumFriendReqs() > 0) pendingRequests = true; 
             
             // Could be buggy
-            if(myProfile == false && currUser.isFriendsWith(currUserID)) alreadyFriends = true; 
+            if(myProfile == false && currUser.isFriendsWith(userID)) alreadyFriends = true; 
             
             if(myProfile == false && inbox.hasPendingRequestFrom(currUserID)) requestSent = true;  
             %>
@@ -164,7 +165,7 @@
                		<div class="head">
                   		<h1>You're not friends. Wanna Be?</h1>
                		</div>
-               		<form method="post" action = "../FriendRequestServlet">
+               		<form method="post" action = "FriendRequestServlet">
                			<div class="boxy">
                				<input type ="hidden" name="toID" value="<%=userID%>">
                   			<input id="submit" type="submit" value="Let's Be Friends!">
@@ -191,13 +192,31 @@
      			</form>
      			<%} %>
      			
+     			<% if(alreadyFriends == true) {%>
+            	<form method="post" action="UnfriendServlet">
+               	<div class ="boxy">
+               		<input type ="hidden" name="userID" value=<%=userID%>>
+     				<input id="submit" type="submit" value="Unfriend this user">
+     			</div>
+     			</form>
+               <% } %>
+     			
      			<% if(myProfile == false && currUser.isAdmin()){ %>
-               	<form method="post" action="../DeleteUserServlet">
+               	<form method="post" action="DeleteUserServlet">
                	<div class ="boxy">
                		<input type ="hidden" name="userID" value=<%=userID%>>
      				<input id="submit" type="submit" value="Delete this user">
      			</div>
      			</form>
+     			
+     			<% if(currUser.isAdmin() && !user.isAdmin()) { %>
+     			<form method="post" action="MakeAdminServlet">
+               	<div class ="boxy">
+               		<input type ="hidden" name="user_id" value=<%=userID%>>
+     				<input id="submit" type="submit" value="Make this user an admin">
+     			</div>
+     			</form>
+     			<% } %>
      			<%} %>
             </div>
          </section>

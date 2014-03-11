@@ -42,10 +42,10 @@
      <!--top bar -->
       <div class="top">
          <span class="header-link"><a href="../create-quiz.jsp">Create Quiz</a></span>
-         <span class="header-link"><a href="../social/compose-mail.html">Compose </a></span>
-         <span class="header-link"><a href="../social/profile.jsp">Profile</a></span>
+         <span class="header-link"><a href="../social/compose-mail.jsp">Compose </a></span>
+         <span class="header-link"><a href="../profile.jsp">Profile</a></span>
          <span class="header-link"><a href="../site/admin.jsp">Admin</a></span>
-         <span class="header-link"><a href="../social/inbox.jsp">Inbox</a></span>
+         <span class="header-link"><a href="../inbox.jsp">Inbox</a></span>
          <span class="right">Welcome to Quizness, <%=name %></span>
       <div class="container">
       
@@ -61,8 +61,8 @@
               <div>
                   <p>Order by:</p>
                   <br>
-                  <label><input type="radio" name="order" id="popular"/> Popular</label>
-                  <label><input type="radio" name="order" id="recent"/> Recent</label>
+                  <label><input type="radio" name="order" value="popular"/> Popular</label>
+                  <label><input type="radio" name="order" value="recent"/> Recent</label>
                </div>
                <input id="submit" type="submit" value="Search!">
             </div>
