@@ -58,7 +58,7 @@
          </section>
       </div>
       <div id="compose">
-         <form method="post" action="compose-mail.jsp">
+         <form method="post" action="../Quizness/social/compose-mail.jsp">
             <input type="submit" value="Compose" />
          </form>
       </div>

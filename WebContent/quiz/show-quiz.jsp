@@ -103,7 +103,21 @@
 		  //----------------------MULTPAGE SECTION---------------------------//
       } else {%>
       <div class="container">
-  	     <form method="post" action="show-quiz.jsp" id="signup">
+      <form method="post" action="show-quiz.jsp" id="signup"><%
+    	QuizTry qTry = null;
+    	int quizTryID = -1;
+    	if(request.getParameter("quiz try id") != null) {
+  			quizTryID = Integer.parseInt(request.getParameter("quiz try id"));
+		 	qTry = ServerConnection.getQuizTry(quizTryID);
+    	} else {
+     		qTry = new QuizTry(user.getUserID(), quizID, quiz.hasPracticeMode(), quiz.hasRandomMode());
+      		quizTryID = ServerConnection.addQuizTry(qTry);
+    	}
+      if(quiz.hasImmediateCorrection()) {
+
+  	  } else {
+  		  
+  	  }%>
          <div class="header">
          <input type="hidden" name="quiz_id" value="<%=quizID %>"/>
          	<h3>Let's Get Started!</h3>
@@ -115,15 +129,7 @@
 		<p><%=quiz.getDescription()%></p><%
 		System.out.println("Multipage");
 		
-		QuizTry qTry = null;
-    	int quizTryID = -1;
-    	if(request.getParameter("quiz try id") != null) {
-  			quizTryID = Integer.parseInt(request.getParameter("quiz try id"));
-		 	qTry = ServerConnection.getQuizTry(quizTryID);
-    	} else {
-     		qTry = new QuizTry(user.getUserID(), quizID, quiz.hasPracticeMode(), quiz.hasRandomMode());
-      		quizTryID = ServerConnection.addQuizTry(qTry);
-    	}
+		
     	
     	if(request.getParameter("answer") != null) {
   			String previousAnswer = request.getParameter("answer");
@@ -137,20 +143,12 @@
 		 	for(String[] one : responses) {
 		 		System.out.println("Current Answers: " + one[0]);
 		 	}
-		 	
-		 	
 		 	session.setAttribute("ready responses", responses);
-  			//qTry.addOneAnwerResponse(previousAnswer);
     	}
     	
   		//if quiz is done, go to results
    		if(!qTry.hasNext()) {
    			System.out.println("done");
-		 	//ArrayList<String> responses = (ArrayList<String>) session.getAttribute("quiz responses");
-		 	//String[] arrayResponses = responses.toArray();
-		 	//responses.removeAll(responses);
-		 	//session.setAttribute("quiz responses", responses);
-		 	//session.setAttribute("ready responses", arrayResponses);
    			qTry.setToDone();%>
    			<input type="hidden" name="multi-page" value="signal"/>
    			<%RequestDispatcher dispatch = request.getRequestDispatcher("results.jsp?multi-page=signal"); 
@@ -265,3 +263,5 @@ private ArrayList<String> getOptions(Question q) {
 	return options;
 }
 %>
+
+

@@ -8,7 +8,7 @@
    <head>
       <meta charset="utf-8" />
       <title>Profile Page</title>
-      <link rel="stylesheet" type="text/css" href="../css/global.css" />
+      <link rel="stylesheet" type="text/css" href="css/global.css" />
    </head>
    <body>
    <%
@@ -182,7 +182,7 @@
                 <%} %>
                 
                 <% if(myProfile == false){ %>
-               	<form method="post" action="../social/compose-mail.jsp">
+               	<form method="post" action="social/compose-mail.jsp">
                	<div class ="boxy">
                		<input type ="hidden" name="messageType" value="note">
                		<input type ="hidden" name="recipient" value=<%=userID%>>
