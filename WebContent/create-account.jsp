@@ -26,10 +26,10 @@
          <div class="sep"></div>
          <div class="inputs">
             <input type="email" name="email" placeholder="e-mail" autofocus />
-            <input type="email" name="name" placeholder="name"/>
+            <input type="name" name="name" placeholder="name"/>
             <input type="password" name="password" placeholder="password" />
-            <input type="email" name="aboutMe" placeholder="about me" />
-            <input type="email" name="location" placeholder="location" />
+            <input type="name" name="aboutMe" placeholder="about me" />
+            <input type="name" name="location" placeholder="location" />
             <div class="checkboxy">
                 <input name="cecky" id="checky" value="1" type="checkbox" /><label class="terms">I understand what I'm getting myself into</label>
             </div>
