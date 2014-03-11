@@ -90,7 +90,7 @@ int numFriendReqs = Site.getNumReqs();
          <span class="header-link"><a href="social/compose-mail.jsp">Compose </a></span>
          <span class="header-link"><a href="social/profile.jsp">Profile</a></span>
          <span class="header-link"><a href="site/admin.jsp">Admin</a></span>
-         <span class="header-link"><a href="social/inbox.jsp">Inbox</a></span>
+         <span class="header-link"><a href="inbox.jsp">Inbox</a></span>
           <span class="header-link"><a href="site/search.jsp">Search</a></span>
       </div>
 
