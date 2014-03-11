@@ -60,12 +60,17 @@ public class CreateServlet extends HttpServlet {
 			String description = request.getParameter("description");
 			session.setAttribute("title", title);
 			session.setAttribute("description", description);
-			forwardToPage("create-quiz.jsp", request, response);
+			forwardToPage("create-quiz.jsp?saved=signal", request, response);
 			return;
 		}
 		
 		if(getUserIntent(session, request).equals("add question")) {
 			Question newQuestion = constructQuestion(session, request);
+			if(newQuestion == null) {
+				int questionType = Integer.parseInt(request.getParameter("question type"));
+				forwardToPage(getErrorRedirection(questionType), request, response);
+				return;
+			}
 			questionList.add(newQuestion);			
 			forwardToPage("create-quiz.jsp", request, response);
 			return;
@@ -81,14 +86,10 @@ public class CreateServlet extends HttpServlet {
 			makeQuizAndAddToDB(questionList, request, currUser);	
 			clearQuestionList(session);
 			forwardToPage("success.html", request, response);		
-		}	
-		
-
-		
-		
+		}			
 	}
 	
-	
+
 private Quiz getQuiz(HttpServletRequest request) {
 	int quizID = Integer.parseInt(request.getParameter("quiz_id"));
 	Quiz quiz = null;
@@ -197,9 +198,11 @@ private Quiz getQuiz(HttpServletRequest request) {
 	private Question constructQuestion(HttpSession session, HttpServletRequest request) {		
 		int questionType = Integer.parseInt(request.getParameter("question type"));
 		String question = request.getParameter("question_text");
+		if(question.isEmpty()) return null;
 		System.out.println("Question:" + question);
 		ArrayList<Set<String>> allAnswers = new ArrayList<Set<String>>();
 		makeAnswersList(request, allAnswers);
+		if(allAnswers.isEmpty()) return null;
 		double pointValue = 1;//default point value for each question depending on difficulty
 		String pointValueStr = request.getParameter("correct_answer_score");
 		if(pointValueStr.length() != 0)
@@ -226,7 +229,8 @@ private Quiz getQuiz(HttpServletRequest request) {
 					System.out.print(synonyms[i]);
 					if(i != synonyms.length - 1)
 						System.out.print(", ");
-					synonymsOfAnswerSet.add(synonyms[i]);
+					if(!synonyms[i].isEmpty())
+						synonymsOfAnswerSet.add(synonyms[i]);
 				}
 				System.out.println();
 				allAnswers.add(synonymsOfAnswerSet);
@@ -246,10 +250,12 @@ private Quiz getQuiz(HttpServletRequest request) {
 			newQuestion = new QuestionResponse(question, allAnswers, pointValue);		
 			return newQuestion;
 		case FILL_IN_THE_BLANK:
+			if(!question.contains("_")) return null;
 			System.out.println("FillInTheBlank Question made.");
 			return new FillInTheBlank(question, allAnswers, pointValue);
 		case MULTIPLE_CHOICE:
 			String choices[] = getWrongChoices(request);	
+			if(choices.length == 0) return null;
 			System.out.println("MultipleChoice Question made.");
 			return new MultipleChoice(question, choices, allAnswers, pointValue);
 		case PICTURE_RESPONSE:
@@ -292,6 +298,23 @@ private Quiz getQuiz(HttpServletRequest request) {
 		dispatch.forward(request, response); 
 	}
 	
+	
+	/*
+	 * gives url of where to go from error
+	 */
+	private String getErrorRedirection(int questionType) {
+		switch(questionType) {//correspond to the question subclass
+		case QUESTION_RESPONSE: 
+			return "quiz/questionCreation/question-answer.jsp?error=signal";
+		case FILL_IN_THE_BLANK:
+			return "quiz/questionCreation/fill-in-blanks.jsp?error=signal";
+		case MULTIPLE_CHOICE:
+			return "quiz/questionCreation/multiple-choice.jsp?error=signal";
+		case PICTURE_RESPONSE:
+			return "quiz/questionCreation/picture-response.jsp?error=signal";
+		}
+		return null;
+	}
 	
 
 }

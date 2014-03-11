@@ -21,12 +21,14 @@ import model.*;
 public class CreateListener implements HttpSessionListener {
 	private User currUser;
 	private static final boolean debugging = true;
+	private HttpSession session;
+	private ArrayList<String[]> readyResponses;
 	/**
 	 * When a browser is opened, a questionList is created, and
 	 */
     public void sessionCreated(HttpSessionEvent event) {
     	System.out.println("Session Created");
-    	HttpSession session = event.getSession(); 
+    	session = event.getSession(); 
       	List<Question> questionList = new ArrayList<Question>();
       	   
 		//addOneToQuestionList(questionList);//testing
@@ -45,7 +47,7 @@ public class CreateListener implements HttpSessionListener {
         session.setAttribute("title", quizTitle);
         session.setAttribute("description", description);
         
-        ArrayList<String[]> readyResponses = new ArrayList<String[]>();
+        readyResponses = new ArrayList<String[]>();
         session.setAttribute("ready responses", readyResponses);
     }
 
@@ -55,6 +57,13 @@ public class CreateListener implements HttpSessionListener {
      */
     public void sessionDestroyed(HttpSessionEvent arg0) {
         currUser = null;
+        session.setAttribute("current user", null);
+        readyResponses = new ArrayList<String[]>();
+        session.setAttribute("ready responses", readyResponses);
+        String quizTitle = "";
+        String description = "";
+        session.setAttribute("title", quizTitle);
+        session.setAttribute("description", description);
     }
 	
     private void setAutomaticAccount() {

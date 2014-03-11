@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.*, java.util.*" %>
-<%@ page errorPage="../site/404.jsp" %>
+<%--<%@ page errorPage="../site/404.jsp" %>--%>
 <head>
    <link rel="stylesheet" type="text/css" href="css/style_login.css" />
 </head>
@@ -14,7 +14,8 @@
       <div class="sep"></div>
       <div class="inputs">
       <div id="quiz_title" class="terms">
-    <form method="post" id="signup">
+    <form method="post" id="signup"> 
+      <%if(request.getParameter("saved") != null) %> <h5>Title and Description Saved Successfully!</h5>
       <%String title = (String)session.getAttribute("title");%>
           <input type="name" name="title" value="<%=title%>" placeholder="Title" autofocus/>
          </div>
@@ -30,8 +31,9 @@
          </div>
          <div><br>
       <%String description = (String)session.getAttribute("description");%>
-          <input type="name" name="description" value="<%=description%>" placeholder="Title" autofocus/>
+          <input type="name" name="description" value="<%=description%>" placeholder="Description" autofocus/>
          </div>
+
          <input type="submit" name="save_title_and_description" value="Save Title And Description"/>
          <div class="checkboxy">
             <input type="checkbox" name="selected" value="multiple_pages"><label class="terms">Show quiz on multiple pages?</label>
