@@ -389,14 +389,14 @@
 	        		for(int i = 0; i < 5; i++) {
 	        			String a = announcements.get(i);
 	        			%>
-	        			<p><%=a%></p>
+	        			<h4><%=a%></h4>
 	        			<%
 	        		}
 	        	} else {
 	        		for(int i = 0; i < numAnnouncements; i++) {
 	        			String a = announcements.get(i);
 						%>
-						<p><%=a %></p>
+						<h4><%=a %></h4>
 						<% 
 	        		}
 	        	}
