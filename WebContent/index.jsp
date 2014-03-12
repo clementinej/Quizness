@@ -35,7 +35,7 @@
             <input type="password" name="password" placeholder="Password">
             <i class="icon-lock icon-large"></i>
          </p>
-         <p class="submit">
+         <p class="login">
             <button type="submit" name="submit"><i class="icon-arrow-right icon-large"></i></button>
          </p>
       </form>
