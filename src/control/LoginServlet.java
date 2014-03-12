@@ -41,6 +41,7 @@ public class LoginServlet extends HttpServlet {
 		QuiznessAccountManager manager = (QuiznessAccountManager) context.getAttribute("manager");
 		String email = request.getParameter("login");		
 		String pw = request.getParameter("password");
+		String remember = request.getParameter("remember"); 
 		
 		try {
 			if(manager.validLogin(email, pw)) {
@@ -49,11 +50,14 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("current user", newUser);
 				System.out.println("redirected to home.jsp");
 				
-				String uniqueID = session.getId();
-				CookieManager.add(uniqueID, newUser.getUserID());
-				Cookie cookie = new Cookie("id", uniqueID);
-				cookie.setMaxAge(1200);
-				response.addCookie(cookie);
+				if(remember != null){
+					String uniqueID = session.getId();
+					CookieManager.add(uniqueID, newUser.getUserID());
+					Cookie cookie = new Cookie("id", uniqueID);
+					cookie.setMaxAge(1200);
+					response.addCookie(cookie);
+				}
+				
 				redirectToPage("home.jsp", request, response);
 				return;
 			} else { 
