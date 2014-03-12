@@ -466,10 +466,6 @@ section {
 	padding: 7em 0;
 }
 
-section:nth-child(even) {
-	background: rgba(0,0,0,.05);
-}
-
 section.related {
 	text-align: center;
 	font-size: 1.6em;
