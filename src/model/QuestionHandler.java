@@ -345,5 +345,20 @@ public class QuestionHandler {
 		return null;
 	}
 	
+	/*
+	 *  for multipage, immediate feedback correct scenario
+	 */
+	public static void forwardToCorrectPage(int quizID, int quizTryID, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String redirectTo = "question-correct.jsp?quiz_id=" + quizID + "&quiz try id=" +quizTryID;
+		forwardToPage(redirectTo, request, response);
+	}
+	
+	/*
+	 *  for multipage, immediate feedback incorrect scenario
+	 */
+	public static void forwardToIncorrectPage(int quizID, int quizTryID, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String redirectTo = "question-incorrect.jsp?quiz_id=" + quizID + "&quiz try id=" +quizTryID;
+		forwardToPage(redirectTo, request, response);
+	}
 	
 }

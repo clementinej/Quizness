@@ -4,13 +4,21 @@
 <%@page import="java.io.*" %>
 <%--<%@ page errorPage="../site/404.jsp" --%>
 <head>
-   <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
+   <link rel="stylesheet" type="text/css" href="/Quizness/css/style_login.css" />
 </head>
 <% 
 	checkIfUserIsLoggedIn(request, response);
 %>
 
 <% boolean debug = false;%>
+<%--
+url parameters:
+for multipage
+quiz_id
+quiz try id
+answer
+
+ --%>
 
 
 <%
@@ -113,11 +121,7 @@
      		qTry = new QuizTry(user.getUserID(), quizID, quiz.hasPracticeMode(), quiz.hasRandomMode());
       		quizTryID = ServerConnection.addQuizTry(qTry);
     	}
-      if(quiz.hasImmediateCorrection()) {
-	//figure out if the last one was wrong
-  	  } else {
-  		  
-  	  }%>
+%>
         <div class="header">
         <input type="hidden" name="quiz_id" value="<%=quizID %>"/>
          	<h3>Let's Get Started!</h3>
@@ -144,6 +148,23 @@
 		 		System.out.println("Current Answers: " + one[0]);
 		 	}
 		 	session.setAttribute("ready responses", responses);
+		 	
+			if(quiz.hasImmediateCorrection()) { 
+				int lastQuestionIndex = qTry.getQuestionNum() - 1;
+				ArrayList<Question> questionList = qTry.getQuestions();
+				Question question = questionList.get(lastQuestionIndex);
+				double pointsFromLastAnswer = question.getPoints(array);
+				if(pointsFromLastAnswer > 0) {
+					System.out.println("IC: Correct!");
+					QuestionHandler.forwardToCorrectPage(quizID, quizTryID, request, response);
+					return;
+				} else {
+					System.out.println("IC: Incorrect! :(");
+					QuestionHandler.forwardToIncorrectPage(quizID, quizTryID, request, response);
+					return;
+				}
+	  		}
+	
     	}
     	
   		//if quiz is done, go to results
@@ -216,7 +237,7 @@ private void checkIfUserIsLoggedIn(HttpServletRequest request,
 	HttpSession session = request.getSession();
 	User currUser = (User) session.getAttribute("current user");
 	if(currUser == null) {
-		RequestDispatcher dispatch = request.getRequestDispatcher("../../LoginServlet"); 
+		RequestDispatcher dispatch = request.getRequestDispatcher("/Quizness/LoginServlet"); 
 		dispatch.forward(request, response); 	
 	}
 }
