@@ -172,11 +172,11 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          
          <!-- We also need to display summary statistics, i.e. the average score on the quiz, 
          average amount of time it took, number of people who've taken it. -->
-         <br><a href="show-quiz.jsp?quiz_id=<%=quiz.getQuizID() %>"">Take Quiz!</a>
+         <br><a href="/Quizness/quiz/show-quiz.jsp?quiz_id=<%=quiz.getQuizID() %>"">Take Quiz!</a>
          
          <% if(quiz.hasPracticeMode()) {%>
          <!--A way to start the quiz in practice mode, if available. -->
-         <br><a href="show-quiz.jsp?quiz_id=<%=quiz.getQuizID() %>"">Practice Quiz</a>
+         <br><a href="/Quizness/quiz/show-quiz.jsp?quiz_id=<%=quiz.getQuizID() %>"">Practice Quiz</a>
          <%} %>
          
          <% if(user.getUserID() == quiz.getCreatorID()) { %>
