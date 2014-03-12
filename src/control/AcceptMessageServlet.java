@@ -41,26 +41,29 @@ public class AcceptMessageServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		HttpSession session = request.getSession(); 
-		String msg_id = request.getParameter("msg_id");
-		int messageID = Integer.parseInt(msg_id); 
-		String messageType = request.getParameter("messageType");
-		String isAccepted = request.getParameter("send_accept"); 
-		String toIDString = request.getParameter("to_id"); 
-		int toID = Integer.parseInt(toIDString);
-		String target = null; 
-				
+		String target = null;
 		try {
+			HttpSession session = request.getSession(); 
+			String msg_id = request.getParameter("msg_id");
+			int messageID = Integer.parseInt(msg_id); 
+			String messageType = request.getParameter("messageType");
+			String isAccepted = request.getParameter("send_accept"); 
+			String toIDString = request.getParameter("to_id"); 
+			int toID = Integer.parseInt(toIDString);
+			
 			Inbox inbox = Inbox.getInbox(toID);
 					
 			if(messageType.equals("friendRequest")){
 				FriendRequest friendRequest = (FriendRequest) Message.getMessage(messageID);
-				if(isAccepted != null) friendRequest.accept();
-				
+				if(isAccepted != null){
+					friendRequest.accept();
+					target = "success-friend.html";
+				} else {
+					target = "social/reject-friend.html";
+				}
 				// If not accepted simply remove the request
 				if(inbox.removeFriendRequest(messageID) == false) throw new Exception();
-				target = "success-friend.html";
+				
 
 			} else if (messageType.equals("challenge")){
 				Challenge challenge = (Challenge) Message.getMessage(messageID);
@@ -68,7 +71,9 @@ public class AcceptMessageServlet extends HttpServlet {
 				if(inbox.removeChallenge(messageID) == false) throw new Exception();
 				target = "quiz/quiz-summary.jsp?quiz_id=" + challenge.getQuizID()+"&challenge_id=" + msg_id; 
 			}
-		} catch (Exception e) { }
+		} catch (Exception e) { 
+			target = "social/message-fail.html";
+		}
 		
 		RequestDispatcher dispatch = request.getRequestDispatcher(target); 
 		dispatch.forward(request, response); 

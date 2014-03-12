@@ -1,3 +1,24 @@
+         .header-link {
+		padding-left:50px;
+		font-weight:bold;	
+		}
+				#leftcontent-home {
+		position: absolute;
+		left:10px;
+		top:50px;
+		width:200px;
+		}
+				#centercontent-home {
+		margin-left: 199px;
+		margin-right:199px;
+		margin-left: 201px;
+		margin-right:201px;
+		} 
+		
+		html>body #centercontent-home {
+		margin-left: 20px;
+		margin-right:0px;
+		}
 *,
 *:after,
 *:before {

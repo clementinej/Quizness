@@ -44,6 +44,7 @@ ArrayList<User> friends = (ArrayList<User>)user.getFriends();
 //System.out.print("friends" + friends.get(0).getUserName());
 String userName = user.getUserName();
 String quizID = request.getParameter("quiz_id"); 
+String toEmail =""; 
 String toString = request.getParameter("recipient");
 System.out.print("Sending a Message to: " + toString);
 
@@ -61,6 +62,7 @@ String challenge="";
 if(toString != null){
 	toID = Integer.parseInt(toString);
 	User to = User.getUser(toID);
+	toEmail = to.getEmail(); 
 	recipientInfo = to.getUserName() + "<" + to.getEmail() + ">";
 }
 
@@ -120,16 +122,17 @@ if(quizID != null) {
 					if(toID == -1) { %>	
 					<h3>Select a friend!</h3>
 						<div class="styled-select">
-						<select name="type" id="friends">
-						<% if (friends.size()>1){
+						<select name="user_email" id="friends">
+						<% 
 								for (int i = 0; i < friends.size(); i++) { 
+								//System.out.print(friends.size());
 								User f = friends.get(i);
-								String to = f.getUserName();
+								String to = f.getEmail();
 						%>
-							 <option value="<%=to%> "><%=to%></option>
-							 <input id="id" name = "id" type="hidden" value="<%=f.getUserID()%>"/>
-						<% } %>
-						<% } %>
+								 <option value="<%=to%> "><%=to%></option>
+							 	
+								<% } %>
+					
 						</select>
 						</div>
 						<script>
@@ -145,7 +148,7 @@ if(quizID != null) {
 					<% } else { %>
 					<%System.out.print("recipientInfo"); %>
 						<input id="email" name= "email" type="name" style="width:300px" value="<%=recipientInfo%>"/>
-						<input id="id" name = "id" type="hidden" value="<%=toID%>"/>
+						<input id="user_email" name = "user_email" type="hidden" value="<%=toEmail%>"/>
 					<% } %>
 					</td>
 				</tr>
@@ -184,13 +187,3 @@ if(quizID != null) {
 	<% } %>
 	</div><br>
 </body>
-<script>
-   var button = document.getElementById("send-button");
-   button.addEventListener("click", function() {
-	   	var type = document.getElementById("friends");
-	   	var value = type.options[type.selectedIndex].value;
-	   	if(value == 0) {
-	   		alert("Please choose a question type");
-	   	}
-	   	});
-</script>
