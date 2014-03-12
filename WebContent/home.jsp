@@ -106,7 +106,8 @@
          <span class="header-link"><a href="profile.jsp">Profile</a></span>
          <span class="header-link"><a href="site/admin.jsp">Admin</a></span>
          <span class="header-link"><a href="inbox.jsp">Inbox</a></span>
-          <span class="header-link"><a href="site/search.jsp">Search</a></span>
+         <span class="header-link"><a href="site/search.jsp">Search</a></span>
+         <span class="header-link"><a href="LogoutServlet">Log Off</a></span>
          <span class="right">Welcome, <%=name %></span>
       </div>
       <div class="container_main">

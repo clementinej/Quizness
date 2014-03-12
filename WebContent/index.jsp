@@ -1,4 +1,5 @@
 <%@ page errorPage="../site/404.jsp"  %>
+<%@ page import="java.util.*, control.*, model.*" %>
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -12,19 +13,22 @@
    <body>
    
    	<% 
-   		//boolean isCorrectUserID = true;
-   		//Cookie[] cookies = request.getCookies();  		
-   		//if(cookies != null){
-   			//for(Cookie cookie : cookies){
-   				//if(cookie.getName().equals("username")){
-   					//if(username =)
-   				//}
-   			//}
-   		//}
-   
-   
-   
-   
+   		boolean isCorrectUserID = true;
+   		Cookie[] cookies = request.getCookies();  		
+   		if(cookies != null){
+   			for(Cookie cookie : cookies){
+   				if(cookie.getName().equals("id")){
+   					int userID = CookieManager.getUserID(cookie.getValue());
+   					if(userID != -1){
+   						User user = User.getUser(userID); 
+   						session.setAttribute("current user", user); 
+   						session.setAttribute("current_session_id", cookie.getValue());
+   						RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp"); 
+   						dispatch.forward(request, response);
+   					}
+   				}
+   			}
+   		}
    
         if(request.getParameter("invalid_login") != null) {
         	System.out.println("Invalid Login");%>

@@ -42,30 +42,27 @@ public class LoginServlet extends HttpServlet {
 		String email = request.getParameter("login");		
 		String pw = request.getParameter("password");
 		
-		
-		
-		Cookie[] cookies = request.getCookies(); 
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		try {
 			if(manager.validLogin(email, pw)) {
 				User newUser = (User) session.getAttribute("current user");
 				newUser = setCurrentUser(newUser, email);
 				session.setAttribute("current user", newUser);
 				System.out.println("redirected to home.jsp");
+				
+				String uniqueID = session.getId();
+				CookieManager.add(uniqueID, newUser.getUserID());
+				Cookie cookie = new Cookie("id", uniqueID);
+				cookie.setMaxAge(1200);
+				response.addCookie(cookie);
 				redirectToPage("home.jsp", request, response);
 				return;
 			} else { 
 				redirectToPage("index.jsp?invalid_login=signal", request, response);
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
