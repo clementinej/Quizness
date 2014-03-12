@@ -3,6 +3,7 @@
 <%@ page import="model.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.util.Date" %>
+ <%@page import="java.text.SimpleDateFormat"%>
 <%-- <%@ page errorPage="../site/404.jsp" %> --%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
@@ -34,6 +35,8 @@
       </div>
       
       <%
+      SimpleDateFormat formatter = (SimpleDateFormat) session.getAttribute("time formatter");
+      
 		// Get the current user
 		User u = (User) session.getAttribute("current user");
 		Inbox inbox = Inbox.getInbox(u.getUserID());
@@ -109,7 +112,7 @@
 		                     <td align="left" width="25%"><a href="profile.jsp?id=<%=fromID%>"><font><b><%=user.getUserName()%></b></font></a></td>
 		                     <!-- LINK TO MESSAGE -->
 		                     <td align="left" width="50%"><a href="social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currNote.getSubject() %></b></font></a></td>
-		                     <td align="right" width="30%"><b><%=sentAt%></b></td>
+		                     <td align="right" width="30%"><b><%=formatter.format(sentAt)%></b></td>
 		                  </tr>
                   		<%
 					}
@@ -136,7 +139,7 @@
 		                     <td align="left" width="25%"><a href="profile.jsp?id=<%=fromID%>"><font><b><%=user.getUserName()%></b></font></a></td>
 		                     <!-- LINK TO MESSAGE -->
 		                     <td align="left" width="50%"><a href="social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currRequest.getSubject() %></b></font></a></td>
-		                     <td align="right" width="30%"><b><%=sentAt%></b></td>
+		                     <td align="right" width="30%"><b><%=formatter.format(sentAt)%></b></td>
 		                  </tr>
                   		<%
 					}
@@ -163,7 +166,7 @@
 		                     <td align="left" width="25%"><a href="profile.jsp?id=<%=fromID%>"><font><b><%=user.getUserName()%></b></font></a></td>
 		                     <!-- LINK TO MESSAGE -->
 		                     <td align="left" width="50%"><a href="social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currChallenge.getSubject() %></b></font></a></td>
-		                     <td align="right" width="30%"><b><%=sentAt%></b></td>
+		                     <td align="right" width="30%"><b><%=formatter.format(sentAt)%></b></td>
 		                  </tr>
                   		<%
 					}
