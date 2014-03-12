@@ -62,10 +62,12 @@ public class QuestionHandler {
 	/*
 	 * makes a quiz and adds it to the database.
 	 */
-	public static void makeQuizAndAddToDB(ArrayList<Question> questionList, HttpServletRequest request, User currUser) {
+	public static boolean makeQuizAndAddToDB(ArrayList<Question> questionList, HttpServletRequest request, User currUser) {
+		if(questionList.size() == 0) return false;
 		int creatorID = getUserID(currUser);	
 		double maxScore = getMaxScore(questionList);
 		String description = request.getParameter("description"), title = request.getParameter("title");
+		if(title.length() == 0) return false;
 		System.out.println("Title: "+ title);
 		System.out.println("Description: "+ description);
 		System.out.println("Max Score: "+ maxScore);
@@ -91,9 +93,12 @@ public class QuestionHandler {
 			checkAchievements(creatorID);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}		
+			return false;
+		}	
+		return true;
 	}
 
+	
 	/*
 	 * Checks achievements, and adds if any are fulfilled 
 	 */
@@ -109,7 +114,6 @@ public class QuestionHandler {
 			numQuizzes++;
 		}
 		System.out.println(numQuizzes);
-		System.out.println("my balls hurt");
 		if (numQuizzes == 1){
 			System.out.println("Adding amateur author");
 			user.addAchievement(new AmateurAuthor());
@@ -282,5 +286,22 @@ public class QuestionHandler {
 		return null;
 	}
 	
-
+	/*
+	 * gives url of where to go from error
+	 */
+	public static String getCreateEditErrorRedirection(int questionType) {
+		switch(questionType) {//correspond to the question subclass
+		case QUESTION_RESPONSE: 
+			return "quiz/questionEditing/edit-question-answer.jsp?error=signal";
+		case FILL_IN_THE_BLANK:
+			return "quiz/questionEditing/edit-fill-in-blanks.jsp?error=signal";
+		case MULTIPLE_CHOICE:
+			return "quiz/questionEditing/edit-multiple-choice.jsp?error=signal";
+		case PICTURE_RESPONSE:
+			return "quiz/questionEditing/edit-picture-response.jsp?error=signal";
+		}
+		return null;
+	}
+	
+	
 }

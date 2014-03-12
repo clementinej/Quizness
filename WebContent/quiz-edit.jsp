@@ -84,16 +84,16 @@ ArrayList<Question> questions = quiz.getNonRandomQuestions();
 		String redirectTo = "";
 		switch(type) {
 		case 1://question-response
-			redirectTo = "quiz/questionEditing/edit-question-answer.jsp?question_index="+i+"&quiz_id="+quiz.getQuizID();
+			redirectTo = "quiz/questionEditing/edit-question-answer.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
 			break;
 		case 2://fill-in-the-blank
-			redirectTo = "quiz/questionEditing/edit-fill-in-blanks.jsp?question_index="+i+"&quiz_id="+quiz.getQuizID();
+			redirectTo = "quiz/questionEditing/edit-fill-in-blanks.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
 			break;
 		case 3://multiple choice
-			redirectTo = "quiz/questionEditing/edit-multiple-choice.jsp?question_index="+i+"&quiz_id="+quiz.getQuizID();
+			redirectTo = "quiz/questionEditing/edit-multiple-choice.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
 			break;
 		case 4://picture response
-			redirectTo = "quiz/questionEditing/edit-picture-response.jsp?question_index="+i+"&quiz_id="+quiz.getQuizID();
+			redirectTo = "quiz/questionEditing/edit-picture-response.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
 			break;
 		}
 		

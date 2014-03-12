@@ -61,6 +61,7 @@ public class CreateServlet extends HttpServlet {
 			addToExistingQuiz(session, request, currUser, response);
 		} else if(QuestionHandler.getUserIntent(session, request).equals("create quiz")) {
 			createQuiz(session, request, response, questionList, currUser);
+			return;
 		}			
 	}
 
@@ -113,7 +114,10 @@ public class CreateServlet extends HttpServlet {
 	private void createQuiz(HttpSession session, HttpServletRequest request,
 			   				HttpServletResponse response, ArrayList<Question> 
 							questionList, User currUser) throws ServletException, IOException {
-		QuestionHandler.makeQuizAndAddToDB(questionList, request, currUser);	
+		if(!QuestionHandler.makeQuizAndAddToDB(questionList, request, currUser)) {
+			QuestionHandler.forwardToPage("create-quiz.jsp?error=signal", request, response);	
+			return;
+		}
 		QuestionHandler.clearQuestionList(session);
 		QuestionHandler.forwardToPage("success.html", request, response);	
 	}
