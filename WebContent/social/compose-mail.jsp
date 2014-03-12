@@ -115,9 +115,9 @@ if(quizID != null) {
 					<%
 					System.out.print("to id" + toID); 
 					if(toID == -1) { %>	
+					<h3>Select a friend!</h3>
 						<div class="styled-select">
 						<select name="type" id="friends">
-							<option>Select a friend</option>
 						<% if (friends.size()>1){
 								for (int i = 0; i < friends.size(); i++) { 
 								User f = friends.get(i);
