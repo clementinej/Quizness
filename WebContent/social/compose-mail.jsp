@@ -111,7 +111,7 @@ if(quizID != null) {
 		<% } else { %>
 		<div class="header"><h3>Compose New Message</h3></div>
 		<% } %>
-			<table>
+			<table id="compose-mail">
 				<tr>
 					<th align="left" width="10%">To </th>
 					<td align="left">

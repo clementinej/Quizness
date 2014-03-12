@@ -15,6 +15,9 @@
     display: table;
     clear: both;
 }
+#compose-mail {
+	color:#333333;
+	}
 
 .form-1 {
     /* Size & position */
