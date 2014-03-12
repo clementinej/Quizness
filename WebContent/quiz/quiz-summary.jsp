@@ -155,7 +155,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
 		 <%
          for(int i = 0; i < bestTriesToday.size() && i < 5; i++) {
          %>
-         <p><%=formatter.format(bestTriesToday.get(i).getTime()) %> <%=User.getUser(bestTriesToday.get(i).getUserID()).getUserName()%> scored <%=bestTriesToday.get(i).getScore() %> </p>
+         <p><%=formatter.format(bestTriesToday.get(i).getDate()) %> <%=User.getUser(bestTriesToday.get(i).getUserID()).getUserName()%> scored <%=bestTriesToday.get(i).getScore() %> </p>
          <%
          }
          %>

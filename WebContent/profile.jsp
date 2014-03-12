@@ -50,7 +50,7 @@
    %>
       <nav>
          <ul id="n" class="clearfix">
-            <li><a href="#">Profile</a></li>
+            <li><a href="home.jsp">Home</a></li>
        		<li><a href="create-quiz.jsp">Create Quiz</a></li>	
          	<li><a href="social/compose-mail.jsp">Compose </a></li>
          	<li><a href="profile.jsp">Profile</a></li>
