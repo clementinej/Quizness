@@ -4,7 +4,34 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head> 
    <link rel="stylesheet" type="text/css" href="css/style_login.css" />
-
+   <link rel="stylesheet" type="text/css" href="css/style.css" />
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" type="text/css" href="../css/style.css" />
+      <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
+      <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300|Montserrat' rel='stylesheet' type='text/css' />
+           <style>
+         .link {
+         color:#fffff;
+         font-weight:bold;
+         text-align:center;
+         }
+         .links {
+         padding-left:40px;
+         }
+         .header-link {
+		padding-left:50px;
+		font-weight:bold;	
+		}
+		.right {
+		color:#fffff;
+		float:right;
+		margin-right:25px;
+		font-weight:bold;
+		font-size:100%;
+		}
+      </style>
 </head>
 <%
 //Login.notLoggedIn(request,response);
@@ -19,7 +46,15 @@ ArrayList<Question> questions = quiz.getNonRandomQuestions();
 %>
 
 <body>
-
+      <!--top bar -->
+      <div class="top">
+         <span class="header-link"><a href="create-quiz.jsp">Create Quiz</a></span>
+         <span class="header-link"><a href="social/compose-mail.jsp">Compose </a></span>
+         <span class="header-link"><a href="social/profile.jsp">Profile</a></span>
+         <span class="header-link"><a href="site/admin.jsp">Admin</a></span>
+         <span class="header-link"><a href="inbox.jsp">Inbox</a></span>
+          <span class="header-link"><a href="site/search.jsp">Search</a></span>
+      </div>
 <div class="container">
 
 	<div id="quizedit">

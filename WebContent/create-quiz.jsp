@@ -19,16 +19,6 @@
       <%String title = (String)session.getAttribute("title");%>
           <input type="name" name="title" value="<%=title%>" placeholder="Title" autofocus/>
          </div>
-         <div>
-            <label class="terms" style="padding:0px 25px;">Category</label>
-            <select id="quiz-category">
-               <option value="general">General</option>
-               <option value="science">Science and Technology</option>
-               <option value="trivia">Trivia</option>
-               <option value="social">Social</option>
-               <option value="educational">Educational</option>
-            </select>
-         </div>
          <div><br>
       <%String description = (String)session.getAttribute("description");%>
           <input type="name" name="description" value="<%=description%>" placeholder="Description" autofocus/>
