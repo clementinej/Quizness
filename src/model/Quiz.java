@@ -103,6 +103,10 @@ public class Quiz implements Serializable{
 		return makeIndexMap();
 	}
 	
+	public ArrayList<Question> getNonRandomQuestions() {
+		return questions;
+	}
+	
 	// Return the number of questions
 	public int getNumQuestions(){
 		return questions.size(); 
@@ -283,7 +287,13 @@ public class Quiz implements Serializable{
 		double score = 0;
 		for (int i = 0; i < questions.size(); i++){
 			System.out.println(i +"< questions.size():"+questions.size() + "and <" +responses.size());
-			score += questions.get(originalToRandomMap.get(i)).getPoints(responses.get(i));
+			double toAdd = 0;
+			try {
+				toAdd = questions.get(originalToRandomMap.get(i)).getPoints(responses.get(i));
+			} catch (Exception e) { 
+	
+			}
+			score += toAdd;
 		}
 		return score;
 	}

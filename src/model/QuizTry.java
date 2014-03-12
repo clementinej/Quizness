@@ -25,7 +25,8 @@ public class QuizTry implements Serializable {
 	private User user;
 	private double elapsedTime;
 	private double startTime;
-	private ArrayList<String[]> responses;
+	private ArrayList<String[]> responses;//for multipage quizzes
+	private ArrayList<Integer> questionIndexMap;
 	private boolean inProgress;
 	private double score;
 	private Date dateTaken;
@@ -153,10 +154,6 @@ public class QuizTry implements Serializable {
 	public void setToDone() throws Exception {
 		inProgress = false;
 	  	ServerConnection.updateQuizTry(this);
-//		Connection con = ServerConnection.getConnection();
-//		Statement stmt = con.createStatement();
-//		stmt.executeQuery("USE " + MYSQL_DATABASE_NAME);
-//		ResultSet rs = stmt.executeUpdate("SELECT * FROM users WHERE username = \""+ userName + "\"");
 	}
 	
 	public ArrayList<String[]> getResponses(){

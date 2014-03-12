@@ -26,7 +26,7 @@
 	String currSolution = "Current Solution";
 	int currScore = 6;
 	
-	ArrayList<Question> questionList = currQuiz.getQuestions(); 
+	ArrayList<Question> questionList = currQuiz.getNonRandomQuestions(); 
 	Question q = questionList.get(qIndex);
 	double points = q.getMaxPoints();
 	String questionText = q.getQuestion();
