@@ -50,6 +50,11 @@ public class CreateServlet extends HttpServlet {
 		System.out.println("In CreateServlet, user = " + currUser.getUserName());
 		int creatorID = QuestionHandler.getUserID(currUser);	
 		if(creatorID == -1) return; //should redirect to a "You are not logged in" page	
+		if(request.getParameter("cancel") != null) {
+			QuestionHandler.clearQuestionList(session);
+			QuestionHandler.forwardToPage("home.jsp", request, response);
+			return;
+		}
 		if(request.getParameter("save_title_and_description") != null) {
 			saveTitleAndDescription(request, session, response);
 			return;
@@ -61,6 +66,7 @@ public class CreateServlet extends HttpServlet {
 			addToExistingQuiz(session, request, currUser, response);
 		} else if(QuestionHandler.getUserIntent(session, request).equals("create quiz")) {
 			createQuiz(session, request, response, questionList, currUser);
+			return;
 		}			
 	}
 
@@ -113,7 +119,10 @@ public class CreateServlet extends HttpServlet {
 	private void createQuiz(HttpSession session, HttpServletRequest request,
 			   				HttpServletResponse response, ArrayList<Question> 
 							questionList, User currUser) throws ServletException, IOException {
-		QuestionHandler.makeQuizAndAddToDB(questionList, request, currUser);	
+		if(!QuestionHandler.makeQuizAndAddToDB(questionList, request, currUser)) {
+			QuestionHandler.forwardToPage("create-quiz.jsp?error=signal", request, response);	
+			return;
+		}
 		QuestionHandler.clearQuestionList(session);
 		QuestionHandler.forwardToPage("success.html", request, response);	
 	}

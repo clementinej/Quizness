@@ -22,7 +22,7 @@ import model.*;
 @WebServlet("/EditServlet")
 public class EditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	public static final int SAVE_AS_SESSION = -2;
 	public static final int QUESTION_RESPONSE = 1;
 	public static final int FILL_IN_THE_BLANK = 2;
 	public static final int MULTIPLE_CHOICE = 3;
@@ -42,16 +42,20 @@ public class EditServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Quiz quiz = QuestionHandler.getQuiz(request);
 		String saveTitleAndDescription = request.getParameter("quiz_info");
-		System.out.println("In EditServlet:" + saveTitleAndDescription);	
+		System.out.println("In EditServlet:");	
+		HttpSession session = request.getSession();	
+		String redirectTo;
 		if(saveTitleAndDescription != null) {
 			saveTitleAndDescription(request, quiz, response);
 			return;
 		} else if(request.getParameter("delete") != null) {
-			deleteQuestion(request, quiz);
+			redirectTo = deleteQuestion(request, quiz, session);
 		} else {	
-			updateQuestion(request, quiz);
+			redirectTo = updateQuestion(request, quiz, session);
 		}	
-		QuestionHandler.forwardToPage("quiz-edit.jsp", request, response);
+		System.out.println("From CreateServlet redirecting to:" + redirectTo);
+		QuestionHandler.forwardToPage(redirectTo, request, response);
+		return;
 	}
 
 
@@ -74,21 +78,41 @@ public class EditServlet extends HttpServlet {
 	/*
 	 * Deletes a question from quiz and stores result in database.
 	 */
-	private void deleteQuestion(HttpServletRequest request, Quiz quiz) {
+	private String deleteQuestion(HttpServletRequest request, Quiz quiz, HttpSession session) {
 		int qIndex = Integer.parseInt(request.getParameter("question_index"));
-		try {quiz.removeQuestionAt(qIndex);} catch (Exception e) {e.printStackTrace();}		
+		if(Integer.parseInt(request.getParameter("quiz_id")) == SAVE_AS_SESSION) {
+			ArrayList<Question> questionList = (ArrayList<Question>) session.getAttribute("question list");
+			questionList.remove(qIndex);
+			session.setAttribute("question list", questionList);
+			return "create-quiz.jsp";
+		} else {
+			try {quiz.removeQuestionAt(qIndex);} catch (Exception e) {e.printStackTrace();}
+		}
+		return "quiz-edit.jsp?quiz_id="+quiz.getQuizID();
 	}
 	
 
 	/*
 	 * Updates question with the given question index and stores result in database
 	 */
-	private void updateQuestion(HttpServletRequest request, Quiz quiz) {
+	private String updateQuestion(HttpServletRequest request, Quiz quiz, HttpSession session) throws ServletException, IOException {
 		int qIndex = Integer.parseInt(request.getParameter("question_index"));
-		Question newQuestion = QuestionHandler.constructQuestion(request);				
+		Question newQuestion = QuestionHandler.constructQuestion(request);
+		int questionType = Integer.parseInt(request.getParameter("question type"));
+		if(newQuestion == null) return QuestionHandler.getCreateEditErrorRedirection(questionType);
+		if(Integer.parseInt(request.getParameter("quiz_id")) == SAVE_AS_SESSION) {
+			//if(newQuestion == null) return QuestionHandler.getCreateEditErrorRedirection(questionType);
+			ArrayList<Question> questionList = (ArrayList<Question>) session.getAttribute("question list");
+			questionList.set(qIndex, newQuestion);
+			session.setAttribute("question list", questionList);
+			return "create-quiz.jsp";
+		} else {
 		try {
 			quiz.updateQuestion(qIndex, newQuestion);} 
 		catch (Exception e) { e.printStackTrace();}
+		}
+		
+		return "quiz-edit.jsp?quiz_id="+Integer.parseInt(request.getParameter("quiz_id"));
 	}
 	
 }

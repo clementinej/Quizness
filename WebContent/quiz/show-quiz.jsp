@@ -46,7 +46,7 @@
 		<p><%=quiz.getDescription()%></p>
    	    <input type="hidden" name="quiz try id" value="<%=qTry.getTryID()%>"/>
 		<%
-		ArrayList<Question> questions = quiz.getQuestions();
+		ArrayList<Question> questions = quiz.getQuestions();//gets random questions
    	    		
    	    /*
    	     * Print out all questions

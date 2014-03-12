@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
     <%@page import="model.*"%>
     <%@page import="java.util.*"%>
+    <%@page import="java.text.SimpleDateFormat"%>
     <%--<%@ page errorPage="../site/404.jsp" --%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -41,6 +42,9 @@ ArrayList<Integer> topPerformerIds = QuizSummary.getAllPerformance((quizID), 10)
 
 //A list showing the performance of recent test takers (both good and bad). 
 ArrayList<Integer> recentTryIds = QuizSummary.getRecentPerformance(quizID, 5);
+
+//Datetime formatter
+SimpleDateFormat formatter = (SimpleDateFormat) session.getAttribute("time formatter"); 
 
 //Summary statistics on how well all users have performed on the quiz. 
 //Summary quizSummary = Summary.getStatistics(quizID);
@@ -103,7 +107,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
       <div class="inputs">
          <h3>Quiz Title</h3>
          <p><%=quiz.getDescription() %></p><br> <!-- TODO -->
-         <p><b>Created by </b><a href="#"><%=creatorName %></a></p>
+         <p><b>Created by </b><a href="../profile.jsp?id=<%=creator.getUserID()%>"><%=creatorName %></a></p>
          
          <!-- Print info on the user's last five tries -->
          <br><h3>Your History</h3>
@@ -111,7 +115,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          <%
          for(int i = 0; i < lastTriesUser.size() && i < 5; i++) {
          %>
-         <p>On <%=lastTriesUser.get(i).getDate() %> you scored <%=lastTriesUser.get(i).getScore() %> </p>
+         <p><%=formatter.format(lastTriesUser.get(i).getDate()) %> you scored <%=lastTriesUser.get(i).getScore() %> </p>
          <%
          }
          %>
@@ -121,7 +125,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          <%
          for(int i = 0; i < recentTries.size() && i < 5; i++) {
          %>
-         <p>At <%=recentTries.get(i).getTime() %> <%=User.getUser(recentTries.get(i).getUserID()).getUserName()%> scored <%=recentTries.get(i).getScore() %> </p>
+         <p><%=formatter.format(recentTries.get(i).getDate()) %> <%=User.getUser(recentTries.get(i).getUserID()).getUserName()%> scored <%=recentTries.get(i).getScore() %> </p>
          <%
          }
          %>
@@ -142,7 +146,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
 		 <%
          for(int i = 0; i < bestTries.size() && i < 5; i++) {
          %>
-         <p>On <%=bestTries.get(i).getDate() %> <%=User.getUser(bestTries.get(i).getUserID()).getUserName()%> scored <%=bestTries.get(i).getScore() %> </p>
+         <p><%=formatter.format(bestTries.get(i).getDate()) %> <%=User.getUser(bestTries.get(i).getUserID()).getUserName()%> scored <%=bestTries.get(i).getScore() %> </p>
          <%
          }
          %>
@@ -151,7 +155,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
 		 <%
          for(int i = 0; i < bestTriesToday.size() && i < 5; i++) {
          %>
-         <p>At <%=bestTriesToday.get(i).getTime() %> <%=User.getUser(bestTriesToday.get(i).getUserID()).getUserName()%> scored <%=bestTriesToday.get(i).getScore() %> </p>
+         <p><%=formatter.format(bestTriesToday.get(i).getDate()) %> <%=User.getUser(bestTriesToday.get(i).getUserID()).getUserName()%> scored <%=bestTriesToday.get(i).getScore() %> </p>
          <%
          }
          %>

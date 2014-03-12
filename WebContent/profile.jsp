@@ -6,16 +6,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
    <head>
-      <meta charset="utf-8" />
-      <title>Profile Page</title>
+   <meta charset="UTF-8" />
+    	<title>Profile Page</title>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" type="text/css" href="css/style.css" />
+      <link rel="stylesheet" type="text/css" href="css/style_login.css" />
+      <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300|Montserrat' rel='stylesheet' type='text/css' />
       <link rel="stylesheet" type="text/css" href="css/global.css" />
    </head>
    <body>
    <%
-   // COMMENT THIS IN. EVERYTHING SHOULD WORK. ALSO REMEMBER TO COMMENT IN THE 
-   // MODEL IMPORT AT THE TOP OF THE PAGE. THAT'S THE BIT THAT I CAN'T COMPILE
-   
-	
    User currUser = (User) session.getAttribute("current user");
    int currUserID = currUser.getUserID();
  
@@ -45,28 +46,17 @@
    if(!user.getHighScore().equals("This user hasn't taken any quizzes yet!")) {
 	   highScore = Integer.parseInt(user.getHighScore());
    }
-   
-   // COMMENT OUT THESE PLACEHOLDERS. ALL THE FIELDS SHOULD BY DYNAMICALLY 
-   // POPULATED BY THE DATA ABOVE
-// 	String name = "Clementine Jacoby";
-//	int numQuizzesTaken = 187;
-//	int highScore = 490;
-//	String numFriends = "24";
-//   String location = "San Francisco, CA"; // Allow user to add this as easy extension?
-//	String aboutMe = "I figured we could add this as an extension easily.";
-//	ArrayList<String> achievements = new ArrayList<String>();
-//	achievements.add("acheived!");
-//	achievements.add("acheived!");
-//	achievements.add("acheived!");
-//	ArrayList<String> friends = new ArrayList<String>();
-//	friends.add("Gene O.");
-//	friends.add("Lloyd L.");
-//	friends.add("Tony W."); 
 
    %>
       <nav>
          <ul id="n" class="clearfix">
-            <li><a href="#">Profile</a></li>
+            <li><a href="home.jsp">Home</a></li>
+       		<li><a href="create-quiz.jsp">Create Quiz</a></li>	
+         	<li><a href="social/compose-mail.jsp">Compose </a></li>
+         	<li><a href="profile.jsp">Profile</a></li>
+         	<li><a href="site/admin.jsp">Admin</a></li>
+         	<li><a href="inbox.jsp">Inbox</a></li>
+          	<li><a href="site/search.jsp">Search</a></li>
          </ul>
       </nav>
       <div id="content" class="clearfix">

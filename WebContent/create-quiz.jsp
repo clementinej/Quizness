@@ -1,4 +1,4 @@
-g<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.*, java.util.*" %>
 <%--<%@ page errorPage="../site/404.jsp" %>--%>
 <head>
@@ -16,6 +16,7 @@ g<%@page contentType="text/html" pageEncoding="UTF-8"%>
       <div id="quiz_title" class="terms">
     <form method="post" id="signup"> 
       <%if(request.getParameter("saved") != null) %> <h5>Title and Description Saved Successfully!</h5>
+      <%if(request.getParameter("error") != null) %> <h5>Whoops! Make sure you have a title and some questions before submitting!</h5>
       <%String title = (String)session.getAttribute("title");%>
           <input type="name" name="title" value="<%=title%>" placeholder="Title" autofocus/>
          </div>
@@ -57,7 +58,7 @@ g<%@page contentType="text/html" pageEncoding="UTF-8"%>
          <br><input type="button" id="add-question" value="Add A Question"></input> <!-- Forward to type-specific creation template -->
          </form>
          <br><input id="submit" type="submit" value="Create Quiz!"><!-- Store new quiz in database -->
-         <br><a href="home.jsp" id="submit">Cancel</a>
+         <br><input id="submit" name="cancel" type="submit" value="Cancel"><!-- Store new quiz in database -->
          <!-- Question section -->
          <div style="margin-top:20px;">
          <h3>Questions</h3>
@@ -71,9 +72,27 @@ g<%@page contentType="text/html" pageEncoding="UTF-8"%>
          	for(int i = 0; i < questionList.size(); i++) {
          		Question q = questionList.get(i);
          		String text = q.getQuestion();
+        		int type = q.getQuestionType();
+         		String redirectTo = "";
+        		switch(type) {
+        		case 1://question-response
+        			redirectTo = "quiz/questionEditing/edit-question-answer.jsp?question_index="+i;
+        			break;
+        		case 2://fill-in-the-blank
+        			redirectTo = "quiz/questionEditing/edit-fill-in-blanks.jsp?question_index="+i;
+        			break;
+        		case 3://multiple choice
+        			redirectTo = "quiz/questionEditing/edit-multiple-choice.jsp?question_index="+i;
+        			break;
+        		case 4://picture response
+        			redirectTo = "quiz/questionEditing/edit-picture-response.jsp?question_index="+i;
+        			break;
+        		}
          %>
          <br>
          	<label class="terms"><%=i + 1%>. "<%=text%>"</label>
+         	<p><a href="<%=redirectTo%>">Edit Question</a></p>
+         	
          	<% 
          	//for each solution
          	for(int solIndex = 0; solIndex < questionList.size(); solIndex++) {

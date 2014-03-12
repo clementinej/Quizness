@@ -44,10 +44,6 @@ public class QuizTry implements Serializable {
 		this.index = 0;
 		this.questions = quiz.getQuestions();
 		this.responses = new ArrayList<String[]>();
-		if (quiz.hasRandomMode()){
-			if (random)
-				shuffleQuestions();
-		}
 		this.startTime = System.currentTimeMillis();
 		this.elapsedTime = 0;
 		this.inProgress = true;
@@ -61,9 +57,6 @@ public class QuizTry implements Serializable {
 		}
 	}
 	
-	private void shuffleQuestions(){
-		Collections.shuffle(questions);
-	}
 	
 /*
  * All the "gets" 
@@ -139,7 +132,6 @@ public class QuizTry implements Serializable {
 		ServerConnection.updateQuizTry(this);
 		quiz.incrementNumOfTimesPlayed();
 		ServerConnection.updateUser(user);
-
 	}
 	
 	private void checkTryAchievements() throws Exception{

@@ -4,43 +4,55 @@
 <%@page import="java.lang.*" %>
 <%@ page errorPage="../site/404.jsp" %>
 <head>
-   <link rel="stylesheet" type="text/css" href="../../css/style_login.css" />
+   <link rel="stylesheet" type="text/css" href="/Quizness/css/style_login.css" />
 </head>
 <%
-	boolean debug = false;
-	User user = (User) session.getAttribute("current user");
-	int currQuizID = 59;//defualt to debugging quiz
-	System.out.println(request.getParameter("quiz_id"));
-	if(!debug) {
-		   currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
-	}
-	System.out.println(request.getParameter("question_index"));
+//place holders
+String currQuestionText = "Current Text";
+String currSolution = "Current Solution";
+int currScore = 6;
+	Question q = null;
+	int currQuizID = -2;
 	int qIndex = Integer.parseInt(request.getParameter("question_index"));
-	
-	Quiz currQuiz = Quiz.getQuiz(currQuizID);
-	if(!user.isAdmin() && currQuiz.getCreatorID() != user.getUserID()) return;//should redirect
-	
-	//place holders
-	String currQuestionText = "Current Image URL";
-	String currSolution = "Current Solution";
-	int currScore = 6;
-	
-	ArrayList<Question> questionList = currQuiz.getNonRandomQuestions(); 
-	Question q = questionList.get(qIndex);
-	double points = q.getMaxPoints();
-	String questionText = q.getQuestion();
-	System.out.println(questionText);
-	ArrayList<Set<String>> answers = q.getAnswer();
-   %>
+
+ if(request.getParameter("e") != null) {
+	   boolean debug = false;
+	   User user = (User) session.getAttribute("current user");
+	   currQuizID = 59;//defualt to debugging quiz
+	   System.out.println(request.getParameter("quiz_id"));
+	   if(!debug) {
+		   currQuizID = Integer.parseInt(request.getParameter("quiz_id"));
+	   }
+	   System.out.println(request.getParameter("question_index"));
+	   
+	   Quiz currQuiz = Quiz.getQuiz(currQuizID);
+	   if(!user.isAdmin() && currQuiz.getCreatorID() != user.getUserID()) return;//should redirect
+
+	   ArrayList<Question> questionList = currQuiz.getNonRandomQuestions(); 
+	   q = questionList.get(qIndex);
+ } else {
+	   ArrayList<Question> questionList = (ArrayList<Question>) session.getAttribute("question list");
+	   q = questionList.get(qIndex);
+ }
+ String questionText = q.getQuestion();
+ double points = q.getMaxPoints();
+ System.out.println(questionText);
+ ArrayList<Set<String>> answers = q.getAnswer();
+ %>
 <body>
    <div class="container">
-      <form method="post" action="../../EditServlet" id="signup">
+      <form method="post" action="/Quizness/EditServlet" id="signup">
          <div class="header">
             <h3>Edit Question</h3>
             <p>Click "Save" to keep your edits or "Back" to cancel.</p>
          </div>
          <div class="sep"></div>
          <div class="inputs">
+         
+         
+          <%if(request.getParameter("error") != null) %> <h3> Question Format Error.  Please Try Again.</h3>
+    
+         
             <div>
                <input type="name" name="question_text" value="<%=questionText%>" style="width:100%" placeholder="<%=currQuestionText%>">
             </div>

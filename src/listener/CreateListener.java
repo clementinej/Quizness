@@ -1,6 +1,7 @@
 package listener;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.servlet.ServletContextAttributeEvent;
@@ -40,6 +41,8 @@ public class CreateListener implements HttpSessionListener {
         if(debugging) {
         	setAutomaticAccount();
         }
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd, yyyy 'at' hh:mm a");
+        session.setAttribute("time formatter", formatter);
         session.setAttribute("current user", currUser);
         
         String quizTitle = "";
