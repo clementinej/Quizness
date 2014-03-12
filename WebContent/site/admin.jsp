@@ -23,8 +23,13 @@ int numFriendReqs = Site.getNumReqs();
 %>
 
 <head>
-   <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
     <link rel="stylesheet" type="text/css" href="../css/admin.css" />
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" type="text/css" href="../css/style.css" />
+      <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
+      <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300|Montserrat' rel='stylesheet' type='text/css' />
     <style>
          .link {
          color:#fffff;
@@ -46,41 +51,11 @@ int numFriendReqs = Site.getNumReqs();
 		font-size:100%;
 		}
 		
-		#leftcontent {
-		position: absolute;
-		left:10px;
-		top:50px;
-		width:200px;
+		#admin-title {
+		padding-top:20px;
+		padding-left:20px;
 		}
-		#centercontent {
-		margin-left: 199px;
-		margin-right:199px;
-		margin-left: 201px;
-		margin-right:201px;
-		} 
 		
-		html>body #centercontent {
-		margin-left: 20px;
-		margin-right:0px;
-		}
-		#rightcontent {
-		position: absolute;
-		right:10px;
-		top:50px;
-		width:200px;
-		}
-		#innerleft {
-		float:left;
-		left:20px;
-		top:50px;
-		width:400px;
-		}
-		#innerright {
-		float:right;
-		right:10px;
-		top:50px;
-		width:400px;
-		}
       </style>
 </head>
 <body>
@@ -94,10 +69,8 @@ int numFriendReqs = Site.getNumReqs();
           <span class="header-link"><a href="site/search.jsp">Search</a></span>
       </div>
 
-  <div class="container_main">
-         <section class="main">
-            <h2 class="cs-text" id="cs-text">Admin Page</h2>
-         </section>
+  <div>
+      <div id="admin-title"><h2>Admin Page</h2></div>
       </div>
       <script>
          $(document).ready(function() {
