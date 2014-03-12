@@ -11,16 +11,15 @@
    <body>
    
    	<% 
-   		boolean isCorrectUsername = false;
-   		boolean isCorrectPassword = true;
-   		Cookie[] cookies = request.getCookies();  		
-   		if(cookies != null){
-   			for(Cookie cookie : cookies){
-   				if(cookie.getName().equals("username")){
-   					i
-   				}
-   			}
-   		}
+   		//boolean isCorrectUserID = true;
+   		//Cookie[] cookies = request.getCookies();  		
+   		//if(cookies != null){
+   			//for(Cookie cookie : cookies){
+   				//if(cookie.getName().equals("username")){
+   					//if(username =)
+   				//}
+   			//}
+   		//}
    
    
    
