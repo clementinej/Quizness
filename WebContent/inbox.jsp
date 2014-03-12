@@ -176,14 +176,18 @@
          </div>
          <div>
             <span id="footer">
-               <b>Selected Messages :</b>
+               <%--<b>Selected Messages :</b>
                <select name="update_type">
                   <option value="delete">Delete Messages</option>
                   <option value="read">Mark as Read</option>
                   <option value="unread">Mark as Unread</option>
-               </select>
-               <input type="hidden" name="quiz_id" value="s">
-               <input type="submit" name="inbox_update" value="Update">
+                  <input type="hidden" name="quiz_id" value="s">
+               		<input type="submit" name="inbox_update" value="Update">
+               </select> --%>
+               <form method = "post" action = "DeleteMessageServlet">
+               		<input type="hidden" name="quiz_id" value="s">
+               		<input type="submit" name="inbox_update" value="Delete Seleted Messages">
+               </form>
             </span>
          </div>
       </form>
