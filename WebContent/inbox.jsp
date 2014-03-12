@@ -3,7 +3,8 @@
 <%@ page import="model.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.util.Date" %>
-<%-- <%@ page errorPage="../site/404.jsp" %> --%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@ page errorPage="../site/404.jsp"  %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
    <head>
@@ -14,12 +15,7 @@
       <link rel="stylesheet" type="text/css" href="css/style.css" />
       <link rel="stylesheet" type="text/css" href="css/inbox.css" />
       <script src="js/modernizr-2.6.2.min.js"></script>
-      <style>
-         .header-link {
-	padding-left:50px;
-	font-weight:bold;	
-	}
-      </style>
+
    </head>
       <body>
             <!--top bar -->
@@ -34,6 +30,8 @@
       </div>
       
       <%
+      SimpleDateFormat formatter = (SimpleDateFormat) session.getAttribute("time formatter");
+      
 		// Get the current user
 		User u = (User) session.getAttribute("current user");
 		Inbox inbox = Inbox.getInbox(u.getUserID());
@@ -102,14 +100,14 @@
 				%>
 		                  <tr>
 		                     <!-- DISPLAY UNREAD LINKS IN BOLD -->
-		                     <td align="left" width="7%">
+		                     <td class="leftalign">
 		                        <input type="checkbox" id="checkbox<%=i%>" name="check" value="<%=messageID%>">
 		                     </td>
 		                     <!-- LINK TO SENDER'S PROFILE -->
-		                     <td align="left" width="25%"><a href="profile.jsp?id=<%=fromID%>"><font><b><%=user.getUserName()%></b></font></a></td>
+		                     <td class="center-subject"><a href="profile.jsp?id=<%=fromID%>"><font><b><%=user.getUserName()%></b></font></a></td>
 		                     <!-- LINK TO MESSAGE -->
-		                     <td align="left" width="50%"><a href="social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currNote.getSubject() %></b></font></a></td>
-		                     <td align="right" width="30%"><b><%=sentAt%></b></td>
+		                     <td class="center-message"><a href="social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currNote.getSubject() %></b></font></a></td>
+		                     <td class="rightalign"><b><%=formatter.format(sentAt)%></b></td>
 		                  </tr>
                   		<%
 					}
@@ -129,14 +127,14 @@
 				%>
 		                  <tr>
 		                     <!-- DISPLAY UNREAD LINKS IN BOLD -->
-		                     <td align="left" width="7%">
+		                     <td class="leftalign">
 		                        <input type="checkbox" id="checkbox<%=i%>" name="check" value="<%=messageID%>">
 		                     </td>
 		                     <!-- LINK TO SENDER'S PROFILE -->
-		                     <td align="left" width="25%"><a href="profile.jsp?id=<%=fromID%>"><font><b><%=user.getUserName()%></b></font></a></td>
+		                     <td class="center-subject"><a href="profile.jsp?id=<%=fromID%>"><font><b><%=user.getUserName()%></b></font></a></td>
 		                     <!-- LINK TO MESSAGE -->
-		                     <td align="left" width="50%"><a href="social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currRequest.getSubject() %></b></font></a></td>
-		                     <td align="right" width="30%"><b><%=sentAt%></b></td>
+		                     <td class="center-message"><a href="social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currRequest.getSubject() %></b></font></a></td>
+		                     <td class="rightalign"><b><%=formatter.format(sentAt)%></b></td>
 		                  </tr>
                   		<%
 					}
@@ -156,14 +154,14 @@
 				%>
 		                  <tr>
 		                     <!-- DISPLAY UNREAD LINKS IN BOLD -->
-		                     <td align="left" width="7%">
+		                     <td class="leftalign">
 		                        <input type="checkbox" id="checkbox<%=i%>" name="check" value="<%=messageID%>">
 		                     </td>
 		                     <!-- LINK TO SENDER'S PROFILE -->
-		                     <td align="left" width="25%"><a href="profile.jsp?id=<%=fromID%>"><font><b><%=user.getUserName()%></b></font></a></td>
+		                     <td class="center-subject"><a href="profile.jsp?id=<%=fromID%>"><font><b><%=user.getUserName()%></b></font></a></td>
 		                     <!-- LINK TO MESSAGE -->
-		                     <td align="left" width="50%"><a href="social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currChallenge.getSubject() %></b></font></a></td>
-		                     <td align="right" width="30%"><b><%=sentAt%></b></td>
+		                     <td class="center-message"><a href="social/read-mail.jsp?msg_id=<%=messageID%>"><font color><b><%= currChallenge.getSubject() %></b></font></a></td>
+		                     <td class="rightalign"><b><%=formatter.format(sentAt)%></b></td>
 		                  </tr>
                   		<%
 					}

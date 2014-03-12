@@ -11,27 +11,6 @@
       <link rel="stylesheet" type="text/css" href="css/style.css" />
       <link rel="stylesheet" type="text/css" href="css/style_login.css" />
       <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300|Montserrat' rel='stylesheet' type='text/css' />
-      <style>
-         .link {
-         color:#fffff;
-         font-weight:bold;
-         text-align:center;
-         }
-         .links {
-         padding-left:40px;
-         }
-         .header-link {
-		padding-left:50px;
-		font-weight:bold;	
-		}
-		.right {
-		color:#fffff;
-		float:right;
-		margin-right:25px;
-		font-weight:bold;
-		font-size:100%;
-		}
-      </style>
       </head>
 <body>
     <%

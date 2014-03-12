@@ -1,181 +1,145 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@ page import="model.*, control.*, java.util.*" %>
+   pageEncoding="ISO-8859-1"%>
+<%@ page import="model.*, control.*, java.util.*" %>
+<%@ page errorPage="../site/404.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<head> 
+<head>
    <link rel="stylesheet" type="text/css" href="css/style_login.css" />
    <link rel="stylesheet" type="text/css" href="css/style.css" />
-      <meta charset="UTF-8" />
-      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" type="text/css" href="../css/style.css" />
-      <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
-      <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300|Montserrat' rel='stylesheet' type='text/css' />
-           <style>
-         .link {
-         color:#fffff;
-         font-weight:bold;
-         text-align:center;
-         }
-         .links {
-         padding-left:40px;
-         }
-         .header-link {
-		padding-left:50px;
-		font-weight:bold;	
-		}
-		.right {
-		color:#fffff;
-		float:right;
-		margin-right:25px;
-		font-weight:bold;
-		font-size:100%;
-		}
-      </style>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" type="text/css" href="../css/style.css" />
+   <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
+   <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300|Montserrat' rel='stylesheet' type='text/css' />
 </head>
 <%
-//Login.notLoggedIn(request,response);
-boolean debug = false;
-User user = (User) session.getAttribute("current user");
-Quiz quiz = Quiz.getQuiz(79);
-if(!debug) {
-	quiz = Quiz.getQuiz(Integer.parseInt(request.getParameter("quiz_id")));
-}
-if(!user.isAdmin() && quiz.getCreatorID() != user.getUserID()) return;
-ArrayList<Question> questions = quiz.getNonRandomQuestions();
-System.out.println("Got questions");
-%>
-
+   boolean debug = false;
+   User user = (User) session.getAttribute("current user");
+   Quiz quiz = Quiz.getQuiz(79);
+   if(!debug) {
+   	quiz = Quiz.getQuiz(Integer.parseInt(request.getParameter("quiz_id")));
+   }
+   if(!user.isAdmin() && quiz.getCreatorID() != user.getUserID()) return;
+   ArrayList<Question> questions = quiz.getNonRandomQuestions();
+   System.out.println("Got questions");
+   %>
 <body>
-      <!--top bar -->
-      <div class="top">
-         <span class="header-link"><a href="create-quiz.jsp">Create Quiz</a></span>
-         <span class="header-link"><a href="social/compose-mail.jsp">Compose </a></span>
-         <span class="header-link"><a href="social/profile.jsp">Profile</a></span>
-         <span class="header-link"><a href="site/admin.jsp">Admin</a></span>
-         <span class="header-link"><a href="inbox.jsp">Inbox</a></span>
-          <span class="header-link"><a href="site/search.jsp">Search</a></span>
+   <!--top bar -->
+   <div class="top">
+      <span class="header-link"><a href="create-quiz.jsp">Create Quiz</a></span>
+      <span class="header-link"><a href="social/compose-mail.jsp">Compose </a></span>
+      <span class="header-link"><a href="social/profile.jsp">Profile</a></span>
+      <span class="header-link"><a href="site/admin.jsp">Admin</a></span>
+      <span class="header-link"><a href="inbox.jsp">Inbox</a></span>
+      <span class="header-link"><a href="site/search.jsp">Search</a></span>
+   </div>
+   <div class="container">
+      <div id="quizedit" >
+         <h1>Edit Quiz Info</h1>
+         <form action="EditServlet" method="post" id="title-edit">
+            Title
+            <p><input name="title" type="name" value="<%=quiz.getTitle() %>"/></p>
+            <br>
+            Description
+            <p><input type="name" name="description" value="<%=quiz.getDescription() %>"/></p>
+            <input id="save-button" type="submit" value="Save Quiz Info" name="quiz_info"/>
+            <input type="hidden" name="quiz_id" value="<%=quiz.getQuizID()%>"/>
+         </form>
       </div>
-<div class="container">
-
-	<div id="quizedit">
-	<h1>Edit Quiz Info</h1>
-	
-	<form action="EditServlet" method="post" id="title-edit">
-		Title
-		<p><input name="title" type="name" value="<%=quiz.getTitle() %>"/></p>		
-		
-		<br>
-	
-		Description
-		<p><input type="name" name="description" value="<%=quiz.getDescription() %>"/></p>
-		<input id="save-button" type="submit" value="Save Quiz Info" name="quiz_info"/>
-		<input type="hidden" name="quiz_id" value="<%=quiz.getQuizID()%>"/>
-	</form>
-	
-	</div>
-
-	<form method="post" action="quiz/edit/EditQuestion" id="questionedit">
-		<input type="hidden" name="quiz_id" value="<%=quiz.getQuizID()%>"/>
-		<h2>Edit Questions</h2>
-		<%
-		for(int i = 0; i < questions.size(); i++) {
-			Question q = questions.get(i);
-			int type = q.getQuestionType();
-			System.out.println(i);
-			String redirectTo = "";
-			switch(type) {
-			case 1://question-response
-				redirectTo = "quiz/questionEditing/edit-question-answer.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
-				break;
-			case 2://fill-in-the-blank
-				redirectTo = "quiz/questionEditing/edit-fill-in-blanks.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
-				break;
-			case 3://multiple choice
-				redirectTo = "quiz/questionEditing/edit-multiple-choice.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
-				break;
-			case 4://picture response
-				redirectTo = "quiz/questionEditing/edit-picture-response.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
-				break;
-			}
-			
-			String text = q.getQuestion();
-		if(type != 4) {%>
-		<p><%=text %></p>
-		<%} else {%>
-		<p><img src="<%=text %>" height="100" width="100"></p>
-		<%}%>
-			<a href="<%=redirectTo%>">Edit Question</a>
-			<br>
-		<%}%>
-		
-
-	</form>
-
-	<div>
-	<form method="post" action="CreateServlet" id="addquestion">
-	  <table>
-            <tr>
-               <th>
-               		<h2>Add Questions</h2>
-                  <input type="hidden" name="quiz_id" value="<%=quiz.getQuizID()%>"/>
-                  <input type="hidden" name="intent" value="add to existing quiz"/>
-                  <select name="question-type" id="question-type">
-                     <option value="0" selected></option>
-                     <option value="question-answer">Question-Answer</option>
-                     <option value="fill-in-blanks">Fill-in-the-Blank</option>
-                      <option value="multiple-choice">Multiple Choice</option>
-                     <option value="picture-response">Picture-Response</option>
-                     <option value="multiple-answer">Multiple Answer</option>
-                     <option value="multiple-choice-multiple-answer">Multi-Choice-Multi-Answer</option>
-                     <option value="matching">Matching</option>
-                     <option value="auto-generated">Auto-Generated</option>
-                     <option value="graded-question">Graded Question</option>
-                  </select>
-            </tr>
-         </table>
-         <div id="add-question-button">
-	 <input type="button" id="add-question" value="Add A Question"></input>
-	 </div> 
-	</form>
-
-	</div>
-	</div>
-	</div>
+      <form method="post" action="quiz/edit/EditQuestion" id="questionedit">
+         <input type="hidden" name="quiz_id" value="<%=quiz.getQuizID()%>"/>
+         <h2>Edit Questions</h2>
+         <%
+            for(int i = 0; i < questions.size(); i++) {
+            	Question q = questions.get(i);
+            	int type = q.getQuestionType();
+            	System.out.println(i);
+            	String redirectTo = "";
+            	switch(type) {
+            	case 1://question-response
+            		redirectTo = "quiz/questionEditing/edit-question-answer.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
+            		break;
+            	case 2://fill-in-the-blank
+            		redirectTo = "quiz/questionEditing/edit-fill-in-blanks.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
+            		break;
+            	case 3://multiple choice
+            		redirectTo = "quiz/questionEditing/edit-multiple-choice.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
+            		break;
+            	case 4://picture response
+            		redirectTo = "quiz/questionEditing/edit-picture-response.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
+            		break;
+            	}
+            	
+            	String text = q.getQuestion();
+            if(type != 4) {%>
+         <p><%=text %></p>
+         <%} else {%>
+         <p><img src="<%=text %>" height="100" width="100"></p>
+         <%}%>
+         <a href="<%=redirectTo%>">Edit Question</a>
+         <br>
+         <%}%>
+      </form>
+      <div>
+         <form method="post" action="CreateServlet" id="addquestion">
+            <table>
+               <tr>
+                  <th>
+                     <h2>Add Questions</h2>
+                     <input type="hidden" name="quiz_id" value="<%=quiz.getQuizID()%>"/>
+                     <input type="hidden" name="intent" value="add to existing quiz"/>
+                     <select name="question-type" id="question-type">
+                        <option value="0" selected></option>
+                        <option value="question-answer">Question-Answer</option>
+                        <option value="fill-in-blanks">Fill-in-the-Blank</option>
+                        <option value="multiple-choice">Multiple Choice</option>
+                        <option value="picture-response">Picture-Response</option>
+                        <option value="multiple-answer">Multiple Answer</option>
+                        <option value="multiple-choice-multiple-answer">Multi-Choice-Multi-Answer</option>
+                        <option value="matching">Matching</option>
+                        <option value="auto-generated">Auto-Generated</option>
+                        <option value="graded-question">Graded Question</option>
+                     </select>
+               </tr>
+            </table>
+            <div id="add-question-button">
+               <input type="button" id="add-question" value="Add A Question"></input>
+            </div>
+         </form>
+      </div>
+   </div>
 </body>
 <script>
-
    var button = document.getElementById("add-question");
    button.addEventListener("click", function() {
-	   	var type = document.getElementById("question-type");
-	   	var value = type.options[type.selectedIndex].value;
-	   	if(value == 0) {
-	   		alert("Please choose a question type");
-	   	} else if(value =="question-answer") {
-	   		window.location = "/Quizness/quiz/questionCreation/question-answer.jsp?intent=add to existing quiz&quizID="+<%=quiz.getQuizID()%>;
-	   	} else if(value == "picture-response")  {
-	   		window.location = "/Quizness/quiz/questionCreation/picture-response.jsp?intent=add to existing quiz&quizID="+<%=quiz.getQuizID()%>;
-	   	} else if(value == "multiple-answer"){
-	   		window.location = "/Quizness/quiz/questionCreation/question-answer.jsp?question-type=5&intent=add to existing quiz";
-	   	} else if (value == "multiple-choice") {
-	   		window.location = "/Quizness/quiz/questionCreation/multiple-choice.jsp?intent=add to existing quiz&quizID="+<%=quiz.getQuizID()%>;
-	   	} else if(value == "multiple-choice-multiple-answer") {
-	   		window.location = "/Quizness/quiz/questionCreation/multiple-choice.jsp?question-type=6&intent=add to existing quiz&quizID="+<%=quiz.getQuizID()%>;
-	   	} else {
-	   		window.location = "/Quizness/quiz/questionCreation/" + value + ".jsp?intent=add to existing quiz&quizID="+<%=quiz.getQuizID()%>;
-	   	}
-	   	});
+    	var type = document.getElementById("question-type");
+    	var value = type.options[type.selectedIndex].value;
+    	if(value == 0) {
+    		alert("Please choose a question type");
+    	} else if(value =="question-answer") {
+    		window.location = "/Quizness/quiz/questionCreation/question-answer.jsp?intent=add to existing quiz&quizID="+<%=quiz.getQuizID()%>;
+    	} else if(value == "picture-response")  {
+    		window.location = "/Quizness/quiz/questionCreation/picture-response.jsp?intent=add to existing quiz&quizID="+<%=quiz.getQuizID()%>;
+    	} else if(value == "multiple-answer"){
+    		window.location = "/Quizness/quiz/questionCreation/question-answer.jsp?question-type=5&intent=add to existing quiz";
+    	} else if (value == "multiple-choice") {
+    		window.location = "/Quizness/quiz/questionCreation/multiple-choice.jsp?intent=add to existing quiz&quizID="+<%=quiz.getQuizID()%>;
+    	} else if(value == "multiple-choice-multiple-answer") {
+    		window.location = "/Quizness/quiz/questionCreation/multiple-choice.jsp?question-type=6&intent=add to existing quiz&quizID="+<%=quiz.getQuizID()%>;
+    	} else {
+    		window.location = "/Quizness/quiz/questionCreation/" + value + ".jsp?intent=add to existing quiz&quizID="+<%=quiz.getQuizID()%>;
+    	}
+    	});
    
    function addTitle(){
-	   var field = document.createElement('input');
-	   field.setAttribute("id", "new-title");
-	   document.getElementById('title-edit').appendChild(field);
-	}
+    var field = document.createElement('input');
+    field.setAttribute("id", "new-title");
+    document.getElementById('title-edit').appendChild(field);
+   }
    function addDescription(){
-	   var field = document.createElement('input');
-	   field.setAttribute("id", "new-description");
-	   document.getElementById('description-edit').appendChild(field);
-	}
+    var field = document.createElement('input');
+    field.setAttribute("id", "new-description");
+    document.getElementById('description-edit').appendChild(field);
+   }
 </script>
-	
 </body>
