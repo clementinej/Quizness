@@ -51,7 +51,12 @@ public class MessageServlet extends HttpServlet {
 			int fromID = fromUser.getUserID();
 			
 			// The challengee
-			int toID = Integer.parseInt(request.getParameter("id"));
+			//int toID = Integer.parseInt(request.getParameter("id"));
+			String toEmail = null; 
+			if(request.getParameter("user_email") != null) toEmail = request.getParameter("user_email"); 
+			
+			int toID = User.getUserID(toEmail);
+			
 			Inbox inbox = Inbox.getInbox(toID);
 			
 			//String email = request.getParameter("email_field");
@@ -75,7 +80,7 @@ public class MessageServlet extends HttpServlet {
 		} 
 		
 		// Need to know which page to forward to
-		RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp"); 
+		RequestDispatcher dispatch = request.getRequestDispatcher("/social/message-success.html"); 
 		dispatch.forward(request, response); 
 	}
 
