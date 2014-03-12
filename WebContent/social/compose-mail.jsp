@@ -95,82 +95,90 @@ if(quizID != null) {
           <span class="header-link"><a href="../site/search.jsp">Search</a></span>
       </div>
 	<div class="container">
-	<form id="signup" method="post" action="../MessageServlet">
-	<% if (challengeID != -1) { %>
-	<div class="header">
-	<h3>Send a Challenge</h3>
-	</div>
-	<% } else { %>
-	<div class="header"><h3>Compose New Message</h3></div>
-	<% } %>
-		<table>
-			<tr>
-				<th align="left" width="10%">To </th>
-				<td align="left">
-				<%
-				System.out.print("to id" + toID); 
-				if(toID == -1) { %>	
-					<div class="styled-select">
-					<select name="type" id="friends">
-						<option>Select a friend</option>
-					<% for (int i = 0; i < friends.size(); i++) { 
-						User f = friends.get(i);
-						String to = f.getUserName();
-					%>
-						 <option value="<%=to%> "><%=to%></option>
-						 <input id="id" name = "id" type="hidden" value="<%=f.getUserID()%>"/>
+	<% if (friends.size() == 0){ %>
+	        <form method="post" action="../site/search.jsp">
+ 		<input id="submit" type="submit" value="You have no friends. Go find some!">
+ 	</form>
+ 	<%} else { %>
+		<form id="signup" method="post" action="../MessageServlet">
+		<% if (challengeID != -1) { %>
+		<div class="header">
+		<h3>Send a Challenge</h3>
+		</div>
+		<% } else { %>
+		<div class="header"><h3>Compose New Message</h3></div>
+		<% } %>
+			<table>
+				<tr>
+					<th align="left" width="10%">To </th>
+					<td align="left">
+					<%
+					System.out.print("to id" + toID); 
+					if(toID == -1) { %>	
+					<h3>Select a friend!</h3>
+						<div class="styled-select">
+						<select name="type" id="friends">
+						<% if (friends.size()>1){
+								for (int i = 0; i < friends.size(); i++) { 
+								User f = friends.get(i);
+								String to = f.getUserName();
+						%>
+							 <option value="<%=to%> "><%=to%></option>
+							 <input id="id" name = "id" type="hidden" value="<%=f.getUserID()%>"/>
+						<% } %>
+						<% } %>
+						</select>
+						</div>
+						<script>
+							var textBox = document.getElementById('email_field');
+							var dropDown = document.getElementById('friend_dropdown');
+							var idField = document.getElementById('id_field');
+							dropDown.onchange = function() {
+								var info = dropDown.value.split(",");
+								textBox.value = info[0];
+								idField.value = info[1];
+							};
+						</script>
+					<% } else { %>
+					<%System.out.print("recipientInfo"); %>
+						<input id="email" name= "email" type="name" style="width:300px" value="<%=recipientInfo%>"/>
+						<input id="id" name = "id" type="hidden" value="<%=toID%>"/>
 					<% } %>
-					</select>
-					</div>
-					<script>
-						var textBox = document.getElementById('email_field');
-						var dropDown = document.getElementById('friend_dropdown');
-						var idField = document.getElementById('id_field');
-						dropDown.onchange = function() {
-							var info = dropDown.value.split(",");
-							textBox.value = info[0];
-							idField.value = info[1];
-						};
-					</script>
-				<% } else { %>
-				<%System.out.print("recipientInfo"); %>
-					<input id="email" name= "email" type="name" style="width:300px" value="<%=recipientInfo%>"/>
-					<input id="id" name = "id" type="hidden" value="<%=toID%>"/>
-				<% } %>
-				</td>
-			</tr>
-			<tr>
-				<th align="left" width="10%">Subject </th>
-				<% if (challengeID != -1) { %>
-					<td align="left" class="message-subject"><%=challengeSubject%><input placeholder="subject" name="subject" type="hidden" value="<%=challengeSubject%>"></td>
-				<% } else { %>
-					<td align="left" class="message-subject"><input name="subject" type="name" style="width:500px" value=""/></td>
-				<% } %>
-			</tr>
-			<tr>
-				<th align="left" width="10%">Body </th>
-				<% if (challengeID != -1) { %>
-					<td><textarea name="body" class="message-body"><%=challenge%></textarea></td>
-				<% } else { %>
-					<td><textarea name="body" class="message-body">Enter your message here.</textarea></td>
-				<% } %>
-			</tr>
-			<tr>
-				<th></th>
-				<% if (challengeID != -1) { %>
-					<td>
-						<input type="hidden" name="quiz_id" value="<%=challengeID%>">
-						<input type="hidden" name="high_score" value="<%=topScore %>">
-						<input type="submit" name ="send_challenge" value="Send">
-						<input type="submit" value="Cancel"/>
 					</td>
-				<% } else { %>
-					<td><input type="submit" name ="send_compose" value="Send">
-					<input type="submit" value="Cancel"/></td>
-				<% } %>
-			</tr>
-		</table>
-	</form>
+				</tr>
+				<tr>
+					<th align="left" width="10%">Subject </th>
+					<% if (challengeID != -1) { %>
+						<td align="left" class="message-subject"><%=challengeSubject%><input placeholder="subject" name="subject" type="hidden" value="<%=challengeSubject%>"></td>
+					<% } else { %>
+						<td align="left" class="message-subject"><input name="subject" type="name" style="width:500px" value=""/></td>
+					<% } %>
+				</tr>
+				<tr>
+					<th align="left" width="10%">Body </th>
+					<% if (challengeID != -1) { %>
+						<td><textarea name="body" class="message-body"><%=challenge%></textarea></td>
+					<% } else { %>
+						<td><textarea name="body" class="message-body">Enter your message here.</textarea></td>
+					<% } %>
+				</tr>
+				<tr>
+					<th></th>
+					<% if (challengeID != -1) { %>
+						<td>
+							<input type="hidden" name="quiz_id" value="<%=challengeID%>">
+							<input type="hidden" name="high_score" value="<%=topScore %>">
+							<input type="submit" name ="send_challenge" value="Send">
+							<input type="submit" value="Cancel"/>
+						</td>
+					<% } else { %>
+						<td><input type="submit" name ="send_compose" value="Send">
+						<input type="submit" value="Cancel"/></td>
+					<% } %>
+				</tr>
+			</table>
+		</form>
+	<% } %>
 	</div><br>
 </body>
 <script>
