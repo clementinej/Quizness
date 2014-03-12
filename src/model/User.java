@@ -34,7 +34,7 @@ public class User implements Serializable {
 
 	//constructor
 	public User(boolean isAdmin, String userName, String pw, String email, String aboutMe, String location){
-		this.isAdmin = true;
+		this.isAdmin = isAdmin;
 		this.isBanned = false;
 		this.pw = pw;
 		this.userName = userName;
