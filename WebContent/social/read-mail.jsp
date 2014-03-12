@@ -81,7 +81,7 @@ m.markAsRead();
      
      	<% } %>
 
-		<a href="inbox.jsp">Back to Inbox</a>
+		<a href="../inbox.jsp">Back to Inbox</a>
       </div>
       </form>
        
