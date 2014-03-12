@@ -57,19 +57,6 @@ public class QuizSearchServlet extends HttpServlet {
 		
 		
 		System.out.println("Seaching for: " + quizName);
-				
-//		response.setContentType("text/html; charset=UTF-8");
-//		PrintWriter out = response.getWriter();
-//		out.println("<!DOCTYPE html>");
-//		out.println("<head>");
-//		out.println("<meta charset=\"UTF-8\" />");
-//		out.println("<title>Student Store</title>");
-//		out.println("</head>");
-//		out.println("<body>");
-//		out.println("<h1>Student Store</h1>");
-//		out.println("<p>Items available:</p>");
-//		out.println("<ul>");
-		
 
 		ArrayList<Quiz> quizList = null;
 		try {
@@ -81,14 +68,6 @@ public class QuizSearchServlet extends HttpServlet {
 		session.setAttribute("resultType", "quiz");
 		RequestDispatcher dispatch = request.getRequestDispatcher("search-results.jsp"); 
 		dispatch.forward(request, response);
-//		for (int i = 0; i < quizList.size(); i++){
-//			Quiz quiz = quizList.get(i);
-//			out.println("<li>");
-//			out.println("<a href=\"show-quiz.jsp?id=" + quiz.getQuizID() + "\">" + quiz.getTitle() + "</a>");
-//			out.println("</li>");
-//		}
-//		out.println("</ul>");
-//		out.println("</body>");
-//		out.println("</html>");	
+
 	}
 }

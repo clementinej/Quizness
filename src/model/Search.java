@@ -18,7 +18,7 @@ public class Search {
 	
 		if (popular){
 			System.out.println("Searching for popular");
-			PreparedStatement ps = con.prepareStatement("SELECT id FROM quizzes WHERE title LIKE ? ORDER BY numTimesTaken");
+			PreparedStatement ps = con.prepareStatement("SELECT id FROM quizzes WHERE title LIKE ? ORDER BY numTimesTaken DESC");
 			ps.setString(1, "%" + queryString + "%");
 			ResultSet rs = ps.executeQuery();
 			rs.beforeFirst();
