@@ -67,9 +67,14 @@ public class AcceptMessageServlet extends HttpServlet {
 
 			} else if (messageType.equals("challenge")){
 				Challenge challenge = (Challenge) Message.getMessage(messageID);
-				if(isAccepted != null) challenge.accept();
+				if(isAccepted != null){
+					challenge.accept();
+					target = "quiz/quiz-summary.jsp?quiz_id=" + challenge.getQuizID()+"&challenge_id=" + msg_id; 
+				} else {
+					target = "inbox.jsp"; 
+				}
 				if(inbox.removeChallenge(messageID) == false) throw new Exception();
-				target = "quiz/quiz-summary.jsp?quiz_id=" + challenge.getQuizID()+"&challenge_id=" + msg_id; 
+				
 			}
 		} catch (Exception e) { 
 			target = "social/message-fail.html";

@@ -80,7 +80,7 @@ public class MessageServlet extends HttpServlet {
 		} 
 		
 		// Need to know which page to forward to
-		RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp"); 
+		RequestDispatcher dispatch = request.getRequestDispatcher("/social/message-success.html"); 
 		dispatch.forward(request, response); 
 	}
 
