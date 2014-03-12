@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -66,9 +67,18 @@ public class QuizTry implements Serializable {
 		return ServerConnection.getQuizTry(quizTryID);
 	}
 	
-	public Date getDate(){
-		return dateTaken;
+	public Date getDate() throws Exception{
+		Date date = null; 
+		Connection con = ServerConnection.getConnection();
+		String query = "SELECT dateCreated FROM quizTries WHERE id = " + this.tryID; 
+		PreparedStatement ps = con.prepareStatement(query);
+		ResultSet rs = ps.executeQuery(); 
+		while(rs.next()){
+			date = rs.getTimestamp(1);
+		}
+		return date;
 	}
+	
 	public boolean isPractice(){
 		return isPractice;
 	}

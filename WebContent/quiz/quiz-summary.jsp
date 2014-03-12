@@ -9,7 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Quiz Summary</title>
-     <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
+     <link rel="stylesheet" type="text/css" href="/Quizness/css/style_login.css" />
 </head>
 <body>
 <%
@@ -107,7 +107,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
       <div class="inputs">
          <h3>Quiz Title</h3>
          <p><%=quiz.getDescription() %></p><br> <!-- TODO -->
-         <p><b>Created by </b><a href="../profile.jsp?id=<%=creator.getUserID()%>"><%=creatorName %></a></p>
+         <p><b>Created by </b><a href="/Quizness/profile.jsp?id=<%=creator.getUserID()%>"><%=creatorName %></a></p>
          
          <!-- Print info on the user's last five tries -->
          <br><h3>Your History</h3>
@@ -124,8 +124,11 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          <br><h3>Recent Activity</h3>
          <%
          for(int i = 0; i < recentTries.size() && i < 5; i++) {
+        	 int userID = User.getUser(recentTries.get(i).getUserID()).getUserID();
+        	 String userName = User.getUser(recentTries.get(i).getUserID()).getUserName(); 
          %>
-         <p><%=formatter.format(recentTries.get(i).getDate()) %> <%=User.getUser(recentTries.get(i).getUserID()).getUserName()%> scored <%=recentTries.get(i).getScore() %> </p>
+         <p><%=formatter.format(recentTries.get(i).getDate()) %> 
+         	<a href="../profile.jsp?user=<%=userID%>"><%=userName%></a> scored <%=recentTries.get(i).getScore() %> </p>
          <%
          }
          %>
@@ -145,8 +148,11 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
       	<br><h3>Top Scores Of All Time</h3>
 		 <%
          for(int i = 0; i < bestTries.size() && i < 5; i++) {
+        	 int userID = User.getUser(bestTries.get(i).getUserID()).getUserID();
+        	 String userName = User.getUser(bestTries.get(i).getUserID()).getUserName(); 
          %>
-         <p><%=formatter.format(bestTries.get(i).getDate()) %> <%=User.getUser(bestTries.get(i).getUserID()).getUserName()%> scored <%=bestTries.get(i).getScore() %> </p>
+         <p><%=formatter.format(bestTries.get(i).getDate()) %> 
+         	<a href="../profile.jsp?user=<%=userID%>"><%=userName%></a> scored <%=bestTries.get(i).getScore() %> </p>
          <%
          }
          %>
@@ -154,8 +160,11 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          <br><h3>Top Scores Today</h3>
 		 <%
          for(int i = 0; i < bestTriesToday.size() && i < 5; i++) {
+        	 int userID = User.getUser(bestTriesToday.get(i).getUserID()).getUserID();
+        	 String userName = User.getUser(bestTriesToday.get(i).getUserID()).getUserName();
          %>
-         <p><%=formatter.format(bestTriesToday.get(i).getDate()) %> <%=User.getUser(bestTriesToday.get(i).getUserID()).getUserName()%> scored <%=bestTriesToday.get(i).getScore() %> </p>
+         <p><%=formatter.format(bestTriesToday.get(i).getDate()) %>
+          	<a href="../profile.jsp?user=<%=userID%>"><%=userName%></a> scored <%=bestTriesToday.get(i).getScore() %> </p>
          <%
          }
          %>
@@ -172,22 +181,22 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          
          <% if(user.getUserID() == quiz.getCreatorID()) { %>
          <!--A way to start editing the quiz, if the user is the quiz owner. -->
-         <br><a href="../quiz-edit.jsp?quiz_id=<%=quiz.getQuizID() %>">Edit Quiz</a>
+         <br><a href="/Quizness/quiz-edit.jsp?quiz_id=<%=quiz.getQuizID() %>">Edit Quiz</a>
          <%} %>
          
          <!-- A way to challenge another user to this quiz -->
-         <br><a href="../social/compose-mail.jsp?quiz_id=<%=quiz.getQuizID() %>&top_score=<%=userHighScore %>">Challenge a friend!</a>
+         <br><a href="/Quizness/social/compose-mail.jsp?quiz_id=<%=quiz.getQuizID() %>&top_score=<%=userHighScore %>">Challenge a friend!</a>
          
           </form>
           <% if(user.isAdmin()){ %>
-          <form method="post" action="../DeleteQuizServlet">
+          <form method="post" action="/Quizness/DeleteQuizServlet">
             <input type ="hidden" name="quiz_id" value=<%=quizID%>>
      		<input id="submit" type="submit" value="Delete Quiz">
      		<% } %>
      		
      	</form>
      	<% if (user.isAdmin()){ %>
-     	<form method = "post" action = "../ClearQuizHistoryServlet">
+     	<form method = "post" action = "/Quizness/ClearQuizHistoryServlet">
      		<input type = "hidden" name = "quiz_id" value="<%=quizID%>"/>
      		<input id = "submit" type = "submit" value = "Clear Quiz History">
      		<% } %>
