@@ -50,6 +50,11 @@ public class CreateServlet extends HttpServlet {
 		System.out.println("In CreateServlet, user = " + currUser.getUserName());
 		int creatorID = QuestionHandler.getUserID(currUser);	
 		if(creatorID == -1) return; //should redirect to a "You are not logged in" page	
+		if(request.getParameter("cancel") != null) {
+			QuestionHandler.clearQuestionList(session);
+			QuestionHandler.forwardToPage("home.jsp", request, response);
+			return;
+		}
 		if(request.getParameter("save_title_and_description") != null) {
 			saveTitleAndDescription(request, session, response);
 			return;

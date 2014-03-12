@@ -1,4 +1,4 @@
-g<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.*, java.util.*" %>
 <%--<%@ page errorPage="../site/404.jsp" %>--%>
 <head>
@@ -58,7 +58,7 @@ g<%@page contentType="text/html" pageEncoding="UTF-8"%>
          <br><input type="button" id="add-question" value="Add A Question"></input> <!-- Forward to type-specific creation template -->
          </form>
          <br><input id="submit" type="submit" value="Create Quiz!"><!-- Store new quiz in database -->
-         <br><a href="home.jsp" id="submit">Cancel</a>
+         <br><input id="submit" name="cancel" type="submit" value="Cancel"><!-- Store new quiz in database -->
          <!-- Question section -->
          <div style="margin-top:20px;">
          <h3>Questions</h3>

@@ -53,7 +53,9 @@ public class EditServlet extends HttpServlet {
 		} else {	
 			redirectTo = updateQuestion(request, quiz, session);
 		}	
+		System.out.println("From CreateServlet redirecting to:" + redirectTo);
 		QuestionHandler.forwardToPage(redirectTo, request, response);
+		return;
 	}
 
 
@@ -86,7 +88,7 @@ public class EditServlet extends HttpServlet {
 		} else {
 			try {quiz.removeQuestionAt(qIndex);} catch (Exception e) {e.printStackTrace();}
 		}
-		return "quiz-edit.jsp";
+		return "quiz-edit.jsp?quiz_id="+quiz.getQuizID();
 	}
 	
 
@@ -109,7 +111,8 @@ public class EditServlet extends HttpServlet {
 			quiz.updateQuestion(qIndex, newQuestion);} 
 		catch (Exception e) { e.printStackTrace();}
 		}
-		return "quiz-edit.jsp";
+		
+		return "quiz-edit.jsp?quiz_id="+Integer.parseInt(request.getParameter("quiz_id"));
 	}
 	
 }

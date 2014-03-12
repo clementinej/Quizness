@@ -43,6 +43,7 @@ if(!debug) {
 }
 if(!user.isAdmin() && quiz.getCreatorID() != user.getUserID()) return;
 ArrayList<Question> questions = quiz.getNonRandomQuestions();
+System.out.println("Got questions");
 %>
 
 <body>
@@ -61,52 +62,53 @@ ArrayList<Question> questions = quiz.getNonRandomQuestions();
 	<h1>Edit Quiz Info</h1>
 	
 	<form action="EditServlet" method="post" id="title-edit">
-	Title
-	<p><input name="title" type="name" value="<%=quiz.getTitle() %>"/></p>		
+		Title
+		<p><input name="title" type="name" value="<%=quiz.getTitle() %>"/></p>		
+		
+		<br>
 	
-	<br>
-
-	Description
-	<p><input type="name" name="description" value="<%=quiz.getDescription() %>"/></p>
-	<input id="save-button" type="submit" value="Save Quiz Info" name="quiz_info"/>
-	<input type="hidden" name="quiz_id" type="name" value="<%=quiz.getQuizID()%>"/>
+		Description
+		<p><input type="name" name="description" value="<%=quiz.getDescription() %>"/></p>
+		<input id="save-button" type="submit" value="Save Quiz Info" name="quiz_info"/>
+		<input type="hidden" name="quiz_id" value="<%=quiz.getQuizID()%>"/>
 	</form>
+	
 	</div>
 
 	<form method="post" action="quiz/edit/EditQuestion" id="questionedit">
-	<input type="hidden" name="quiz_id" value="<%=quiz.getQuizID()%>"/>
-	<h2>Edit Questions</h2>
-	<%
-	for(int i = 0; i < questions.size(); i++) {
-		Question q = questions.get(i);
-		int type = q.getQuestionType();
-		System.out.println(i);
-		String redirectTo = "";
-		switch(type) {
-		case 1://question-response
-			redirectTo = "quiz/questionEditing/edit-question-answer.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
-			break;
-		case 2://fill-in-the-blank
-			redirectTo = "quiz/questionEditing/edit-fill-in-blanks.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
-			break;
-		case 3://multiple choice
-			redirectTo = "quiz/questionEditing/edit-multiple-choice.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
-			break;
-		case 4://picture response
-			redirectTo = "quiz/questionEditing/edit-picture-response.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
-			break;
-		}
+		<input type="hidden" name="quiz_id" value="<%=quiz.getQuizID()%>"/>
+		<h2>Edit Questions</h2>
+		<%
+		for(int i = 0; i < questions.size(); i++) {
+			Question q = questions.get(i);
+			int type = q.getQuestionType();
+			System.out.println(i);
+			String redirectTo = "";
+			switch(type) {
+			case 1://question-response
+				redirectTo = "quiz/questionEditing/edit-question-answer.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
+				break;
+			case 2://fill-in-the-blank
+				redirectTo = "quiz/questionEditing/edit-fill-in-blanks.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
+				break;
+			case 3://multiple choice
+				redirectTo = "quiz/questionEditing/edit-multiple-choice.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
+				break;
+			case 4://picture response
+				redirectTo = "quiz/questionEditing/edit-picture-response.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
+				break;
+			}
+			
+			String text = q.getQuestion();
+		if(type != 4) {%>
+		<p><%=text %></p>
+		<%} else {%>
+		<p><img src="<%=text %>" height="100" width="100"></p>
+		<%}%>
+			<a href="<%=redirectTo%>">Edit Question</a>
+			<br>
+		<%}%>
 		
-		String text = q.getQuestion();
-	if(type != 4) {%>
-	<p><%=text %></p>
-	<%} else {%>
-	<p><img src="<%=text %>" height="100" width="100"></p>
-	<%}%>
-		<a href="<%=redirectTo%>">Edit Question</a>
-		<br>
-	<%}%>
-	
 
 	</form>
 
