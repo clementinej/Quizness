@@ -96,8 +96,11 @@ if(quizID != null) {
       </div>
 	<div class="container">
 	<% if (friends.size() == 0){ %>
-	        <form method="post" action="../site/search.jsp">
- 		<input id="submit" type="submit" value="You have no friends. Go find some!">
+		<form method="post" action="../site/search.jsp">
+	     <div class="form-1">
+	     <h2 id="no-friends">You can't do that. <br> You have no friends.</h2>
+ 		<input id="find-friends" class="submit" type="submit" value="Go find some!">
+ 		</div>
  	</form>
  	<%} else { %>
 		<form id="signup" method="post" action="../MessageServlet">

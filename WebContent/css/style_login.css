@@ -101,6 +101,11 @@
     color: #52cfeb;
 }
 
+#no-friends {
+	color:#000000;
+	margin-left:22px;
+	margin-bottom:10px;
+	}
 .form-1 input[type=text]:focus ~ i,
 .form-1 input[type=password]:focus ~ i {
     color: #42A2BC;
@@ -114,13 +119,10 @@
 
 .form-1 .submit {
     /* Size and position */
-    width: 65px;
-    height: 65px;
-    position: absolute;
-    top: 17px;
-    right: -25px;
-    padding: 10px;
-    z-index: 2;
+    width: 200px;
+    height: 200px;
+    align:center;
+    margin-left:37px;
 
     /* Styles */
     background: #ffffff;
