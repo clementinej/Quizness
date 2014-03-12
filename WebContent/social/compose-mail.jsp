@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, model.*" %>
-<%--@ page errorPage="../site/404.jsp" --%>
+<%@ page errorPage="../site/404.jsp" %>
 <head>
   <meta charset="UTF-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -8,33 +8,6 @@
       <link rel="stylesheet" type="text/css" href="../css/style.css" />
       <link rel="stylesheet" type="text/css" href="../css/style_login.css" />
       <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300|Montserrat' rel='stylesheet' type='text/css' />
-   <style>
-   .message-body{
-   	margin-top:20px;
-   	width:500px;
-   	height:150px;
-   	font-family: 'Lato', Calibri, Arial, sans-serif;
-    font-size: 18px;
-   }
-    .message-subject{
-    padding-top:20px;
-   	font-family: 'Lato', Calibri, Arial, sans-serif;
-    font-size: 18px;
-   }
-   .styled-select select {
-   width: 268px;
-   padding: 5px;
-   font-size: 16px;
-   line-height: 1;
-   border: 1;
-   border-radius: 1;
-   height: 34px;
-   }
-   .header-link {
-	padding-left:50px;
-	font-weight:bold;	
-	}
-   </style>
 </head>
 <%
 
@@ -147,7 +120,7 @@ if(quizID != null) {
 						</script>
 					<% } else { %>
 					<%System.out.print("recipientInfo"); %>
-						<input id="email" name= "email" type="name" style="width:300px" value="<%=recipientInfo%>"/>
+						<input id="email" name= "email" type="name" value="<%=recipientInfo%>"/>
 						<input id="user_email" name = "user_email" type="hidden" value="<%=toEmail%>"/>
 					<% } %>
 					</td>
