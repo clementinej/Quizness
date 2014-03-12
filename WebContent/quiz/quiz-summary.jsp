@@ -111,11 +111,11 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          
          <!-- Print info on the user's last five tries -->
          <br><h3>Your History</h3>
-         <p>Your high score on this quiz is <%=userHighScore %></p>
+         <p>Your high score on this quiz is <%=NumberConverter.toString(userHighScore) %></p>
          <%
          for(int i = 0; i < lastTriesUser.size() && i < 5; i++) {
          %>
-         <p><%=formatter.format(lastTriesUser.get(i).getDate()) %> you scored <%=lastTriesUser.get(i).getScore() %> </p>
+         <p><%=formatter.format(lastTriesUser.get(i).getDate()) %> you scored <%=NumberConverter.toString(lastTriesUser.get(i).getScore()) %> </p>
          <%
          }
          %>
@@ -128,7 +128,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
         	 String userName = User.getUser(recentTries.get(i).getUserID()).getUserName(); 
          %>
          <p><%=formatter.format(recentTries.get(i).getDate()) %> 
-         	<a href="../profile.jsp?user=<%=userID%>"><%=userName%></a> scored <%=recentTries.get(i).getScore() %> </p>
+         	<a href="../profile.jsp?user=<%=userID%>"><%=userName%></a> scored <%=NumberConverter.toString(recentTries.get(i).getScore()) %> </p>
          <%
          }
          %>
@@ -152,7 +152,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
         	 String userName = User.getUser(bestTries.get(i).getUserID()).getUserName(); 
          %>
          <p><%=formatter.format(bestTries.get(i).getDate()) %> 
-         	<a href="../profile.jsp?user=<%=userID%>"><%=userName%></a> scored <%=bestTries.get(i).getScore() %> </p>
+         	<a href="../profile.jsp?user=<%=userID%>"><%=userName%></a> scored <%=NumberConverter.toString(bestTries.get(i).getScore()) %> </p>
          <%
          }
          %>
@@ -164,7 +164,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
         	 String userName = User.getUser(bestTriesToday.get(i).getUserID()).getUserName();
          %>
          <p><%=formatter.format(bestTriesToday.get(i).getDate()) %>
-          	<a href="../profile.jsp?user=<%=userID%>"><%=userName%></a> scored <%=bestTriesToday.get(i).getScore() %> </p>
+          	<a href="../profile.jsp?user=<%=userID%>"><%=userName%></a> scored <%=NumberConverter.toString(bestTriesToday.get(i).getScore()) %> </p>
          <%
          }
          %>

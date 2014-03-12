@@ -11,6 +11,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +41,18 @@ public class LoginServlet extends HttpServlet {
 		QuiznessAccountManager manager = (QuiznessAccountManager) context.getAttribute("manager");
 		String email = request.getParameter("login");		
 		String pw = request.getParameter("password");
+		
+		
+		
+		Cookie[] cookies = request.getCookies(); 
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		try {
 			if(manager.validLogin(email, pw)) {

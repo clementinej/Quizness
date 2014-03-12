@@ -9,7 +9,24 @@
       <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300|Montserrat' rel='stylesheet' type='text/css' />
    </head>
    <body>
-        <%if(request.getParameter("invalid_login") != null) {
+   
+   	<% 
+   		boolean isCorrectUsername = false;
+   		boolean isCorrectPassword = true;
+   		Cookie[] cookies = request.getCookies();  		
+   		if(cookies != null){
+   			for(Cookie cookie : cookies){
+   				if(cookie.getName().equals("username")){
+   					i
+   				}
+   			}
+   		}
+   
+   
+   
+   
+   
+        if(request.getParameter("invalid_login") != null) {
         	System.out.println("Invalid Login");%>
         <h1>Invalid Login.  Please Try Again.</h1>
         <%}%>
