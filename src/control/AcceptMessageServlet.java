@@ -60,7 +60,7 @@ public class AcceptMessageServlet extends HttpServlet {
 				
 				// If not accepted simply remove the request
 				if(inbox.removeFriendRequest(messageID) == false) throw new Exception();
-				target = "social/success-friend.html";
+				target = "success-friend.html";
 
 			} else if (messageType.equals("challenge")){
 				Challenge challenge = (Challenge) Message.getMessage(messageID);
