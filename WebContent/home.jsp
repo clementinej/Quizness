@@ -248,14 +248,14 @@
    					for(int i = 0; i < 5; i++) {
    						Achievement a = achievements.get(i);
    			%>
-			<p>You earned <%=a.getDescription()%></p>
+			<p>You earned <%=a.getAchievement()%></p>
 			<%
 					} // end for loop
    				} else {
    					for(int i = 0; i < numAcheivements; i++) {
    						Achievement a = achievements.get(i);
    			%>
-   			<p>You earned <%=a.getDescription()%></p>
+   			<p>You earned <%=a.getAchievement()%></p>
    			<% 
    					}
    				}
