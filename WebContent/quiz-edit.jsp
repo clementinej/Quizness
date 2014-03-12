@@ -15,7 +15,7 @@ if(!debug) {
 	quiz = Quiz.getQuiz(Integer.parseInt(request.getParameter("quiz_id")));
 }
 if(!user.isAdmin() && quiz.getCreatorID() != user.getUserID()) return;
-ArrayList<Question> questions = quiz.getQuestions();
+ArrayList<Question> questions = quiz.getNonRandomQuestions();
 %>
 
 <body>

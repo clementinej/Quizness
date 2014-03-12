@@ -31,9 +31,6 @@ public class CreateServlet extends HttpServlet {
 	public static final int FILL_IN_THE_BLANK = 2;
 	public static final int MULTIPLE_CHOICE = 3;
 	public static final int PICTURE_RESPONSE = 4;
-	public static final int MULTIANSWER = 5;
-	public static final int MULTIPLE_CHOICE_MULTIPLE_ANSWERS = 6;
-	public static final int MATCHING = 7;
 	
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,305 +44,77 @@ public class CreateServlet extends HttpServlet {
 	 * newly generated quizID and the current questionList.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
-		HttpSession session = request.getSession();
-		
+		HttpSession session = request.getSession();	
 		ArrayList<Question> questionList = (ArrayList<Question>) session.getAttribute("question list");	
-		session.setAttribute("question list", questionList);
-		
 		User currUser = (User) session.getAttribute("current user");
 		System.out.println("In CreateServlet, user = " + currUser.getUserName());
-		int creatorID = getUserID(currUser);	
-
-		if(creatorID == -1) return; //should redirect to a "You are not logged in" page
-		
+		int creatorID = QuestionHandler.getUserID(currUser);	
+		if(creatorID == -1) return; //should redirect to a "You are not logged in" page	
 		if(request.getParameter("save_title_and_description") != null) {
-			String title = request.getParameter("title");
-			String description = request.getParameter("description");
-			session.setAttribute("title", title);
-			session.setAttribute("description", description);
-			forwardToPage("create-quiz.jsp?saved=signal", request, response);
+			saveTitleAndDescription(request, session, response);
 			return;
-		}
-		
-		if(getUserIntent(session, request).equals("add question")) {
-			Question newQuestion = constructQuestion(session, request);
-			if(newQuestion == null) {
-				int questionType = Integer.parseInt(request.getParameter("question type"));
-				forwardToPage(getErrorRedirection(questionType), request, response);
-				return;
-			}
-			questionList.add(newQuestion);			
-			forwardToPage("create-quiz.jsp", request, response);
+		}	
+		if(QuestionHandler.getUserIntent(session, request).equals("add question")) {
+			handleQuestionJob(session, request, response, questionList);
 			return;
-		} else if(getUserIntent(session, request).equals("add to existing quiz")) {
-			Question newQuestion = constructQuestion(session, request);
-			Quiz quiz = getQuiz(request);
-			try {
-				quiz.addQuestion(currUser.getUserID(), newQuestion);
-			} catch (Exception e) { e.printStackTrace(); }	
-			
-			forwardToPage("quiz-edit.jsp", request, response);
-		} else if(getUserIntent(session, request).equals("create quiz")) {
-			makeQuizAndAddToDB(questionList, request, currUser);	
-			clearQuestionList(session);
-			forwardToPage("success.html", request, response);		
+		} else if(QuestionHandler.getUserIntent(session, request).equals("add to existing quiz")) {
+			addToExistingQuiz(session, request, currUser, response);
+		} else if(QuestionHandler.getUserIntent(session, request).equals("create quiz")) {
+			createQuiz(session, request, response, questionList, currUser);
 		}			
 	}
+
+	
+	/*
+	 * sets the title and description for users who are creating a quiz
+	 */
+	private void saveTitleAndDescription(HttpServletRequest request, HttpSession session, HttpServletResponse response) throws ServletException, IOException {
+		String title = request.getParameter("title");
+		String description = request.getParameter("description");
+		session.setAttribute("title", title);
+		session.setAttribute("description", description);
+		QuestionHandler.forwardToPage("create-quiz.jsp?saved=signal", request, response);		
+	}
 	
 
-private Quiz getQuiz(HttpServletRequest request) {
-	int quizID = Integer.parseInt(request.getParameter("quiz_id"));
-	Quiz quiz = null;
-	try {
-		quiz = Quiz.getQuiz(quizID);
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
-	return quiz;
-}
-
-	//--------Helper Functions---------//
 	/*
-	 * Takes in a current user and reads the ID from the database
+	 * Makes a new question and adds it to the list of questions
 	 */
-	private int getUserID(User currUser) {
-		int creatorID = -1;
+	private void handleQuestionJob(HttpSession session, HttpServletRequest request, HttpServletResponse response, 
+								   ArrayList<Question> questionList) throws ServletException, IOException {
+		Question newQuestion = QuestionHandler.constructQuestion(request);
+		if(newQuestion == null) {
+			int questionType = Integer.parseInt(request.getParameter("question type"));
+			QuestionHandler.forwardToPage(QuestionHandler.getErrorRedirection(questionType), request, response);
+			return;
+		}
+		questionList.add(newQuestion);			
+		QuestionHandler.forwardToPage("create-quiz.jsp", request, response);
+	}
+
+
+	/*
+	 * Adds a question to an existing quiz
+	 */
+	private void addToExistingQuiz(HttpSession session, HttpServletRequest request, User currUser,
+								   HttpServletResponse response) throws ServletException, IOException {
+		Question newQuestion = QuestionHandler.constructQuestion(request);
+		Quiz quiz = QuestionHandler.getQuiz(request);
 		try {
-			creatorID = User.getUserID(currUser.getEmail());
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		return creatorID;
+			quiz.addQuestion(currUser.getUserID(), newQuestion);
+		} catch (Exception e) { e.printStackTrace(); }	
+		QuestionHandler.forwardToPage("quiz-edit.jsp", request, response);
 	}
 	
 	
 	/*
-	 * Reads what user intends to do from HttpServletRequest request
+	 * creates a new quiz
 	 */
-	private String getUserIntent(HttpSession session, HttpServletRequest request) {
-		String userIntent = request.getParameter("intent");
-		session.setAttribute("intent", userIntent);
-		System.out.println(userIntent);
-		return userIntent;
+	private void createQuiz(HttpSession session, HttpServletRequest request,
+			   				HttpServletResponse response, ArrayList<Question> 
+							questionList, User currUser) throws ServletException, IOException {
+		QuestionHandler.makeQuizAndAddToDB(questionList, request, currUser);	
+		QuestionHandler.clearQuestionList(session);
+		QuestionHandler.forwardToPage("success.html", request, response);	
 	}
-	
-
-	/*
-	 * makes a quiz and adds it to the database.
-	 */
-	private void makeQuizAndAddToDB(ArrayList<Question> questionList, HttpServletRequest request, User currUser) {
-		int creatorID = getUserID(currUser);	
-		double maxScore = getMaxScore(questionList);
-		String description = request.getParameter("description"), title = request.getParameter("title");
-		System.out.println("Title: "+ title);
-		System.out.println("Description: "+ description);
-		System.out.println("Max Score: "+ maxScore);
-		boolean isPracticeMode = false, hasTimedMode = false; //extensions add later
-		boolean multiplePages = false;
-		boolean hasRandomMode = false;
-		boolean immediateCorrection = false;
-		if(request.getParameterValues("selected") != null) {
-			String [] selected = request.getParameterValues("selected");
-			for(int i = 0; i < selected.length; i++) {
-				if(selected[i].equals("multiple_pages"))
-					multiplePages = true;
-				if(selected[i].equals("random_questions"))
-					hasRandomMode= true;
-				if(selected[i].equals("immediate_correction"))
-					immediateCorrection = true;
-			}
-		}
-
-		
-		Quiz quiz = new Quiz(creatorID, maxScore, description, title, 
-				questionList, isPracticeMode, hasRandomMode, hasTimedMode, immediateCorrection, multiplePages);
-		try {
-			ServerConnection.addQuiz(quiz);
-			checkAchievements(creatorID);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
-	}
-
-	private void checkAchievements(int creatorID) throws Exception{
-		System.out.println("Checking achievements");
-		Connection con = ServerConnection.getConnection();
-		User user = ServerConnection.getUser(creatorID);
-		PreparedStatement ps = con.prepareStatement("SELECT id FROM quizzes WHERE creatorID = ?");
-		ps.setInt(1, creatorID);
-		ResultSet rs = ps.executeQuery();
-		int numQuizzes = 0;
-		while (rs.next()){
-			numQuizzes++;
-		}
-		System.out.println(numQuizzes);
-		System.out.println("my balls hurt");
-		if (numQuizzes == 1){
-			System.out.println("Adding amateur author");
-			user.addAchievement(new AmateurAuthor());
-		}
-		if (numQuizzes == 3){
-			System.out.println("Adding prolific author");
-			user.addAchievement(new ProlificAuthor());
-		}
-		if (numQuizzes == 5){
-			System.out.println("Adding prodigious author");
-			user.addAchievement(new ProdigiousAuthor());
-		}
-		ServerConnection.updateUser(user);
-	}
-	/*
-	 * After a quiz is created, the temporary question list is replaced with an empty list
-	 * in preparation for another quiz to be made.
-	 * TODO: discard changes button
-	 * TODO: remove from list button
-	 */
-	private void clearQuestionList(HttpSession session) {
-		ArrayList<Question> questionList = (ArrayList<Question>) session.getAttribute("question list");	
-		questionList = new ArrayList<Question>();
-		session.setAttribute("question list", questionList);
-		//for(int i = 0; i < questionList.size(); i++) //restart question list
-		//	questionList.remove(i);	//may want to store questionLists in a map depending on potential quizID
-		System.out.println("Question List has been reset.");
-	}
-
-
-	/*
-	 * Gets the maximum possible score that can be achieved from the quiz.
-	 */
-	private double getMaxScore(ArrayList<Question> questionList) {
-		double pointCount = 0;
-		for(Question question: questionList) {
-			pointCount += question.getMaxPoints();
-		}
-		return pointCount;
-	}
-
-
-	
-	/*
-	 * Makes a new question given the information passed in by the user
-	 */
-	private Question constructQuestion(HttpSession session, HttpServletRequest request) {		
-		int questionType = Integer.parseInt(request.getParameter("question type"));
-		String question = request.getParameter("question_text");
-		if(question.isEmpty()) return null;
-		System.out.println("Question:" + question);
-		ArrayList<Set<String>> allAnswers = new ArrayList<Set<String>>();
-		makeAnswersList(request, allAnswers);
-		if(allAnswers.isEmpty()) return null;
-		double pointValue = 1;//default point value for each question depending on difficulty
-		String pointValueStr = request.getParameter("correct_answer_score");
-		if(pointValueStr.length() != 0)
-			pointValue = Double.parseDouble(pointValueStr);
-		return makeQuestion(questionType, question, allAnswers, pointValue, request);
-	}
-	
-	/*
-	 * Moves all answers to the allAnswers ArrayList.
-	 */
-	private void makeAnswersList(HttpServletRequest request, ArrayList<Set<String>> allAnswers) {
-		Map<String, String[]> answersMap = request.getParameterMap();
-		java.util.Iterator<String> iter = answersMap.keySet().iterator();
-		int solNum = 0;
-		while(iter.hasNext()) {	
-			String answerName = iter.next();
-			if(answerName.indexOf("correct_answer_text") == -1) {}//ignore
-			else {
-				Set<String> synonymsOfAnswerSet = new HashSet<String>();
-				String[] synonyms = answersMap.get(answerName);
-				int debugIndex = solNum + 1;
-				System.out.print("Solution " + debugIndex + ": ");
-				for(int i = 0; i < synonyms.length; i++) {
-					System.out.print(synonyms[i]);
-					if(i != synonyms.length - 1)
-						System.out.print(", ");
-					if(!synonyms[i].isEmpty())
-						synonymsOfAnswerSet.add(synonyms[i]);
-				}
-				System.out.println();
-				allAnswers.add(synonymsOfAnswerSet);
-			}	
-		}	
-	}
-	
-	/*
-	 * Constructs and returns a Question object.
-	 */
-	private Question makeQuestion(int questionType, String question, ArrayList<Set<String>> allAnswers, 
-									double pointValue, HttpServletRequest request) {
-		switch(questionType) {//correspond to the question subclass
-		case QUESTION_RESPONSE: 
-			Question newQuestion;
-			System.out.println("QuestionResponse Question made.");
-			newQuestion = new QuestionResponse(question, allAnswers, pointValue);		
-			return newQuestion;
-		case FILL_IN_THE_BLANK:
-			if(!question.contains("_")) return null;
-			System.out.println("FillInTheBlank Question made.");
-			return new FillInTheBlank(question, allAnswers, pointValue);
-		case MULTIPLE_CHOICE:
-			String choices[] = getWrongChoices(request);	
-			if(choices.length == 0) return null;
-			System.out.println("MultipleChoice Question made.");
-			return new MultipleChoice(question, choices, allAnswers, pointValue);
-		case PICTURE_RESPONSE:
-			System.out.println("PictureResponse Question made.");
-			return new PictureResponse(question, allAnswers, pointValue);
-		case MULTIANSWER:
-			//extension
-		case MULTIPLE_CHOICE_MULTIPLE_ANSWERS:
-			//extension
-		case MATCHING:
-			//extension
-		}	
-		return null;
-	}
-	
-	
-	/*
-	 * For multiple choice.  Get's wrong answer options and returns them in a string array.
-	 */
-	private String[] getWrongChoices(HttpServletRequest request) {
-		Map<String, String[]> answersMap = request.getParameterMap();
-		String choices[] = answersMap.get("incorrect_answer");
-		
-		System.out.print("Incorrect Answers: ");
-		for(int i = 0; i < choices.length; i++) {
-			System.out.print(choices[i]);
-			if(i != choices.length - 1) System.out.print(", ");
-		}
-		System.out.println();
-		
-		return choices;
-	}
-	
-	/*
-	 * Forwards to specified page.  I might have to hard code it again here.
-	 */
-	private void forwardToPage(String page, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		RequestDispatcher dispatch = request.getRequestDispatcher(page); 
-		dispatch.forward(request, response); 
-	}
-	
-	
-	/*
-	 * gives url of where to go from error
-	 */
-	private String getErrorRedirection(int questionType) {
-		switch(questionType) {//correspond to the question subclass
-		case QUESTION_RESPONSE: 
-			return "quiz/questionCreation/question-answer.jsp?error=signal";
-		case FILL_IN_THE_BLANK:
-			return "quiz/questionCreation/fill-in-blanks.jsp?error=signal";
-		case MULTIPLE_CHOICE:
-			return "quiz/questionCreation/multiple-choice.jsp?error=signal";
-		case PICTURE_RESPONSE:
-			return "quiz/questionCreation/picture-response.jsp?error=signal";
-		}
-		return null;
-	}
-	
-
 }

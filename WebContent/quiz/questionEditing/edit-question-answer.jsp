@@ -4,7 +4,7 @@
 <%@page import="java.lang.*" %>
 <%@ page errorPage="../site/404.jsp" %>
 <head>
-   <link rel="stylesheet" type="text/css" href="../../css/style_login.css" />
+   <link rel="stylesheet" type="text/css" href="/Quizness/css/style_login.css" />
 </head>
 
 <%
@@ -26,7 +26,7 @@
    String currSolution = "Current Solution";
    int currScore = 6;
    
-   ArrayList<Question> questionList = currQuiz.getQuestions(); 
+   ArrayList<Question> questionList = currQuiz.getNonRandomQuestions(); 
    Question q = questionList.get(qIndex);
    double points = q.getMaxPoints();
    String questionText = q.getQuestion();
@@ -35,7 +35,7 @@
    %>
 <body>
    <div class="container">
-      <form method="post" action="../../EditServlet id="signup">
+      <form method="post" action="../../EditServlet" id="signup">
          <div class="header">
             <h3>Edit Question</h3>
             <p>Click "Save" to keep your edits or "Back" to cancel.</p>
