@@ -150,7 +150,7 @@
    						Quiz topQuiz = Quiz.getQuiz(topQuizzes.get(i));
    						int topQuizID = topQuizzes.get(i);
   			%>
-			<p><a href="quiz/show-quiz.jsp?quiz_id=<%=topQuizID%>"><%=topQuiz.getTitle()%></a></p>
+			<p><a href="quiz/quiz-summary.jsp?quiz_id=<%=topQuizID%>"><%=topQuiz.getTitle()%></a></p>
 			<%	
    					} // end for loop
    				} else {
@@ -158,7 +158,7 @@
    						Quiz topQuiz = Quiz.getQuiz(topQuizzes.get(i));
    						int topQuizID = topQuizzes.get(i);
    			%>
-   			<p><a href="quiz/show-quiz.jsp?quiz_id=<%=topQuizID%>"><%=topQuiz.getTitle()%></a></p>
+   			<p><a href="quiz/quiz-summary.jsp?quiz_id=<%=topQuizID%>"><%=topQuiz.getTitle()%></a></p>
    					<% 
    					} // end for loop
    				} // end else
@@ -173,7 +173,7 @@
    						Quiz newQuiz = Quiz.getQuiz(newQuizzes.get(i));
    						int newQuizID = newQuizzes.get(i);
   			%>
-			<p><a href="quiz/show-quiz.jsp?quiz_id=<%=newQuizID%>"><%=newQuiz.getTitle()%></a></p>
+			<p><a href="quiz/quiz-summary.jsp?quiz_id=<%=newQuizID%>"><%=newQuiz.getTitle()%></a></p>
 			<%
 					} // end for loop
    				} else {
@@ -181,7 +181,7 @@
    						Quiz newQuiz = Quiz.getQuiz(newQuizzes.get(i));
    						int newQuizID = newQuizzes.get(i);
    			%>
-   			<p><a href="quiz/show-quiz.jsp?quiz_id=<%=newQuizID%>"><%=newQuiz.getTitle()%></a></p>
+   			<p><a href="quiz/quiz-summary.jsp?quiz_id=<%=newQuizID%>"><%=newQuiz.getTitle()%></a></p>
    			<%
    					}
    				} // end else 
@@ -279,7 +279,7 @@
 	   					int creatorID = q.getCreatorID();
 	   					String creator = User.getUser(creatorID).getUserName();
 	   		%>
-			<p><a href="profile?user=<%=creatorID%>"><%=creator %></a> + " created " + <%=quizName %></p>
+			<p><a href="profile.jsp?user=<%=creatorID%>"><%=creator %></a> created <%=quizName %></p>
 			<%
 					} // end for loop
 				} else {
@@ -289,7 +289,7 @@
 						int creatorID = q.getCreatorID();
 						String creator = User.getUser(creatorID).getUserName();
 			%>
-			<p><a href="profile?user=<%=creatorID%>"><%=creator %></a> + " created " + <%=quizName %></p>
+			<p><a href="profile.jsp?user=<%=creatorID%>"><%=creator %></a> created <%=quizName %></p>
 			<% 
 					} // end for loop
 				} // end else
@@ -306,7 +306,7 @@
 	   					int creatorID = q.getCreatorID();
 	   					String creator = User.getUser(creatorID).getUserName(); 
 	   		%>
-			<p><a href="profile?user=<%=creatorID%>"><%=creator %></a> + " took " + <%=quizName %></p>
+			<p><a href="profile.jsp?user=<%=creatorID%>"><%=creator %></a> took <%=quizName %></p>
 			<%
 					} // end for loop
 				} else {
@@ -316,7 +316,7 @@
 						int creatorID = q.getCreatorID();
 						String creator = User.getUser(creatorID).getUserName();
 						%>
-			<p><a href="profile?user=<%=creatorID%>"><%=creator %></a> + " took " + <%=quizName %></p>
+			<p><a href="profile.jsp?user=<%=creatorID%>"><%=creator %></a> took <%=quizName %></p>
 						<% 
 					} // end for loop
 				} // end else 
@@ -331,11 +331,11 @@
 	   			<h2>Messages</h2><% 
 	   			if(numMessages > 1) {
 	  		 %>
-			<p>You have <%=numMessages %> new messages! <a href="social/inbox.jsp">Go to your inbox.</a></p>
+			<p>You have <%=numMessages %> new messages! <a href="inbox.jsp">Go to your inbox.</a></p>
 			<%
 				} else {
 			%>
-			<p>You have a new message! <a href="social/inbox.jsp">Go to your inbox.</a></p>	
+			<p>You have a new message! <a href="inbox.jsp">Go to your inbox.</a></p>	
 			<% 	
 				}
 	   		}
@@ -346,10 +346,10 @@
 	   		<h2>Challenges</h2><%
 	   			if(numChallenges > 1) {%>
 	   			
-	   		<p>You have <%=numChallenges %> new challenges! <a href="social/inbox.jsp">Go to your inbox.</a></p>
+	   		<p>You have <%=numChallenges %> new challenges! <a href="inbox.jsp">Go to your inbox.</a></p>
 			<% } else { %>
 				
-			<p>You have a new challenge! <a href="social/inbox.jsp">Go to your inbox.</a></p>	
+			<p>You have a new challenge! <a href="inbox.jsp">Go to your inbox.</a></p>	
 			<% 	
 				}
 	   		}
