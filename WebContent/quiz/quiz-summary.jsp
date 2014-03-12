@@ -124,8 +124,11 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          <br><h3>Recent Activity</h3>
          <%
          for(int i = 0; i < recentTries.size() && i < 5; i++) {
+        	 int userID = User.getUser(recentTries.get(i).getUserID()).getUserID();
+        	 String userName = User.getUser(recentTries.get(i).getUserID()).getUserName(); 
          %>
-         <p><%=formatter.format(recentTries.get(i).getDate()) %> <%=User.getUser(recentTries.get(i).getUserID()).getUserName()%> scored <%=recentTries.get(i).getScore() %> </p>
+         <p><%=formatter.format(recentTries.get(i).getDate()) %> 
+         	<a href="../profile.jsp?user=<%=userID%>"><%=userName%></a> scored <%=recentTries.get(i).getScore() %> </p>
          <%
          }
          %>
@@ -145,8 +148,11 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
       	<br><h3>Top Scores Of All Time</h3>
 		 <%
          for(int i = 0; i < bestTries.size() && i < 5; i++) {
+        	 int userID = User.getUser(bestTries.get(i).getUserID()).getUserID();
+        	 String userName = User.getUser(bestTries.get(i).getUserID()).getUserName(); 
          %>
-         <p><%=formatter.format(bestTries.get(i).getDate()) %> <%=User.getUser(bestTries.get(i).getUserID()).getUserName()%> scored <%=bestTries.get(i).getScore() %> </p>
+         <p><%=formatter.format(bestTries.get(i).getDate()) %> 
+         	<a href="../profile.jsp?user=<%=userID%>"><%=userName%></a> scored <%=bestTries.get(i).getScore() %> </p>
          <%
          }
          %>
@@ -154,8 +160,11 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          <br><h3>Top Scores Today</h3>
 		 <%
          for(int i = 0; i < bestTriesToday.size() && i < 5; i++) {
+        	 int userID = User.getUser(bestTriesToday.get(i).getUserID()).getUserID();
+        	 String userName = User.getUser(bestTriesToday.get(i).getUserID()).getUserName();
          %>
-         <p><%=formatter.format(bestTriesToday.get(i).getDate()) %> <%=User.getUser(bestTriesToday.get(i).getUserID()).getUserName()%> scored <%=bestTriesToday.get(i).getScore() %> </p>
+         <p><%=formatter.format(bestTriesToday.get(i).getDate()) %>
+          	<a href="../profile.jsp?user=<%=userID%>"><%=userName%></a> scored <%=bestTriesToday.get(i).getScore() %> </p>
          <%
          }
          %>
