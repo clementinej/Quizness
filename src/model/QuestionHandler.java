@@ -164,6 +164,10 @@ public class QuestionHandler {
 	
 	/*
 	 * Makes a new question given the information passed in by the user
+	 * REQUIREMENTS:
+	 * -Text fields must be populated.
+	 * -There must be at least one answer.
+	 * -Points Awarded must be greater than 0 and must be a valid numeric character
 	 */
 	public static Question constructQuestion(HttpServletRequest request) {		
 		int questionType = Integer.parseInt(request.getParameter("question type"));
@@ -179,6 +183,7 @@ public class QuestionHandler {
 			try { pointValue = Double.parseDouble(pointValueStr); }
 			catch (Exception e) {return null;}
 		else return null;
+		if(pointValue <= 0) return null;
 		return makeQuestion(questionType, question, allAnswers, pointValue, request);
 	}
 	
@@ -214,6 +219,9 @@ public class QuestionHandler {
 	
 	/*
 	 * Constructs and returns a Question object.
+	 * REQUIREMENTS:
+	 * -Fill in the blank must have an underscore in the question.
+	 * -Multiple Choice Questions must have other options that are wrong.
 	 */
 	private static Question makeQuestion(int questionType, String question, ArrayList<Set<String>> allAnswers, 
 									double pointValue, HttpServletRequest request) {
@@ -299,6 +307,40 @@ public class QuestionHandler {
 			return "quiz/questionEditing/edit-multiple-choice.jsp?error=signal";
 		case PICTURE_RESPONSE:
 			return "quiz/questionEditing/edit-picture-response.jsp?error=signal";
+		}
+		return null;
+	}
+	
+	/*
+	 * gives url of where to go from error
+	 */
+	public static String getEditErrorRedirection(int questionType, int quizID, int i) {
+		switch(questionType) {//correspond to the question subclass
+		case QUESTION_RESPONSE: 
+			return "quiz/questionEditing/edit-question-answer.jsp?e=e&question_index="+i+"&error=signal&quiz_id="+quizID;
+		case FILL_IN_THE_BLANK:
+			return "quiz/questionEditing/edit-fill-in-blanks.jsp?e=e&question_index="+i+"&error=signal&quiz_id="+quizID;
+		case MULTIPLE_CHOICE:
+			return "quiz/questionEditing/edit-multiple-choice.jsp?e=e&question_index="+i+"&error=signal&quiz_id="+quizID;
+		case PICTURE_RESPONSE:
+			return "quiz/questionEditing/edit-picture-response.jsp?e=e&question_index="+i+"&error=signal&quiz_id="+quizID;
+		}
+		return null;
+	}
+	
+	/*
+	 * gives url of where to go from error
+	 */
+	public static String getNewToExistingRedirection(int questionType, int quizID) {
+		switch(questionType) {//correspond to the question subclass
+		case QUESTION_RESPONSE: 
+			return "quiz/questionCreation/question-answer.jsp?error=signal&quizID="+quizID + "&intent=add to existing quiz";
+		case FILL_IN_THE_BLANK:
+			return "quiz/questionCreation/fill-in-blanks.jsp?error=signal&quizID="+quizID + "&intent=add to existing quiz";
+		case MULTIPLE_CHOICE:
+			return "quiz/questionCreation/multiple-choice.jsp?error=signal&quizID="+quizID + "&intent=add%20to%20existing%20quiz";
+		case PICTURE_RESPONSE:
+			return "quiz/questionCreation/picture-response.jsp?error=signal&quizID="+quizID + "&intent=add%20to%20existing%20quiz";
 		}
 		return null;
 	}

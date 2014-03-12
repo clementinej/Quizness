@@ -2,7 +2,7 @@
 <%@page import="model.*" %>
 <%@page import="java.util.*" %>
 <%@page import="java.lang.*" %>
-<%@ page errorPage="../site/404.jsp" %>
+<%-- <%@ page errorPage="../site/404.jsp" %>--%>
 <head>
    <link rel="stylesheet" type="text/css" href="/Quizness/css/style_login.css" />
 </head>
@@ -31,6 +31,7 @@ int currScore = 6;
 
 	   ArrayList<Question> questionList = currQuiz.getNonRandomQuestions(); 
 	   q = questionList.get(qIndex);
+	   System.out.println("Question Edit: Setup...");
    } else {
 	   ArrayList<Question> questionList = (ArrayList<Question>) session.getAttribute("question list");
 	   q = questionList.get(qIndex);

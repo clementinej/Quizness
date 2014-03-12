@@ -105,6 +105,14 @@ public class CreateServlet extends HttpServlet {
 	private void addToExistingQuiz(HttpSession session, HttpServletRequest request, User currUser,
 								   HttpServletResponse response) throws ServletException, IOException {
 		Question newQuestion = QuestionHandler.constructQuestion(request);
+		int questionType = Integer.parseInt(request.getParameter("question type"));
+		if(newQuestion == null)  {
+			Quiz quiz = QuestionHandler.getQuiz(request);
+			String redirectTo = QuestionHandler.getNewToExistingRedirection(questionType, quiz.getQuizID());
+			System.out.println(redirectTo);
+			QuestionHandler.forwardToPage(redirectTo, request, response);
+			return;
+		}
 		Quiz quiz = QuestionHandler.getQuiz(request);
 		try {
 			quiz.addQuestion(currUser.getUserID(), newQuestion);

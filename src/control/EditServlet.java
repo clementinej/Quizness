@@ -55,7 +55,6 @@ public class EditServlet extends HttpServlet {
 		}	
 		System.out.println("From CreateServlet redirecting to:" + redirectTo);
 		QuestionHandler.forwardToPage(redirectTo, request, response);
-		return;
 	}
 
 
@@ -88,7 +87,7 @@ public class EditServlet extends HttpServlet {
 		} else {
 			try {quiz.removeQuestionAt(qIndex);} catch (Exception e) {e.printStackTrace();}
 		}
-		return "quiz-edit.jsp?quiz_id="+quiz.getQuizID();
+		return "quiz-edit.jsp?e=e&quiz_id="+quiz.getQuizID();
 	}
 	
 
@@ -99,20 +98,19 @@ public class EditServlet extends HttpServlet {
 		int qIndex = Integer.parseInt(request.getParameter("question_index"));
 		Question newQuestion = QuestionHandler.constructQuestion(request);
 		int questionType = Integer.parseInt(request.getParameter("question type"));
-		if(newQuestion == null) return QuestionHandler.getCreateEditErrorRedirection(questionType);
 		if(Integer.parseInt(request.getParameter("quiz_id")) == SAVE_AS_SESSION) {
-			//if(newQuestion == null) return QuestionHandler.getCreateEditErrorRedirection(questionType);
+			if(newQuestion == null) return QuestionHandler.getCreateEditErrorRedirection(questionType);
 			ArrayList<Question> questionList = (ArrayList<Question>) session.getAttribute("question list");
 			questionList.set(qIndex, newQuestion);
 			session.setAttribute("question list", questionList);
 			return "create-quiz.jsp";
 		} else {
-		try {
-			quiz.updateQuestion(qIndex, newQuestion);} 
-		catch (Exception e) { e.printStackTrace();}
+			if(newQuestion == null) return QuestionHandler.getEditErrorRedirection(questionType, quiz.getQuizID(), qIndex);
+			try {
+				quiz.updateQuestion(qIndex, newQuestion);} 
+			catch (Exception e) { e.printStackTrace();}
 		}
-		
-		return "quiz-edit.jsp?quiz_id="+Integer.parseInt(request.getParameter("quiz_id"));
+		return "quiz-edit.jsp?e=e&quiz_id="+Integer.parseInt(request.getParameter("quiz_id"));
 	}
 	
 }
