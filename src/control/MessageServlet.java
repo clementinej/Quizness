@@ -51,7 +51,12 @@ public class MessageServlet extends HttpServlet {
 			int fromID = fromUser.getUserID();
 			
 			// The challengee
-			int toID = Integer.parseInt(request.getParameter("id"));
+			//int toID = Integer.parseInt(request.getParameter("id"));
+			String toEmail = null; 
+			if(request.getParameter("user_email") != null) toEmail = request.getParameter("user_email"); 
+			
+			int toID = User.getUserID(toEmail);
+			
 			Inbox inbox = Inbox.getInbox(toID);
 			
 			//String email = request.getParameter("email_field");
