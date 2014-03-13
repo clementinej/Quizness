@@ -12,6 +12,7 @@
      <link rel="stylesheet" type="text/css" href="/Quizness/css/style_login.css" />
 </head>
 <body>
+
 <%
 User user = (User) session.getAttribute("current user");
 //The text description of the quiz. 
