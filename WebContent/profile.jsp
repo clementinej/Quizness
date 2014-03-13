@@ -31,12 +31,11 @@
 	   user = currUser; 
    }
    
-   //model.User u = new model.User(false, "Gene Oetomo", "gene", "goetomo@stanford.edu", "my name is gene", "stanford");
    String name = user.getUserName();
    Inbox inbox = Inbox.getInbox(userID);
    int numQuizzesTaken = user.numQuizzesTaken();
    int numFriends = user.getFriends().size();
-   String aboutMe = user.getAboutMe(); // Allow user to add this as easy extension?
+   String aboutMe = user.getAboutMe(); 
    String location = user.getLocation();
    int averageScore = (int) user.getAverageScore();
    ArrayList<Achievement> achievements = user.getAchievements();
@@ -77,6 +76,102 @@
             </div>
             <h1>About Me:</h1>
             <p><%=aboutMe%></p>
+                 <!-- Show nothing if no friend requests.
+            If friend requests, display them.
+            If not your profile, display friend request button. -->
+         <%
+         	// Check if the current user is session user
+            boolean myProfile = false;
+         
+         	// Check if the user has any pending requests
+            boolean pendingRequests = false;
+            
+         	// Check if the session is already friends with the current user
+            boolean alreadyFriends = false;
+         	
+         	// Check if there is a pending request from the session to the the current user
+            boolean requestSent = false; 
+            
+            if(userID == currUserID) myProfile = true; 
+            if(inbox.getNumFriendReqs() > 0) pendingRequests = true; 
+            
+            // Could be buggy
+            if(myProfile == false && currUser.isFriendsWith(userID)) alreadyFriends = true; 
+            
+            if(myProfile == false && inbox.hasPendingRequestFrom(currUserID)) requestSent = true;  
+            %>
+            <div class="gcontent">
+               <% if(myProfile == true) {
+                  	if(pendingRequests == true) {
+                %>
+               <div class="head">
+                  <h1>Friend Requests</h1>
+               </div>
+               <div class="boxy">
+                  <p>You have pending friend requests! Go to your inbox.</p>
+               </div>
+               <%
+                  }} 
+               
+               	if(myProfile == false){
+                  	if(alreadyFriends == false && requestSent == false) {%>
+               		<div class="head">
+                  		<h1>You're not friends. Wanna Be?</h1>
+               		</div>
+               		<form method="post" action = "FriendRequestServlet">
+               			<div class="boxy">
+               				<input type ="hidden" name="toID" value="<%=userID%>">
+                  			<input id="submit" class="blue-button" type="submit" value="Let's Be Friends!">
+               			</div>
+               		</form>
+               <%} else if(alreadyFriends == true) {%>
+            	     <div class="head">
+                  		<h1>You and <%=name%> are friends!</h1>
+               		</div>
+               <%}} %>
+               <% if(myProfile == false && requestSent == true){ %>
+                	<div class = "head">
+                	<h1>You already sent an request to <%=name%>!</h1>
+                	</div>
+                <%} %>
+                
+                <% if(myProfile == false){ %>
+               	<form method="post" action="social/compose-mail.jsp">
+               	<div class="inputs">
+               		<input type ="hidden" name="messageType" value="note">
+               		<input type ="hidden" name="recipient" value=<%=userID%>>
+     				<input id="submit" class="blue-button" type="submit" value="Send a Note!">
+     			</div>
+     			</form>
+     			<%} %>
+     			
+     			<% if(alreadyFriends == true) {%>
+            	<form method="post" action="UnfriendServlet">
+               	<div class="inputs">
+               		<input type ="hidden" name="userID" value=<%=userID%>>
+     				<input id="submit" class="blue-button" type="submit" value="Unfriend this user">
+     			</div>
+     			</form>
+               <% } %>
+     			
+     			<% if(myProfile == false && currUser.isAdmin()){ %>
+               	<form method="post" action="DeleteUserServlet">
+               	<div class="inputs">
+               		<input type ="hidden" name="userID" value=<%=userID%>>
+     				<input id="submit" class="blue-button" type="submit" value="Delete this user">
+     			</div>
+     			</form>
+     			
+     			<% if(currUser.isAdmin() && !user.isAdmin()) { %>
+     			<form method="post" action="MakeAdminServlet">
+               	<div class="inputs">
+               		<input type ="hidden" name="user_id" value=<%=userID%>>
+     				<input id="submit" class="blue-button" type="submit" value="Make this user an admin">
+     			</div>
+     			</form>
+     			<% } %>
+     			<%} %>
+            </div>
          </section>
          <section id="right">
             <div class="gcontent">
@@ -108,105 +203,6 @@
                      <%} %>
                   </div>
                </div>
-            </div>
-         </section>
-         <!-- Show nothing if no friend requests.
-            If friend requests, display them.
-            If not your profile, display friend request button. -->
-         <%
-         	// Check if the current user is session user
-            boolean myProfile = false;
-         
-         	// Check if the user has any pending requests
-            boolean pendingRequests = false;
-            
-         	// Check if the session is already friends with the current user
-            boolean alreadyFriends = false;
-         	
-         	// Check if there is a pending request from the session to the the current user
-            boolean requestSent = false; 
-            
-            if(userID == currUserID) myProfile = true; 
-            if(inbox.getNumFriendReqs() > 0) pendingRequests = true; 
-            
-            // Could be buggy
-            if(myProfile == false && currUser.isFriendsWith(userID)) alreadyFriends = true; 
-            
-            if(myProfile == false && inbox.hasPendingRequestFrom(currUserID)) requestSent = true;  
-            %>
-         <section id="left">
-            <div class="gcontent">
-               <% if(myProfile == true) {
-                  	if(pendingRequests == true) {
-                %>
-               <div class="head">
-                  <h1>Friend Requests</h1>
-               </div>
-               <div class="boxy">
-                  <p>People who wanna be your friends</p>
-                  <!-- TODO: Display a List of friend requests -->
-               </div>
-               <%
-                  }} 
-               
-               	if(myProfile == false){
-                  	if(alreadyFriends == false && requestSent == false) {%>
-               		<div class="head">
-                  		<h1>You're not friends. Wanna Be?</h1>
-               		</div>
-               		<form method="post" action = "FriendRequestServlet">
-               			<div class="boxy">
-               				<input type ="hidden" name="toID" value="<%=userID%>">
-                  			<input id="submit" type="submit" value="Let's Be Friends!">
-               			</div>
-               		</form>
-               <%} else if(alreadyFriends == true) {%>
-            	     <div class="head">
-                  		<h1>You and <%=name%> are friends!</h1>
-               		</div>
-               <%}} %>
-               <% if(myProfile == false && requestSent == true){ %>
-                	<div class = "head">
-                	<h1>You already sent an request to <%=name%>!</h1>
-                	</div>
-                <%} %>
-                
-                <% if(myProfile == false){ %>
-               	<form method="post" action="social/compose-mail.jsp">
-               	<div class ="boxy">
-               		<input type ="hidden" name="messageType" value="note">
-               		<input type ="hidden" name="recipient" value=<%=userID%>>
-     				<input id="submit" type="submit" value="Send a Note!">
-     			</div>
-     			</form>
-     			<%} %>
-     			
-     			<% if(alreadyFriends == true) {%>
-            	<form method="post" action="UnfriendServlet">
-               	<div class ="boxy">
-               		<input type ="hidden" name="userID" value=<%=userID%>>
-     				<input id="submit" type="submit" value="Unfriend this user">
-     			</div>
-     			</form>
-               <% } %>
-     			
-     			<% if(myProfile == false && currUser.isAdmin()){ %>
-               	<form method="post" action="DeleteUserServlet">
-               	<div class ="boxy">
-               		<input type ="hidden" name="userID" value=<%=userID%>>
-     				<input id="submit" type="submit" value="Delete this user">
-     			</div>
-     			</form>
-     			
-     			<% if(currUser.isAdmin() && !user.isAdmin()) { %>
-     			<form method="post" action="MakeAdminServlet">
-               	<div class ="boxy">
-               		<input type ="hidden" name="user_id" value=<%=userID%>>
-     				<input id="submit" type="submit" value="Make this user an admin">
-     			</div>
-     			</form>
-     			<% } %>
-     			<%} %>
             </div>
          </section>
       </div>
