@@ -121,7 +121,7 @@
    			<h1>Activity</h1>			
 	   		<% if(numUserTakenQuizzes == 0 && numRecentQuizzes == 0) {
 	   			%>	
-	   		<div style="padding-bottom:50px;"><h4>You've had no activity lately. <a href="site/search.jsp">Get in the game!</a></h4>
+	   		<div style="padding-bottom:50px;"><h4>You've had no activity lately. <a href="site/search.jsp">Get in the game!</a></h4></div>
 	   		<%} %>
 			<%
    			if(numUserTakenQuizzes != 0) {%>
@@ -231,7 +231,7 @@
    		
 			</div>
 			
-			<div style="float:left;width:20%;">
+			<div style="float:left;width:20%;padding-left:20px;">
 				<h1>Announcements</h1>
 	        <%
 	        int numAnnouncements = 0;
@@ -276,10 +276,9 @@
    			}
    			%>
    			</div>
-   		
    			</div>
    			
-   			<div style="float:left;width:25%;">
+   			<div style="float:left;width:25%;padding-left:20px;">
    			<h1>News</h1>	
 	        <% 
   			 if(numPopularQuizzes != 0) {%>
