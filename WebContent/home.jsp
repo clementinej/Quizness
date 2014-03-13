@@ -16,7 +16,6 @@
    <div>
       <%
          User u = (User) session.getAttribute("current user");
-
          int userID = u.getUserID();
          String name = u.getUserName();
          
@@ -56,8 +55,7 @@
          
          // DOES THE USER HAVE ANY FRIEND REQUESTS?
          int numReqs = 0;
-         ArrayList<FriendRequest> reqs = u.getFriendRequests();
-    	 numReqs = reqs.size();
+    	 numReqs = inbox.getNumFriendReqs();
     	 
     	 // HAVE FRIENDS CREATED QUIZZES RECENTLY?
     	int numFriendCreations = 0;
@@ -317,22 +315,15 @@
 	   		}
 	   		if(numReqs != 0) {%>
 	   			<h2>Friend Requests</h2><%	
-	   			if(numReqs < 5) {
-	   				for(int i = 0; i < numReqs; i++) {
-	   					String from = reqs.get(i).getFrom();
-	   		%>
-			<p><%=from %> has requested your friendship!</p>
-			<%
-					} // end for loop
-	   			} else {
-	   				for(int i = 0; i < 5; i++) {
-	   					String from = reqs.get(i).getFrom();
-	   		%>
-	   		<p><%=from %> has requested your friendship!</p>
-	   		<% 
-	   				} // end for loop
-	   			} // end else 
-	   		} // end if
+	 			if(numChallenges > 1) {%>
+	   			
+		   		<p>You have <%=numReqs %> friend requests! <a href="inbox.jsp">Go to your inbox.</a></p>
+				<% } else { %>
+					
+				<p>You have a new friend request! <a href="inbox.jsp">Go to your inbox.</a></p>	
+				<% 	
+					}
+		   		}
 	   		%>
 	        </div>
 	        </div>
