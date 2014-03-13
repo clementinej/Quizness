@@ -41,11 +41,7 @@ public class QuizResult {
 	
 	// Return the average score of all users
 	public static double getAllAverageScore(int quizID) throws Exception {
-		String query = "SELECT AVG(score)  FROM quizTries WHERE quizID = " + quizID;
-		PreparedStatement ps = ServerConnection.getConnection().prepareStatement(query);
-		ResultSet rs = ps.executeQuery();
-		if(rs.next()) return rs.getDouble(1);
-		else return -1.0; 
+		return QuizSummary.getAllAverageScore(quizID);
 	}
 	
 	// BUGGY

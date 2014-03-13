@@ -32,6 +32,9 @@ String creatorName = creator.getUserName();
 ArrayList<Integer> triesByDate = QuizSummary.getPerformanceByDate(user.getUserID(), quizID, 10);
 ArrayList<Integer> triesByScore = QuizSummary.getPerformanceByScore(user.getUserID(), quizID, 10);
 ArrayList<Integer> triesByTime = QuizSummary.getPerformancyByTime(user.getUserID(), quizID, 10);
+double averageTime = QuizSummary.getAllAverageTimeSpent(quizID);
+double averageScore = QuizSummary.getAllAverageScore(quizID);
+int numAttempts = QuizSummary.getAllNumOfTimesTaken(quizID);
 	
 //A list of the highest performers of all time. 
 ArrayList<Integer> topQuizTriesTodayIds = QuizSummary.getAllPerformanceWithDays(quizID, 5, 1);
@@ -136,15 +139,14 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          }
          %>
          
-         <form method = "post" action = "../Quizness/quiz/quiz-summary">
-	         <select name="orderBy">
-	 			 	<option value="date">Order By Date Taken</option>
-				  	<option value="percentage">Order By Percent Correct</option>
-				 	<option value="time">Order By Time Spent</option>
-			</select>
+	     <select name="orderBy">
+	 		<option value="date">Order By Date Taken</option>
+			<option value="percentage">Order By Percent Correct</option>
+			<option value="time">Order By Time Spent</option>
+		 </select>
      		<input type = "hidden" name = "quiz_id" value="<%=quizID%>"/>
      		<input id = "submit" type = "submit" value = "Update"> 
-     	</form>
+     	
      	       
          <!-- Print info on the last five tries of this quiz-->
          <br><h3>Recent Activity</h3>
@@ -170,7 +172,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          <h3>Top Scores</h3>
       </div>
       <div class="sep"></div>
-      <div class="inputs">
+      
       	<br><h3>Top Scores Of All Time</h3>
 		 <%
          for(int i = 0; i < bestTries.size() && i < 5; i++) {
@@ -194,15 +196,14 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          <%
          }
          %>
-         </form>
          
          <!-- We also need to display summary statistics, i.e. the average score on the quiz, 
          average amount of time it took, number of people who've taken it. -->
-         <br><a href="/Quizness/quiz/show-quiz.jsp?quiz_id=<%=quiz.getQuizID() %>"">Take Quiz!</a>
+         <br><a href="/Quizness/quiz/show-quiz.jsp?quiz_id=<%=quiz.getQuizID() %>">Take Quiz!</a>
          
          <% if(quiz.hasPracticeMode()) {%>
          <!--A way to start the quiz in practice mode, if available. -->
-         <br><a href="/Quizness/quiz/show-quiz.jsp?quiz_id=<%=quiz.getQuizID() %>"">Practice Quiz</a>
+         <br><a href="/Quizness/quiz/show-quiz.jsp?quiz_id=<%=quiz.getQuizID() %>">Practice Quiz</a>
          <%} %>
          
          <% if(user.getUserID() == quiz.getCreatorID()) { %>
@@ -213,7 +214,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          <!-- A way to challenge another user to this quiz -->
          <br><a href="/Quizness/social/compose-mail.jsp?quiz_id=<%=quiz.getQuizID() %>&top_score=<%=userHighScore %>">Challenge a friend!</a>
          
-          </form>
+          
           <% if(user.isAdmin()){ %>
           <form method="post" action="/Quizness/DeleteQuizServlet">
             <input type ="hidden" name="quiz_id" value=<%=quizID%>>
@@ -227,7 +228,25 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
      		<input id = "submit" type = "submit" value = "Clear Quiz History">
      		<% } %>
      	</form>
-      </div>	
-   </div>
+     	</form>
+      </div>
+   
+   
+   	<div class="container" style="float:left;padding-left:300px;">
+      <form method="post" action="" id="signup">
+      <div class="header">
+         <h3>Quiz Statistics</h3>
+      </div>
+      <div class="sep"></div>
+      
+      	<br><h3>Average Time Spent</h3>
+      	<p><%=averageTime%> seconds</p><br>
+      	<br><h3>Average Score</h3>
+      	<p><%=NumberConverter.toString(averageScore)%></p><br>
+      	<br><h3>Total Attempts</h3>
+      	<p><%=numAttempts%></p><br>
+	 </form>
+      </div>
+     
 </body>
 </html>

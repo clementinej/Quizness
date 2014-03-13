@@ -59,6 +59,30 @@ public class QuizSummary {
 		return result; 
 	}
 	
+	public static double getAllAverageScore(int quizID) throws Exception {
+		String query = "SELECT AVG(score)  FROM quizTries WHERE quizID = " + quizID;
+		PreparedStatement ps = ServerConnection.getConnection().prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()) return rs.getDouble(1);
+		else return -1.0; 
+	}
+	
+	public static double getAllAverageTimeSpent(int quizID) throws Exception {
+		String query = "SELECT AVG(timeSpent)  FROM quizTries WHERE quizID = " + quizID;
+		PreparedStatement ps = ServerConnection.getConnection().prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()) return rs.getDouble(1)/1000;
+		else return -1.0; 
+	}
+	
+	public static int getAllNumOfTimesTaken(int quizID) throws Exception {
+		String query = "SELECT COUNT(*) FROM quizTries WHERE quizID = " + quizID;
+		PreparedStatement ps = ServerConnection.getConnection().prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()) return rs.getInt(1);
+		else return -1; 
+	}
+	
 	// Execute the given query, throws exception=
 	private static ArrayList<Integer> executeQuery(String query) throws Exception{
 		Connection con = ServerConnection.getConnection();
