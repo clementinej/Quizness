@@ -14,33 +14,14 @@
       </head>
 <body>
     <%
-    	boolean loggedIn = true; 
-    	int userID = -1;
     	String name = "Guest User"; 
-        User user = (User) session.getAttribute("current user");
-    	if(user == null){
-    		loggedIn = false; 
-    	} else {
-    		loggedIn = true;
-    		userID = user.getUserID();
-            name = user.getUserName();
-    	}
          
          %>
      <!--top bar -->
       <div class="top">
-      	<% if(loggedIn){ %>
-         <span class="header-link"><a href="create-quiz.jsp">Create Quiz</a></span>
-         <span class="header-link"><a href="social/compose-mail.html">Compose </a></span>
-         <span class="header-link"><a href="profile.jsp">Profile</a></span>
-         <span class="header-link"><a href="site/admin.jsp">Admin</a></span>
-         <span class="header-link"><a href="inbox.jsp">Inbox</a></span>
-         
-         <% } else { %>
          <span class="header-link"><a href="home-guest.jsp">Home</a></span>
          <span class="header-link"><a href="index.jsp">Log In</a></span>
          <span class="header-link"><a href="create-account.jsp">Create a New Account</a></span>
-         <% } %>
          <span class="right">Welcome to Quizness, <%=name %></span>
       </div>
       <div class="container">
@@ -63,7 +44,7 @@ if(resultType.equals("user")) {
 	for(int i = 0; i < quizzes.size(); i++) {
 		Quiz q = quizzes.get(i);
 		%>
-		<a href="../Quizness/quiz/quiz-summary.jsp?quiz_id=<%=q.getQuizID()%>"><p><%=q.getTitle() %></p></a>
+		<a href="../Quizness/quiz/quiz-summary-guest.jsp?quiz_id=<%=q.getQuizID()%>"><p><%=q.getTitle() %></p></a>
 		<% 
 	}
 }

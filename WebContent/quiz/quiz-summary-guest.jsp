@@ -13,8 +13,7 @@
 </head>
 <body>
 <%
-User user = (User) session.getAttribute("current user");
-//The text description of the quiz. 
+
 
 int quizID = Integer.parseInt(request.getParameter("quiz_id"));
 String orderBy = request.getParameter("orderBy"); 
@@ -26,12 +25,7 @@ String description = quiz.getDescription();
 User creator = User.getUser(quiz.getCreatorID());
 String creatorName = creator.getUserName();
 
-//A list of the user's past performance on this specific quiz. 
 
-//Consider allowing the user to order this by date, by percent correct, and by amount of time the quiz took. 
-ArrayList<Integer> triesByDate = QuizSummary.getPerformanceByDate(user.getUserID(), quizID, 10);
-ArrayList<Integer> triesByScore = QuizSummary.getPerformanceByScore(user.getUserID(), quizID, 10);
-ArrayList<Integer> triesByTime = QuizSummary.getPerformancyByTime(user.getUserID(), quizID, 10);
 double averageTime = QuizSummary.getAllAverageTimeSpent(quizID);
 double averageScore = QuizSummary.getAllAverageScore(quizID);
 int numAttempts = QuizSummary.getAllNumOfTimesTaken(quizID);
@@ -53,18 +47,7 @@ SimpleDateFormat formatter = (SimpleDateFormat) session.getAttribute("time forma
 //Summary quizSummary = Summary.getStatistics(quizID);
 %>
 
-<% 
-double userHighScore = 0.0;
-if(triesByScore.size() > 0) {
-	userHighScore = QuizTry.getTry(triesByScore.get(0)).getScore();
-}
-/*double highScore = 0.0;
-if(topPerformerIds.size() > 0) {
-	int topID = topPerformerIds.get(0);
-	System.out.println(topID);
-	QuizTry t = QuizTry.getTry(topID);
-	highScore = t.getScore();
-}*/
+<%
 double lastScore = 0.0;
 if(recentTryIds.size() > 0) {
 	lastScore = QuizTry.getTry(recentTryIds.get(0)).getScore();
@@ -75,27 +58,6 @@ ArrayList<QuizTry> recentTries = new ArrayList<QuizTry>();
 for(int i = 0; i < recentTryIds.size(); i++) {
 	QuizTry t = QuizTry.getTry(recentTryIds.get(i));
 	recentTries.add(t);
-}
-
-//should return the USER'S LAST five quiz tries 
-ArrayList<QuizTry> lastTriesUser = new ArrayList<QuizTry>(); 
-ArrayList<Integer> triesUser = triesByDate;
-
-if(orderBy != null){
-	if(orderBy.equals("date")){
-		triesUser = triesByDate; 
-	}
-	if(orderBy.equals("percentage")){
-		triesUser = triesByScore; 
-	}
-	if(orderBy.equals("time")){
-		triesUser = triesByTime;
-	}
-}
-
-for(int i = 0; i < triesUser.size(); i++) {
-	QuizTry t = QuizTry.getTry(triesUser.get(i));
-	lastTriesUser.add(t);
 }
 
 //should return the BEST five tries on this quiz
@@ -126,28 +88,9 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          <p><%=quiz.getTitle()%></p><br>
          <h3>Description</h3>
          <p><%=quiz.getDescription()%></p><br> 
-         <p><b>Created by </b><a href="/Quizness/profile.jsp?id=<%=creator.getUserID()%>"><%=creatorName %></a></p>
-         
-         <!-- Print info on the user's last five tries -->
-         <br><h3>Your History</h3>
-         <p>Your high score on this quiz is <%=NumberConverter.toString(userHighScore) %></p>
-         <%
-         for(int i = 0; i < lastTriesUser.size() && i < 5; i++) {
-         %>
-         <p><%=formatter.format(lastTriesUser.get(i).getDate()) %> you scored <%=NumberConverter.toString(lastTriesUser.get(i).getScore()) %> </p>
-         <%
-         }
-         %>
-         
-	     <select name="orderBy">
-	 		<option value="date">Order By Date Taken</option>
-			<option value="percentage">Order By Percent Correct</option>
-			<option value="time">Order By Time Spent</option>
-		 </select>
-     		<input type = "hidden" name = "quiz_id" value="<%=quizID%>"/>
-     		<input id = "submit" type = "submit" value = "Update"> 
+         <p><b>Created by </b><%=creatorName %></p>
      	
-     	       
+     	      
          <!-- Print info on the last five tries of this quiz-->
          <br><h3>Recent Activity</h3>
          <%
@@ -156,7 +99,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
         	 String userName = User.getUser(recentTries.get(i).getUserID()).getUserName(); 
          %>
          <p><%=formatter.format(recentTries.get(i).getDate()) %> 
-         	<a href="../profile.jsp?user=<%=userID%>"><%=userName%></a> scored <%=NumberConverter.toString(recentTries.get(i).getScore()) %> </p>
+         	<%=userName%> scored <%=NumberConverter.toString(recentTries.get(i).getScore()) %> </p>
          <%
          }
          %>
@@ -180,7 +123,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
         	 String userName = User.getUser(bestTries.get(i).getUserID()).getUserName(); 
          %>
          <p><%=formatter.format(bestTries.get(i).getDate()) %> 
-         	<a href="../profile.jsp?user=<%=userID%>"><%=userName%></a> scored <%=NumberConverter.toString(bestTries.get(i).getScore()) %> </p>
+         	<%=userName%> scored <%=NumberConverter.toString(bestTries.get(i).getScore()) %> </p>
          <%
          }
          %>
@@ -192,45 +135,13 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
         	 String userName = User.getUser(bestTriesToday.get(i).getUserID()).getUserName();
          %>
          <p><%=formatter.format(bestTriesToday.get(i).getDate()) %>
-          	<a href="../profile.jsp?user=<%=userID%>"><%=userName%></a> scored <%=NumberConverter.toString(bestTriesToday.get(i).getScore()) %> </p>
+          	<%=userName%> scored <%=NumberConverter.toString(bestTriesToday.get(i).getScore()) %> </p>
          <%
          }
          %>
-         
-         <!-- We also need to display summary statistics, i.e. the average score on the quiz, 
-         average amount of time it took, number of people who've taken it. -->
-         <br><a href="/Quizness/quiz/show-quiz.jsp?quiz_id=<%=quiz.getQuizID() %>">Take Quiz!</a>
-         
-         <% if(quiz.hasPracticeMode()) {%>
-         <!--A way to start the quiz in practice mode, if available. -->
-         <br><a href="/Quizness/quiz/show-quiz.jsp?quiz_id=<%=quiz.getQuizID() %>">Practice Quiz</a>
-         <%} %>
-         
-         <% if(user.getUserID() == quiz.getCreatorID()) { %>
-         <!--A way to start editing the quiz, if the user is the quiz owner. -->
-         <br><a href="/Quizness/quiz-edit.jsp?quiz_id=<%=quiz.getQuizID() %>">Edit Quiz</a>
-         <%} %>
-         
-         <!-- A way to challenge another user to this quiz -->
-         <br><a href="/Quizness/social/compose-mail.jsp?quiz_id=<%=quiz.getQuizID() %>&top_score=<%=userHighScore %>">Challenge a friend!</a>
-         
-          
-          <% if(user.isAdmin()){ %>
-          <form method="post" action="/Quizness/DeleteQuizServlet">
-            <input type ="hidden" name="quiz_id" value=<%=quizID%>>
-     		<input id="submit" type="submit" value="Delete Quiz">
-     		<% } %>
-     		
-     	</form>
-     	<% if (user.isAdmin()){ %>
-     	<form method = "post" action = "/Quizness/ClearQuizHistoryServlet">
-     		<input type = "hidden" name = "quiz_id" value="<%=quizID%>"/>
-     		<input id = "submit" type = "submit" value = "Clear Quiz History">
-     		<% } %>
-     	</form>
-     	</form>
-      </div>
-   
+         <br><a href="/Quizness/quiz/show-quiz-guest.jsp?quiz_id=<%=quiz.getQuizID() %>">Take Quiz!</a>
+         </form>
+   </div>
    
    	<div class="container" style="float:left;padding-left:300px;">
       <form method="post" action="" id="signup">

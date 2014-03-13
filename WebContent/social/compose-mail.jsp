@@ -69,7 +69,7 @@ if(quizID != null) {
          <span class="header-link"><a href="../inbox.jsp">Inbox</a></span>
           <span class="header-link"><a href="../site/search.jsp">Search</a></span>
       </div>
-	<div class="container">
+	<div class="center" style="width:700px; margin-left: auto; margin-right: auto;">
 	<% if (friends.size() == 0){ %>
 		<form method="post" action="../site/search.jsp">
 	     <div class="form-1">

@@ -2,7 +2,7 @@
 <%@page import="model.*" %>
 <%@page import="java.util.*" %>
 <%@page import="java.io.*" %>
-<%--<%@ page errorPage="../site/404.jsp" --%>
+<%@ page errorPage="../site/404.jsp"%>
 <head>
    <link rel="stylesheet" type="text/css" href="/Quizness/css/style_login.css" />
 </head>
