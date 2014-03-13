@@ -102,7 +102,7 @@ answer
 			}
 		}	
 		qTry.setToDone();%> 
-	 <input type="submit" name="submit" value="Grade Me!"/>
+	 <input type="submit" class="blue-button" name="submit" value="Grade Me!"/>
 	 </div>
 	 </form>
 	  <%

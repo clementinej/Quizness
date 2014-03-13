@@ -1,3 +1,74 @@
+*,
+*:after,
+*:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+.button{
+	float:left;
+	padding-left:120px;
+	}
+.blue-button {
+	font-family: 'Lato', Calibri, Arial, sans-serif;
+	margin-left:200px;
+	text-align:center; 
+	margin-bottom:30px;
+	    width: 300px;
+    margin-top: 20px;
+    padding: 15px 0;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-align: center;
+    text-decoration: none;
+        background: -moz-linear-gradient(
+        top,
+        #b9c5dd 0%,
+        #a4b0cb);
+    background: -webkit-gradient(
+        linear, left top, left bottom, 
+        from(#b9c5dd),
+        to(#a4b0cb));
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid #737b8d;
+    -moz-box-shadow:
+        0px 5px 5px rgba(000,000,000,0.1),
+        inset 0px 1px 0px rgba(255,255,255,0.5);
+    -webkit-box-shadow:
+        0px 5px 5px rgba(000,000,000,0.1),
+        inset 0px 1px 0px rgba(255,255,255,0.5);
+    box-shadow:
+        0px 5px 5px rgba(000,000,000,0.1),
+        inset 0px 1px 0px rgba(255,255,255,0.5);
+    text-shadow:
+        0px 1px 3px rgba(000,000,000,0.3),
+        0px 0px 0px rgba(255,255,255,0);
+    display: table;
+    position: static;
+    clear: both;
+	}
+body {
+    /*background-image: url(http://kreativo.se/backlogin.jpg);*/
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8be8cf), color-stop(100%,#cdeb8b));
+  
+  
+    font-family: "Helvetica Neue", Helvetica, Arial;
+    padding-top: 20px;
+}
+
+   .header-link {
+		padding-left:50px;
+		font-weight:bold;	
+		}
+
 #score {
 	 text-align: center;
 }
@@ -27,12 +98,7 @@
   -ms-filter: none;
   filter: none;
 }
-.demo {
-  margin: 0 auto;
-  -webkit-filter: drop-shadow(30px 30px 23px rgba(0,0,0,0.3));
-  -moz-filter: drop-shadow(30px 30px 23px rgba(0,0,0,0.3));
-  filter: drop-shadow(30px 30px 23px rgba(0,0,0,0.3));
-}
+
 #cubes{
   margin-bottom: 4rem;
 }

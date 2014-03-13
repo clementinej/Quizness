@@ -99,38 +99,38 @@
         double friendsAverageTime = QuizResult.getFriendsAverageTimeSpent(user.getUserID(), quizID);%>
              
             <div id="score">
-             <h2>You scored <%=NumberConverter.toString(score) %></h2>
+             <h1>You scored <%=NumberConverter.toString(score) %></h1>
              <p>It took you <%=time %> seconds to complete this quiz</p><br>
                
-            <h1>Your History</h1>
+            <h2>Your History</h2>
             <p>Your average score on this quiz is <%=NumberConverter.toString(userAverageScore)%></p>
             <p>On average, this quiz takes you <%=userAverageTime%> seconds to complete </p>
             <p>You've taken this quiz <%=userNumTries%> times </p>
             <p>You last took this quiz on <%=formatter.format(userLastTryDate)%></p>
             
-            <h1>Quiz History</h1>
+            <h2>Quiz History</h2>
             <p>On average, users score <%=NumberConverter.toString(averageScore)%> on this quiz.</p>
             <p>On average, this quiz takes users <%=averageTime%> seconds to complete.</p>
             <p>This quiz has been taken <%=numTries%> times.</p>
             <p>This quiz has been taken <%=numTriesToday%> times today.</p>
             
-            <h1>Friend's History</h1>
+            <h2>Friend's History</h2>
             <p>On average, your friends score <%=NumberConverter.toString(friendsAverageScore)%></p>
             <p>On average, this quiz takes your friends <%=friendsAverageTime %> seconds to complete</p>
             </div>
          </form>
          
-		<form method = "post" action = "../quiz/quiz-summary.jsp?quiz_id=<%=quizID %>" style="text-align:center; margin-top:15px">
-     		<input id = "submit" type = "submit" value = "Back to Quiz Summary">
+		<form method="post" action="../quiz/quiz-summary.jsp?quiz_id=<%=quizID %>"  class="button">
+     		<input id="submit" class="blue-button" type="submit" value="Back to Quiz Summary">
      	</form>
      
-     	<form method = "post" action = "../quiz/show-quiz.jsp?quiz_id=<%=quizID %>" style="text-align:center; margin-top:15px; margin-bottom:30px">
-     		<input id = "submit" type = "submit" value = "Take this Quiz Again">
+     	<form method="post" action="../quiz/show-quiz.jsp?quiz_id=<%=quizID %>" class="button">
+     		<input id="submit" class="blue-button" type="submit" value = "Take this Quiz Again">
      	</form>
      	
-     	<form method = "post" action = "../ReportServlet" style="text-align:center; margin-top:15px; margin-bottom:30px">
-     		<input id = "submit" type = "submit" value = "Mark As Inappropriate">
-     		<input id = "submit" type = "hidden" name="quizID" value=<%=quizID%>>
+     	<form method="post" action="../ReportServlet" class="button">
+     		<input id="submit" class="blue-button" type="submit" value="Mark As Inappropriate">
+     		<input id="submit" type="hidden" name="quizID" value=<%=quizID%>>
      	</form>
         <%--
          <%
