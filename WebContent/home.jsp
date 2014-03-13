@@ -333,6 +333,7 @@
          $(document).ready(function() {
          	$("#cs-text").lettering().children('span').wrap('<span />');
          });
+         window.history.pushState("", "", '/Quizness/home.jsp');
       </script>
       </div>
    </body>
