@@ -73,6 +73,15 @@ public class QuizSummary {
 		ResultSet rs = ps.executeQuery();
 		if(rs.next()) return rs.getDouble(1)/1000;
 		else return -1.0; 
+	}	
+	
+	public static int getAllNumOfTimesTakenToday(int quizID) throws Exception {
+		String query = "SELECT COUNT(*) FROM quizTries WHERE quizID = " + quizID
+		+ " AND dateCreated >= NOW() - INTERVAL " + 1 + " DAY ";
+		PreparedStatement ps = ServerConnection.getConnection().prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()) return rs.getInt(1);
+		else return -1; 
 	}
 	
 	public static int getAllNumOfTimesTaken(int quizID) throws Exception {

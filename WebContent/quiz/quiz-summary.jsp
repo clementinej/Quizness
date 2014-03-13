@@ -115,7 +115,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
 %>
 
 <div class="container" style="float:left;padding-left:100px;">
-   <form method="post" action="../quiz/quiz-summary.jsp" id="signup">
+   <form method="post" action="../quiz/quiz-summary.jsp?quiz_id=<%=quizID %>" id="signup">
       <div class="header">
          <h3>Quiz Summary</h3>
          <p>Take, edit, or practice the quiz.</p>
@@ -240,7 +240,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
       <div class="sep"></div>
       
       	<br><h3>Average Time Spent</h3>
-      	<p><%=averageTime%> seconds</p><br>
+      	<p><%=NumberConverter.roundToTwoPlaces(averageTime)%> seconds</p><br>
       	<br><h3>Average Score</h3>
       	<p><%=NumberConverter.toString(averageScore)%></p><br>
       	<br><h3>Total Attempts</h3>

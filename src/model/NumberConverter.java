@@ -19,4 +19,10 @@ public class NumberConverter {
 		}
 		return result; 
 	}
+	
+	public static double roundToTwoPlaces(double num){
+		BigDecimal bd = new BigDecimal(num);
+		bd = bd.setScale(2, RoundingMode.HALF_UP);
+		return bd.doubleValue(); 
+	}
 }

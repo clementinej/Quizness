@@ -27,6 +27,17 @@ public class QuizResult {
 		return executeQuery(query);
 	}
 	
+	public static int getLastDateTaken(int quizID, int userID) throws Exception{
+		//Connection con = ServerConnection.getConnection();
+		String query = "SELECT id FROM quizTries WHERE quizID = " + quizID 
+				+ " AND userID = " + userID
+				+ " ORDER BY dateCreated DESC";
+		PreparedStatement ps = ServerConnection.getConnection().prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()) return rs.getInt(1);
+		else return -1; 
+	}
+	
 	// Return the average score of this user
 	//TODO: Fix AND operator, it simply doesn't work.
 	public static double getUserAverageScore(int userID, int quizID) throws Exception{
@@ -39,10 +50,42 @@ public class QuizResult {
 		else return -1.0; 
 	}
 	
+	public static double getUserAverageTimeSpent(int userID, int quizID) throws Exception {
+		String query = "SELECT AVG(timeSpent)  FROM quizTries WHERE quizID = " + quizID 
+				+ " AND userID = " + userID;
+		PreparedStatement ps = ServerConnection.getConnection().prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()) return rs.getDouble(1)/1000;
+		else return -1.0; 
+	}
+	
+	public static int getUserNumOfTimesTaken(int userID, int quizID) throws Exception {
+		String query = "SELECT COUNT(*) FROM quizTries WHERE quizID = " + quizID
+				+ " AND userID = " + userID;
+		PreparedStatement ps = ServerConnection.getConnection().prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()) return rs.getInt(1);
+		else return -1; 
+	}
+	
 	// Return the average score of all users
 	public static double getAllAverageScore(int quizID) throws Exception {
 		return QuizSummary.getAllAverageScore(quizID);
 	}
+	
+	public static double getAllAverageTimeSpent(int quizID) throws Exception {
+		return QuizSummary.getAllAverageTimeSpent(quizID);
+	}
+	
+	public static double getFriendsAverageTimeSpent(int userID, int quizID) throws Exception {
+		String query = "SELECT AVG(timeSpent)  FROM quizTries"
+				+ " INNER JOIN friendships ON quizTries.userID = friendships.toID"
+				+ " WHERE friendships.fromID = " + userID + " AND quizTries.quizID = " + quizID;
+		PreparedStatement ps = ServerConnection.getConnection().prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()) return rs.getDouble(1)/1000;
+		else return -1.0; 
+	}	
 	
 	// BUGGY
 	
