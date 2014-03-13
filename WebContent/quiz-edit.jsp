@@ -15,10 +15,7 @@
 <%
    boolean debug = false;
    User user = (User) session.getAttribute("current user");
-   Quiz quiz = Quiz.getQuiz(79);
-   if(!debug) {
-   	quiz = Quiz.getQuiz(Integer.parseInt(request.getParameter("quiz_id")));
-   }
+   Quiz quiz = Quiz.getQuiz(Integer.parseInt(request.getParameter("quiz_id")));
    if(!user.isAdmin() && quiz.getCreatorID() != user.getUserID()) return;
    ArrayList<Question> questions = quiz.getNonRandomQuestions();
    System.out.println("Got questions");

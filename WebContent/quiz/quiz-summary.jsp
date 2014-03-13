@@ -130,8 +130,16 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          
          <!-- Print info on the user's last five tries -->
          <br><h3>Your History</h3>
-         <p>Your high score on this quiz is <%=NumberConverter.toString(userHighScore) %></p>
          <%
+         String score = NumberConverter.toString(userHighScore);
+         if(score.equals("0 points")) {
+        	 %>
+        	 <p>You've never taken this quiz</p>
+        	 <% 
+         } else {
+         %>
+         <p>Your high score on this quiz is <%=score%></p>
+         <%}
          for(int i = 0; i < lastTriesUser.size() && i < 5; i++) {
          %>
          <p><%=formatter.format(lastTriesUser.get(i).getDate()) %> you scored <%=NumberConverter.toString(lastTriesUser.get(i).getScore()) %> </p>
