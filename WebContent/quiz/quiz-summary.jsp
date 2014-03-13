@@ -156,7 +156,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
         	 String userName = User.getUser(recentTries.get(i).getUserID()).getUserName(); 
          %>
          <p><%=formatter.format(recentTries.get(i).getDate()) %> 
-         	<a href="../profile.jsp?user=<%=userID%>"><%=userName%></a> scored <%=NumberConverter.toString(recentTries.get(i).getScore()) %> </p>
+         	<a href="/Quizness/profile.jsp?id=<%=userID%>"><%=userName%></a> scored <%=NumberConverter.toString(recentTries.get(i).getScore()) %> </p>
          <%
          }
          %>
@@ -179,8 +179,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
         	 int userID = User.getUser(bestTries.get(i).getUserID()).getUserID();
         	 String userName = User.getUser(bestTries.get(i).getUserID()).getUserName(); 
          %>
-         <p><%=formatter.format(bestTries.get(i).getDate()) %> 
-         	<a href="../profile.jsp?user=<%=userID%>"><%=userName%></a> scored <%=NumberConverter.toString(bestTries.get(i).getScore()) %> </p>
+         <p><%=formatter.format(bestTries.get(i).getDate()) %><a href="/Quizness/profile.jsp?id=<%=userID%>"><%=userName%></a> scored <%=NumberConverter.toString(bestTries.get(i).getScore()) %> </p>
          <%
          }
          %>
@@ -192,7 +191,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
         	 String userName = User.getUser(bestTriesToday.get(i).getUserID()).getUserName();
          %>
          <p><%=formatter.format(bestTriesToday.get(i).getDate()) %>
-          	<a href="../profile.jsp?user=<%=userID%>"><%=userName%></a> scored <%=NumberConverter.toString(bestTriesToday.get(i).getScore()) %> </p>
+          	<a href="/Quizness/profile.jsp?id=<%=userID%>"><%=userName%></a> scored <%=NumberConverter.toString(bestTriesToday.get(i).getScore()) %> </p>
          <%
          }
          %>

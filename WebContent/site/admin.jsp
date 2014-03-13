@@ -37,6 +37,7 @@
       <span class="header-link"><a href="../profile.jsp">Profile</a></span>
       <span class="header-link"><a href="../site/admin.jsp">Admin</a></span>
       <span class="header-link"><a href="../inbox.jsp">Inbox</a></span>
+      <span class="header-link"><a href="../reported-quizzes.jsp">Reported Quizzes</a></span>
       <span class="header-link"><a href="../site/search.jsp">Search</a></span>
    </div>
    <div>

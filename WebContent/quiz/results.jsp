@@ -127,6 +127,11 @@
      	<form method = "post" action = "../quiz/show-quiz.jsp?quiz_id=<%=quizID %>" style="text-align:center; margin-top:15px; margin-bottom:30px">
      		<input id = "submit" type = "submit" value = "Take this Quiz Again">
      	</form>
+     	
+     	<form method = "post" action = "../ReportServlet" style="text-align:center; margin-top:15px; margin-bottom:30px">
+     		<input id = "submit" type = "submit" value = "Mark As Inappropriate">
+     		<input id = "submit" type = "hidden" name="quizID" value=<%=quizID%>>
+     	</form>
         <%--
          <%
          for(int i = 0; i < responses.size(); i++) {
