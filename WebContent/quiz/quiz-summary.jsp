@@ -114,7 +114,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
 
 %>
       
-<div class="container" style="float:left;padding-left:100px;">
+<div class="container" style="float:left;padding-left:20px;">
    <form method="post" action="../quiz/quiz-summary.jsp?quiz_id=<%=quizID %>" id="signup">
       <div class="header">
          <h3>Quiz Summary</h3>
@@ -166,10 +166,11 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
    </div>
    
     <!-- Print info on the top scores on this quiz-->
-   <div class="container" style="float:left;padding-left:200px;">
+   <div class="container" style="float:left;padding-left:50px;">
       <form method="post" action="" id="signup">
       <div class="header">
          <h3>Top Scores</h3>
+         <p>See how you stack up!</p> 
       </div>
       <div class="sep"></div>
       
@@ -179,7 +180,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
         	 int userID = User.getUser(bestTries.get(i).getUserID()).getUserID();
         	 String userName = User.getUser(bestTries.get(i).getUserID()).getUserName(); 
          %>
-         <p><%=formatter.format(bestTries.get(i).getDate()) %><a href="/Quizness/profile.jsp?id=<%=userID%>"><%=userName%></a> scored <%=NumberConverter.toString(bestTries.get(i).getScore()) %> </p>
+         <p><%=formatter.format(bestTries.get(i).getDate()) %><a href="/Quizness/profile.jsp?id=<%=userID%>"><%=" " + userName + " "%></a> scored <%=" " + NumberConverter.toString(bestTries.get(i).getScore()) %> </p>
          <%
          }
          %>
@@ -191,7 +192,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
         	 String userName = User.getUser(bestTriesToday.get(i).getUserID()).getUserName();
          %>
          <p><%=formatter.format(bestTriesToday.get(i).getDate()) %>
-          	<a href="/Quizness/profile.jsp?id=<%=userID%>"><%=userName%></a> scored <%=NumberConverter.toString(bestTriesToday.get(i).getScore()) %> </p>
+          	<a href="/Quizness/profile.jsp?id=<%=userID%>"><%=userName + " " %></a> scored <%= " " + NumberConverter.toString(bestTriesToday.get(i).getScore()) %> </p>
          <%
          }
          %>
@@ -215,26 +216,22 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          
           
           <% if(user.isAdmin()){ %>
-          <form method="post" action="/Quizness/DeleteQuizServlet">
+          <form method="post" action="/Quizness/DeleteQuizServlet" id="signup">
+           <div class="inputs">
             <input type ="hidden" name="quiz_id" value=<%=quizID%>>
      		<input id="submit" type="submit" value="Delete Quiz">
+     		</div>
      		<% } %>
-     		
-     	</form>
-     	<% if (user.isAdmin()){ %>
-     	<form method = "post" action = "/Quizness/ClearQuizHistoryServlet">
-     		<input type = "hidden" name = "quiz_id" value="<%=quizID%>"/>
-     		<input id = "submit" type = "submit" value = "Clear Quiz History">
-     		<% } %>
-     	</form>
+     		</form>
      	</form>
       </div>
    
    
-   	<div class="container" style="float:left;padding-left:300px;">
+   	<div class="container" style="float:left;padding-left:80px;">
       <form method="post" action="" id="signup">
       <div class="header">
          <h3>Quiz Statistics</h3>
+         <p>Track your progress</p>
       </div>
       <div class="sep"></div>
       
@@ -244,8 +241,17 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
       	<p><%=NumberConverter.toString(averageScore)%></p><br>
       	<br><h3>Total Attempts</h3>
       	<p><%=numAttempts%></p><br>
+      		            	<% if (user.isAdmin()){ %>
+     	<form method="post" action="/Quizness/ClearQuizHistoryServlet" id="signup">
+     		<input type="hidden" name="quiz_id" value="<%=quizID%>"/>
+     		<div class="inputs">
+     		<input style="width:200px;" id="submit" type="submit" value="Clear Quiz History">
+     		<% } %>
+     		</div>
+     	</form>
 	 </form>
       </div>
+
      
 </body>
 </html>

@@ -182,7 +182,7 @@
 	   					int creatorID = q.getCreatorID();
 	   					String creator = User.getUser(creatorID).getUserName();
 	   		%>
-			<p><a href="profile.jsp?user=<%=creatorID%>"><%=creator %></a> created <%=quizName %></p>
+			<p><a href="profile.jsp?id=<%=creatorID%>"><%=creator %></a> created <%=quizName %></p>
 			<%
 					} // end for loop
 				} else {
@@ -192,7 +192,7 @@
 						int creatorID = q.getCreatorID();
 						String creator = User.getUser(creatorID).getUserName();
 			%>
-			<p><a href="profile.jsp?user=<%=creatorID%>"><%=creator %></a> created <%=quizName %></p>
+			<p><a href="profile.jsp?id=<%=creatorID%>"><%=creator %></a> created <%=quizName %></p>
 			<% 
 					} // end for loop
 				} // end else
@@ -210,7 +210,7 @@
 	   					int creatorID = q.getCreatorID();
 	   					String creator = User.getUser(creatorID).getUserName(); 
 	   		%>
-			<p><a href="profile.jsp?user=<%=creatorID%>"><%=creator %></a> took <%=quizName %></p>
+			<p><a href="profile.jsp?id=<%=creatorID%>"><%=creator %></a> took <%=quizName %></p>
 			<%
 					} // end for loop
 				} else {
@@ -220,7 +220,7 @@
 						int creatorID = q.getCreatorID();
 						String creator = User.getUser(creatorID).getUserName();
 						%>
-			<p><a href="profile.jsp?user=<%=creatorID%>"><%=creator %></a> took <%=quizName %></p>
+			<p><a href="profile.jsp?id=<%=creatorID%>"><%=creator %></a> took <%=quizName %></p>
 						<% 
 					} // end for loop
 				} // end else 
