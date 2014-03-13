@@ -358,6 +358,34 @@ public class Quiz implements Serializable{
 		System.out.println("The top score on this quiz is: ");
 		return result;
 	}
+	
+	public static void report (int userID, int quizID) throws Exception{
+		String query = "INSERT INTO reportedQuizzes (userID, quizID) VALUES (?,?)";
+		Connection con = ServerConnection.getConnection();
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.setInt(1, userID);
+		ps.setInt(2, quizID);
+		ps.executeUpdate();
+	}
+	
+	public static void removeFromReported(int quizID) throws Exception {
+		String query = "DELETE FROM reportedQuizzes WHERE quizID = " + quizID; 
+		Connection con = ServerConnection.getConnection();
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.executeUpdate();
+	}
+	
+	public static ArrayList<Integer> getReported() throws Exception{
+		String query = "SELECT quizID FROM reportedQuizzes";
+		Connection con = ServerConnection.getConnection();
+		PreparedStatement ps = con.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		while(rs.next()){
+			result.add(rs.getInt(1));
+		}
+		return result;
+	}
 	/*
 	public static ArrayList<Integer> getTopPerformers(int num, int quizID) throws Exception{
 		String query = "SELECT quizTryID FROM quizTries WHERE quizID = " + quizID 

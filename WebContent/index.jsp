@@ -47,6 +47,7 @@
          });
       </script>
       <h2 id="create-account"><a href="create-account.jsp">Create New Account</a></h2>
+      <h2 id="create-account"><a href="home-guest.jsp">Continue As a Guest</a></h2>
       <form class="form-1" action="LoginServlet" method="post">
          <p class="field">
             <input type="text" name="login" placeholder="Username or email">
@@ -56,6 +57,7 @@
             <input type="password" name="password" placeholder="Password">
             <i class="icon-lock icon-large"></i>
          </p>
+         <input type="checkbox" name="remember" value="remember" ><span style="color:grey; font-weight:600;"> Remember Me</span><br>
          <p class="login">
             <button type="submit" name="submit"><i class="icon-arrow-right icon-large"></i></button>
          </p>

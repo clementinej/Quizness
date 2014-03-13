@@ -11,41 +11,11 @@
       <link rel="stylesheet" type="text/css" href="css/style.css" />
       <link rel="stylesheet" type="text/css" href="css/style_login.css" />
       <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300|Montserrat' rel='stylesheet' type='text/css' />
-      <style>
-
-		.right {
-		color:#fffff;
-		float:right;
-		margin-right:25px;
-		font-weight:bold;
-		font-size:100%;
-		}
-		
-		#rightcontent {
-		position: absolute;
-		right:10px;
-		top:50px;
-		width:200px;
-		}
-		#innerleft {
-		float:left;
-		left:20px;
-		top:50px;
-		width:400px;
-		}
-		#innerright {
-		float:right;
-		right:10px;
-		top:50px;
-		width:400px;
-		}
-      </style>
    </head>
    <body>
    <div>
       <%
          User u = (User) session.getAttribute("current user");
-
          int userID = u.getUserID();
          String name = u.getUserName();
          
@@ -85,8 +55,7 @@
          
          // DOES THE USER HAVE ANY FRIEND REQUESTS?
          int numReqs = 0;
-         ArrayList<FriendRequest> reqs = u.getFriendRequests();
-    	 numReqs = reqs.size();
+    	 numReqs = inbox.getNumFriendReqs();
     	 
     	 // HAVE FRIENDS CREATED QUIZZES RECENTLY?
     	int numFriendCreations = 0;
@@ -115,13 +84,12 @@
             <h4 class="cs-text" id="cs-text">Quizness</h4>
          </section>
 	   </div>
-	   <div id="below" style="align:center;margin-bottom:100px;">
-	
-   			<div id="activity" style="float:left;width:20%;margin-left:60px;padding-bottom:60px;">
+	   <div id="below">
+   			<div id="activity">
    			<h1>Activity</h1>			
 	   		<% if(numUserTakenQuizzes == 0 && numRecentQuizzes == 0) {
 	   			%>	
-	   		<div style="padding-bottom:50px;"><h4>You've had no activity lately. <a href="site/search.jsp">Get in the game!</a></h4>
+	   		<div class="spacer"><h4>You've had no activity lately. <a href="site/search.jsp">Get in the game!</a></h4></div>
 	   		<%} %>
 			<%
    			if(numUserTakenQuizzes != 0) {%>
@@ -182,7 +150,7 @@
 	   					int creatorID = q.getCreatorID();
 	   					String creator = User.getUser(creatorID).getUserName();
 	   		%>
-			<p><a href="profile.jsp?user=<%=creatorID%>"><%=creator %></a> created <%=quizName %></p>
+			<p><a href="profile.jsp?id=<%=creatorID%>"><%=creator %></a> created <%=quizName %></p>
 			<%
 					} // end for loop
 				} else {
@@ -192,13 +160,12 @@
 						int creatorID = q.getCreatorID();
 						String creator = User.getUser(creatorID).getUserName();
 			%>
-			<p><a href="profile.jsp?user=<%=creatorID%>"><%=creator %></a> created <%=quizName %></p>
+			<p><a href="profile.jsp?id=<%=creatorID%>"><%=creator %></a> created <%=quizName %></p>
 			<% 
 					} // end for loop
 				} // end else
 			} // end if
-			%>
-  	
+			%>  	
   		<div>
 			<%
 			if(numQuizzesTakenByFriends != 0) {%>
@@ -210,7 +177,7 @@
 	   					int creatorID = q.getCreatorID();
 	   					String creator = User.getUser(creatorID).getUserName(); 
 	   		%>
-			<p><a href="profile.jsp?user=<%=creatorID%>"><%=creator %></a> took <%=quizName %></p>
+			<p><a href="profile.jsp?id=<%=creatorID%>"><%=creator %></a> took <%=quizName %></p>
 			<%
 					} // end for loop
 				} else {
@@ -220,18 +187,15 @@
 						int creatorID = q.getCreatorID();
 						String creator = User.getUser(creatorID).getUserName();
 						%>
-			<p><a href="profile.jsp?user=<%=creatorID%>"><%=creator %></a> took <%=quizName %></p>
+			<p><a href="profile.jsp?id=<%=creatorID%>"><%=creator %></a> took <%=quizName %></p>
 						<% 
 					} // end for loop
 				} // end else 
 			} // end if 
 			%>
 			</div>
-   			
-   		
 			</div>
-			
-			<div style="float:left;width:20%;">
+			<div id="announcements">
 				<h1>Announcements</h1>
 	        <%
 	        int numAnnouncements = 0;
@@ -254,7 +218,7 @@
 	        		}
 	        	}
 	        }%>
-	        <div style="padding-top:50px;">
+	        <div class="space1">
    			<%
    			if(numAcheivements != 0) {%>
    	   			<h2>Recent Achievements</h2><% 
@@ -276,10 +240,8 @@
    			}
    			%>
    			</div>
-   		
    			</div>
-   			
-   			<div style="float:left;width:25%;">
+   			<div id="news">
    			<h1>News</h1>	
 	        <% 
   			 if(numPopularQuizzes != 0) {%>
@@ -302,9 +264,6 @@
    					} // end for loop
    				} // end else
   			 } // end if
-   				%>
-   			
-   			<%
    			if(numNewQuizzes != 0) {%>
    				<div><h2>New Quizzes</h2><%
    				if(numNewQuizzes > 5) {
@@ -327,9 +286,6 @@
    			}  // end if
    			%>
 	        </div>
-	    
-   			 
-   			
 	   </div>
 	       <div id="innerright">
 	       
@@ -346,9 +302,6 @@
 			<% 	
 				}
 	   		}
-			%>
-			
-			<%
 	   		if(numChallenges != 0) {%>
 	   		<h2>Challenges</h2><%
 	   			if(numChallenges > 1) {%>
@@ -360,28 +313,17 @@
 			<% 	
 				}
 	   		}
-			%>
-			
-			
-			<%
 	   		if(numReqs != 0) {%>
 	   			<h2>Friend Requests</h2><%	
-	   			if(numReqs < 5) {
-	   				for(int i = 0; i < numReqs; i++) {
-	   					String from = reqs.get(i).getFrom();
-	   		%>
-			<p><%=from %> has requested your friendship!</p>
-			<%
-					} // end for loop
-	   			} else {
-	   				for(int i = 0; i < 5; i++) {
-	   					String from = reqs.get(i).getFrom();
-	   		%>
-	   		<p><%=from %> has requested your friendship!</p>
-	   		<% 
-	   				} // end for loop
-	   			} // end else 
-	   		} // end if
+	 			if(numChallenges > 1) {%>
+	   			
+		   		<p>You have <%=numReqs %> friend requests! <a href="inbox.jsp">Go to your inbox.</a></p>
+				<% } else { %>
+					
+				<p>You have a new friend request! <a href="inbox.jsp">Go to your inbox.</a></p>	
+				<% 	
+					}
+		   		}
 	   		%>
 	        </div>
 	        </div>
@@ -391,6 +333,7 @@
          $(document).ready(function() {
          	$("#cs-text").lettering().children('span').wrap('<span />');
          });
+         window.history.pushState("", "", '/Quizness/home.jsp');
       </script>
       </div>
    </body>

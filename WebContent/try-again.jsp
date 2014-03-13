@@ -13,11 +13,11 @@
             </div>
             <div class="inputs">
                <div class="sep"></div>
-               <input type="name" name="email" placeholder="email"/>
+               <input type="email" name="email" placeholder="email"/>
                <input type="name" name="password" placeholder="password"/>
                <input type="name" name="name" placeholder="name"/>
-               <input type="email" name="aboutMe" placeholder="about me" />
-               <input type="email" name="location" placeholder="location" />
+               <input type="name" name="aboutMe" placeholder="about me" />
+               <input type="name" name="location" placeholder="location" />
                <input id="submit" type="submit" value="Create Account" />
             </div>
          </form>

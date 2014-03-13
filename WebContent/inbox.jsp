@@ -73,7 +73,7 @@
       </div>
       <div id="compose">
          <form method="post" action="../Quizness/social/compose-mail.jsp">
-            <input type="submit" value="Compose" />
+            <input type="submit" class="blue-button" value="COMPOSE" />
          </form>
       </div>
       <hr id="inbox"/>
@@ -174,11 +174,18 @@
          </div>
          <div>
             <span id="footer">
+<<<<<<< HEAD
                <%--<b>Selected Messages :</b>
+=======
+              <input type="hidden" name="quiz_id" value="s">
+               <input type="submit" class="blue-button" name="inbox_update" value="UPDATE" style="">
+               <b>Selected Messages :</b>
+>>>>>>> d99d455d140a59bca4c1292540310ac0961ff7f6
                <select name="update_type">
                   <option value="delete">Delete Messages</option>
                   <option value="read">Mark as Read</option>
                   <option value="unread">Mark as Unread</option>
+<<<<<<< HEAD
                   <input type="hidden" name="quiz_id" value="s">
                		<input type="submit" name="inbox_update" value="Update">
                </select> --%>
@@ -186,6 +193,9 @@
                		<input type="hidden" name="quiz_id" value="s">
                		<input type="submit" name="inbox_update" value="Delete Seleted Messages">
                </form>
+=======
+               </select>
+>>>>>>> d99d455d140a59bca4c1292540310ac0961ff7f6
             </span>
          </div>
       </form>

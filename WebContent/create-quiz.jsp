@@ -25,7 +25,7 @@
           <input type="name" name="description" value="<%=description%>" placeholder="Description" autofocus/>
          </div>
 
-         <input type="submit" name="save_title_and_description" value="Save Title And Description"/>
+         <input type="submit" class="blue-button" name="save_title_and_description" value="Save Title And Description"/>
          <div class="checkboxy">
             <input type="checkbox" name="selected" value="multiple_pages"><label class="terms">Show quiz on multiple pages?</label>
          </div>
@@ -55,7 +55,7 @@
                   </select>
             </tr>
          </table>
-         <br><input type="button" id="add-question" value="Add A Question"></input> <!-- Forward to type-specific creation template -->
+         <br><input type="button" id="add-question" class="blue-button" value="Add A Question"></input> <!-- Forward to type-specific creation template -->
          </form>
          <br><input id="submit" type="submit" value="Create Quiz!"><!-- Store new quiz in database -->
          <br><input id="submit" name="cancel" type="submit" value="Cancel"><!-- Store new quiz in database -->

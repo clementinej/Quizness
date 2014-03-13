@@ -1,3 +1,71 @@
+    .top {
+	line-height: 24px;
+	background: #fff;
+	background: rgba(255, 255, 255, 0.5);
+	text-transform: uppercase;
+	z-index: 9999;
+	position: relative;
+	box-shadow: 1px 0px 2px rgba(0,0,0,0.2);
+}
+
+    	.right {
+		color:#fffff;
+		float:right;
+		margin-right:25px;
+		font-weight:bold;
+		font-size:100%;
+		}
+		
+		#rightcontent {
+		position: absolute;
+		right:10px;
+		top:50px;
+		width:200px;
+		}
+		#innerleft {
+		float:left;
+		left:20px;
+		top:50px;
+		width:400px;
+		}
+		#innerright {
+		float:right;
+		right:10px;
+		top:50px;
+		width:400px;
+		}
+		
+		#announcements{
+		float:left;
+		width:20%;
+		padding-left:20px;
+		}
+		
+		#activity{
+		float:left;
+		width:20%;
+		margin-left:60px;
+		padding-bottom:60px;
+		}
+		
+		#below{
+		align:center;
+		margin-bottom:100px;
+		}
+		
+		#news{
+		float:left;
+		width:25%;
+		padding-left:20px;
+		}
+		
+		.spacer{
+		padding-bottom:50px;
+		}
+		
+		.space1{
+		padding-top:80px;
+		}
          .header-link {
 		padding-left:50px;
 		font-weight:bold;	
@@ -383,6 +451,7 @@ body {
 }
 
 #signup .header {
+	margin-top: 20px; 
     margin-bottom: 20px;
 }
 
@@ -466,6 +535,45 @@ input:-moz-placeholder {
     font-size: 14px;
     font-style: italic;
 }
+
+.blue-button {
+	    width: 100%;
+    margin-top: 20px;
+    padding: 15px 0;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-align: center;
+    text-decoration: none;
+        background: -moz-linear-gradient(
+        top,
+        #b9c5dd 0%,
+        #a4b0cb);
+    background: -webkit-gradient(
+        linear, left top, left bottom, 
+        from(#b9c5dd),
+        to(#a4b0cb));
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid #737b8d;
+    -moz-box-shadow:
+        0px 5px 5px rgba(000,000,000,0.1),
+        inset 0px 1px 0px rgba(255,255,255,0.5);
+    -webkit-box-shadow:
+        0px 5px 5px rgba(000,000,000,0.1),
+        inset 0px 1px 0px rgba(255,255,255,0.5);
+    box-shadow:
+        0px 5px 5px rgba(000,000,000,0.1),
+        inset 0px 1px 0px rgba(255,255,255,0.5);
+    text-shadow:
+        0px 1px 3px rgba(000,000,000,0.3),
+        0px 0px 0px rgba(255,255,255,0);
+    display: table;
+    position: static;
+    clear: both;
+	}
 
 #signup .inputs #submit {
     width: 100%;
