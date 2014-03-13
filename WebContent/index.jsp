@@ -56,7 +56,7 @@
             <input type="password" name="password" placeholder="Password">
             <i class="icon-lock icon-large"></i>
          </p>
-         <input type="checkbox" name="remember" value="remember">Remember Me<br>
+         <input type="checkbox" name="remember" value="remember" ><span style="color:black;"> Remember Me</span><br>
          <p class="login">
             <button type="submit" name="submit"><i class="icon-arrow-right icon-large"></i></button>
          </p>

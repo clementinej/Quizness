@@ -17,7 +17,7 @@ User user = (User) session.getAttribute("current user");
 //The text description of the quiz. 
 
 int quizID = Integer.parseInt(request.getParameter("quiz_id"));
-
+String orderBy = request.getParameter("orderBy"); 
 Quiz quiz = Quiz.getQuiz(quizID);
 
 String description = quiz.getDescription();
@@ -76,8 +76,22 @@ for(int i = 0; i < recentTryIds.size(); i++) {
 
 //should return the USER'S LAST five quiz tries 
 ArrayList<QuizTry> lastTriesUser = new ArrayList<QuizTry>(); 
-for(int i = 0; i < triesByDate.size(); i++) {
-	QuizTry t = QuizTry.getTry(triesByDate.get(i));
+ArrayList<Integer> triesUser = triesByDate;
+
+if(orderBy != null){
+	if(orderBy.equals("date")){
+		triesUser = triesByDate; 
+	}
+	if(orderBy.equals("percentage")){
+		triesUser = triesByScore; 
+	}
+	if(orderBy.equals("time")){
+		triesUser = triesByTime;
+	}
+}
+
+for(int i = 0; i < triesUser.size(); i++) {
+	QuizTry t = QuizTry.getTry(triesUser.get(i));
 	lastTriesUser.add(t);
 }
 
@@ -98,15 +112,17 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
 %>
 
 <div class="container" style="float:left;padding-left:100px;">
-   <form method="post" action="../../InitQuizServlet??" id="signup">
+   <form method="post" action="../quiz/quiz-summary.jsp" id="signup">
       <div class="header">
          <h3>Quiz Summary</h3>
          <p>Take, edit, or practice the quiz.</p>
       </div>
       <div class="sep"></div>
       <div class="inputs">
-         <h3>Quiz Title</h3>
-         <p><%=quiz.getDescription() %></p><br> <!-- TODO -->
+         <h3>Title</h3>
+         <p><%=quiz.getTitle()%></p><br>
+         <h3>Description</h3>
+         <p><%=quiz.getDescription()%></p><br> 
          <p><b>Created by </b><a href="/Quizness/profile.jsp?id=<%=creator.getUserID()%>"><%=creatorName %></a></p>
          
          <!-- Print info on the user's last five tries -->
@@ -120,6 +136,16 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
          }
          %>
          
+         <form method = "post" action = "../Quizness/quiz/quiz-summary">
+	         <select name="orderBy">
+	 			 	<option value="date">Order By Date Taken</option>
+				  	<option value="percentage">Order By Percent Correct</option>
+				 	<option value="time">Order By Time Spent</option>
+			</select>
+     		<input type = "hidden" name = "quiz_id" value="<%=quizID%>"/>
+     		<input id = "submit" type = "submit" value = "Update"> 
+     	</form>
+     	       
          <!-- Print info on the last five tries of this quiz-->
          <br><h3>Recent Activity</h3>
          <%
