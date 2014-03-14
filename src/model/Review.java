@@ -62,6 +62,8 @@ public class Review {
 			total += rs.getInt(1);
 			count++;
 		}
+		if (count == 0)
+			return 0;
 		return (int) (total/count);
 	}
 	
