@@ -7,7 +7,7 @@
 <title>Upload Page</title>
 </head>
 <body>
-	<form name="form1" id="form1" action="/XMLUpload" method="post" enctype="multipart/form-data">
+	<form name="form1" id="form1" action="ParseQuizUpload" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="hiddenfield1" value="ok">
 	Files to upload:
 	<br/>

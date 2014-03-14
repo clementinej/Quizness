@@ -288,6 +288,11 @@
 	        </div>
 	   </div>
 	       <div id="innerright">
+	       <form action ="ParseUploadedQuiz" method="post" enctype="multipart/form-data">
+	       		Upload a Quiz: <input type="file" name="filename" value="file"><br>
+	       	<input type ="submit" value="Upload">
+	       </form>
+	       
 	       
 			<%
 	   		if(numMessages !=0) {%>
