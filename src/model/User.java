@@ -32,6 +32,8 @@ public class User implements Serializable {
 	private String location;
 	private int highScore;
 	private String picture;
+	private boolean visToFriends;
+	private boolean visToAll;
 
 	//constructor
 	public User(boolean isAdmin, String userName, String pw, String email, String aboutMe, String location, String picture){
@@ -52,6 +54,8 @@ public class User implements Serializable {
 		this.location = location;
 		this.highScore = -1;
 		this.picture = picture;
+		visToFriends = true;
+		visToAll = true;
 	}
 
 	
@@ -178,6 +182,12 @@ public class User implements Serializable {
 /*Random functions that return the stored variable of User 
  * 
  */
+	public void setVisibilityToAll(boolean visibility){
+		visToAll = visibility;
+	}
+	public void setVisibilityToFriends(boolean visibility){
+		visToAll = visibility;
+	}
 	
 	public void setPicture(String file){
 		picture = file;
