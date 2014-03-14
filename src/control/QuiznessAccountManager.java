@@ -17,8 +17,8 @@ public class QuiznessAccountManager {
 	 */
 	public QuiznessAccountManager() throws Exception {//initialize with two accounts
 		salt = "@#$%@#FERYS^%#$YSEAH#$E73452WE@#%3#$";
-		createNewAccount("Patrick", "patrick@stanford.edu" ,"1234", "", "", true);//add emails
-		createNewAccount("Molly", "molly@dog.com","FloPup", "", "", true);
+		createNewAccount("Patrick", "patrick@stanford.edu" ,"1234", "", "", true, "WebContent/img/1.png");//add emails
+		createNewAccount("Molly", "molly@dog.com","FloPup", "", "", true, "WebContent/img/1.png");
 	}
 
 	/*
@@ -26,7 +26,7 @@ public class QuiznessAccountManager {
 	 *  Returns false if the username is already taken.
 	 *  Adds a grain of salt to the password for extra security before hashing.
 	 */
-	public boolean createNewAccount(String userName, String email, String pw, String newLocation, String newAboutMe, boolean isAdmin) throws Exception {
+	public boolean createNewAccount(String userName, String email, String pw, String newLocation, String newAboutMe, boolean isAdmin, String picture) throws Exception {
 		boolean accountFree = false;	
 		System.out.println("In account manager, createNewAccount.");
 		if(User.emailIsAvailable(email)) { //read from database			
@@ -35,7 +35,7 @@ public class QuiznessAccountManager {
 			String hashedPW = generateHash(unencryptedPlusSalt);
 			String aboutMe = newAboutMe;
 			String location = newLocation;
-			User newUser = new User(isAdmin, userName, hashedPW, email, aboutMe, location);
+			User newUser = new User(isAdmin, userName, hashedPW, email, aboutMe, location, picture);
 			model.ServerConnection.addUser(newUser);
 			accountFree = true;
 		} else System.out.println("AccountManager: Email "+ email +" was not available.");
@@ -109,7 +109,7 @@ public class QuiznessAccountManager {
 	public static void main(String[] args) throws Exception {
 		QuiznessAccountManager manager = new QuiznessAccountManager();
 		System.out.println("Start");
-		if(manager.createNewAccount("Lloyd2", "lglucin@stanford.edu","ILikeCats29", "","", true));
+		if(manager.createNewAccount("Master", "master@master.edu","ILikeCats29", "","", true, "WebContent/img/1.png"));
 			System.out.println("Successfully Created New Account");
 		if(manager.validLogin("Lloyd2", "ILikeCats29"))
 			System.out.println("Successful Login");

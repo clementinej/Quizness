@@ -24,6 +24,8 @@ public class CreateListener implements HttpSessionListener {
 	private static final boolean debugging = true;
 	private HttpSession session;
 	private ArrayList<String[]> readyResponses;
+	private ArrayList<String[]> currentMultiAnswers;
+	
 	/**
 	 * When a browser is opened, a questionList is created, and
 	 */
@@ -52,6 +54,9 @@ public class CreateListener implements HttpSessionListener {
         
         readyResponses = new ArrayList<String[]>();
         session.setAttribute("ready responses", readyResponses);
+        
+        currentMultiAnswers = new ArrayList<String[]>();
+        session.setAttribute("answers", currentMultiAnswers);
     }
 
 
