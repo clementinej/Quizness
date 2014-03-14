@@ -34,7 +34,7 @@ public class User implements Serializable {
 	private String picture;
 
 	//constructor
-	public User(boolean isAdmin, String userName, String pw, String email, String aboutMe, String location){
+	public User(boolean isAdmin, String userName, String pw, String email, String aboutMe, String location, String picture){
 		this.isAdmin = isAdmin;
 		this.isBanned = false;
 		this.pw = pw;
@@ -51,7 +51,7 @@ public class User implements Serializable {
 		this.aboutMe = aboutMe;
 		this.location = location;
 		this.highScore = -1;
-//		this.picture = picture;
+		this.picture = picture;
 	}
 
 	
