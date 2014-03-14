@@ -206,7 +206,7 @@
             <!-- A way to challenge another user to this quiz -->
             <br><a href="/Quizness/social/compose-mail.jsp?quiz_id=<%=quiz.getQuizID() %>&top_score=<%=userHighScore %>">Challenge a friend!</a>
             <% if(user.isAdmin()){ %>
-         <form method="post" action="/Quizness/DeleteQuizServlet" id="signup">
+         <form method="post" action="/Quizness/DeleteQuizServlet" >
             <div class="inputs">
                <input type ="hidden" name="quiz_id" value=<%=quizID%>>
                <input id="submit" type="submit" value="Delete Quiz">

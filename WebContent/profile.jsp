@@ -57,6 +57,9 @@
           	<li><a href="site/search.jsp">Search</a></li>
          </ul>
       </nav>
+      <% if (user.isBanned()){ %>
+      	<h1>This user is banned</h1>
+      	<% } %>
       <div id="content" class="clearfix">
          <section id="left">
             <div id="userStats" class="clearfix">

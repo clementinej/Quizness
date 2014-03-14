@@ -46,9 +46,12 @@ public class QuiznessAccountManager {
 	 * Will return true if the login and pw and hash function is in stored within the account manager.
 	 * login string can either be an email or a username.
 	 */
-	public boolean validLogin(String login, String pw) throws SQLException {
+	public boolean validLogin(String login, String pw) throws Exception {
 		boolean validLogin = false;		
 		if(!User.emailIsAvailable(login)) { //read from database
+			User user = ServerConnection.getUser(login);
+			if (user.isBanned())
+				return false;
 			System.out.println("validLogin: db read successful");
 			String unencryptedPlusSalt = pw + salt;
 			String hashedPW = generateHash(unencryptedPlusSalt);
