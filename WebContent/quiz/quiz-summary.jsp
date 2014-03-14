@@ -205,14 +205,14 @@
             <%} %>
             <!-- A way to challenge another user to this quiz -->
             <br><a href="/Quizness/social/compose-mail.jsp?quiz_id=<%=quiz.getQuizID() %>&top_score=<%=userHighScore %>">Challenge a friend!</a>
-            <% if(user.isAdmin()){ %>
-         <form method="post" action="/Quizness/DeleteQuizServlet" >
+         </form>
+         <% if(user.isAdmin()){ %>
+         <form method="post" action="/Quizness/DeleteQuizServlet" id="signup">
             <div class="inputs">
                <input type ="hidden" name="quiz_id" value=<%=quizID%>>
-               <input id="submit" type="submit" value="Delete Quiz">
+               <input style = "width:200px;" id="submit" type="submit" value="Delete Quiz">
             </div>
             <% } %>
-         </form>
          </form>
       </div>
       <div class="container" style="float:left;padding-left:80px;">
@@ -265,14 +265,15 @@
             <%}else { %>
             <h5><%=rating %></h5>
             <%} %>
-            <% if (user.isAdmin()){ %>
+
+         </form>
+         <% if (user.isAdmin()){ %>
          <form method="post" action="/Quizness/ClearQuizHistoryServlet" id="signup">
             <input type="hidden" name="quiz_id" value="<%=quizID%>"/>
             <div class="inputs">
                <input style="width:200px;" id="submit" type="submit" value="Clear Quiz History">
                <% } %>
             </div>
-         </form>
          </form>
       </div>
    </body>

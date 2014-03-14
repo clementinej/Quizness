@@ -49,9 +49,19 @@ public class ReviewServlet extends HttpServlet {
 		Connection con = ServerConnection.getConnection();
 		int quizID = Integer.parseInt(request.getParameter("quizID"));
 		int reviewerID = Integer.parseInt(request.getParameter("reviewerID"));
-//		int ranking = Integer.parseInt(request.getParameter("rating-input"));
+		String numStars = request.getParameter("rating");
 		String review = request.getParameter("review");
-		int ranking = 5;
+		
+		int ranking = 0;
+		if (numStars.equals("1-star"))
+			ranking = 1;
+		else if (numStars.equals("2-star"))
+			ranking = 2;
+		else if (numStars.equals("3-star"))
+			ranking = 3;
+		else if (numStars.equals("4-star"))
+			ranking = 4;
+		else ranking = 5;
 		//add a review to the database		
 		String query = "INSERT INTO reviews (quizID, reviewerID, ranking, review, dateCreated) VALUES(?, ?, ?, ?, ?)";
 		PreparedStatement ps;

@@ -44,7 +44,7 @@ public class ClearQuizHistoryServlet extends HttpServlet {
 			Quiz quiz = ServerConnection.getQuiz(quizID);
 			Delete.clearQuizTryHistory(quiz);
 			System.out.println("Cleared quiz history");
-			redirectToPage("home.jsp", request, response);
+			redirectToPage("quiz/quiz-summary.jsp?quiz_id=" + quizID, request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
