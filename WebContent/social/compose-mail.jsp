@@ -70,7 +70,7 @@ if(quizID != null) {
           <span class="header-link"><a href="../site/search.jsp">Search</a></span>
       </div>
 	<div class="center" style="width:700px; margin-left: auto; margin-right: auto;">
-	<% if (friends.size() == 0){ %>
+	<% if (friends.size() == 0 && toString == null){ %>
 		<form method="post" action="../site/search.jsp">
 	     <div class="form-1">
 	     <h2 id="no-friends">You can't do that. <br> You have no friends.</h2>

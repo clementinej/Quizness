@@ -31,6 +31,7 @@ public class User implements Serializable {
 	private String aboutMe;
 	private String location;
 	private int highScore;
+	private String picture;
 
 	//constructor
 	public User(boolean isAdmin, String userName, String pw, String email, String aboutMe, String location){
@@ -50,6 +51,7 @@ public class User implements Serializable {
 		this.aboutMe = aboutMe;
 		this.location = location;
 		this.highScore = -1;
+//		this.picture = picture;
 	}
 
 	
@@ -177,6 +179,13 @@ public class User implements Serializable {
  * 
  */
 	
+	public void setPicture(String file){
+		picture = file;
+	}
+	
+	public String getPicture(){
+		return picture;
+	}
 	public static User getUser(int userID) throws Exception{
 
 		//ServerConnection.open();
