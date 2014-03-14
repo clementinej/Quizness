@@ -15,7 +15,7 @@ public class Review {
 	public static ArrayList<Integer> getReviews(int quizID) throws SQLException{
 		ArrayList<Integer> reviewIDs = new ArrayList<Integer>();
 		Connection con = ServerConnection.getConnection();
-		PreparedStatement ps = con.prepareStatement("SELECT id FROM reviews WHERE quizID = ?");
+		PreparedStatement ps = con.prepareStatement("SELECT id FROM reviews WHERE quizID = ? ORDER BY dateCreated DESC");
 		ps.setInt(1, quizID);
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()){
