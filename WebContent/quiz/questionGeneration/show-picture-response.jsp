@@ -16,7 +16,6 @@
 	String title = Quiz.getQuiz(quizTry.getQuizID()).getTitle();
 	ArrayList<Set<String>> solution = question.getAnswer();
 	%>
-	
 		<div class="container">
    <form method="post" action="../CreateServlet" id="signup">
       <div class="header">

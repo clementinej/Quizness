@@ -4,7 +4,8 @@
     <%@ page errorPage="../site/404.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>   <link rel="stylesheet" type="text/css" href="../../css/style_login.css" />
+<head>   
+	<link rel="stylesheet" type="text/css" href="../../css/style_login.css" />
 </head>
 <body>
 
@@ -18,15 +19,6 @@
 	String title = Quiz.getQuiz(quizTry.getQuizID()).getTitle();
 	ArrayList<Set<String>> solutions = question.getAnswer();
 	%>
-<%--
-	//dummydata
-	
-	int questionID = 3;
-	String title = "title";
-	String questionText = "question text";
-	int numBlanks = 6;
-	--%>
-	
 	<div class="container">
    <form method="post" action="../CreateServlet" id="signup">
       <div class="header">

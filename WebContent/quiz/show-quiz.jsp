@@ -183,9 +183,9 @@ answer
 		int nextQuestionType = q.getQuestionType();
 		switch(q.getQuestionType()) {
 		case 1: %>
-			<%=q.getQuestion()%></p>
-			<p><input type="text" name="answer" /></p>
-			<input type="submit" name="submit" value="next"/>
+			<p>Question <%=" " + q.getQuestion()%></p>
+			<p><input type="name" name="answer" /></p>
+			<input type="submit" class="blue-button" name="submit" value="next"/>
 			<%--<jsp:include page="questionGeneration/show-question-answer.jsp" />--%><%
 			break;
 		case 2:
@@ -194,7 +194,7 @@ answer
 			String beforeBlank = q.getQuestion().substring(0, blankIndex);
 			String afterBlank = q.getQuestion().substring(lastBlankIndex + 1);%>
 			<%=beforeBlank%><input type="text" name="answer"/><%=afterBlank%></p>
-			<input type="submit" name="submit" value="next"/>
+			<input type="submit" class="blue-button" name="submit" value="next"/>
 			<%--<jsp:include page="questionGeneration/show-fill-in-blanks.jsp" />--%><%
 			break;
 		case 3:
@@ -208,14 +208,14 @@ answer
 				<div class="checkboxy">
 	        	<input type="checkbox" name="answer" value="<%=option %>"> <%=option %></div>
        		<%}%>
-			<input type="submit" name="submit" value="next"/>
+			<input type="submit" class="blue-button" name="submit" value="next"/>
 			<%--<jsp:include page="questionGeneration/show-multiple-choice.jsp" />--%><%
 			break;
 		case 4:
 			%>
 			<img src="<%=q.getQuestion()%>" height="300" width="300">
 			<p><input type="text" name="answer" /></p>
-			<input type="submit" name="submit" value="next"/>
+			<input type="submit" class="blue-button" name="submit" value="next"/>
 			<%--<jsp:include page="questionGeneration/show-picture-response.jsp" />--%><%
 			break;
 		}%>

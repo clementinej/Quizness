@@ -15,15 +15,6 @@
 	String title = Quiz.getQuiz(quizTry.getQuizID()).getTitle();
 	ArrayList<Set<String>> solution = question.getAnswer();
 	%>
-<%--
-	//dummydata
-	
-	int questionID = 3;
-	String title = "title";
-	String questionText = "question text";
-	int numBlanks = 6;
-	String solution = "solution";
-	--%>
 	<div class="container">
    <form method="post" action="../CreateServlet" id="signup">
       <div class="header">
