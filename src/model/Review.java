@@ -52,5 +52,17 @@ public class Review {
 		}
 		return null;
 	}
+	public static int getAverageRanking() throws SQLException{
+		Connection con = ServerConnection.getConnection();
+		PreparedStatement ps = con.prepareStatement("SELECT ranking FROM reviews");
+		ResultSet rs = ps.executeQuery();
+		double total = 0;
+		double count = 0;
+		while (rs.next()){
+			total += rs.getInt(1);
+			count++;
+		}
+		return (int) (total/count);
+	}
 	
 }
