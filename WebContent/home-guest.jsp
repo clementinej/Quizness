@@ -40,10 +40,10 @@
             <h4 class="cs-text" id="cs-text">Quizness</h4>
          </section>
 	   </div>
-	   <div id="below" style="align:center;margin-bottom:100px;">
+	   <div id="below" style="margin-bottom:100px;margin:0 auto;width:80%;margin-left:20%;">
    		
-			<div id="activity" style="float:left;width:20%;margin-left:60px;margin-bottom:500px;">
-				<h1>News</h1>
+			<div style="float:left;width:25%;">
+				<h1>Announcements</h1>
 	        <%
 	        int numAnnouncements = 0;
 	        ArrayList<String> announcements = Announcements.getBody();
@@ -66,11 +66,10 @@
 	        	}
 	        }%>
    			</div>
-   			<div style="float:left;width:25%;">
-   			<h1>Quizzes</h1>	
+   			<div style="float:left;width:25%;">	
 	        <% 
   			 if(numPopularQuizzes != 0) {%>
-  				<h2>Popular Quizzes</h2><% 
+  				<h1>Popular Quizzes</h1><% 
   				if(numPopularQuizzes > 5) {
    					for(int i = 0; i < 5; i++) {
    						Quiz topQuiz = Quiz.getQuiz(topQuizzes.get(i));
@@ -90,10 +89,11 @@
    				} // end else
   			 } // end if
    				%>
-   			
+   			</div>
+   			<div style="float:left;width:25%;">
    			<%
    			if(numNewQuizzes != 0) {%>
-   				<div><h2>New Quizzes</h2><%
+   				<div><h1>New Quizzes</h1><%
    				if(numNewQuizzes > 5) {
    					for(int i = 0; i < 5; i++) {
    						Quiz newQuiz = Quiz.getQuiz(newQuizzes.get(i));

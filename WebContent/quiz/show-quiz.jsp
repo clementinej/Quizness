@@ -219,7 +219,6 @@
     
 </body>
 
-
 <%-- Private Functions --%>
 <%!
 private void checkIfUserIsLoggedIn(HttpServletRequest request,
