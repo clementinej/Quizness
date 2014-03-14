@@ -44,8 +44,13 @@
          <span class="right">Welcome to Quizness, <%=name %></span>
       </div>
       <div class="container">
-      <h1>Search Results</h1>
-      <h3>Click the links below to explore quizzes</h3>
+      <div id="signup">
+      	 <div class="header">       
+            <h3>Search Results</h3>
+            <p>Click the links below to explore quizzes</p>    
+        </div>
+          <div class="sep"></div>
+          <div class="inputs">
 <%
 String resultType = (String) session.getAttribute("resultType");
 if(resultType.equals("user")) {
@@ -53,9 +58,7 @@ if(resultType.equals("user")) {
 	for(int i = 0; i < users.size(); i++) {
 		User u = users.get(i);
 		%>
-		<a href="profile.jsp?id=<%=u.getUserID() %>"><p><%=u.getUserName() %><p></a>
-		
-		<br>
+		<p><%=i %>.</p><a href="profile.jsp?id=<%=u.getUserID() %>"><p><%=u.getUserName() %><p></a>
 		<% 
 	}
 } else {
@@ -63,11 +66,13 @@ if(resultType.equals("user")) {
 	for(int i = 0; i < quizzes.size(); i++) {
 		Quiz q = quizzes.get(i);
 		%>
-		<a href="../Quizness/quiz/quiz-summary.jsp?quiz_id=<%=q.getQuizID()%>"><p><%=q.getTitle() %></p></a>
+		<p><%=i %>.</p><a href="../Quizness/quiz/quiz-summary.jsp?quiz_id=<%=q.getQuizID()%>"><p><%=q.getTitle() %></p></a>
 		<% 
 	}
 }
 %>
+</div>
+</div>
 </div>
 </body>
 </html>
