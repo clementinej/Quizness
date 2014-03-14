@@ -42,13 +42,6 @@ public class ServerConnection {
 		return con;
 	}
 	
-	// Convert an quiz object into byte[]
-	private static byte[] convertToByteArray(Review review) throws Exception{
-		 ByteArrayOutputStream bos = new ByteArrayOutputStream();
-	     ObjectOutputStream oos = new ObjectOutputStream(bos);
-	     oos.writeObject(review);
-	     return bos.toByteArray();
-	}
 	
 	// Convert an quiz object into byte[]
 	private static byte[] convertToByteArray(Quiz quiz) throws Exception{
@@ -179,29 +172,6 @@ public class ServerConnection {
 		return quizID; 
 	}
 	
-	//add a review to the database
-	public static int addReview(Review review) throws Exception {
-		String query = "INSERT INTO reviews (quizID, reviewerID, ranking, dateCreated) VALUES(?, ?, ?, ?)";
-		PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
-		Date date = new Date();
-		Timestamp timestamp = new Timestamp(date.getTime());
-
-		ps.setInt(1, review.getQuizID());
-		ps.setInt(2, review.getUserID());
-		ps.setInt(3, review.getRanking());
-		ps.setTimestamp(4, timestamp);
-		ps.executeUpdate();
-		
-		int reviewID =  getGeneratedKey(ps);
-		review.setID(reviewID);
-		
-		query = "UPDATE reviews SET review = ? WHERE id = " + reviewID; 
-		ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
-		ps.setBytes(1, convertToByteArray(review));
-		ps.executeUpdate();
-		
-		return reviewID;
-	}
 	
 	// Return a quiz from the database given the quizID
 	public static Review getReview(int reviewID) throws Exception {

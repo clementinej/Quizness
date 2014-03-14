@@ -137,9 +137,9 @@
      	
      	<form id="review" method="post" action="../ReviewServlet" class="button">
      		<h2>Review this Quiz!</h2>
-     		<input id="title" class="inputs" type="text" name="reviewerID" value="What did you think?"><br>
-     		<input id="subject" class="inputs" type="text" name="reviewerID" value="Add your review and click save!">
+     		<input id="subject" class="inputs" type="text" name="review" value="Add a short review and click save!">
      		<input id="save-review" class="blue-button" type="submit" value="Save Review" >
+     		<input id ="quizID" type="hidden" name="quizID" value=<%=quizTry.getQuizID() %>>
      		<input id="reviewerID" type="hidden" name="reviewerID" value=<%=user.getUserID()%>>
      	</form>
      	</div>

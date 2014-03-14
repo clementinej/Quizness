@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.mysql.jdbc.Statement;
 
 import model.Review;
 import model.ServerConnection;
@@ -42,28 +46,39 @@ public class ReviewServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Connection con = ServerConnection.getConnection();
 		int quizID = Integer.parseInt(request.getParameter("quizID"));
 		int reviewerID = Integer.parseInt(request.getParameter("reviewerID"));
-		int ranking = Integer.parseInt(request.getParameter("ranking"));
-		String title = request.getParameter("title");
-		String subject = request.getParameter("subject");
+//		int ranking = Integer.parseInt(request.getParameter("ranking"));
+		String review = request.getParameter("review");
 		
 		//for testing
 //		int quizID = 1;
 //		int reviewerID = 9;
-//		int ranking = 5;
+		int ranking = 5;
 //		String title = "this rocks";
 //		String subject = "this is the best quiz i've ever taken hands down 5/5";
+		//add a review to the database
 		
-		Review review = new Review(quizID, reviewerID, ranking, title, subject);
-		
+		String query = "INSERT INTO reviews (quizID, reviewerID, ranking, review, dateCreated) VALUES(?, ?, ?, ?, ?)";
+		PreparedStatement ps;
 		try {
-			ServerConnection.addReview(review);
+			ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			Date date = new Date();
+			Timestamp timestamp = new Timestamp(date.getTime());
+			ps.setInt(1, quizID);
+			ps.setInt(2, reviewerID);
+			ps.setInt(3, ranking);
+			ps.setString(4, review);
+			ps.setTimestamp(5, timestamp);
+			ps.executeUpdate();
+
 			RequestDispatcher dispatch = request.getRequestDispatcher("quiz/quiz-summary.jsp?quiz_id=" + quizID); 
 			dispatch.forward(request, response);
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		} 
+	
 	}
 
 }
