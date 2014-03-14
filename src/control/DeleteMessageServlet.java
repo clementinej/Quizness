@@ -43,7 +43,7 @@ public class DeleteMessageServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String[] selectedMessages = request.getParameterValues("selected_messages");
+		String[] selectedMessages = request.getParameterValues("check");
 		User user = (User) session.getAttribute("current user");
 		
 		try {

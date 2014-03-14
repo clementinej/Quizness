@@ -82,7 +82,7 @@
          <h4> You've got no messages. Zero. None.</h4>
       <%} %>
       </div>
-      <form method="post" action="MessageServlet">
+      <form method="post" action="DeleteMessageServlet">
          <div id="table-container">
             <table id="table">
                <tbody>
@@ -184,7 +184,7 @@
                </select> --%>
                <form method = "post" action = "DeleteMessageServlet">
                		<input type="hidden" name="quiz_id" value="s">
-               		<input type="submit" name="inbox_update" value="Delete Seleted Messages">
+               		<input type="submit" name="delete_messages" value="Delete Seleted Messages">
                </form>
             </span>
          </div>
