@@ -93,7 +93,7 @@ Quiz Result
 +Friend's time spent
 
 Overall Website Look 
-+CSS
++CSS (No Bootstrap)
 +JavaScript
 
 Error Checking 
@@ -103,6 +103,7 @@ User sessions and threading
 
 Extensions
 -Tags and categories (NOT SURE) 
+-Edit profiles (NOT SURE)
 +Quiz editing
 +Rating and review system
 +Reporting system
@@ -113,4 +114,7 @@ Extensions
 -XML loading
 +Naming 
 -Practice mode
++Profile pictures
++Additional user features: about me, location, etc. 
++Flag quizzes as innappropriate
 
