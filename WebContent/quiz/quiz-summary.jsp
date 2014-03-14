@@ -3,7 +3,7 @@
     <%@page import="model.*"%>
     <%@page import="java.util.*"%>
     <%@page import="java.text.SimpleDateFormat"%>
-    <%--<%@ page errorPage="../site/404.jsp" --%>
+    <%@ page errorPage="../site/404.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -49,9 +49,6 @@ ArrayList<Integer> recentTryIds = QuizSummary.getRecentPerformance(quizID, 5);
 
 //Datetime formatter
 SimpleDateFormat formatter = (SimpleDateFormat) session.getAttribute("time formatter"); 
-
-//Summary statistics on how well all users have performed on the quiz. 
-//Summary quizSummary = Summary.getStatistics(quizID);
 %>
 
 <% 
@@ -59,13 +56,7 @@ double userHighScore = 0.0;
 if(triesByScore.size() > 0) {
 	userHighScore = QuizTry.getTry(triesByScore.get(0)).getScore();
 }
-/*double highScore = 0.0;
-if(topPerformerIds.size() > 0) {
-	int topID = topPerformerIds.get(0);
-	System.out.println(topID);
-	QuizTry t = QuizTry.getTry(topID);
-	highScore = t.getScore();
-}*/
+
 double lastScore = 0.0;
 if(recentTryIds.size() > 0) {
 	lastScore = QuizTry.getTry(recentTryIds.get(0)).getScore();
@@ -112,7 +103,6 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
 	QuizTry t = QuizTry.getTry(topQuizTriesTodayIds.get(i));
 	bestTriesToday.add(t);
 }
-
 %>
       
 <div class="container" style="float:left;padding-left:20px;">
@@ -234,8 +224,6 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
      		</form>
      	</form>
       </div>
-   
-   
    	<div class="container" style="float:left;padding-left:80px;">
       <form method="post" action="" id="signup">
       <div class="header">
@@ -250,6 +238,27 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
       	<p><%=NumberConverter.toString(averageScore)%></p><br>
       	<br><h3>Total Attempts</h3>
       	<p><%=numAttempts%></p><br>
+      	<br><h3>Reviews</h3>
+      	<%
+      		int numReviews = 0;
+      		ArrayList<Integer> reviews = Review.getReviews(quizID);  
+      		numReviews = reviews.size();
+    		if(numReviews != 0) {%>
+    	<h5>Last Review</h5>
+      		<p><%=reviews.get(0) %></p>
+      		<%} else {%>
+      		<h5>Nobody has reviewed this quiz yet.</h5>
+      	<%} %>
+      	<br><h3>Average Rating</h3>
+      	<%
+      	int rating = Review.getRanking(user.getUserID()); 
+      	if(rating == 0) {
+      	%>
+      	<h5>Nobody has ranked this quiz yet.</h5>
+      	<%}else { %>
+      	<h5><%=rating %></h5>
+      	<%} %>
+      	
       		            	<% if (user.isAdmin()){ %>
      	<form method="post" action="/Quizness/ClearQuizHistoryServlet" id="signup">
      		<input type="hidden" name="quiz_id" value="<%=quizID%>"/>
