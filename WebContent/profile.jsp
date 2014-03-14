@@ -108,7 +108,7 @@
                   <h1>Friend Requests</h1>
                </div>
                <div class="boxy">
-                  <p>You have pending friend requests! Go to your inbox.</p>
+                  <p>You have pending friend requests! <a href="inbox.jsp">Go to your inbox.</a></p>
                </div>
                <%
                   }} 

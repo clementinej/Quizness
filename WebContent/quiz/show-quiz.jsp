@@ -11,16 +11,6 @@
 %>
 
 <% boolean debug = false;%>
-<%--
-url parameters:
-for multipage
-quiz_id
-quiz try id
-answer
-
- --%>
-
-
 <%
     User user = (User) session.getAttribute("current user");
   	int quizID = 79;//debugging default
@@ -69,7 +59,7 @@ answer
 				%>
 				<%=q.getQuestion()%></p>
 				<p><input type="text" name="answer<%=qIndex%>" /></p>
-				<%--<jsp:include page="questionGeneration/show-question-answer.jsp" />--%><%
+				<%
 				break;
 			case 2: //Fill-In-The-Blank
 				int blankIndex = q.getQuestion().indexOf('_');
@@ -78,7 +68,7 @@ answer
 				String afterBlank = q.getQuestion().substring(lastBlankIndex + 1);
 				%>
 				<%=beforeBlank%><input type="text" name="answer<%=qIndex%>"/><%=afterBlank%></p>
-				<%--<jsp:include page="questionGeneration/show-fill-in-blanks.jsp" />--%><%
+				<%
 				break;
 			case 3:	//Multiple Choice				
 				ArrayList<String> options = new ArrayList<String>();
@@ -93,7 +83,7 @@ answer
        				<%
 					}
 					%>
-				<%--<jsp:include page="questionGeneration/show-multiple-choice.jsp" />--%><%
+				<%
 				break;
 			case 4: //Picture Response%>
 				<img src="<%=q.getQuestion()%>" height="300" width="300">
@@ -195,7 +185,7 @@ answer
 			String afterBlank = q.getQuestion().substring(lastBlankIndex + 1);%>
 			<%=beforeBlank%><input type="text" name="answer"/><%=afterBlank%></p>
 			<input type="submit" class="blue-button" name="submit" value="next"/>
-			<%--<jsp:include page="questionGeneration/show-fill-in-blanks.jsp" />--%><%
+			<%
 			break;
 		case 3:
 			//get wrong choices
@@ -209,7 +199,7 @@ answer
 	        	<input type="checkbox" name="answer" value="<%=option %>"> <%=option %></div>
        		<%}%>
 			<input type="submit" class="blue-button" name="submit" value="next"/>
-			<%--<jsp:include page="questionGeneration/show-multiple-choice.jsp" />--%><%
+			<%
 			break;
 		case 4:
 			%>
@@ -256,8 +246,6 @@ Quiz getCurrQuiz(int quizID) throws IOException {
 	return quiz;
 }	
 %>
-
-
 <%! 
 /*
  * For multiple choice questions.  Gets all options that will appear next to the check boxes and puts them
