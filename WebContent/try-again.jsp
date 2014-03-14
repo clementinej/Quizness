@@ -1,3 +1,4 @@
+<%@ page errorPage="../site/404.jsp" %>
 <!DOCTYPE html>
 <html>
    <head>

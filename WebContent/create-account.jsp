@@ -3,7 +3,6 @@
      <head>
      <link rel="stylesheet" type="text/css" href="css/style_login.css" />
      </head>
-
 <body>
 <div class="container">
 	<% if(request.getParameter("bad_email") != null) { %>

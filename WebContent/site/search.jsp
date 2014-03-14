@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
    pageEncoding="ISO-8859-1"%>
-   <%@ page import="java.util.*, model.*" %>
-   <%@ page errorPage="../site/404.jsp" %>
+<%@ page import="java.util.*, model.*" %>
+<%@ page errorPage="../site/404.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-     <head>
+   <head>
       <meta charset="UTF-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,52 +18,52 @@
          int userID = u.getUserID();
          String name = u.getUserName();
          %>
-     <!--top bar -->
+      <!--top bar -->
       <div class="top">
-      	<span class="header-link"><a href="../home.jsp">Home</a></span>
+         <span class="header-link"><a href="../home.jsp">Home</a></span>
          <span class="header-link"><a href="../create-quiz.jsp">Create Quiz</a></span>
          <span class="header-link"><a href="../social/compose-mail.jsp">Compose </a></span>
          <span class="header-link"><a href="../profile.jsp">Profile</a></span>
          <span class="header-link"><a href="../site/admin.jsp">Admin</a></span>
          <span class="header-link"><a href="../inbox.jsp">Inbox</a></span>
          <span class="right">Welcome to Quizness, <%=name %></span>
-         </div>
+      </div>
       <div class="container">
-      
-      <div>
-      <form action="../QuizSearchServlet" method="post" id="signup">
-         <div class="header">
-            <h3>Quiz Search</h3>
-         </div>
-         <div class="sep"></div>
-         <div class="inputs">
-            <div>
-               <input type="name" name="search" placeholder="Search for quizzes, friends, etc."></input>
-              <div>
-                  <p>Order by:</p>
-                  <br>
-                  <label><input type="radio" name="order" value="popular"/> Popular</label>
-                  <label><input type="radio" name="order" value="recent"/> Recent</label>
+         <div>
+            <form action="../QuizSearchServlet" method="post" id="signup">
+               <div class="header">
+                  <h3>Quiz Search</h3>
                </div>
-               <input id="submit" type="submit" value="Search!">
-            </div>
-      </form>
-      </div>
-      <br>
-      <div>
-      <form action="../UserSearchServlet" method="post" id="signup">
-         <div class="header">
-            <h3>User Search</h3>
+               <div class="sep"></div>
+               <div class="inputs">
+                  <div>
+                     <input type="name" name="search" placeholder="Search for quizzes, friends, etc."></input>
+                     <div>
+                        <p>Order by:</p>
+                        <br>
+                        <label><input type="radio" name="order" value="popular"/> Popular</label>
+                        <label><input type="radio" name="order" value="recent"/> Recent</label>
+                     </div>
+                     <input id="submit" type="submit" value="Search!">
+                  </div>
+               </div>
+            </form>
          </div>
-         <div class="sep"></div>
-         <div class="inputs">
-            <div>
-               <input type="name" name="search" placeholder="Search for quizzes, friends, etc."></input>
-               <input id="submit" type="submit" value="Search!">
-            </div>
-      </form>
-      </div>
-      
+         <br>
+         <div>
+            <form action="../UserSearchServlet" method="post" id="signup">
+               <div class="header">
+                  <h3>User Search</h3>
+               </div>
+               <div class="sep"></div>
+               <div class="inputs">
+                  <div>
+                     <input type="name" name="search" placeholder="Search for quizzes, friends, etc."></input>
+                     <input id="submit" type="submit" value="Search!">
+                  </div>
+               </div>
+            </form>
+         </div>
       </div>
    </body>
 </html>

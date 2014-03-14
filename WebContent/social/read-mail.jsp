@@ -76,15 +76,11 @@ m.markAsRead();
        		<input type ="hidden" name="msg_id" value=<%=messageID%>>
        		<input type ="hidden" name="messageType" value=<%=messageType%>>
      		<input id="submit" type="submit" name="send_accept" value="Accept">
-     		<input id="submit" type="submit" name="send_reject" value="Reject">
-     
+     		<input id="submit" type="submit" name="send_reject" value="Reject">  
      	<% } %>
-
 		<a href="../inbox.jsp">Back to Inbox</a>
       </div>
       </form>
-       
-       
    </div>
 </body>
 </html>

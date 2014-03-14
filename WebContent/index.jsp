@@ -1,5 +1,6 @@
 <%@ page errorPage="../site/404.jsp"  %>
 <%@ page import="java.util.*, control.*, model.*" %>
+<%@ page errorPage="../site/404.jsp"  %>
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -11,7 +12,6 @@
       <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300|Montserrat' rel='stylesheet' type='text/css' />
    </head>
    <body>
-   
    	<% 
    		boolean isCorrectUserID = true;
    		Cookie[] cookies = request.getCookies();  		

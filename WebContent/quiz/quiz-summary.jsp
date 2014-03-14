@@ -251,7 +251,7 @@ for(int i = 0; i < topQuizTriesTodayIds.size(); i++) {
       	<%} %>
       	<br><h3>Average Rating</h3>
       	<%
-      	int rating = Review.getRanking(user.getUserID()); 
+      	int rating = Review.getAverageRanking(); 
       	if(rating == 0) {
       	%>
       	<h5>Nobody has ranked this quiz yet.</h5>

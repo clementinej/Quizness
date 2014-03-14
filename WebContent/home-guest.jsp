@@ -11,40 +11,10 @@
       <link rel="stylesheet" type="text/css" href="css/style.css" />
       <link rel="stylesheet" type="text/css" href="css/style_login.css" />
       <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300|Montserrat' rel='stylesheet' type='text/css' />
-      <style>
-
-		.right {
-		color:#fffff;
-		float:right;
-		margin-right:25px;
-		font-weight:bold;
-		font-size:100%;
-		}
-		
-		#rightcontent {
-		position: absolute;
-		right:10px;
-		top:50px;
-		width:200px;
-		}
-		#innerleft {
-		float:left;
-		left:20px;
-		top:50px;
-		width:400px;
-		}
-		#innerright {
-		float:right;
-		right:10px;
-		top:50px;
-		width:400px;
-		}
-      </style>
    </head>
    <body>
    <div>
       <%
-    
          String name = "Guest User";
          
          // ARE THERE ANY POPULAR QUIZZES?
@@ -73,7 +43,7 @@
 	   <div id="below" style="align:center;margin-bottom:100px;">
    		
 			<div id="activity" style="float:left;width:20%;margin-left:60px;margin-bottom:500px;">
-				<h1>Announcements</h1>
+				<h1>News</h1>
 	        <%
 	        int numAnnouncements = 0;
 	        ArrayList<String> announcements = Announcements.getBody();
@@ -95,12 +65,9 @@
 	        		}
 	        	}
 	        }%>
-
-   		
    			</div>
-   			
    			<div style="float:left;width:25%;">
-   			<h1>News</h1>	
+   			<h1>Quizzes</h1>	
 	        <% 
   			 if(numPopularQuizzes != 0) {%>
   				<h2>Popular Quizzes</h2><% 
@@ -147,9 +114,6 @@
    			}  // end if
    			%>
 	        </div>
-	    
-   			 
-   			
 	   </div>
 	   </div>
       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
