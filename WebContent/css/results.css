@@ -9,9 +9,36 @@
     padding: 0;
     margin: 0;
 }
+.inputs {
+    background: #f5f5f5;
+    font-size: 0.8rem;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: none;
+    padding: 13px 10px;
+    width: 330px;
+    margin-bottom: 20px;
+    box-shadow: inset 0px 2px 3px rgba( 0,0,0,0.1 );
+    clear: both;
+}
+
+#review {
+	margin-top:25px;
+    padding: 0px 25px 25px;
+    background: #fff;
+    box-shadow: 
+        0px 0px 0px 5px rgba( 255,255,255,0.4 ), 
+        0px 4px 20px rgba( 0,0,0,0.33 );
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    display: table;
+    position: static;
+}
 .button{
 	float:left;
-	padding-left:120px;
+	padding-left:40px;
 	}
 .blue-button {
 	font-family: 'Lato', Calibri, Arial, sans-serif;
@@ -78,7 +105,7 @@ body {
   text-align: center;
 }
 #set-button,
-#submit {
+.blue-button {
   background-color: #888;
   color: #fff;
   -webkit-border-radius: 3px;

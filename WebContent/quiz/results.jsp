@@ -120,18 +120,30 @@
             </div>
          </form>
          
+         <div>
 		<form method="post" action="../quiz/quiz-summary.jsp?quiz_id=<%=quizID %>"  class="button">
-     		<input id="submit" class="blue-button" type="submit" value="Back to Quiz Summary">
+     		<input id="go-to-summary" class="blue-button" type="submit" value="Back to Quiz Summary">
      	</form>
      
      	<form method="post" action="../quiz/show-quiz.jsp?quiz_id=<%=quizID %>" class="button">
-     		<input id="submit" class="blue-button" type="submit" value = "Take this Quiz Again">
+     		<input id="take-again" class="blue-button" type="submit" value = "Take this Quiz Again">
      	</form>
      	
      	<form method="post" action="../ReportServlet" class="button">
-     		<input id="submit" class="blue-button" type="submit" value="Mark As Inappropriate">
+     		<input id="innapropriate" class="blue-button" type="submit" value="Mark As Inappropriate">
      		<input id="submit" type="hidden" name="quizID" value=<%=quizID%>>
      	</form>
+     	
+     	
+     	<form id="review" method="post" action="../ReviewServlet" class="button">
+     		<h2>Review this Quiz!</h2>
+     		<input id="title" class="inputs" type="text" name="reviewerID" value="What did you think?"><br>
+     		<input id="subject" class="inputs" type="text" name="reviewerID" value="Add your review and click save!">
+     		<input id="save-review" class="blue-button" type="submit" value="Save Review" >
+     		<input id="reviewerID" type="hidden" name="reviewerID" value=<%=user.getUserID()%>>
+     	</form>
+     	</div>
+     	</div>
         <%--
          <%
          for(int i = 0; i < responses.size(); i++) {
