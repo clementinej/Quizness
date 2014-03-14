@@ -11,6 +11,19 @@
       <link rel="stylesheet" type="text/css" href="css/style.css" />
       <link rel="stylesheet" type="text/css" href="css/style_login.css" />
       <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300|Montserrat' rel='stylesheet' type='text/css' />
+      
+      <style>
+      .guest-col{
+      float:left;
+      width:25%;
+      }
+      #guest-below{
+      margin-bottom:100px;
+      margin:0 auto;
+      width:80%;
+      margin-left:20%;
+      }
+      </style>
    </head>
    <body>
    <div>
@@ -40,10 +53,10 @@
             <h4 class="cs-text" id="cs-text">Quizness</h4>
          </section>
 	   </div>
-	   <div id="below" style="margin-bottom:100px;margin:0 auto;width:80%;margin-left:20%;">
+	   <div id="guest-below">
    		
-			<div style="float:left;width:25%;">
-				<h1>Announcements</h1>
+			<div class="guest-col">
+				<h1>News</h1>
 	        <%
 	        int numAnnouncements = 0;
 	        ArrayList<String> announcements = Announcements.getBody();
@@ -66,7 +79,7 @@
 	        	}
 	        }%>
    			</div>
-   			<div style="float:left;width:25%;">	
+   			<div class="guest-col">	
 	        <% 
   			 if(numPopularQuizzes != 0) {%>
   				<h1>Popular Quizzes</h1><% 
@@ -90,7 +103,7 @@
   			 } // end if
    				%>
    			</div>
-   			<div style="float:left;width:25%;">
+   			<div class="guest-col">
    			<%
    			if(numNewQuizzes != 0) {%>
    				<div><h1>New Quizzes</h1><%
