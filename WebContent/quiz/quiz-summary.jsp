@@ -240,9 +240,18 @@
                int numReviews = 0;
                ArrayList<Integer> reviews = Review.getReviews(quizID);  
                numReviews = reviews.size();
+               if (numReviews > 3) numReviews = 3;
                if(numReviews != 0) {%>
-            <h5>Last Review</h5>
-            <p><%=reviews.get(0) %></p>
+            <h5>Recent Reviews</h5>
+            <% for (int i = 0; i < numReviews; i++){%>
+            	<% int reviewID = reviews.get(i);
+            	int ranking = Review.getRanking(reviewID);
+            	String review = Review.getReview(reviewID);
+            	String reviewer = Review.getReviewerName(reviewID);%>
+            	<p><%=reviewer %> said: <%=review %></p>
+            	<p><%=ranking %> stars</p>
+            	<p></p>
+            <% } %>
             <%} else {%>
             <h5>Nobody has reviewed this quiz yet.</h5>
             <%} %>
