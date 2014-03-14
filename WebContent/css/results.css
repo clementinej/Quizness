@@ -9,6 +9,40 @@
     padding: 0;
     margin: 0;
 }
+
+#subject{
+	margin-top:15px;
+	}
+
+.rating {
+    overflow: hidden;
+    display: inline-block;
+    font-size: 0;
+    position: relative;
+}
+.rating-input {
+    float: right;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    margin: 0 0 0 -16px;
+    opacity: 0;
+}
+.rating:hover .rating-star:hover,
+.rating:hover .rating-star:hover ~ .rating-star,
+.rating-input:checked ~ .rating-star {
+    background-position: 0 0;
+}
+.rating-star,
+.rating:hover .rating-star {
+    position: relative;
+    float: right;
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url('http://kubyshkin.ru/samples/star-rating/star.png') 0 -16px;
+}
+
 .inputs {
     background: #f5f5f5;
     font-size: 0.8rem;
@@ -24,6 +58,7 @@
 }
 
 #review {
+	margin-left:30px;
 	margin-top:25px;
     padding: 0px 25px 25px;
     background: #fff;
@@ -40,6 +75,7 @@
 	float:left;
 	padding-left:40px;
 	}
+	
 .blue-button {
 	font-family: 'Lato', Calibri, Arial, sans-serif;
 	margin-left:200px;
@@ -97,7 +133,20 @@ body {
 		}
 
 #score {
-	 text-align: center;
+	text-align:center;
+}
+#quiz-info{
+	float:left;
+	}
+.quiz-info{
+	padding-left:60px;
+	margin-bottom:20px;
+	}
+	
+#ranking-panel{
+	float:left;
+	padding-left:20px;
+
 }
 #choose-time {
   margin: 80px auto;
