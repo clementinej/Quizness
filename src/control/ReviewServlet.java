@@ -49,17 +49,10 @@ public class ReviewServlet extends HttpServlet {
 		Connection con = ServerConnection.getConnection();
 		int quizID = Integer.parseInt(request.getParameter("quizID"));
 		int reviewerID = Integer.parseInt(request.getParameter("reviewerID"));
-//		int ranking = Integer.parseInt(request.getParameter("ranking"));
+//		int ranking = Integer.parseInt(request.getParameter("rating-input"));
 		String review = request.getParameter("review");
-		
-		//for testing
-//		int quizID = 1;
-//		int reviewerID = 9;
 		int ranking = 5;
-//		String title = "this rocks";
-//		String subject = "this is the best quiz i've ever taken hands down 5/5";
-		//add a review to the database
-		
+		//add a review to the database		
 		String query = "INSERT INTO reviews (quizID, reviewerID, ranking, review, dateCreated) VALUES(?, ?, ?, ?, ?)";
 		PreparedStatement ps;
 		try {
