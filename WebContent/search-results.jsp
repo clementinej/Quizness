@@ -30,7 +30,7 @@
       <div class="top">
          <% if(loggedIn){ %>
          <span class="header-link"><a href="create-quiz.jsp">Create Quiz</a></span>
-         <span class="header-link"><a href="social/compose-mail.html">Compose </a></span>
+         <span class="header-link"><a href="social/compose-mail.jsp">Compose </a></span>
          <span class="header-link"><a href="profile.jsp">Profile</a></span>
          <span class="header-link"><a href="site/admin.jsp">Admin</a></span>
          <span class="header-link"><a href="inbox.jsp">Inbox</a></span>

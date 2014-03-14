@@ -75,6 +75,7 @@
                SimpleDateFormat formatter = (SimpleDateFormat) session.getAttribute("time formatter"); 
                
                double score = quizTry.getScore();
+               user.checkHighScore(score);
                double time = quizTry.getTime()/1000;
                ArrayList<String[]> responses = quizTry.getResponses();
                int quizID = quizTry.getQuizID();

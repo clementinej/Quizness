@@ -158,12 +158,21 @@
                <% } %>
      			
      			<% if(myProfile == false && currUser.isAdmin()){ %>
-               	<form method="post" action="DeleteUserServlet">
-               	<div class="inputs">
-               		<input type ="hidden" name="userID" value=<%=userID%>>
-     				<input id="submit" class="blue-button" type="submit" value="Delete this user">
-     			</div>
-     			</form>
+     				<% if (!user.isBanned()) { %>
+	               	<form method="post" action="DeleteUserServlet">
+	               	<div class="inputs">
+	               		<input type ="hidden" name="userID" value=<%=userID%>>
+	     				<input id="submit" class="blue-button" type="submit" value="Ban this user">
+	     			</div>
+	     			</form>
+	     			<% } else if (user.isBanned()) { %>
+	               	<form method="post" action="UnbanUserServlet">
+	               	<div class="inputs">
+	               		<input type ="hidden" name="userID" value=<%=userID%>>
+	     				<input id="submit" class="blue-button" type="submit" value="Unban this user">
+	     			</div>
+	     			</form>
+	     			<% } %>
      			
      			<% if(currUser.isAdmin() && !user.isAdmin()) { %>
      			<form method="post" action="MakeAdminServlet">
@@ -203,7 +212,7 @@
                      <div class="friend">
                         <span class="friendly"><a href="profile.jsp?id=<%=f.getUserID() %>"><%=f.getUserName()%></a></span>
                      </div>
-                     <%} %>
+                     <% } %>
                   </div>
                </div>
             </div>

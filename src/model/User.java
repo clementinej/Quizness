@@ -196,6 +196,10 @@ public class User implements Serializable {
 		isBanned = true;
 	}
 	
+	public void unBan(){
+		isBanned = false;
+	}
+	
 	public void setAdmin(){
 		isAdmin = true;
 	}
@@ -212,6 +216,13 @@ public class User implements Serializable {
 			return "This user hasn't taken any quizzes yet!";
 		String score = "" + highScore;
 		return score;
+	}
+	
+	public void checkHighScore(double score){
+		if (score > highScore){
+			highScore = (int) score;
+			System.out.println("the new high score is " + highScore);
+		}
 	}
 	
 	public String getAboutMe(){
