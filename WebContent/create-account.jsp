@@ -29,6 +29,17 @@
             <input type="password" name="password" placeholder="password" />
             <input type="name" name="aboutMe" placeholder="about me" />
             <input type="name" name="location" placeholder="location" />
+            
+            <div>
+            <%
+			for(int i = 1; i < 9; i++) {
+				if(i == 5) {%>
+					<br>
+				<%} %>
+			<img src="/Quizness/img/<%=i %>.png" width="150" height="150">
+			<input id="pic-<%=i %>" name="pic" type="radio">
+			<%}%>
+            </div>
             <div class="checkboxy">
                 <input name="cecky" id="checky" value="1" type="checkbox" /><label class="terms">I understand what I'm getting myself into</label>
             </div>

@@ -11,19 +11,6 @@
       <link rel="stylesheet" type="text/css" href="css/style.css" />
       <link rel="stylesheet" type="text/css" href="css/style_login.css" />
       <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300|Montserrat' rel='stylesheet' type='text/css' />
-      
-      <style>
-      .guest-col{
-      float:left;
-      width:25%;
-      }
-      #guest-below{
-      margin-bottom:100px;
-      margin:0 auto;
-      width:80%;
-      margin-left:20%;
-      }
-      </style>
    </head>
    <body>
    <div>
