@@ -41,16 +41,18 @@ public class RemoveReportedQuizServlet extends HttpServlet {
 		String[] quizIDList = request.getParameterValues("check"); 
 		String removeQuizzes = request.getParameter("remove");
 		
-		for(int i = 0; i < quizIDList.length; i++){
-			int quizID = Integer.parseInt(quizIDList[i]); 
-			try {
-				Quiz.removeFromReported(quizID);
-				if(removeQuizzes != null) Delete.deleteQuiz(quizID);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} 
+		if(quizIDList != null){
+			for(int i = 0; i < quizIDList.length; i++){
+				int quizID = Integer.parseInt(quizIDList[i]); 
+				try {
+					Quiz.removeFromReported(quizID);
+					if(removeQuizzes != null) Delete.deleteQuiz(quizID);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} 
+		}
 		String target = "reported-quizzes.jsp";
 		RequestDispatcher dispatch = request.getRequestDispatcher(target); 
 		dispatch.forward(request, response); 

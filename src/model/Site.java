@@ -26,7 +26,7 @@ public class Site {
 		int count = 0;
 		Statement st = ServerConnection.getConnection().createStatement();
 		ResultSet rs = st.executeQuery("SELECT COUNT(DISTINCT quizID) FROM quizTries");
-		while(rs.next()) rs.getInt(1);
+		while(rs.next()) return rs.getInt(1);
 		return count; 
 	}
 	
@@ -52,7 +52,7 @@ public class Site {
 		PreparedStatement ps = ServerConnection.getConnection().prepareStatement(query);
 		ps.setString(1,  type);
 		ResultSet rs = ps.executeQuery();
-		while(rs.next()) rs.getInt(1);
+		while(rs.next()) return rs.getInt(1);
 		return count; 
 	}
 	
@@ -60,7 +60,7 @@ public class Site {
 		int count = 0;
 		Statement st = ServerConnection.getConnection().createStatement();
 		ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM " + tableName);
-		while(rs.next()) rs.getInt(1);
+		while(rs.next()) return rs.getInt(1);
 		return count; 
 	}
 	
