@@ -67,7 +67,8 @@ if(quizID != null) {
          <span class="header-link"><a href="../profile.jsp">Profile</a></span>
          <span class="header-link"><a href="../site/admin.jsp">Admin</a></span>
          <span class="header-link"><a href="../inbox.jsp">Inbox</a></span>
-          <span class="header-link"><a href="../site/search.jsp">Search</a></span>
+         <span class="header-link"><a href="../site/search.jsp">Search</a></span>
+         <span class="header-link"><a href="LogoutServlet">Log Off</a></span>
       </div>
 	<div class="center" style="width:700px; margin-left: auto; margin-right: auto;">
 	<% if (friends.size() == 0 && toString == null){ %>

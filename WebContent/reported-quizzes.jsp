@@ -41,7 +41,6 @@
              	<a href="reported-quizzes.jsp">Reported Quizzes</a>
             </nav>
          </section>
-      </div>
       <hr id="inbox"/>
       <div id="num-messages">
       <%if(numReported == 0) { %>
@@ -78,8 +77,11 @@
                </tbody>
             </table>
          </div>
-         <input type="submit" name="remove" value="Remove Quizzes" />
-         <input type="submit" name="keep" value="Keep Quizzes" />
+         <div id="report-buttons">
+         <input type="submit" class="report-button" name="remove" value="Remove Quizzes" />
+         <input type="submit" class="report-button" name="keep" value="Keep Quizzes" />
+         </div>
       </form>
+      </div>	
    </body>
 </html>

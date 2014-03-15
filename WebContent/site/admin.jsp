@@ -32,6 +32,7 @@
 <body>
    <!--top bar -->
    <div class="top">
+      <span class="header-link"><a href="../home.jsp">Home</a></span>
       <span class="header-link"><a href="../create-quiz.jsp">Create Quiz</a></span>
       <span class="header-link"><a href="../social/compose-mail.jsp">Compose </a></span>
       <span class="header-link"><a href="../profile.jsp">Profile</a></span>
@@ -39,6 +40,7 @@
       <span class="header-link"><a href="../inbox.jsp">Inbox</a></span>
       <span class="header-link"><a href="../reported-quizzes.jsp">Reported Quizzes</a></span>
       <span class="header-link"><a href="../site/search.jsp">Search</a></span>
+      <span class="header-link"><a href="LogoutServlet">Log Off</a></span>
    </div>
    <div>
       <div id="admin-title">
