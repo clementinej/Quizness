@@ -10,6 +10,9 @@ Questions
 +Multiple Choice
 +Picture-Response Questions
 
+Extensioned Features
++Multianswer Question
+
 Answers
 +Synonyms
 
@@ -17,7 +20,6 @@ Quiz Properties and Quiz Options
 +Random Questions
 +One Page vs. Multiple Pages
 +Immediate Correction
-+Practice Mode
 
 Scoring
 +User score and completion time
@@ -117,4 +119,13 @@ Extensions
 +Profile pictures
 +Additional user features: about me, location, etc. 
 +Flag quizzes as innappropriate
-
++Error Checking for Non-sensical input for quiz creation
++Error Checking for Non-sensical input for quiz editing
++Error Checking for Non-sensical input for question generation
++Error Checking for Non-sensical input for question editing
++Error Checking for creating a quiz with no questions
++Ability to save title and description for in progress quiz creation
++Canceling Feature for in-process quiz creation
++Post quiz editing
++Ability to add new questions to quiz post creation
++Ability to delete previous questions from quiz post creation
