@@ -49,7 +49,7 @@ public class ReviewServlet extends HttpServlet {
 		Connection con = ServerConnection.getConnection();
 		int quizID = Integer.parseInt(request.getParameter("quizID"));
 		int reviewerID = Integer.parseInt(request.getParameter("reviewerID"));
-		String numStars = request.getParameter("rating");
+		String numStars = request.getParameter("rank");
 		String review = request.getParameter("review");
 		
 		int ranking = 0;

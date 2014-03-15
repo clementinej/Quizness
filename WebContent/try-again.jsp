@@ -19,6 +19,16 @@
                <input type="name" name="name" placeholder="name"/>
                <input type="name" name="aboutMe" placeholder="about me" />
                <input type="name" name="location" placeholder="location" />
+                        <div>
+            <%
+			for(int i = 1; i < 9; i++) {
+				if(i == 5) {%>
+					<br>
+				<%} %>
+			<img src="/Quizness/img/<%=i %>.png" width="150" height="150">
+			<input id="pic-<%=i %>" name="pic<%=i %>" value="<%=i%>.png" type="radio">
+			<%}%>
+            </div>
                <input id="submit" type="submit" value="Create Account" />
             </div>
          </form>

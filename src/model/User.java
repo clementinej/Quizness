@@ -223,8 +223,9 @@ public class User implements Serializable {
 		isAdmin = true;
 	}
 	
-	public void incrementQuizzesTaken(){
+	public void incrementQuizzesTaken() throws Exception{
 		numQuizzesTaken++;
+		ServerConnection.updateUser(this);
 		System.out.println("Number of quizzes taken: " + numQuizzesTaken);
 	}
 	
@@ -237,10 +238,11 @@ public class User implements Serializable {
 		return score;
 	}
 	
-	public void checkHighScore(double score){
+	public void checkHighScore(double score) throws Exception{
 		if (score > highScore){
 			highScore = (int) score;
 			System.out.println("the new high score is " + highScore);
+			ServerConnection.updateUser(this);
 		}
 	}
 	

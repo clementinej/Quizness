@@ -93,7 +93,7 @@ Quiz Result
 +Friend's time spent
 
 Overall Website Look 
-+CSS (No Bootstrap)
++CSS (No Bootstrap (!), but special thanks to Codrops tutorials)
 +JavaScript
 
 Error Checking 

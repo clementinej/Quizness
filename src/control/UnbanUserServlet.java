@@ -10,18 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Delete;
+import model.ServerConnection;
+import model.User;
 
 /**
- * Servlet implementation class DeleteUserServlet
+ * Servlet implementation class UnbanUserServlet
  */
-@WebServlet("/DeleteUserServlet")
-public class DeleteUserServlet extends HttpServlet {
+@WebServlet("/UnbanUserServlet")
+public class UnbanUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteUserServlet() {
+    public UnbanUserServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,10 +39,14 @@ public class DeleteUserServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int deleteID = Integer.parseInt(request.getParameter("userID"));
+		int unbanID = Integer.parseInt(request.getParameter("userID"));
 		try {
-			Delete.deleteUser(deleteID);
-			redirectToPage("profile.jsp?id=" + deleteID, request, response);
+			User user = ServerConnection.getUser(unbanID);
+			user.unBan();
+			ServerConnection.updateUser(user);
+			if (!user.isBanned())
+				System.out.println("This user has been unbanned");
+			redirectToPage("profile.jsp?id=" + unbanID, request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
