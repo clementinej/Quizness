@@ -102,7 +102,7 @@
          	bestTriesToday.add(t);
          }
          %>
-      <div class="top">
+      <div class="top">      
          <span class="header-link"><a href="/Quizness/home.jsp">Home</a></span>
          <span class="header-link"><a href="/Quizness/create-quiz.jsp">Create Quiz</a></span>
          <span class="header-link"><a href="/Quizness/social/compose-mail.jsp">Compose </a></span>
@@ -243,14 +243,13 @@
             <p><%=numAttempts%></p>
             <br>
             <br>
-            <h3>Reviews</h3>
+            <h3>Recent Reviews</h3>
             <%
                int numReviews = 0;
                ArrayList<Integer> reviews = Review.getReviews(quizID);  
                numReviews = reviews.size();
                if (numReviews > 3) numReviews = 3;
                if(numReviews != 0) {%>
-            <h5>Recent Reviews</h5>
             <% for (int i = 0; i < numReviews; i++){%>
             	<% int reviewID = reviews.get(i);
             	int ranking = Review.getRanking(reviewID);
@@ -284,5 +283,7 @@
             </div>
          </form>
       </div>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+     
    </body>
 </html>
