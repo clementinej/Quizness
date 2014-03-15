@@ -44,7 +44,8 @@
    if(!user.getHighScore().equals("This user hasn't taken any quizzes yet!")) {
 	   highScore = Integer.parseInt(user.getHighScore());
    }
-	String profileImgURL = "Quizness/img/1.png";
+	//String profileImgURL = "/Quizness/img/" + user.getPicture();
+	String profileImgURL = "/Quizness/img/1.png";
    %>
       <nav>
          <ul id="n" class="clearfix">
