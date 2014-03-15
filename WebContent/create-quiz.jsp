@@ -93,8 +93,15 @@
         		}
          %>
          <br>
-         	<label class="terms"><%=i + 1%>. "<%=text%>"</label>
-         	<p><a href="<%=redirectTo%>">Edit Question</a></p>
+         	<label class="terms"><%=i + 1%>. 
+         	<%if(type == 4) {%>
+         	<img src="<%=text%>" width="200" height="200">
+           	<p><a href="<%=redirectTo%>">Edit Question</a></p>
+         	
+         	<%}else {%>"<%=text%>"
+         	         	<p><a href="<%=redirectTo%>">Edit Question</a></p>
+         	<%} %>
+         	</label>
          	
          	<% 
          	//for each solution
