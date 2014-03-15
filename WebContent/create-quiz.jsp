@@ -76,7 +76,10 @@
          		String redirectTo = "";
         		switch(type) {
         		case 1://question-response
-        			redirectTo = "quiz/questionEditing/edit-question-answer.jsp?question_index="+i;
+        			if(q.getAnswer().size() > 1)
+        				redirectTo = "quiz/questionEditing/edit-question-answer.jsp?question_index="+i;
+        			else
+        				redirectTo = "quiz/questionEditing/edit-question-multi-answer.jsp?question_index="+i;
         			break;
         		case 2://fill-in-the-blank
         			redirectTo = "quiz/questionEditing/edit-fill-in-blanks.jsp?question_index="+i;
@@ -118,7 +121,7 @@
 	   	} else if(value == "picture-response")  {
 	   		window.location = "/Quizness/quiz/questionCreation/picture-response.jsp?question-type=4&intent=add question";
 	   	} else if(value == "multiple-answer"){
-	   		window.location = "/Quizness/quiz/questionCreation/question-answer.jsp?question-type=5&intent=add question";
+	   		window.location = "/Quizness/quiz/questionCreation/question-multi-answer.jsp?question-type=5&intent=add question";
 	   	} else if (value == "multiple-choice") {
 	   		window.location = "/Quizness/quiz/questionCreation/multiple-choice.jsp?question-type=3&intent=add question";
 	   	} else if(value == "multiple-choice-multiple-answer") {

@@ -56,7 +56,7 @@
          <form method="post" action="/SaveResults">
             <%/* GRADING
                * --------------
-               * First chunk of code represents multi-page quiz grading. We get the quizResponses by grabbing
+               * First chunk of code represents single page quiz grading. We get the quizResponses by grabbing
                * from request parameters and store them in the quizResponses ArrayList.  And then pass that in
                * to the quizTry to grade.
                */
@@ -188,10 +188,12 @@
    	if(!currentQuestion.contains("answer")) {}
    	else {
    		String [] responseForOneQuestion = map.get(currentQuestion);
-   		//---debugging----//
-   		System.out.println("Responses:" + responseForOneQuestion[0]);
-   //---------------//
-   		quizResponses.add(responseForOneQuestion);
+   		for(int i = 0; i < responseForOneQuestion.length; i++) {
+   			//---debugging----//
+   			System.out.println("Responses:" + responseForOneQuestion[i]);
+   			//---------------//
+   			quizResponses.add(responseForOneQuestion);
+   		}
    	}	
    }
    return quizResponses;

@@ -22,6 +22,8 @@ public class QuestionHandler {
 	public static final int FILL_IN_THE_BLANK = 2;
 	public static final int MULTIPLE_CHOICE = 3;
 	public static final int PICTURE_RESPONSE = 4;
+	public static final int MULTIANSWER = 5;
+
 		
 	public static Quiz getQuiz(HttpServletRequest request) {
 		int quizID = Integer.parseInt(request.getParameter("quiz_id"));
@@ -133,8 +135,6 @@ public class QuestionHandler {
 	/*
 	 * After a quiz is created, the temporary question list is replaced with an empty list
 	 * in preparation for another quiz to be made.
-	 * TODO: discard changes button
-	 * TODO: remove from list button
 	 */
 	public static void clearQuestionList(HttpSession session) {
 		ArrayList<Question> questionList = (ArrayList<Question>) session.getAttribute("question list");	
@@ -177,13 +177,16 @@ public class QuestionHandler {
 		ArrayList<Set<String>> allAnswers = new ArrayList<Set<String>>();
 		makeAnswersList(request, allAnswers);
 		if(allAnswers.isEmpty()) return null;
-		double pointValue = -1;//default point value for each question depending on difficulty
-		String pointValueStr = request.getParameter("correct_answer_score");
-		if(pointValueStr.length() != 0) 
-			try { pointValue = Double.parseDouble(pointValueStr); }
-			catch (Exception e) {return null;}
-		else return null;
-		if(pointValue <= 0) return null;
+		double pointValue = 1;//default point value for each question depending on difficulty
+		if(request.getParameter("correct_answer_score") != null) {
+			String pointValueStr = request.getParameter("correct_answer_score");
+			if(pointValueStr.length() != 0) 
+				try { pointValue = Double.parseDouble(pointValueStr); }
+				catch (Exception e) {return null;}
+			else return null;
+			if(pointValue <= 0) return null;
+		}
+		System.out.println("Got past points");
 		return makeQuestion(questionType, question, allAnswers, pointValue, request);
 	}
 	
@@ -213,7 +216,8 @@ public class QuestionHandler {
 				System.out.println();
 				if(!synonymsOfAnswerSet.isEmpty())
 					allAnswers.add(synonymsOfAnswerSet);
-			}	
+			}
+			solNum++;
 		}	
 	}
 	
@@ -243,6 +247,9 @@ public class QuestionHandler {
 		case PICTURE_RESPONSE:
 			System.out.println("PictureResponse Question made.");
 			return new PictureResponse(question, allAnswers, pointValue);
+		case MULTIANSWER: 
+			System.out.println("MultiResponse Question made.");
+			return new MultiQuestionResponse(question, allAnswers, pointValue);		
 		}	
 		return null;
 	}
@@ -290,6 +297,8 @@ public class QuestionHandler {
 			return "quiz/questionCreation/multiple-choice.jsp?error=signal";
 		case PICTURE_RESPONSE:
 			return "quiz/questionCreation/picture-response.jsp?error=signal";
+		case MULTIANSWER:
+			return "quiz/questionCreation/question-multi-answer.jsp?error=signal";
 		}
 		return null;
 	}

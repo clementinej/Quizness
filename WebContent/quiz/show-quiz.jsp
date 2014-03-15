@@ -58,8 +58,11 @@
 			case 1: //Question Response
 				%>
 				<%=q.getQuestion()%></p>
-				<p><input type="text" name="answer<%=qIndex%>" /></p>
-				<%
+				<%ArrayList<Set<String>> answers = q.getAnswer(); 
+				System.out.println("Number of answers required for Q:" + qIndex + " = " +answers.size());
+				for(int answerIndex = 0; answerIndex < answers.size(); answerIndex++) {%>
+					<p><input type="text" name="answer<%=qIndex%>" /></p>
+				<%}
 				break;
 			case 2: //Fill-In-The-Blank
 				int blankIndex = q.getQuestion().indexOf('_');
@@ -89,6 +92,14 @@
 				<img src="<%=q.getQuestion()%>" height="300" width="300">
 				<p><input type="text" name="answer<%=qIndex%>" /></p>
 				<%break;
+			case 5: //Picture Response			%>
+				<%=q.getQuestion()%></p>
+				<%ArrayList<Set<String>> answers2 = q.getAnswer(); 
+				System.out.println("Number of answers required for Q:" + qIndex + " = " +answers2.size());
+				for(int answerIndex = 0; answerIndex < answers2.size(); answerIndex++) {%>
+					<p><input type="text" name="answer<%=qIndex%>" /></p>
+				<%}
+				break;
 			}
 		}	
 		qTry.setToDone();%> 

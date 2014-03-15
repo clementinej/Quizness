@@ -94,6 +94,7 @@ public class CreateServlet extends HttpServlet {
 			QuestionHandler.forwardToPage(QuestionHandler.getErrorRedirection(questionType), request, response);
 			return;
 		}
+		System.out.println("CreateServlet.handleQuestionJob: about to add sized to qlist: " +newQuestion.getAnswer().size());
 		questionList.add(newQuestion);			
 		QuestionHandler.forwardToPage("create-quiz.jsp", request, response);
 	}
@@ -105,6 +106,7 @@ public class CreateServlet extends HttpServlet {
 	private void addToExistingQuiz(HttpSession session, HttpServletRequest request, User currUser,
 								   HttpServletResponse response) throws ServletException, IOException {
 		Question newQuestion = QuestionHandler.constructQuestion(request);
+		System.out.println("CreateServlet.handleQuestionJob: about to add sized to qlist: " +newQuestion.getAnswer().size());
 		int questionType = Integer.parseInt(request.getParameter("question type"));
 		if(newQuestion == null)  {
 			Quiz quiz = QuestionHandler.getQuiz(request);

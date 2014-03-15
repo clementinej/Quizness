@@ -37,7 +37,7 @@
 					<br>
 				<%} %>
 			<img src="/Quizness/img/<%=i %>.png" width="150" height="150">
-			<input id="pic-<%=i %>" name="pic<%=i %>" value="<%=i%>.png" type="radio">
+			<input id="pic-<%=i %>" name="pic" value="<%=i%>.png" type="radio">
 			<%}%>
             </div>
             <div class="checkboxy">

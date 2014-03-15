@@ -65,6 +65,9 @@
             	case 4://picture response
             		redirectTo = "quiz/questionEditing/edit-picture-response.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
             		break;
+            	case 5://question-response
+            		redirectTo = "quiz/questionEditing/edit-question-multi-answer.jsp?e=e&question_index="+i+"&quiz_id="+quiz.getQuizID();
+            		break;
             	}
             	
             	String text = q.getQuestion();
@@ -118,7 +121,7 @@
     	} else if(value == "picture-response")  {
     		window.location = "/Quizness/quiz/questionCreation/picture-response.jsp?intent=add to existing quiz&quizID="+<%=quiz.getQuizID()%>;
     	} else if(value == "multiple-answer"){
-    		window.location = "/Quizness/quiz/questionCreation/question-answer.jsp?question-type=5&intent=add to existing quiz";
+    		window.location = "/Quizness/quiz/questionCreation/question-multi-answer.jsp?intent=add to existing quiz&quizID="+<%=quiz.getQuizID()%>;
     	} else if (value == "multiple-choice") {
     		window.location = "/Quizness/quiz/questionCreation/multiple-choice.jsp?intent=add to existing quiz&quizID="+<%=quiz.getQuizID()%>;
     	} else if(value == "multiple-choice-multiple-answer") {

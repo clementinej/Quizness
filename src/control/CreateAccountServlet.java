@@ -41,7 +41,8 @@ public class CreateAccountServlet extends HttpServlet {
 		
 		String location = request.getParameter("location");
 		String aboutMe = request.getParameter("aboutMe"); 
-		String picture = request.getParameter("picture");
+		String picture = request.getParameter("pic");
+		System.out.println("Saving picture:"+ picture);
 		
 		System.out.println("In Create Servlet");
 		try {

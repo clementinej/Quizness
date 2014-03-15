@@ -24,6 +24,7 @@ public class Answers implements Serializable{
 	 */
 	public Answers(ArrayList<Set<String>> answers){
 		this.answers = new ArrayList<Set<String>>();
+		System.out.println("In Answers Class: Answer size = " + answers.size());
 		for (Set<String> possibilities : answers){
 			this.answers.add(possibilities);
 		}
@@ -31,6 +32,7 @@ public class Answers implements Serializable{
 	
 	//returns the arraylist of answers
 	public ArrayList<Set<String>> getValue(){
+		System.out.println("In Answers.getValue: Answers Size = " + answers.size());
 		return answers;
 	}
 	
@@ -46,6 +48,7 @@ public class Answers implements Serializable{
 			if (thisAnswer.contains(responses[i]))
 				correct++;
 		}
+		System.out.println(correct +" correct.");
 		return correct;
 	}
 	
