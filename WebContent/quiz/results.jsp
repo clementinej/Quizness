@@ -16,6 +16,7 @@
       System.out.println("About to user check");
         //Get the user
         User user = (User)session.getAttribute("current user");
+        user.incrementQuizzesTaken();
         System.out.println("Got Current User: " + user.getUserName());
         
         //Get the quiz try by id
