@@ -102,6 +102,14 @@
          	bestTriesToday.add(t);
          }
          %>
+      <div class="top">
+         <span class="header-link"><a href="../home.jsp">Home</a></span>
+         <span class="header-link"><a href="../create-quiz.jsp">Create Quiz</a></span>
+         <span class="header-link"><a href="../social/compose-mail.jsp">Compose </a></span>
+         <span class="header-link"><a href="../profile.jsp">Profile</a></span>
+         <span class="header-link"><a href="../site/admin.jsp">Admin</a></span>
+         <span class="header-link"><a href="../inbox.jsp">Inbox</a></span>
+      </div>
       <div class="container" style="float:left;padding-left:20px;">
          <form method="post" action="../quiz/quiz-summary.jsp?quiz_id=<%=quizID %>" id="signup">
             <div class="header">
