@@ -16,7 +16,7 @@ public class Search {
 		Connection con = ServerConnection.getConnection();
 		ArrayList<Quiz> searchedQuizzes = new ArrayList<Quiz>();
 	
-		if (!popular){
+		if (popular){
 			System.out.println("Searching for popular");
 			PreparedStatement ps = con.prepareStatement("SELECT id FROM quizzes WHERE title LIKE ? ORDER BY numTimesTaken DESC");
 			ps.setString(1, "%" + queryString + "%");
