@@ -117,7 +117,7 @@
                <%
                   }} 
                
-               	if(myProfile == false){
+               	if(myProfile == false && !user.isBanned()){
                   	if(alreadyFriends == false && requestSent == false) {%>
                		<div class="head">
                   		<h1>You're not friends. Wanna Be?</h1>
@@ -139,7 +139,7 @@
                 	</div>
                 <%} %>
                 
-                <% if(myProfile == false){ %>
+                <% if(myProfile == false && !user.isBanned()){ %>
                	<form method="post" action="social/compose-mail.jsp">
                	<div class="inputs">
                		<input type ="hidden" name="messageType" value="note">
@@ -175,7 +175,7 @@
 	     			</form>
 	     			<% } %>
      			
-     			<% if(currUser.isAdmin() && !user.isAdmin()) { %>
+     			<% if(currUser.isAdmin() && !user.isAdmin() && !user.isBanned()) { %>
      			<form method="post" action="MakeAdminServlet">
                	<div class="inputs">
                		<input type ="hidden" name="user_id" value=<%=userID%>>
