@@ -7,6 +7,17 @@
 	position: relative;
 	box-shadow: 1px 0px 2px rgba(0,0,0,0.2);
 }
+
+#invalid {
+	padding-left:20px;
+	}
+	
+	#messages{
+		float:left;
+		width:25%;
+		padding-left:20px;
+		}
+		
     .guest-col{
       float:left;
       width:25%;
@@ -316,14 +327,15 @@
 }
 
 html {
-    /*background-image: url(http://kreativo.se/backlogin.jpg);*/
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8be8cf), color-stop(100%,#cdeb8b));
-    padding-top: 20px;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8be8cf), color-stop(100%,#cdeb8b));
+    background-size:cover;
+    background-repeat: no-repeat;
+    min-height:100%;
+    
 }
 
 body{
-	    font-family: "Helvetica Neue", Helvetica, Arial;
-	
+	font-family: "Helvetica Neue", Helvetica, Arial;
 	}
 
 .container {

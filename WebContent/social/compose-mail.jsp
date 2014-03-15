@@ -70,7 +70,7 @@ if(quizID != null) {
          <span class="header-link"><a href="../site/search.jsp">Search</a></span>
          <span class="header-link"><a href="LogoutServlet">Log Off</a></span>
       </div>
-	<div class="center" style="width:700px; margin-left: auto; margin-right: auto;">
+	<div class="container">
 	<% if (friends.size() == 0 && toString == null){ %>
 		<form method="post" action="../site/search.jsp">
 	     <div class="form-1">
@@ -85,7 +85,9 @@ if(quizID != null) {
 		<h3>Send a Challenge</h3>
 		</div>
 		<% } else { %>
-		<div class="header"><h3>Compose New Message</h3></div>
+		<div class="header">
+		<h3>Compose New Message</h3>
+		</div>
 		<% } %>
 			<table id="compose-mail">
 				<tr>
@@ -148,12 +150,12 @@ if(quizID != null) {
 						<td>
 							<input type="hidden" name="quiz_id" value="<%=challengeID%>">
 							<input type="hidden" name="high_score" value="<%=topScore %>">
-							<input type="submit" name ="send_challenge" value="Send">
-							<input type="submit" value="Cancel"/>
+							<input type="submit" class="blue-button" name ="send_challenge" value="Send">
+							<input type="submit" class="blue-button"value="Cancel"/>
 						</td>
 					<% } else { %>
-						<td><input type="submit" name ="send_compose" value="Send">
-						<input type="submit" value="Cancel"/></td>
+						<td><input type="submit" class="blue-button" name ="send_compose" value="Send">
+						<input type="submit" class="blue-button" value="Cancel"/></td>
 					<% } %>
 				</tr>
 			</table>

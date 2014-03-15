@@ -56,7 +56,7 @@
                   	for(int i = 0; i < users.size(); i++) {
                   		User u = users.get(i);
                   		%>
-               <p><%=i %>.</p>
+               <p><%=i+1 %>.</p>
                <a href="profile.jsp?id=<%=u.getUserID() %>"><%=u.getUserName() %></a>
                <% 
                   }
@@ -65,7 +65,7 @@
                   for(int i = 0; i < quizzes.size(); i++) {
                   	Quiz q = quizzes.get(i);
                   	%>
-               <p><%=i %>.</p>
+               <p><%=i+1 %>.</p>
                <a href="../Quizness/quiz/quiz-summary.jsp?quiz_id=<%=q.getQuizID()%>"><%=q.getTitle() %></a>
                <% 
                   }
