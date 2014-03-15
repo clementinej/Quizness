@@ -124,6 +124,7 @@ Extensions
 +Error Checking for Non-sensical input for question generation
 +Error Checking for Non-sensical input for question editing
 +Error Checking for creating a quiz with no questions
++Ignores repetitive or blank synonyms for question answers
 +Ability to save title and description for in progress quiz creation
 +Canceling Feature for in-process quiz creation
 +Post quiz editing
