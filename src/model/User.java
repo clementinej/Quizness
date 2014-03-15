@@ -223,8 +223,9 @@ public class User implements Serializable {
 		isAdmin = true;
 	}
 	
-	public void incrementQuizzesTaken(){
+	public void incrementQuizzesTaken() throws Exception{
 		numQuizzesTaken++;
+		ServerConnection.updateUser(this);
 		System.out.println("Number of quizzes taken: " + numQuizzesTaken);
 	}
 	
