@@ -52,9 +52,10 @@ public class Review {
 		}
 		return null;
 	}
-	public static int getAverageRanking() throws SQLException{
+	public static int getAverageRanking(int quizID) throws SQLException{
 		Connection con = ServerConnection.getConnection();
-		PreparedStatement ps = con.prepareStatement("SELECT ranking FROM reviews");
+		PreparedStatement ps = con.prepareStatement("SELECT ranking FROM reviews WHERE quizID = ? ");
+		ps.setInt(1, quizID);
 		ResultSet rs = ps.executeQuery();
 		double total = 0;
 		double count = 0;

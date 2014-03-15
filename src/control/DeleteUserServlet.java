@@ -40,8 +40,7 @@ public class DeleteUserServlet extends HttpServlet {
 		int deleteID = Integer.parseInt(request.getParameter("userID"));
 		try {
 			Delete.deleteUser(deleteID);
-			System.out.println("redirected to home.jsp");
-			redirectToPage("home.jsp", request, response);
+			redirectToPage("profile.jsp?id=" + deleteID, request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

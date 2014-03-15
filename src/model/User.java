@@ -237,10 +237,11 @@ public class User implements Serializable {
 		return score;
 	}
 	
-	public void checkHighScore(double score){
+	public void checkHighScore(double score) throws Exception{
 		if (score > highScore){
 			highScore = (int) score;
 			System.out.println("the new high score is " + highScore);
+			ServerConnection.updateUser(this);
 		}
 	}
 	

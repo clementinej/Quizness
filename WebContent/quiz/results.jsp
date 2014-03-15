@@ -129,19 +129,19 @@
                <input id="subject" class="inputs" type="text" name="review" value="Add a short review and click save!">
                <div><span class="rating">
                   <input type="radio" class="rating-input"
-                     id="1-star" name="rank"/>
+                     id="1-star" name="rank" value="5-star"/>
                   <label for="1-star" class="rating-star"></label>
                   <input type="radio" class="rating-input"
-                     id="2-star" name="rank"/>
+                     id="2-star" name="rank" value="4-star"/>
                   <label for="2-star" class="rating-star"></label>
                   <input type="radio" class="rating-input"
-                     id="3-star" name="rank"/>
+                     id="3-star" name="rank" value="3-star"/>
                   <label for="3-star" class="rating-star"></label>
                   <input type="radio" class="rating-input"
-                     id="4-star" name="rank"/>
+                     id="4-star" name="rank" value="2-star"/>
                   <label for="4-star" class="rating-star"></label>
                   <input type="radio" class="rating-input"
-                     id="5-star" name="rank"/>
+                     id="5-star" name="rank" value="1-star"/>
                   <label for="5-star" class="rating-star"></label>
                   </span>
                </div>

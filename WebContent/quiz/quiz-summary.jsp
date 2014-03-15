@@ -258,7 +258,7 @@
             <br>
             <h3>Average Rating</h3>
             <%
-               int rating = Review.getAverageRanking(); 
+               int rating = Review.getAverageRanking(quizID); 
                if(rating == 0) {
                %>
             <h5>Nobody has ranked this quiz yet.</h5>
