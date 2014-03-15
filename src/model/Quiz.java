@@ -47,13 +47,11 @@ public class Quiz implements Serializable{
 		this.hasRandomMode = hasRandomMode;
 		this.hasTimedMode = hasTimedMode; 
 		
-		//TODO: add getters and setters
 		this.immediateCorrection = immediateCorrection;
 		this.multiplePages = multiplePages;
 		
 		this.numOfTimesPlayed = 0;
 		
-		//this.topScorers = new ArrayList<User>();
 		this.description = description; 
 		this.title = title; 
 	}
@@ -386,73 +384,4 @@ public class Quiz implements Serializable{
 		}
 		return result;
 	}
-	/*
-	public static ArrayList<Integer> getTopPerformers(int num, int quizID) throws Exception{
-		String query = "SELECT quizTryID FROM quizTries WHERE quizID = " + quizID 
-				+ " ORDER BY score DESC LIMIT" + num;
-		return executeQuery(query);
-	}
-	
-
-	public static ArrayList<Integer> getTopPerformers(int num, int quizID, int numOfDays) throws Exception{
-		String query = "SELECT quizTryID FROM quizTries WHERE quizID = " + quizID
-				+ " AND WHERE dateCreated >= NOW() - INTERVAL " + numOfDays + " DAY "
-				+ " ORDER BY score DESC LIMIT" + num;
-		return executeQuery(query);
-	}
-	
-
-	public static ArrayList<Integer> getTopPerformers(int num, int quizID, int numOfDays) throws Exception{
-		String query = "SELECT DISTINCT userID FROM quizTries WHERE quizID = " + quizID
-				+ " AND WHERE dateCreated >= NOW() - INTERVAL " + numOfDays + " DAY "
-				+ " ORDER BY score DESC LIMIT" + num;
-		return executeQuery(query);
-	}
-	
-	public static ArrayList<Integer> getRecentlyCreatedByFriends(int num, int userID) throws Exception{
-		Connection con = ServerConnection.getConnection();
-		String query = "SELECT id FROM quizzes INNER JOIN friendships USING (toID) WHERE fromID = " + userID
-				+ " ORDER BY dateCreated DESC LIMIT" + num; 
-		PreparedStatement ps = con.prepareStatement(query);
-		ps.executeUpdate();
-		return executeQuery(query);
-	}
-	 
-	public static ArrayList<Integer> getRecentlyTakenByFriends(int num, int userID) throws Exception{
-		Connection con = ServerConnection.getConnection();
-		String query = "SELECT id FROM quizTries INNER JOIN friendships USING (toID) WHERE fromID = " + userID
-				+ " ORDER BY dateCreated DESC LIMIT" + num; 
-		PreparedStatement ps = con.prepareStatement(query);
-		ps.executeUpdate();
-		return executeQuery(query);
-	}
-
-	// Remove a quiz from the database
-	public static void removeQuiz(int quizID) throws Exception {
-		Connection con = ServerConnection.getConnection();
-		PreparedStatement ps = con.prepareStatement("DELETE FROM quizzes WHERE quizID = ?");
-		ps.setInt(1, quizID);
-		ps.executeQuery();
-	}
-	
-	// Convert IDs into Quiz object
-	public static ArrayList<Quiz> toQuizzes(ArrayList<Integer> quizIDs) throws Exception{
-		ArrayList<Quiz> results = new ArrayList<Quiz>();
-		int num = quizIDs.size();
-		for(int i = 0; i < num; i++){
-			results.add(Quiz.getQuiz(quizIDs.get(i)));
-		}
-		return results; 
-	}
-	
-	// Convert IDs into QuizTry object
-	public static ArrayList<QuizTry> toQuizTries(ArrayList<Integer> quizTryIDs) throws Exception{
-		ArrayList<QuizTry> results = new ArrayList<QuizTry>();
-		int num = quizTryIDs.size();
-		for(int i = 0; i < num; i++){
-			results.add(ServerConnection.getQuizTry((quizTryIDs.get(i))));
-		}
-		return results; 
-	}
-	*/
 }

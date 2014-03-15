@@ -41,8 +41,5 @@ public class Announcements {
 		return announcements;
 	}
 	
-//	public static void main (String[] args) throws Exception{
-//		ArrayList<String> announcements = getSubject();
-//	}
 
 }
